@@ -5,4 +5,3 @@ $nutil    = "root";
 $nmdp     = "";
 $nserveur = "localhost";
 //------------- fin -------------
-?>

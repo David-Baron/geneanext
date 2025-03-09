@@ -1,10 +1,7 @@
 <?php
 
 //=====================================================================
-// Descendance directe d'une personne
-// La sortie peut s'effectuer au format HTML ou au format texte
-// JL Servin
-// UTF-8
+// Descendance directe d'une personne au format HTML ou au format texte
 //=====================================================================
 
 session_start();

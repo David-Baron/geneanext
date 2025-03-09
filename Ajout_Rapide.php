@@ -5,9 +5,6 @@
 // De frère / soeur si filiation définie ==> création de la personne et de sa filiation
 // Des parents si la filiation n'est pas définie ==> création des personnes, de leur union et de la filiation
 // D'un conjoint ==> création de la personne et de l'union
-// JL Servin
-//  + G Kester pour parties
-// UTF-8
 //=====================================================================
 
 session_start();

@@ -7,33 +7,33 @@ include_once('fonctions.php');
 
 $debug = false;
 
-function Etend_les_dates($date1, $date2, $forcage=false) {
-	$texte = '';
-	if ($date1 != $date2) {
-		if ($date1 != '') $texte .= Etend_date($date1, $forcage);
-		if ($date2 != '') {
-			if ($date1 != '') $texte .= ' - '	;
-			$texte .= Etend_date($date2, $forcage);
-		}
-	}
-	else {
-		if ($date1 != '') $texte .= Etend_date($date1, $forcage);
-	}
-	if ($texte != '') $texte = '('.$texte.')';
-	return $texte;
+function Etend_les_dates($date1, $date2, $forcage = false)
+{
+    $texte = '';
+    if ($date1 != $date2) {
+        if ($date1 != '') $texte .= Etend_date($date1, $forcage);
+        if ($date2 != '') {
+            if ($date1 != '') $texte .= ' - ';
+            $texte .= Etend_date($date2, $forcage);
+        }
+    } else {
+        if ($date1 != '') $texte .= Etend_date($date1, $forcage);
+    }
+    if ($texte != '') $texte = '(' . $texte . ')';
+    return $texte;
 }
 
 
 if ($debug) {
-	$f_log = open_log();
-	ecrire($f_log,'evt : '.$_GET['idNomFam']);
-	ecrire($f_log,'ref : '.$_GET['ref']);
+    $f_log = open_log();
+    ecrire($f_log, 'evt : ' . $_GET['idNomFam']);
+    ecrire($f_log, 'ref : ' . $_GET['ref']);
 }
 
 if (isset($_GET['idNomFam'])) $idNomFam = ($_GET['idNomFam']);
 else exit;
 
-if ($debug) ecrire($f_log,'suite...');
+if ($debug) ecrire($f_log, 'suite...');
 
 $x = Lit_Env();
 
@@ -44,12 +44,12 @@ $message = $dom->createElement('message');
 $message = $dom->appendChild($message);
 
 $sql = 'SELECT Reference, Prenoms, Ne_le, Decede_Le '
-		.'FROM '.nom_table('personnes')
-		.' WHERE idNomFam =' . $idNomFam;
-if (!$_SESSION['estPrivilegie']) $sql = $sql ." and Diff_Internet = 'O' ";
-$sql = $sql .' ORDER by Prenoms, Ne_Le';
-		
-if ($debug) ecrire($f_log,'sql : '.$sql);
+    . 'FROM ' . nom_table('personnes')
+    . ' WHERE idNomFam =' . $idNomFam;
+if (!$_SESSION['estPrivilegie']) $sql = $sql . " and Diff_Internet = 'O' ";
+$sql = $sql . ' ORDER by Prenoms, Ne_Le';
+
+if ($debug) ecrire($f_log, 'sql : ' . $sql);
 
 $id_maxi = 0;
 $res = lect_sql($sql);
@@ -60,26 +60,26 @@ $res = lect_sql($sql);
 // $personnes->setAttribute('id', '0');
 
 while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
-	$dates = html_entity_decode(aff_annees_pers($enreg['Ne_le'],$enreg['Decede_Le']), ENT_QUOTES, $def_enc );
-	$prenoms = $enreg['Prenoms'];
-	$interdits = array('&');
-	$prenoms = str_replace($interdits, '', $prenoms);
-	if ($debug) {
-		ecrire($f_log,'enreg : '.$enreg['Reference']);
-		ecrire($f_log,'enreg : '.$prenoms);
-		ecrire($f_log,'enreg : '.$dates);
-	}
-	// $personnes = $dom->createElement('personnes', utf8_encode($prenoms.' '.$dates));
-	$personnes = $dom->createElement('personnes', $prenoms.' '.$dates);
-	$personnes = $message->appendChild($personnes);
-	$personnes->setAttribute('id', $enreg['Reference']);
-	$id_maxi = max($enreg['Reference'], $id_maxi);
+    $dates = html_entity_decode(aff_annees_pers($enreg['Ne_le'], $enreg['Decede_Le']), ENT_QUOTES, $def_enc);
+    $prenoms = $enreg['Prenoms'];
+    $interdits = array('&');
+    $prenoms = str_replace($interdits, '', $prenoms);
+    if ($debug) {
+        ecrire($f_log, 'enreg : ' . $enreg['Reference']);
+        ecrire($f_log, 'enreg : ' . $prenoms);
+        ecrire($f_log, 'enreg : ' . $dates);
+    }
+    // $personnes = $dom->createElement('personnes', utf8_encode($prenoms.' '.$dates));
+    $personnes = $dom->createElement('personnes', $prenoms . ' ' . $dates);
+    $personnes = $message->appendChild($personnes);
+    $personnes->setAttribute('id', $enreg['Reference']);
+    $id_maxi = max($enreg['Reference'], $id_maxi);
 }
 
 $maxi = $dom->createElement('maxi', $id_maxi);
 // $maxi = $dom->createElement('maxi', utf8_encode($id_maxi));
 $maxi = $message->appendChild($maxi);
-	
+
 echo $dom->saveXML();
 /* 
 Donne :
@@ -92,4 +92,3 @@ Donne :
 </message>
 */
 if ($debug) fclose($f_log);
-?>
