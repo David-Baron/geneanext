@@ -3,9 +3,8 @@
 // Saisie multiple de personnes nées ou décédées dans une ville
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -49,7 +48,7 @@ $objet = stripcslashes($objet);
 
 $titre = $objet;                       // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

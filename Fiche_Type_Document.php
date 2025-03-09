@@ -4,9 +4,9 @@
 // Affichage d'un type de document 
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Fiche d\'un type de document';    // Titre pour META
 
@@ -29,7 +29,7 @@ $Code = Recup_Variable('code', 'N');
 
 $req_sel = 'select * from ' . nom_table('types_doc') . ' where Id_Type_Document = \'' . $Code . '\' limit 1';
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

@@ -7,10 +7,10 @@
 //		L'identifiant si le nom de famille existe
 //		OK si le nom de famille n'existe pas
 //=====================================================================
-session_start();
 
-// header("Content-Type:text/plain; charset=iso-8859-1");
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $x = Lit_Env();
 
 //	Récupération du nom

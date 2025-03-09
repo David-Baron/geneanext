@@ -8,9 +8,8 @@
 //   - au format csv pour un import dans un tableur
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -49,7 +48,7 @@ $acces = 'L';                                        // Type d'accès de la page
 $titre = $LG_Menu_Title['Archive_Preparation'];        // Titre pour META
 $niv_requis = 'C';
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

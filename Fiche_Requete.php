@@ -4,9 +4,9 @@
 // Affichage d'une requête
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Request'];       // Titre pour META
 $niv_requis = 'P';
@@ -28,7 +28,7 @@ $reference = Recup_Variable('reference', 'N');
 
 $req_sel = 'select Titre, Criteres, Code_SQL from ' . nom_table('requetes') . ' where Reference = ' . $reference . ' limit 1';
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

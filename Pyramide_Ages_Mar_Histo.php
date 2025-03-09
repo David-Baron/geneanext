@@ -4,15 +4,14 @@
 // Affichage de l'historique de l'âge au 1er mariage pour les femmes et les hommes en fonction de l'année de naissance
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
 }
-
-include('fonctions.php');
 
 // Sécurisation des variables postées
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
@@ -41,7 +40,7 @@ switch ($Type_Histo) {
 }
 $x = Lit_Env();
 $index_follow = 'ON';        // NOFOLLOW demandé pour les moteurs
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

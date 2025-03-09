@@ -4,18 +4,16 @@
 // Cette page permet à un utilisateur d'obtenir une vue personnalisée de la base à partir de la fiche d'une personne
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // On simule le bouton OK pour ne pas écrire l'entête de la page
 $ok = 'OK';
 
-// Gestion standard des pages
-include('fonctions.php');
-
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Vue personnalisée rapide';    // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $Refer = Recup_Variable('Refer', 'N');
 

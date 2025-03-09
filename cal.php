@@ -3,7 +3,8 @@
 // Formulaire de saisie de date
 //=====================================================================
 
-include('fonctions.php');
+require(__DIR__ . '/fonctions.php');
+
 $aff_req = false;
 $x = Lit_Env();
 $zone2 = Recup_Variable('zone', 'S');

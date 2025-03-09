@@ -3,8 +3,9 @@
 // Complétude des personnes par génération avec pourcentage par rapport à la génération précédente
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                // Type d'accès de la page
 
 $tab_variables = array('annuler', 'Horigine', 'Gen_D', 'Gen_F');
@@ -26,7 +27,7 @@ $Gen_F = Secur_Variable_Post($Gen_F, 1, 'N');
 $titre = $LG_Menu_Title['Gen_Is_Complete'];    // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'P';                // Page accessible à partir du niveau privilégié
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

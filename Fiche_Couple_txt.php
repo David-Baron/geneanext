@@ -3,6 +3,9 @@
 // Fiche couple au format texte
 //=====================================================================
 
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 function affiche_image($ref)
 {
     global $pdf, $image, $chemin_images_util, $sortie_pdf;
@@ -29,8 +32,6 @@ function aff_cadre_union()
     }
 }
 
-session_start();
-include('fonctions.php');
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_COUPLE_REPORT_TITLE;
 $niv_requis = 'P';                        // Page accessible uniquement aux privilégiés
@@ -45,7 +46,7 @@ if ((!$SiteGratuit) or ($Premium)) {
 
 if ($sortie_pdf) $no_entete = true;        // Pas d'entête HTML sinon le PDF ne s'affichera pas
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Recup de la variable passée dans l'URL : référence de l'union, et pdf o ?
 $Reference = Recup_Variable('Reference', 'N');

@@ -5,6 +5,9 @@
 // Un seul commentaire est autorisé par évènement
 //=====================================================================
 
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 function aff_nb_enr($lib1, $accord)
 {
     global $simulation, $nb_enr, $premier_lib, $tab, $h_LG_EVT_MERGE_ACTION, $lg_evt_participation, $lg_evt_participations, $lg_evt_image, $lg_evt_images, $lg_evt_document, $lg_evt_documents, $lg_evt_done;
@@ -27,10 +30,6 @@ function aff_nb_enr($lib1, $accord)
         }
     }
 }
-
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
 
 $simulation = -1;
 
@@ -58,7 +57,7 @@ if ($simulation == -1) $simulation = false;
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Event_Merging'];       // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $compl = Ajoute_Page_Info(600, 250);
 Insere_Haut(my_html($titre), $compl, 'Fusion_Evenements', '');
@@ -79,10 +78,6 @@ echo '</tr></table>';
 echo '</form>' . "\n";
 
 echo Affiche_Icone('tip', 'Information') . '&nbsp;' . my_html(LG_EVT_MERGE_TIP) . '<br />';
-
-// $simulation = true;
-
-//if ($ok == $lib_OK) {
 
 $Anc_Enreg = '';
 $ident_premier = 0;

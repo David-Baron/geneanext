@@ -1,6 +1,9 @@
 <?php
 // Choix d'une zone géographique
-include('fonctions.php');
+
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 //FenCalend=window.open('sel_zone_geo.php?zoneLib='+zoneLib
 //                                     +'&zoneValue='+zoneValue
 //                                     +'&valZone='+valZone

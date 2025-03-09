@@ -3,10 +3,10 @@
 // Liste des noms de famille
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include_once('fonctions.php');
-include_once('phonetique.php');        //	Traitements phonétiques
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/Phonetique.php');
+
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 
 // Recup de la variable passée dans l'URL : texte ou non
@@ -14,9 +14,9 @@ $texte = Dem_Texte();
 
 $titre = $LG_Menu_Title['Names_List'];  // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
-//	Initialisation d'un objet de la classe
-$codePho = new phonetique();
+require(__DIR__ . '/Gestion_Pages.php');
+
+$codePho = new Phonetique();
 
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut($titre, $compl, 'Liste_NomFam', '');

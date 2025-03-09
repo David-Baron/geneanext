@@ -3,8 +3,8 @@
 // Edition d'une ville
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -51,7 +51,7 @@ if ($Modif)
 else
     $titre = $LG_Menu_Title['Town_Add'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -396,7 +396,7 @@ if (($ok == '') && ($annuler == '')) {
         aff_erreur(LG_ICSV_TOWN_UNKNOWN);
         echo '<a href="Liste_Villes.php?Type_Liste=V">' . LG_SUBDIV_LIST . '</a>';
     } else {
-        include('Insert_Tiny.js');
+        include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
         echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Nom_VilleV\')" action="' . my_self() . '?Ident=' . $Ident . '">' . "\n";
         aff_origine();
@@ -412,7 +412,7 @@ if (($ok == '') && ($annuler == '')) {
 
         echo '</form>' . "\n";
 
-        include('gest_onglets.js');
+        include(__DIR__ . '/assets/js/gest_onglets.js');
         // On cache les div d'ajout des villes et on positionne l'onglet par défaut
         echo '<script type="text/javascript">' . "\n";
         echo 'function affiche_icone_carte(obj) {' . "\n";

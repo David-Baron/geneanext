@@ -244,8 +244,8 @@ function Ajoute_Nom($idNom, $Nom)
             }
         }
         if ($idNom == 0) {
-            include_once('phonetique.php');
-            $objetCodePho = new phonetique();
+            require(__DIR__ . '/app/Phonetique.php');
+            $objetCodePho = new Phonetique();
             $codePho = $objetCodePho->calculer($Nom);
             $codePho = addslashes($codePho);
             $sql = 'insert into ' . nom_table('noms_famille') . '(nomFamille,codePhonetique) ' .
@@ -886,10 +886,8 @@ function Creation_Noms_Commun()
     global $Cre_Noms, $idNom, $Init,
         $n_personnes, $n_noms, $n_liens_noms, $nb_cre_noms;
 
-    //    Appel du fichier contenant la classe
-    include 'phonetique.php';
-    //    Initialisation d'un objet de la classe
-    $codePho = new phonetique();
+    require(__DIR__ . '/app/Phonetique.php');
+    $codePho = new Phonetique();
 
     $Anom = '';
     $n_noms = nom_table('noms_famille');

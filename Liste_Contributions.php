@@ -3,14 +3,14 @@
 // Liste des contributions proposées par les utilisateurs
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Contribs_List'];    // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'C';                        // Page accessible aux contributeurs
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ignorer', 'retour');

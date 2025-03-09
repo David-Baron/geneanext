@@ -4,9 +4,9 @@
 // Liste des personnes par génération
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';
 $titre = $LG_Menu_Title['Pers_Gen'];        // Titre pour META
 $x = Lit_Env();
@@ -21,7 +21,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -489,11 +489,11 @@ if($sortie_pdf) {
                     '<a href="Vue_Personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' .
                     my_html($LG_LPersG_limited_max_gen_4) . "\n";
             }
-            include('jscripts/Liste_Patro.js');        // Même javascript que la liste patronymique
+            include(__DIR__ . '/assets/js/Liste_Patro.js');        // Même javascript que la liste patronymique
         }
     }
 } else {
-    if (! $CSV) include('jscripts/Liste_Patro.js');
+    if (! $CSV) include(__DIR__ . '/assets/js/Liste_Patro.js');
     $erreur = Erreur_DeCujus();
 }
 

@@ -4,15 +4,15 @@
 // Converstisseur de nombres romains dans les 2 sens
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $x = Lit_Env();
 $objet = $LG_Menu_Title['Convert_Roman_To_Arabic'];
 $titre = $objet;
 $mots = 'convertisseur';
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 ?>
 <script type="text/javascript">

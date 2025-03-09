@@ -2,7 +2,8 @@
 
 // Génération de l'image pour la carte Appelé par appelle_image_france_dep.php
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 function calc_indice($pour)
 {
@@ -27,10 +28,9 @@ function colorie_depart_code2($code, $couleur, $indice)
     colorie_depart($x, $y, $indice, $couleur);
 }
 
-include_once('fonctions.php');
 $all = true;
-include_once('Degrades_inc.php');
-include_once('France_Dep_inc.php');
+require(__DIR__ . '/Degrades_inc.php');
+require(__DIR__ . '/France_Dep_inc.php');
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 

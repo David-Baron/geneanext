@@ -4,9 +4,9 @@
 //   Affichage d'une actualité (évènement spécialisé)
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['New'];        // Titre pour META
 
@@ -22,7 +22,7 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 

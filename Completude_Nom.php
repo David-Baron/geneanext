@@ -3,8 +3,9 @@
 // Complétude des informations des personnes portant un nom
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Name_Is_Complete'];         // Titre pour META
 
@@ -22,7 +23,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
 $niv_requis = 'P';                // Page accessible à partir du niveau privilégié
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();

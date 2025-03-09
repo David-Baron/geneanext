@@ -3,14 +3,14 @@
 // Arbre ascendant d'une personne
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_assc_tree;
 $x = Lit_Env();
 $index_follow = 'IN';                // NOFOLLOW demandé pour les moteurs
-include('Gestion_Pages.php');        // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');        // Appel de la gestion standard des pages
 
 function Retourne_Pers($Num)
 {
@@ -44,7 +44,7 @@ function Charge_Parents($Personne)
 
 $imp_mar = 0;
 
-include('Commun_Arbre.php');
+require(__DIR__ . '/Commun_Arbre.php');
 
 // Coordonnée gauche par génération
 $Coord_X = array(40, 260, 480, 700);

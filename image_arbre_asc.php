@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $imp_mar = 1;
 $Larg_Cellule = 140;
@@ -78,8 +79,6 @@ $VER_Coord_Y = array(
 );
 
 header("Content-type: image/png");
-
-include_once('fonctions.php');
 
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');

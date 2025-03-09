@@ -3,8 +3,8 @@
 // Edition d'une région
 //=====================================================================
 
-session_start();
-include('fonctions.php');              // Appel des fonctions générales
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -37,7 +37,7 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Edition région';             // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -233,7 +233,7 @@ $compl = '';
 // Première entrée : affichage pour saisie
 if (($ok == '') && ($annuler == '')) {
 
-    include('Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
     $compl = Ajoute_Page_Info(600, 150);
     Insere_Haut($titre, $compl, 'Edition_Region', $Ident);
@@ -271,7 +271,7 @@ if (($ok == '') && ($annuler == '')) {
 
     echo '</form>' . "\n";
 
-    include('gest_onglets.js');
+    include(__DIR__ . '/assets/js/gest_onglets.js');
     //echo '<!-- On cache les div d\'ajout des villes et on positionne l\'onglet par défaut -->'."\n";
     echo '<script type="text/javascript">' . "\n";
     echo '	setupPanes("container1", "tab1", 40);' . "\n";

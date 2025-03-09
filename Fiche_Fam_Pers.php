@@ -3,9 +3,9 @@
 // Affichage d'une fiche familiale
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';
 $titre = LG_FFAM_OBJECT;        // Titre pour META
 $x = Lit_Env();
@@ -15,7 +15,7 @@ $index_follow = 'IN';            // NOFOLLOW demandé pour les moteurs
 $Refer = Recup_Variable('Refer', 'N');
 $req_sel = 'select * from ' . nom_table('personnes') . ' where Reference = ' . $Refer . ' limit 1';
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Affichage des enfants avec le conjoint éventuel
 function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)

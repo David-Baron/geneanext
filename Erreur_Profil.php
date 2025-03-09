@@ -3,12 +3,12 @@
 // Erreur sur profil
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $titre = $LG_function_noavailable_profile;        // Titre pour META
 $acces = 'L';                                    // Type d'accès de la page : (M)ise à jour, (L)ecture
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 $x = Lit_Env();
 
 Insere_Haut($titre, '', 'Erreur_Profil', '');

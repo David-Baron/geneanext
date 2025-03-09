@@ -4,15 +4,14 @@
 // a engistrer dans le repertoire www en enlevant l'extension ".txt" et a executer dans le navigateur
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $acces = 'M';
 $titre = 'Rectification de zones nulles en base';
 $x = Lit_Env();
 $niv_requis = 'G';                // Page reservee au profil gestionnaire
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $compl = Ajoute_Page_Info(600, 250);
 Insere_Haut(my_html($titre), $compl, 'Rectif_Null', '');

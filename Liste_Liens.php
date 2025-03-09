@@ -4,7 +4,8 @@
 // Liste des liens
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'supprimer', 'S_Sup', 'idLien');
@@ -13,7 +14,6 @@ foreach ($tab_variables as $nom_variables) {
     else $$nom_variables = '';
 }
 
-include('fonctions.php');
 $acces = 'M';
 $titre = $LG_Menu_Title['Links'];            // Titre pour META
 $x = Lit_Env();
@@ -21,7 +21,7 @@ $x = Lit_Env();
 $lib_sup = my_html(LG_LINKS_DEL);
 
 $niv_requis = 'I';
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $compl = Ajoute_Page_Info(600, 150);
 
@@ -56,7 +56,7 @@ if ($bt_Sup) {
     }
 }
 
-//include('jscripts/Liste_Liens.js');
+# include(__DIR__ . '/assets/js/Liste_Liens.js');
 
 // Suffixe pour les div
 $suf = 0;

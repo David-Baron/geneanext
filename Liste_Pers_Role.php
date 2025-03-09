@@ -3,8 +3,9 @@
 // Liste des personnes pour un rôle passé en paramètre
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
 $tab_variables = array('annuler', 'Horigine');
@@ -29,8 +30,7 @@ $objet = $LG_Menu_Title['Role_List_Pers'];
 $titre = $objet;     // Titre pour META
 $x = Lit_Env();      // Lecture de l'indicateur d'environnement
 
-// Appel de la gestion standard des pages
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

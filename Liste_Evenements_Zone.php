@@ -3,8 +3,9 @@
 //  Affichage de la liste des évènements sur une zone géographique
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'C';
 
@@ -23,7 +24,7 @@ $titre = $LG_Menu_Title['Event_List_Area'];       // Titre pour META
 
 $x = Lit_Env();
 $niv_requis = 'P';                        // Page réservée au profil privilégié
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

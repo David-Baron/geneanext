@@ -4,9 +4,9 @@
 // Affichage d'une catégorie
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Category'];    // Titre pour META
 
@@ -23,7 +23,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $niv_requis = 'P';
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

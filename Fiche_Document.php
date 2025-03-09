@@ -3,9 +3,9 @@
 // FIche d'un document
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Document'];    // Titre pour META
 
@@ -29,7 +29,7 @@ $req_sel = 'SELECT * FROM ' . nom_table('documents') . ' d, ' . nom_table('types
     ' AND d.Id_Type_Document = t.Id_Type_Document limit 1';
 
 $x = Lit_Env();                    // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

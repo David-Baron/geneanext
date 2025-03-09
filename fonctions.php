@@ -9,24 +9,25 @@ if (!isset($_SESSION['estCnx'])) $_SESSION['estCnx'] = false;
 if (!isset($_SESSION['niveau'])) $_SESSION['niveau'] = 'I';
 if (!isset($est_privilegie)) $est_privilegie = false;
 
-include_once('parametres.php');
+include_once(__DIR__ . '/parametres.php');
 
 $deb = '';
 $suffixe_info = '_info.php';
 
 $langue = 'FR';
 $langue_min = 'fr';
-$fic_lang = $deb . $rep_lang . '/lang_' . $langue . '.php';
-if (file_exists($fic_lang)) {
-    include($fic_lang);
-    // echo 'fic trouvé<br>'.'LG_TIP : '.LG_TIP.'<br>'.'LG_html_file : '.$LG_html_file.'<br>';
+
+if (file_exists(__DIR__ . '/languages/lang_' . $langue . '.php')) {
+    include(__DIR__ . '/languages/lang_' . $langue . '.php');
 }
-$fic_lang_part = $deb . $rep_lang . '/lang_' . $langue . '_part.php';
-if (file_exists($fic_lang_part)) include($fic_lang_part);
+
+if (file_exists(__DIR__ . '/languages/lang_' . $langue . '_part.php')) {
+    include(__DIR__ . '/languages/lang_' . $langue . '_part.php');
+}
 
 $is_windows = substr(php_uname(), 0, 7) == "Windows" ? true : false;
 
-include_once($fic_icones);
+include_once(__DIR__ . '/Icones.php');
 
 $ListeMoisRev = array(
     "vendémiaire",     //1
@@ -97,12 +98,11 @@ $Natures_Docs = array(
 // S'agit-il dune page d'information ?
 function is_info()
 {
-    global $suffixe_info, $debug;
-    if ($debug) var_dump($suffixe_info);
-    if (strpos(my_self(), $suffixe_info) !== false)
+    global $suffixe_info;
+    if (strpos(my_self(), $suffixe_info) !== false) {
         return true;
-    else
-        return false;
+    }
+    return false;
 }
 
 function nom_table($table)
@@ -385,7 +385,7 @@ function Lit_Env()
         $Base_Vide, $est_privilegie,
         $connexion, $def_enc, $bk;
     $Acces = 0;
-    include('connexion_inc.php');
+    include(__DIR__ . '/connexion_inc.php');
     if ($ndb != '') {
         $db      = $ndb;
         $util    = $nutil;
@@ -650,9 +650,9 @@ function Ecrit_meta($titre, $cont, $mots, $index_follow = 'IF')
     }
     echo '<meta name="REVISIT-AFTER" content="7 days">' . "\n";
     // echo '<link rel="stylesheet" href="divers_styles.css">'."\n";
-    include('divers_styles.css');
-    if (file_exists('divers_styles_part.css'))
-        echo '<link rel="stylesheet" href="divers_styles_part.css">' . "\n";
+    include(__DIR__ . '/assets/css/divers_styles.css');
+    if (file_exists(__DIR__ . '/assets/css/divers_styles_part.css'))
+        echo '<link rel="stylesheet" href="assets/css/divers_styles_part.css">';
 
     if (isset($_SERVER['HTTP_REFERER']))
         $HTTP_REFERER = $_SERVER['HTTP_REFERER'];
@@ -666,10 +666,9 @@ function Ecrit_meta($titre, $cont, $mots, $index_follow = 'IF')
     if (!isset($avec_js)) $avec_js = 1;
     // Pas de javascript sur les pages d'information
     if (is_info()) {
-        //if (strpos(my_self(),$suffixe_info) !== false) {
         $avec_js = false;
     }
-    if ($avec_js) include('monSSG.js');
+    if ($avec_js) include(__DIR__ . '/assets/js/monSSG.js');
     return 0;
 }
 

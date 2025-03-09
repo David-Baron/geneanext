@@ -3,8 +3,8 @@
 // Administration des tables, Optimisation, réparation
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération de la liste des tables dans un tableau
 function recup_liste_tables()
@@ -60,7 +60,7 @@ $acces = 'L';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Menu_Title['Tables_Admin'];
 $niv_requis = 'G';                        // Page réservée au gestionnaire
 $x = Lit_Env();                            // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Verrouillage de la page sur les gratuits
 if ($SiteGratuit) Retour_Ar();

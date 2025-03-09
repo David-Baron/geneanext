@@ -106,7 +106,7 @@ if (isset($Environnement)) {
     }
 
     // Intégration des fonctions spécifiques de mise à jour
-    if ($maj) include('fonctions_maj.php');
+    if ($maj) require(__DIR__ . '/fonctions_maj.php');
 
     // Initialisation des boutons
     $bt_OK        = false;
@@ -134,7 +134,7 @@ if (isset($Environnement)) {
         else {
             $avec_js = true;
             Ecrit_Entete_Page($titre, $contenu, $mots, $index_follow);
-            include('jscripts/edition_geneamania.js');
+            include(__DIR__ . '/assets/js/edition_geneamania.js');
         }
     }
 

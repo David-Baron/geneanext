@@ -3,7 +3,8 @@
 // Fusion de villes
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -18,8 +19,6 @@ foreach ($tab_variables as $nom_variables) {
     else $$nom_variables = '';
     // echo $nom_variables.' : '.$$nom_variables.'<br>';
 }
-
-include('fonctions.php');
 
 // Sécurisation des variables postées
 $ok       = Secur_Variable_Post($ok, strlen(LG_CH_FUSIONNER), 'S');
@@ -39,7 +38,7 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -56,7 +55,7 @@ else {
 
     if ($bt_OK) {
         Ecrit_Entete_Page($titre, $contenu, $mots);
-        include('monSSG.js');
+        include(__DIR__ . '/assets/js/monSSG.js');
     }
 
     $compl = Ajoute_Page_Info(600, 150);
@@ -149,7 +148,7 @@ else {
     echo '</tr>';
     echo '</tbody>';
 
-    include('jscripts/Fusion_Villes.js');
+    include(__DIR__ . '/assets/js/Fusion_Villes.js');
 
     $n_ville = '';
     $cp = '';

@@ -3,8 +3,9 @@
 // Export pour recherche des dates de décès sur https://deces.matchid.io/link
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';
 
 $lib_ok = $lib_Exporter;
@@ -35,8 +36,7 @@ $niv_requis = 'G';        // Niveau minimum : Gestionnaire
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 if ($ok == $lib_ok) $ok = 'OK';
 
-// Appel de la gestion standard des pages
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();

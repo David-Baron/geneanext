@@ -3,13 +3,14 @@
 // Vérification des homonymes
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Namesake_Cheking']; // Titre pour META
 $niv_requis = 'C';
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $D_Nais = false;
 if (isset($_POST['D_Nais'])) $D_Nais = true;
@@ -31,7 +32,7 @@ if ($_SESSION['estGestionnaire']) {
     $compl .= '<a href="' . my_self() . '?texte=O' . $compl_texte . '">' . Affiche_Icone('text', $LG_printable_format) . '</a>' . "\n";
 }
 
-//include('jscripts/Verif_Homonymes.js');
+# include(__DIR__ . '/assets/js/Verif_Homonymes.js');
 
 if (!$texte) {
     Insere_Haut(my_html($titre), $compl, 'Verif_Homonymes', '');

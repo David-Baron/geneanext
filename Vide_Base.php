@@ -5,7 +5,8 @@
 // Vidage de la base : reset
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 function suppression($lib, $n_table, $genre, $where, $affichage = true)
 {
@@ -22,10 +23,7 @@ function suppression($lib, $n_table, $genre, $where, $affichage = true)
     }
 }
 
-include('fonctions.php');
-
-// Fonction de recctification UTF8
-include('Rectif_Utf8_Commun.php');
+require(__DIR__ . '/Rectif_Utf8_Commun.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -46,7 +44,7 @@ $acces = 'L';                          // Type d'accès de la page : (M)ise à j
 $titre = $LG_Menu_Title['Reset_DB'];   // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 $niv_requis = 'G';                        // Page accessible au gestionnaire
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -65,7 +63,7 @@ if ($bt_OK) {
     //Demande de reset
     if ($Init) {
 
-        include('fonctions_maj.php');
+        require(__DIR__ . '/fonctions_maj.php');
 
         // Optimisation : calcul des noms de tables
         $n_filiations     = nom_table('filiations');

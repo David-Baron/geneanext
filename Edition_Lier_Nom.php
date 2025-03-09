@@ -7,8 +7,8 @@
 // - refNom : référence du nom (-1 pour la création du lien) TODO: lol
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');;
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -30,7 +30,7 @@ foreach ($tab_variables as $nom_variables) {
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Alt_Name'];   // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Sécurisation des variables postées
 $ok        = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');

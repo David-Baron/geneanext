@@ -4,6 +4,9 @@
 // 
 //=====================================================================
 
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 // Initilisation des infirmations de connexion
 function Init_infos_cnx()
 {
@@ -17,9 +20,6 @@ function Init_infos_cnx()
     $_SESSION['estCnx'] = false;
     $est_cnx = false;
 }
-
-session_start();
-include('fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('NomU', 'motPasse', 'geneGraphe', 'ok', 'sortir');
@@ -51,7 +51,6 @@ if ($geneGraphe == 'exec') {
 $_SESSION['sens'] = '>';
 
 echo '<!DOCTYPE html>';
-// echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 echo '<html lang="' . $langue_min . '">';
 echo '<head>' . "\n";
 
@@ -89,9 +88,9 @@ function cryptmail($addmail)
 $x = Lit_Env();
 $id_cnx = $x;
 
+//$Environnement = 'I';
 if ($Environnement == 'L') $RepGenSite = $RepGenSiteLoc;
 else                       $RepGenSite = $RepGenSiteInt;
-//$Environnement = 'I';
 
 // Lit la version contenu dans le fichier de référence
 $vers_fic = lit_fonc_fichier();
@@ -113,12 +112,10 @@ controle_utilisateur('I');
 if (!isset($_SESSION['estCnx'])) $_SESSION['estCnx'] = false;
 $est_cnx = ($_SESSION['estCnx'] === true ? true : false);
 
-
 // L'utilisateur se déconnecte, on ré-initalise les droits
 if ($sortir == $lib_Deconnecter) Init_infos_cnx();
 
-$self  = my_self();
-//echo 'Self : '.$self.'<br>';
+$self = my_self();
 
 // Pour palier aux soucis de session entre des sous-sites d'un même site, on contrôle que l'on est bien sur le même sous-site
 if ($Environnement == 'I') {
@@ -221,9 +218,7 @@ if ($SiteGratuit) {
     if ($Premium) echo '<!-- Premium -->' . "\n";
 }
 
-// echo '<p><img style="vertical-align:middle" src="'.$chemin_images.$Lettre_B.'" alt="" /> Texte &agrave; aligner</p>';
-// echo '<p><img class="img-b" src="'.$chemin_images.$Lettre_B.'" alt="" /> Texte &agrave; aligner</p>';
-echo '<table width="100%" border="0" cellspacing="0" cellpadding="0">' . "\n";
+echo '<table width="100%" cellspacing="0" cellpadding="0">' . "\n";
 echo '<tr align="center" v-align="middle"><td>' . "\n";
 
 $lib = $LG_index_welcome;
@@ -322,9 +317,7 @@ if (($vers_fic == $Version) and (!$maintenance)  and (!$verrou)) {
         $nbDemain = $_SESSION['AnnivD'];
     }
 
-    //echo '<br>';
-
-    echo '<form method="post" action="">';
+    echo '<form method="post">';
     echo '<div class="exemple" id="ex2">';
     echo '<ul class="nav">';
     echo '<li><a href="Liste_Pers.php?Type_Liste=P">' . $LG_index_menu_pers . '</a></li>';
@@ -340,16 +333,15 @@ if (($vers_fic == $Version) and (!$maintenance)  and (!$verrou)) {
 
     $star = Affiche_Icone('etoile', $LG_star);
 
-    //$Base_Vide = true;
     if (!$Base_Vide) {
-        echo '<table width="60%" align="center" border="0">';
-        //echo '<table width="80%" align="center" border="0" class="tab_bord_bas">';
+        echo '<table width="60%" align="center">';
+        //echo '<table width="80%" align="center" class="tab_bord_bas">';
         echo '<tr><td><fieldset style="width:90%;"><legend>' . $LG_index_quick_search . '&nbsp;' . Affiche_Icone('help', $LG_index_tip_search) . '</legend>';
-        echo '<table align="center" border="0">';
+        echo '<table align="center">';
         echo '<tr><td>';
         echo '<fieldset><legend>' . $LG_index_menu_pers . '</legend>';
         echo '<form method="post" action="Recherche_Personne.php" >' . "\n";
-        echo '<table border="0">';
+        echo '<table>';
         echo '<tr><td>' . LG_PERS_NAME . '&nbsp;:</td><td><input type="text" size="30" name="NomP"/></td>';
         echo '<td rowspan="2" valign="middle"><input type="submit" name="ok" value="' . $lib_Rechercher . '" style="background:url(' . $chemin_images_icones . $Icones['chercher'] . ') no-repeat;padding-left:18px;" /></td></tr>';
         echo '<tr><td>' . LG_PERS_FIRST_NAME . '&nbsp;:</td><td><input type="text" size="30" name="Prenoms"/></td></tr>';
@@ -379,7 +371,7 @@ if (($vers_fic == $Version) and (!$maintenance)  and (!$verrou)) {
         // Affichage lien vers le noyau
         // Pour un gestionnaire
         if ($_SESSION['estGestionnaire']) {
-            echo '<table width="60%" align="center" border="0"><tr align="center"><td>';
+            echo '<table width="60%" align="center"><tr align="center"><td>';
             echo '<br><a href="Noyau_Pers.php">' . $LG_Menu_Title['Decujus_And_Family'] . '</a><br><br>';
             echo '</td></tr></table>';
         }
@@ -422,7 +414,7 @@ if (($vers_fic == $Version) and (!$maintenance)  and (!$verrou)) {
     $result = lect_sql($requete);
     $nb_actus = $result->rowCount();
     $nb = 0;
-    echo '<table width="95%" border="0" cellspacing="1" cellpadding="3" align="center" class="tab_bord_bas">' . "\n";
+    echo '<table width="95%" cellspacing="1" cellpadding="3" align="center" class="tab_bord_bas">' . "\n";
     echo '<tr>';
     echo '<td width="50%" class="tab_bord_bas"><font size="+1">' . my_html($LG_index_news) . '...</font></td>' . "\n";
     echo '<td width="50%" class="tab_bord_bas"><font size="+1">' . my_html($LG_index_links) . '...</font></td>' . "\n";
@@ -606,7 +598,7 @@ echo 'Pages mémo : '.count($_SESSION['pages']).'<br>';
 for ($nb=0;$nb<count($_SESSION['pages']);$nb++) echo 'Page '.$nb.' : '.$_SESSION['pages'][$nb]."<br>\n";
 */
 
-include 'jscripts/ctrlMotPasse.js';
+include(__DIR__ . '/assets/js/ctrlMotPasse.js');
 ?>
 </body>
 

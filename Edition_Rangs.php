@@ -3,8 +3,8 @@
 // Gestion des rangs d'une union
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'Horigine');
@@ -41,7 +41,7 @@ foreach ($_POST as $key => $value) {
 $acces = 'M';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Rank_Edit'];        // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -71,7 +71,7 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if (($ok == '') && ($annuler == '')) {
 
-    //include('jscripts/Edition_Rangs.js');		Remplacé par un script embeded vue sa taille
+    # include(__DIR__ . '/assets/js/Edition_Rangs.js');		Remplacé par un script embeded vue sa taille
     $compl = Ajoute_Page_Info(650, 200);
     Insere_Haut($titre, $compl, 'Edition_Rangs', $Pere . '/' . $Mere);
 

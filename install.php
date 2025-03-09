@@ -1,5 +1,8 @@
 <?php
 
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $cnx = false;
 $msg_cnx_ok = 'Connexion OK';
 $lib_maj_param = 'Mettre à jour les paramètres';
@@ -10,8 +13,6 @@ function db_connect($host, $dbname, $user, $pswd)
 {
     global $msg, $connexion, $msg_cnx_ok;
     $cnx = false;
-    // echo $host.'/'.$dbname.'/'.$user.'/'.$pswd.'<br>';
-    // $msg = $msg_cnx_ok;
     $msg = '';
     $aj_charset = ';charset=utf8';
     try {
@@ -21,7 +22,6 @@ function db_connect($host, $dbname, $user, $pswd)
     } catch (PDOException $ex) {
         $msg = 'Echec de la connexion à la base de donnnées !' . $ex->getMessage();
     }
-    //if ($connexion) echo 'OK<br>'; else echo 'échec<br>';
     return $cnx;
 }
 
@@ -133,8 +133,6 @@ $msgMod = '';
 $msgMaj = '';
 $msgEff = '';
 
-include_once('fonctions.php');
-
 // Lit la version contenu dans le fichier de référence
 $LaVersion = lit_fonc_fichier();
 // Récupération des variables de l'affichage précédent
@@ -173,14 +171,10 @@ $msg = '';
 <html lang="fr">
 
 <head>
-    <?php
-    echo '<title>Installation de Généamania</title>' . "\n";
-    echo '<meta name="description" content="Installation Geneamania"/>' . "\n";
-    echo '<meta name="keywords" content="Généalogie, Geneamania, Généamania, Installation"/>' . "\n";
-    echo '<meta name="owner" content="support@geneamania.net"/>' . "\n";
-    echo '<meta http-equiv="content-LANGUAGE" content="French"/>' . "\n";
-    echo '<meta http-equiv="content-TYPE" content="text/html; charset=' . $def_enc . '"/>' . "\n";
-    ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation de Généamania</title>
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <style type="text/css">
         body {
             background-color: #e8fbe5;
@@ -216,7 +210,6 @@ $msg = '';
         .form-style-6 textarea,
         .form-style-6 select {
             -webkit-transition: all 0.30s ease-in-out;
-            -moz-transition: all 0.30s ease-in-out;
             -ms-transition: all 0.30s ease-in-out;
             -o-transition: all 0.30s ease-in-out;
             transition: all 0.30s ease-in-out;
@@ -315,7 +308,7 @@ $msg = '';
 
     // L'utilsateur a cliqué sur Initialisation
     if ($maj == 'Initialisation') {
-        include_once('connexion_inc.php');
+        include_once(__DIR__ . '/connexion_inc.php');
         $cnx = db_connect($nserveur, $ndb, $nutil, $nmdp);
         if ($cnx) {
             // Ecriture du fichier de préfixe en cas de changement de préfixe
@@ -399,7 +392,7 @@ $msg = '';
         $n_evenements   = nom_table('evenements');
         $n_images       = nom_table('images');
 
-        include_once('connexion_inc.php');
+        include_once(__DIR__ . '/connexion_inc.php');
         $cnx = db_connect($nserveur, $ndb, $nutil, $nmdp);
         if ($msg == $msg_cnx_ok) $msg = '';
 
@@ -955,10 +948,10 @@ $msg = '';
                     . 'PRIMARY KEY  (`idPers`,`idNom`)'
                     . ') ENGINE=MyISAM ';
 
-                //    Appel du fichier contenant la classe
-                include 'phonetique.php';
-                //    Initialisation d'un objet de la classe
-                $codePho = new phonetique();
+
+                require(__DIR__ . '/app/Phonetique.php');
+                $codePho = new Phonetique();
+
                 $Anom = '';
                 $idNom = 0;
                 $sql = 'SELECT UPPER(Nom), Reference FROM ' . nom_table('personnes') . ' order by UPPER(Nom)';
@@ -1861,7 +1854,7 @@ $msg = '';
         if ($msg == '') $msg = 'OKMod';
         $msgMod = $msg;
     }
-    include_once('connexion_inc.php');
+    include_once(__DIR__ . '/connexion_inc.php');
     if (!$cnx) {
         // Les paramètres de connexion sont-ils OK ?
         $cnx = db_connect($nserveur, $ndb, $nutil, $nmdp);

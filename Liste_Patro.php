@@ -6,10 +6,9 @@
 // pour chaque patronyme, on affiche les unions en descendant vers le de cujus
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-// Gestion standard des pages
-include('fonctions.php');
 $acces = 'L';                                    // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Patronymic_List'];        // Titre pour META
 $x = Lit_Env();
@@ -23,7 +22,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -441,7 +440,7 @@ if ($decujus = get_decujus()) {
     HTML_ou_PDF('</table>', $sortie);
     if (!$texte) echo '</div>' . "\n";
 
-    if (!$texte) include('jscripts/Liste_Patro.js');
+    if (!$texte) include(__DIR__ . '/assets/js/Liste_Patro.js');
 } else $x = Erreur_DeCujus();
 
 if ($sortie_pdf) {

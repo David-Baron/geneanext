@@ -4,73 +4,72 @@
 // Ajout contribution
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
-$tab_variables
-    = array(
-        'ok',
-        'annuler',
-        // variables pour le père
-        'Nompere',
-        'Prenomspere',
-        'Ne_lepere',
-        'CNe_lepere',
-        'idNeZonepere',
-        'Nepere',
-        'Decede_lepere',
-        'CDecede_lepere',
-        'idDecedeZonepere',
-        'Decedepere',
-        // variables pour la mère
-        'Nommere',
-        'Prenomsmere',
-        'Ne_lemere',
-        'CNe_lemere',
-        'idNeZonemere',
-        'Nemere',
-        'Decede_lemere',
-        'CDecede_lemere',
-        'idDecedeZonemere',
-        'Decedemere',
-        // variables pour le conjoint
-        'Nomconj',
-        'Prenomsconj',
-        'Ne_leconj',
-        'CNe_leconj',
-        'idNeZoneconj',
-        'Neconj',
-        'Decede_leconj',
-        'CDecede_leconj',
-        'idDecedeZoneconj',
-        'Decedeconj',
-        // variables pour l'enfant 1
-        'Nomenfant1',
-        'Prenomsenfant1',
-        'Ne_leenfant1',
-        'CNe_leenfant1',
-        'idNeZoneenfant1',
-        'Neenfant1',
-        'Decede_leenfant1',
-        'CDecede_leenfant1',
-        'idDecedeZoneenfant1',
-        'Decedeenfant1',
-        // variables pour  l'enfant 2
-        'Nomenfant2',
-        'Prenomsenfant2',
-        'Ne_leenfant2',
-        'CNe_leenfant2',
-        'idNeZoneenfant2',
-        'Neenfant2',
-        'Decede_leenfant2',
-        'CDecede_leenfant2',
-        'idDecedeZoneenfant2',
-        'Decedeenfant2',
-        'mail',
-        'message',
-        'Horigine'
-    );
+$tab_variables = array(
+    'ok',
+    'annuler',
+    // variables pour le père
+    'Nompere',
+    'Prenomspere',
+    'Ne_lepere',
+    'CNe_lepere',
+    'idNeZonepere',
+    'Nepere',
+    'Decede_lepere',
+    'CDecede_lepere',
+    'idDecedeZonepere',
+    'Decedepere',
+    // variables pour la mère
+    'Nommere',
+    'Prenomsmere',
+    'Ne_lemere',
+    'CNe_lemere',
+    'idNeZonemere',
+    'Nemere',
+    'Decede_lemere',
+    'CDecede_lemere',
+    'idDecedeZonemere',
+    'Decedemere',
+    // variables pour le conjoint
+    'Nomconj',
+    'Prenomsconj',
+    'Ne_leconj',
+    'CNe_leconj',
+    'idNeZoneconj',
+    'Neconj',
+    'Decede_leconj',
+    'CDecede_leconj',
+    'idDecedeZoneconj',
+    'Decedeconj',
+    // variables pour l'enfant 1
+    'Nomenfant1',
+    'Prenomsenfant1',
+    'Ne_leenfant1',
+    'CNe_leenfant1',
+    'idNeZoneenfant1',
+    'Neenfant1',
+    'Decede_leenfant1',
+    'CDecede_leenfant1',
+    'idDecedeZoneenfant1',
+    'Decedeenfant1',
+    // variables pour  l'enfant 2
+    'Nomenfant2',
+    'Prenomsenfant2',
+    'Ne_leenfant2',
+    'CNe_leenfant2',
+    'idNeZoneenfant2',
+    'Neenfant2',
+    'Decede_leenfant2',
+    'CDecede_leenfant2',
+    'idDecedeZoneenfant2',
+    'Decedeenfant2',
+    'mail',
+    'message',
+    'Horigine'
+);
 
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) {
@@ -108,7 +107,7 @@ $titre = 'Contribution';               // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 $niv_requis = 'I';                        // Les contributions sont ouvertes à tout le monde
 $index_follow = 'NN';                    // NOINDEX NOFOLLOW demandé pour les moteurs
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 
 // Retour sur demande d'annulation
@@ -544,7 +543,7 @@ if ($bt_OK) {
 
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An)) {
-    // include('jscripts/Ajout_Contribution.js');
+    // include(__DIR__ . '/assets/js/Ajout_Contribution.js');
     $compl = '';
     if (Get_Nom_Prenoms($Refer, $Nom, $Prenoms)) {
         if (!$est_privilegie and $Diff_Internet_P != 'O') {
@@ -555,24 +554,22 @@ if ((!$bt_OK) && (!$bt_An)) {
         } else {
             $compl = Ajoute_Page_Info(600, 200);
             Insere_Haut($entetePage . '&nbsp;pour&nbsp;' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Contribution', $Refer);
-            echo '<br />' . "\n";
+            echo '<br>';
             // echo '<form id="saisie" method="post" onsubmit="return verification_form(this)" action="'.my_self().'?Refer='.$Refer.'">'."\n";
-            echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . my_self() . '?Refer=' . $Refer . '" >' . "\n";
+            echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . my_self() . '?Refer=' . $Refer . '" >';
 
-            echo '<input type="hidden" name="Refer" value="' . $Refer . '"/>' . "\n";
+            echo '<input type="hidden" name="Refer" value="' . $Refer . '"/>';
             aff_origine();
-
-            // Affichage des données
-            $x = Aff_Donnees($Refer);
-
+            Aff_Donnees($Refer); // Affichage des données
             echo '</form>';
-            include('gest_onglets.js');
-            echo '<!-- On positionne l\'onglet par défaut -->' . "\n";
-            echo '<script type="text/javascript">' . "\n";
-            echo '  document.getElementById("bouton_ok").style.visibility = "hidden";' . "\n";
-            echo '	setupPanes("container1", "tab1",0);' . "\n";
-            echo '</script>' . "\n";
-        }
+            include(__DIR__ . '/assets/js/gest_onglets.js'); ?>
+
+            <script type="text/javascript">
+                // On positionne l'onglet par défaut
+                document.getElementById("bouton_ok").style.visibility = "hidden";
+                setupPanes("container1", "tab1", 0);
+            </script>
+<?php }
     }
     Insere_Bas($compl);
 } else {
@@ -581,7 +578,6 @@ if ((!$bt_OK) && (!$bt_An)) {
 
 ?>
 <script type="text/javascript">
-    <!--
     // Appel de la popup de sélection de ville
     function Appelle_Zone_Naissance(cible) {
         x = Zone_Geo('Ne' + cible, 'idNeZone' + cible, document.getElementsByName('idNeZone' + cible).value, 4);
@@ -606,7 +602,6 @@ if ((!$bt_OK) && (!$bt_An)) {
         var chParam = "resizable=no, location=no, menubar=no, directories=no, scrollbars=no, status=no, ";
         PopupCentrer('sel_zone_geo.php?zoneLib=' + zoneLib + '&zoneValue=' + zoneValue + '&valZone=' + valZone + '&valNiveau=' + valNiveau, w, h, chParam);
     }
-    -->
 </script>
 </body>
 

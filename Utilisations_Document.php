@@ -4,15 +4,14 @@
 // Liste des utilisations d'un document
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
 }
-
-include('fonctions.php');
 
 // Sécurisation des variables postées
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
@@ -26,12 +25,12 @@ $acces = 'L';                                // Type d'accès de la page : (M)is
 $titre = $LG_Menu_Title['Document_Utils'];    // Titre pour META
 $niv_requis = 'G';                            // Page accessible uniquement au gestionnaire
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-include('Commun_Rech_Com_Util_Docs.php');
+require(__DIR__ . '/Commun_Rech_Com_Util_Docs.php');
 
 // Recup des variables passées dans l'URL : référence du document
 $Reference = Recup_Variable('Doc', 'N');

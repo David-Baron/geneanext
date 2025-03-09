@@ -1,12 +1,11 @@
 <?php
-session_start();
 
 //=====================================================================
 // Frise Chronologique pour les évènements de la personne et les dates de naissance des enfants
 //=====================================================================
 
-// Gestion standard des pages
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 function Lien_vers_Pers()
 {
@@ -63,7 +62,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

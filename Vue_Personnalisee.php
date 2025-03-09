@@ -4,10 +4,8 @@
 // Vue personnalisée de la base
 //=====================================================================
 
-session_start();
-
-// Gestion standard des pages
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $lib_ref = 'Défaut	';
 
@@ -32,7 +30,7 @@ $acces = 'L';                          // Type d'accès de la page : (M)ise à j
 $titre = $LG_Menu_Title['Custom_View'];          // Titre pour META
 $x = Lit_Env();
 $index_follow = 'NN';                    // NOINDEX NOFOLLOW demandé pour les moteurs
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

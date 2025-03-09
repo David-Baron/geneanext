@@ -1,21 +1,21 @@
 <?php
-//	Codage phonétique des noms de personnes
-//	Totalement écrit par Gérard KESTER
-//	Février 2009
+//	Codage phonï¿½tique des noms de personnes
+//	Totalement ï¿½crit par Gï¿½rard KESTER
+//	Fï¿½vrier 2009
 //
 //	Dans les commentaires, je place les lettres entre guilemets ("a")
 //		et les sons entre barres obliques (/a/).
 //
-//	Pour élargir la recherche, vous pouvez faire une comparaison en mettant le code phonétique en minuscules ou en majuscules.
-//	Cela permet de rapprocher les sons "a" et "â", les sons "é" et "è",
-//		"o" et "ô", "in" et "un", "en" et "on"
-class phonetique
+//	Pour ï¿½largir la recherche, vous pouvez faire une comparaison en mettant le code phonï¿½tique en minuscules ou en majuscules.
+//	Cela permet de rapprocher les sons "a" et "ï¿½", les sons "ï¿½" et "ï¿½",
+//		"o" et "ï¿½", "in" et "un", "en" et "on"
+class Phonetique
 {
 	//	Mot en cours de traduction
 	private $mot;
-	//	Code calculé
+	//	Code calculï¿½
 	private $code;
-	//	pointeur sur le mot à coder
+	//	pointeur sur le mot ï¿½ coder
 	private $indMot;
 	//	tableau de lettres
 	private $tab1c,$tab2c,$tab3c,$tab4c;
@@ -23,7 +23,7 @@ class phonetique
 	private $tabMots;
 	private $voyelles , $lettres1;
 	private $aou , $eiy;
-	//	tableau pour traduction phonétique
+	//	tableau pour traduction phonï¿½tique
 	private $phon , $phonR;
 	//
 	private $trouve;
@@ -33,20 +33,20 @@ class phonetique
 	{
 		//	Tableaux de correspondaces lettres => sons
 		$this->tab1c = array(
-			'a'=>'a','à'=>'a','â'=>'A','ä'=>'E','b'=>'b','c'=>'k','ç'=>'s','d'=>'d','e'=>'E','é'=>'e',
-			'è'=>'E','ê'=>'E','ë'=>'E','f'=>'f','g'=>'g','h'=>'' ,'i'=>'i','î'=>'i','ï'=>'i','j'=>'j',
-			'k'=>'k','l'=>'l','m'=>'m','n'=>'n','ñ'=>'N','o'=>'O','ö'=>'o','ö'=>'c','ô'=>'o','p'=>'p',
-			'q'=>'q','r'=>'r','s'=>'s','t'=>'t','u'=>'u','ù'=>'u','û'=>'u','ü'=>'u','v'=>'v','w'=>'v',
-			'y'=>'i','ÿ'=>'i','z'=>'z','á'=>'a','í'=>'i','ó'=>'o','ú'=>'u','ß'=>'s'
+			'a'=>'a','ï¿½'=>'a','ï¿½'=>'A','ï¿½'=>'E','b'=>'b','c'=>'k','ï¿½'=>'s','d'=>'d','e'=>'E','ï¿½'=>'e',
+			'ï¿½'=>'E','ï¿½'=>'E','ï¿½'=>'E','f'=>'f','g'=>'g','h'=>'' ,'i'=>'i','ï¿½'=>'i','ï¿½'=>'i','j'=>'j',
+			'k'=>'k','l'=>'l','m'=>'m','n'=>'n','ï¿½'=>'N','o'=>'O','ï¿½'=>'o','ï¿½'=>'c','ï¿½'=>'o','p'=>'p',
+			'q'=>'q','r'=>'r','s'=>'s','t'=>'t','u'=>'u','ï¿½'=>'u','ï¿½'=>'u','ï¿½'=>'u','v'=>'v','w'=>'v',
+			'y'=>'i','ï¿½'=>'i','z'=>'z','ï¿½'=>'a','ï¿½'=>'i','ï¿½'=>'o','ï¿½'=>'u','ï¿½'=>'s'
 			);
 		$this->tab2c = array(
-			'ae'=>'E' ,'aë'=>'a' ,'ai'=>'E','aî'=>'E' ,'am'=>'q','an'=>'q','au'=>'o'  ,'ch'=>'x','ck'=>'k',
-			'ei'=>'E' ,'em'=>'q' ,'en'=>'q','eu'=>'c' ,'eû'=>'c','ey'=>'E','gn'=>'N'  ,'oe'=>'c','oi'=>'wa',
-			'oî'=>'wa','oi'=>'Oi','om'=>'Q','on'=>'Q' ,'ou'=>'w','oû'=>'w','oy'=>'wai','ph'=>'f','qu'=>'k',
-			'uë'=>'u' ,'um'=>'Y' ,'un'=>'Y','xc'=>'ks','ym'=>'y','yn'=>'y'
+			'ae'=>'E' ,'aï¿½'=>'a' ,'ai'=>'E','aï¿½'=>'E' ,'am'=>'q','an'=>'q','au'=>'o'  ,'ch'=>'x','ck'=>'k',
+			'ei'=>'E' ,'em'=>'q' ,'en'=>'q','eu'=>'c' ,'eï¿½'=>'c','ey'=>'E','gn'=>'N'  ,'oe'=>'c','oi'=>'wa',
+			'oï¿½'=>'wa','oi'=>'Oi','om'=>'Q','on'=>'Q' ,'ou'=>'w','oï¿½'=>'w','oy'=>'wai','ph'=>'f','qu'=>'k',
+			'uï¿½'=>'u' ,'um'=>'Y' ,'un'=>'Y','xc'=>'ks','ym'=>'y','yn'=>'y'
 			); 
 		$this->tab3c = array(
-			'aen'=>'q','aën'=>'q','aie'=>'E'  ,'ain'=>'y' ,'aon'=>'q','cch'=>'k','cqu'=>'k','ean'=>'q',
+			'aen'=>'q','aï¿½n'=>'q','aie'=>'E'  ,'ain'=>'y' ,'aon'=>'q','cch'=>'k','cqu'=>'k','ean'=>'q',
 			'eau'=>'o','eim'=>'y','ein'=>'y','gua'=>'gwa','oei'=>'ci','oeu'=>'c','sch'=>'x'
 			);
 		$this->tab4c = array(
@@ -55,30 +55,30 @@ class phonetique
 		//
 		//
 		$this->finale2 = array(
-			'am'=>'am','ap'=>'A','as'=>'A' ,'âs'=>'A','at'=>'A' ,'ât'=>'A','aw'=>'o','ay'=>'E','az'=>'a',
+			'am'=>'am','ap'=>'A','as'=>'A' ,'ï¿½s'=>'A','at'=>'A' ,'ï¿½t'=>'A','aw'=>'o','ay'=>'E','az'=>'a',
 			'be'=>'b' ,'bs'=>'b','ce'=>'s' ,'ck'=>'k','cq'=>'k' ,'cs'=>'k','de'=>'d','ds'=>'d','dt'=>'t',
-			'ed'=>'e' ,'ée'=>'e','ef'=>'ef','en'=>'y','er'=>'Er','es'=>'@','és'=>'e','ès'=>'E','et'=>'E',
-			'èt'=>'E' ,'ey'=>'E','ez'=>'ez','fe'=>'f','ge'=>'j' ,'gg'=>'g','gs'=>'g','gt'=>' ','ie'=>'i',
-			'ïe'=>'i' ,'il'=>'i','is'=>'i' ,'ïs'=>'i','it'=>'i' ,'ît'=>'i','ks'=>'k','le'=>'l','ls'=>'l',
+			'ed'=>'e' ,'ï¿½e'=>'e','ef'=>'ef','en'=>'y','er'=>'Er','es'=>'@','ï¿½s'=>'e','ï¿½s'=>'E','et'=>'E',
+			'ï¿½t'=>'E' ,'ey'=>'E','ez'=>'ez','fe'=>'f','ge'=>'j' ,'gg'=>'g','gs'=>'g','gt'=>' ','ie'=>'i',
+			'ï¿½e'=>'i' ,'il'=>'i','is'=>'i' ,'ï¿½s'=>'i','it'=>'i' ,'ï¿½t'=>'i','ks'=>'k','le'=>'l','ls'=>'l',
 			'me'=>'m' ,'ms'=>'m','ne'=>'n' ,'ns'=>'n','oc'=>'o' ,'od'=>'o','op'=>'o','os'=>'o','ot'=>'o',
-			'oy'=>'wa','ôt'=>'o','pe'=>'p' ,'ps'=>'p','qs'=>'k' ,'rc'=>'r','rd'=>'r','re'=>'r','rf'=>'r',
+			'oy'=>'wa','ï¿½t'=>'o','pe'=>'p' ,'ps'=>'p','qs'=>'k' ,'rc'=>'r','rd'=>'r','re'=>'r','rf'=>'r',
 			'rs'=>'r' ,'rt'=>'r','se'=>'z' ,'sh'=>'x','ss'=>'s' ,'te'=>'t','th'=>'t','ts'=>'t','tt'=>'t',
-			'ue'=>'u' ,'ul'=>'u','us'=>'u' ,'ûs'=>'u','ut'=>'u' ,'ût'=>'u','ve'=>'v','ye'=>'i','ze'=>'z'
+			'ue'=>'u' ,'ul'=>'u','us'=>'u' ,'ï¿½s'=>'u','ut'=>'u' ,'ï¿½t'=>'u','ve'=>'v','ye'=>'i','ze'=>'z'
 			);
 		$this->finale3 = array(
-			'acs'=>'A' ,'aid'=>'E' ,'aie'=>'E' ,'ail'=>'ai','aim'=>'y' ,'ais'=>'E' ,'ait'=>'E' ,'aît'=>'E',
+			'acs'=>'A' ,'aid'=>'E' ,'aie'=>'E' ,'ail'=>'ai','aim'=>'y' ,'ais'=>'E' ,'ait'=>'E' ,'aï¿½t'=>'E',
 			'aix'=>'E' ,'amp'=>'q' ,'anc'=>'q' ,'and'=>'q' ,'ang'=>'q' ,'ans'=>'q' ,'ant'=>'q' ,'aon'=>'q',
 			'ard'=>'ar','ars'=>'ar','art'=>'Ar','ats'=>'A' ,'ats'=>'a' ,'aud'=>'o' ,'aus'=>'o' ,'aut'=>'o',
 			'aux'=>'o' ,'bbe'=>'b' ,'bes'=>'b' ,'ces'=>'s' ,'cgs'=>'k' ,'che'=>'x' ,'chs'=>'ks','cks'=>'ks',
-			'des'=>'d' ,'ect'=>'E' ,'eds'=>'e' ,'ées'=>'e' ,'efs'=>'e' ,'eil'=>'Ei','ein'=>'y' ,'emp'=>'q',
-			'end'=>'q' ,'eng'=>'q' ,'ens'=>'q' ,'ent'=>'q' ,'ers'=>'e' ,'ets'=>'E' ,'èts'=>'E' ,'eue'=>'c',
+			'des'=>'d' ,'ect'=>'E' ,'eds'=>'e' ,'ï¿½es'=>'e' ,'efs'=>'e' ,'eil'=>'Ei','ein'=>'y' ,'emp'=>'q',
+			'end'=>'q' ,'eng'=>'q' ,'ens'=>'q' ,'ent'=>'q' ,'ers'=>'e' ,'ets'=>'E' ,'ï¿½ts'=>'E' ,'eue'=>'c',
 			'eus'=>'c' ,'eux'=>'c' ,'fes'=>'f' ,'ffe'=>'f' ,'ges'=>'j' ,'ggs'=>'g' ,'gne'=>'N' ,'gue'=>'g',
-			'hie'=>'i' ,'his'=>'i' ,'ien'=>'iy','ier'=>'ie','ies'=>'i' ,'ïes'=>'i' ,'ils'=>'i' ,'inq'=>'y',
-			'ins'=>'y' ,'int'=>'y' ,'înt'=>'y' ,'its'=>'i' ,'khs'=>'k' ,'les'=>'l' ,'lle'=>'l' ,'mes'=>'m',
+			'hie'=>'i' ,'his'=>'i' ,'ien'=>'iy','ier'=>'ie','ies'=>'i' ,'ï¿½es'=>'i' ,'ils'=>'i' ,'inq'=>'y',
+			'ins'=>'y' ,'int'=>'y' ,'ï¿½nt'=>'y' ,'its'=>'i' ,'khs'=>'k' ,'les'=>'l' ,'lle'=>'l' ,'mes'=>'m',
 			'mme'=>'m' ,'mne'=>'m' ,'nes'=>'n' ,'nne'=>'n' ,'oeu'=>'c' ,'oid'=>'wa','ois'=>'wa','oit'=>'wa',
 			'oix'=>'wa','omb'=>'Q' ,'omp'=>'Q' ,'oms'=>'Q' ,'onc'=>'Q' ,'ond'=>'Q' ,'omg'=>'Q' ,'ons'=>'Q',
 			'ont'=>'Q' ,'ots'=>'o' ,'oud'=>'w' ,'oue'=>'w' ,'oul'=>'w' ,'oup'=>'w' ,'ous'=>'w' ,'out'=>'w',
-			'oût'=>'w' ,'oux'=>'w' ,'pes'=>'p' ,'phe'=>'f' ,'ppe'=>'p' ,'que'=>'k' ,'rcs'=>'r' ,'rds'=>'r',
+			'oï¿½t'=>'w' ,'oux'=>'w' ,'pes'=>'p' ,'phe'=>'f' ,'ppe'=>'p' ,'que'=>'k' ,'rcs'=>'r' ,'rds'=>'r',
 			'rdt'=>'r' ,'res'=>'r' ,'rfs'=>'r' ,'rre'=>'r' ,'rts'=>'r' ,'ses'=>'z' ,'sse'=>'s' ,'the'=>'t',
 			'ths'=>'tQ','tte'=>'t' ,'tts'=>'t' ,'ues'=>'u' ,'uls'=>'u' ,'ums'=>'Y' ,'uns'=>'Y' ,'unt'=>'Y',
 			'uts'=>'u' ,'ves'=>'v' ,'yes'=>'i' ,'zes'=>'z'
@@ -93,7 +93,7 @@ class phonetique
 			'lent'=>'lq','lles'=>'l' ,'ment'=>'mq','mmes'=>'m' ,'mnes'=>'m' ,'nent'=>'nq','nnes'=>'n' ,
 			'oeux'=>'c', 'oids'=>'wa','oies'=>'wa','oigt'=>'wa','oint'=>'wy','oist'=>'wa','oits'=>'wa',
 			'ombs'=>'Q', 'ompt'=>'Q' ,'oncs'=>'Q' ,'onds'=>'Q' ,'ongs'=>'Q' ,'onts'=>'Q' ,'oues'=>'w' ,
-			'ould'=>'w' ,'oult'=>'w' ,'oups'=>'w' ,'oûts'=>'w' ,'pent'=>'pq','phes'=>'f' ,'ppes'=>'p' ,
+			'ould'=>'w' ,'oult'=>'w' ,'oups'=>'w' ,'oï¿½ts'=>'w' ,'pent'=>'pq','phes'=>'f' ,'ppes'=>'p' ,
 			'ques'=>'k' ,'rent'=>'rq','rres'=>'r' ,'sent'=>'zq','sses'=>'s' ,'thes'=>'t' ,'ttes'=>'t' ,
 			'uent'=>'uq','unts'=>'Y' ,'vent'=>'vq','xent'=>'sq','yent'=>'y','zent'=>'zq'
 			);
@@ -105,47 +105,47 @@ class phonetique
 			'ttent'=>'tq'
 			);
 		//
-		$this->eiy = 'eéèêëiîïyÿ';
-		$this->aou = 'aàâäoôöuùûü';
+		$this->eiy = 'eï¿½ï¿½ï¿½ï¿½iï¿½ï¿½yï¿½';
+		$this->aou = 'aï¿½ï¿½ï¿½oï¿½ï¿½uï¿½ï¿½ï¿½';
 		$this->voyelles = $this->eiy . $this->aou;
 		$this->lettres1 = $this->voyelles . 'hmn';
 		//
 		$this->phon = array(
 			'A'=>'a','a'=>'a','b'=>'b','c'=>'eu','d'=>'d','e'=>'&eacute;','E'=>'&egrave;','f'=>'f',
-			//'g'=>'g','N'=>'gn','i'=>'i','j'=>'j','k'=>'k','l'=>'l','m'=>'m','n'=>'n','o'=>'ô',
+			//'g'=>'g','N'=>'gn','i'=>'i','j'=>'j','k'=>'k','l'=>'l','m'=>'m','n'=>'n','o'=>'ï¿½',
 			'g'=>'g','N'=>'gn','i'=>'i','j'=>'j','k'=>'k','l'=>'l','m'=>'m','n'=>'n','o'=>'&ocirc;',
 			'O'=>'o','p'=>'p','q'=>'en','Q'=>'on','r'=>'r','s'=>'s','t'=>'t','u'=>'u','v'=>'v',
 			'w'=>'ou','x'=>'ch','y'=>'in','Y'=>'un','z'=>'z','@'=>'e'
 		);
 		$this->phonR = array_flip($this->phon);
-		$this->phonR['é'] = 'e';
-		$this->phonR['è'] = 'E';
+		$this->phonR['ï¿½'] = 'e';
+		$this->phonR['ï¿½'] = 'E';
 		//
 		$this->tabMots = array(
 			'ce' => 'c@','de' => 'd@','des' => 'de','je' => 'j@','le' => 'l@','me' => 'm@','ne' => 'n@','se' => 's@',
 			'te' => 't@'
 		);
-		$this->indesirables = array(';','.','(',')','[',']','{','}','?','\'','\"','&','/','#','%','€','@','$','-','_',',');
+		$this->indesirables = array(';','.','(',')','[',']','{','}','?','\'','\"','&','/','#','%','ï¿½','@','$','-','_',',');
 	}
 	public function calculer($parTexte)
 	{
 		$this->code = '';
 		//	Suppression des '/' de codage
 		$parTexte = stripslashes($parTexte);
-		// S'il n'y a pas de texte, on sort immédiatement
+		// S'il n'y a pas de texte, on sort immï¿½diatement
 		if ($parTexte == '') return '';
 		// On met tout en minuscule
 		$parTexte = mb_strtolower($parTexte,"iso-8859-1");
-		//	Remplacement des caractères indésirables par des espaces
+		//	Remplacement des caractï¿½res indï¿½sirables par des espaces
 		$parTexte = str_replace($this->indesirables , ' ' , $parTexte);
-		//	Suppression des espaces de début et de fin
+		//	Suppression des espaces de dï¿½but et de fin
 		$parTexte = trim($parTexte);
 		//	Compactage des espaces
 		$parTexte = preg_replace('/\s{2,}/', ' ', $parTexte); 
  		//	Remplacement des ligatures
-		$parTexte = str_replace('æ' , 'ae' , $parTexte);
-		$parTexte = str_replace('œ' , 'oe' , $parTexte);
-		// Si la chaîne ne fait qu'un seul caractère, on sort avec
+		$parTexte = str_replace('ï¿½' , 'ae' , $parTexte);
+		$parTexte = str_replace('ï¿½' , 'oe' , $parTexte);
+		// Si la chaï¿½ne ne fait qu'un seul caractï¿½re, on sort avec
 		if (strlen($parTexte) == 1 ) return $parTexte;
 		//	Boucle pour chacun des mots contenus dans le texte
 		$tabMots = explode(' ' , $parTexte);
@@ -174,13 +174,13 @@ class phonetique
 		//		
 		do
 		{
-			$carPre2 = '';	//	2 caractère avant celui pointé
-			$carPre = '';	//	caractère précédent celui pointé
-			$car1 = substr($this->mot,$this->indMot,1);	//	caractère pointé
-			$car2 = '';		//	caractère suivant celui pointé
-			$car3 = '';		//	3e caractère suivant celui pointé
-			$car4 = '';		//	4e caractère suivant celui pointé
-			$car5 = '';		//	5e caractère suivant celui pointé
+			$carPre2 = '';	//	2 caractï¿½re avant celui pointï¿½
+			$carPre = '';	//	caractï¿½re prï¿½cï¿½dent celui pointï¿½
+			$car1 = substr($this->mot,$this->indMot,1);	//	caractï¿½re pointï¿½
+			$car2 = '';		//	caractï¿½re suivant celui pointï¿½
+			$car3 = '';		//	3e caractï¿½re suivant celui pointï¿½
+			$car4 = '';		//	4e caractï¿½re suivant celui pointï¿½
+			$car5 = '';		//	5e caractï¿½re suivant celui pointï¿½
 			if ($this->indMot < $longMot - 1)
 				$car2 = substr($this->mot,$this->indMot + 1,1);
 			if ($this->indMot < $longMot - 2)
@@ -359,7 +359,7 @@ class phonetique
 						$this->priseEnCompte('E',1);
 					break;
 				}
-				//	"ex" en début de mot et suivi d'une voyelle ou de "h"
+				//	"ex" en dï¿½but de mot et suivi d'une voyelle ou de "h"
 				if ($carPre == '' AND $car2 == 'x' AND ($this->existeChaine($this->voyelles , $car3) OR $car3 == 'h') )
 						$this->priseEnCompte('gz',2);
 				break;
@@ -436,8 +436,8 @@ class phonetique
 						$this->priseEnCompte('y',2);
 				}
 				break;
-			case 'î':
-				//	"în"
+			case 'ï¿½':
+				//	"ï¿½n"
 				if ($car2 == 'n')
 				{
 					if (!$this->existeChaine($this->voyelles , $car3))
@@ -473,7 +473,7 @@ class phonetique
 						$this->priseEnCompte('s',2);
 					break;
 				}
-				//	Début de mot
+				//	Dï¿½but de mot
 				if ($carPre == '')
 					$this->priseEnCompte('s',1);
 				else
@@ -502,7 +502,7 @@ class phonetique
 				}
 				break;
 			case 'x':
-				//	"x" en début de mot
+				//	"x" en dï¿½but de mot
 				if ($carPre == '')
 					$this->priseEnCompte('gz',1);
 				else
@@ -554,25 +554,25 @@ class phonetique
 		}
 		while ($this->indMot < $longMot);
 	}
-	//	Cette fonction retourne TRUE si la valeur recherchée ($chRecherchee) 
-	//		est la première de la liste testée ($chaine)
+	//	Cette fonction retourne TRUE si la valeur recherchï¿½e ($chRecherchee) 
+	//		est la premiï¿½re de la liste testï¿½e ($chaine)
 	private function existeChaine($chaine,$chRecherchee)
 	{
 		if ($chRecherchee == "")	return false;
 		if (strpos($chaine,$chRecherchee) !== false) return true;
 		return false;
 	}
-	//	Détermine si la chaîne $chRecherchee existe dans le tableau $tableau
-	//		en tant que clé
+	//	Dï¿½termine si la chaï¿½ne $chRecherchee existe dans le tableau $tableau
+	//		en tant que clï¿½
 	private function existeTableau($tableau , $chRecherchee)
 	{
 		if ($chRecherchee == "")	return false;
 		if (array_key_exists($chRecherchee , $tableau))return true;
 		return false;
 	}
-	//	Prise en compte d'une séquence de caractères
-	//	$parCode = code correspondant à la séquence
-	//	$parIndice = valeur à ajouter au pointeur sur le mot à traiter
+	//	Prise en compte d'une sï¿½quence de caractï¿½res
+	//	$parCode = code correspondant ï¿½ la sï¿½quence
+	//	$parIndice = valeur ï¿½ ajouter au pointeur sur le mot ï¿½ traiter
 	private function priseEnCompte($parCode,$parIndice)
 	{
 		if ($parCode != '')
@@ -580,7 +580,7 @@ class phonetique
 		$this->indMot += $parIndice;
 		$this->trouve = true;
 	}
-	//	Renvoie un texte correspondant à la phonétique du code
+	//	Renvoie un texte correspondant ï¿½ la phonï¿½tique du code
 	public function codeVersPhon($parCode)
 	{
 		if (strlen($parCode) == 0)
@@ -597,11 +597,11 @@ class phonetique
 			if (array_key_exists($tabW[$indice] , $this->phon))
 				$retour[] = $this->phon[$tabW[$indice]];
 			else
-				echo 'Caractère non traduisible >>' . $tabW[$indice] . '<< <br>';
+				echo 'Caractï¿½re non traduisible >>' . $tabW[$indice] . '<< <br>';
 		}
 		return implode('-' , $retour);
 	}
-	//	Renvoie le code correspondant à un texte phonétique
+	//	Renvoie le code correspondant ï¿½ un texte phonï¿½tique
 	public function phonVersCode($parCode)
 	{
 		$tabW = explode('-',$parCode);

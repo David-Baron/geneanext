@@ -3,8 +3,8 @@
 // Edition d'une image
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -40,7 +40,7 @@ $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 $acces = 'M';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Ch_Image_Script_Title;        // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -198,8 +198,8 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
-    include('Insert_Tiny.js');
-    //include('jscripts/Edition_Image.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
+    # include(__DIR__ . '/assets/js/Edition_Image.js');
 
     $compl = Ajoute_Page_Info(650, 250);
     Insere_Haut($titre, $compl, 'Edition_Image', $ident_image);

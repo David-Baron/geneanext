@@ -3,8 +3,8 @@
 // Edition d'un type d'évènement
 //=====================================================================
 
-session_start();
-include('fonctions.php');              // Appel des fonctions générales
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -23,6 +23,7 @@ $tab_variables = array(
     'AUniciteF',
     'Horigine',
 );
+
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
@@ -46,7 +47,7 @@ if ($Creation) $titre = $LG_Menu_Title['Event_Type_Add'];
 else $titre = $LG_Menu_Title['Event_Type_Edit'];
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -228,7 +229,6 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     Insere_Bas($compl);
 
     echo '<script type="text/javascript">' . "\n";
-    echo '<!--' . "\n";
     echo 'function verification_code(zone) {' . "\n";
     echo ' var codes = document.forms.saisie.codes.value;' . "\n";
     echo ' var posi  = codes.indexOf(zone.value);' . "\n";
@@ -238,7 +238,6 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '  zone.value = "";' . "\n";
     echo ' }' . "\n";
     echo '}' . "\n";
-    echo '//-->' . "\n";
     echo '</script>' . "\n";
 } ?>
 </body>

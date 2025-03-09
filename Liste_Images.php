@@ -4,9 +4,9 @@
 // Liste des images d'une personne, ville...
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
 $tab_variables = array('annuler', 'Horigine');
@@ -23,7 +23,7 @@ if ($annuler == $lib_Retour) $annuler = 'Annuler';
 
 $titre = $LG_Menu_Title['Image_List'];        // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

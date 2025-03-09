@@ -4,20 +4,18 @@
 // Cacher|montrer une personne en 1 clic à partir de la fiche d'une personne
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // On simule le bouton OK pour ne pas écrire l'entête de la page
 $ok = 'OK'; // TODO: lol
-
-// Gestion standard des pages
-include('fonctions.php');
 
 if (($_SESSION['estPrivilegie']) or ($_SESSION['estContributeur']) or ($_SESSION['estGestionnaire'])) {
 
     $acces = 'M';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
     $titre = 'Cacher/montrer une personne';    // Titre pour META
     $x = Lit_Env();
-    include('Gestion_Pages.php');
+    require(__DIR__ . '/Gestion_Pages.php');
 
     $Refer = Recup_Variable('Refer', 'N');
     $Diff = Recup_Variable('Diff', 'C', 'NO');

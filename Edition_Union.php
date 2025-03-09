@@ -3,8 +3,8 @@
 // Edition d'une union
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -36,6 +36,7 @@ $tab_variables = array(
     'Nom_Defaut',
     'Horigine'
 );
+
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
@@ -65,7 +66,7 @@ else
     $titre = LG_UNION_EDIT;
 
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -609,8 +610,8 @@ if ((!$bt_OK) && (!$bt_An)) {
     // Récupération de la liste des types
     Recup_Types_Evt('U');
 
-    include('jscripts/Ajout_Evenement.js');
-    include('Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Ajout_Evenement.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
     // Récupération des infos du conjoint passé en paramètre
     $x = Get_Nom_Prenoms_Dates($Personne, $Nom, $Prenoms, $Ne_Pers, $Dec_Pers);
@@ -701,7 +702,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $x = Aff_Union($enreg2, $Ref_Union, false);
 
     echo '</form>';
-    include('gest_onglets.js');
+    include(__DIR__ . '/assets/js/gest_onglets.js');
     //echo '<!-- On cache les div d\'ajout des villes et on positionne l\'onglet par défaut -->'."\n";
     echo '<script type="text/javascript">' . "\n";
     echo '	cache_div("id_div_ajout1");' . "\n";

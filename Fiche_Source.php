@@ -3,9 +3,9 @@
 // Affichage d'une source
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'P';
 $titre = $LG_Menu_Title['Source'];        // Titre pour META
@@ -31,7 +31,7 @@ $req_sel = 'select s.*, d.Nom from ' . nom_table('sources') . ' s left outer joi
     . ' where s.Ident = ' . $Ident
     . ' limit 1';
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

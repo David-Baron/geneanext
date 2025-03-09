@@ -3,8 +3,9 @@
 //  Affichage de la liste des évènements éventuellement par type
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
 $actu = Recup_Variable('actu', 'C', 'xo');
@@ -18,7 +19,7 @@ if ($professions) $titre = $LG_Menu_Title['Jobs_List'];
 
 $x = Lit_Env();
 $niv_requis = 'P';                        // Page réservée au profil privilégié
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Recup de la variable passée dans l'URL : sortie dans un fichier CSV ?
 $csv_dem = Recup_Variable('csv', 'C', 'ce');

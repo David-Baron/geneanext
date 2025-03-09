@@ -3,8 +3,8 @@
 // Edition d'une fiche département
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -24,6 +24,7 @@ $tab_variables = array(
     'AStatut_Fiche',
     'Horigine'
 );
+
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
@@ -48,7 +49,7 @@ else
     $titre = $LG_Menu_Title['County_Add'];
 
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -162,7 +163,7 @@ if (($ok == '') && ($annuler == '')) {
         if ($Modif)
             Champ_car($enreg2, 'Nom_Depart_Min');
         // Affichage des données du département
-        include('Insert_Tiny.js');
+        include(__DIR__ . '/assets/js/Insert_Tiny.js');
         echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Nom_Depart,Code_Depart\')" action="' . my_self() . '?Ident=' . $Ident . '">' . "\n";
         echo '<input type="' . $hidden . '" name="Ident" value="' . $Ident . '"/>';
 
@@ -266,7 +267,7 @@ if (($ok == '') && ($annuler == '')) {
 
         echo '</form>' . "\n";
 
-        include('gest_onglets.js');
+        include(__DIR__ . '/assets/js/gest_onglets.js');
     }
     // On cache les div d'ajout des villes et on positionne l'onglet par défaut
     echo '<script type="text/javascript">' . "\n";

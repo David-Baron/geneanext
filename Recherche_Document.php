@@ -8,9 +8,8 @@
 //   - au format csv pour un import dans un tableur
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -40,7 +39,7 @@ $acces = 'L';
 $titre = $LG_Menu_Title['Find_Doc'];        // Titre pour META
 $niv_requis = 'C';                            // Page pour contributeur minimum
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -64,7 +63,7 @@ if ($est_gestionnaire) {
     //Demande de recherche
     if ($bt_OK) {
 
-        //include_once('Commun_Rech_Com_Util_Docs.php');
+        # require(__DIR__ . '/Commun_Rech_Com_Util_Docs.php');
 
         $Recherche = Secur_Variable_Post($Recherche, 80, 'S');
         $Nature    = Secur_Variable_Post($Nature, 3, 'S');

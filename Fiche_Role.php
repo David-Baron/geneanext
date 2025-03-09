@@ -3,9 +3,9 @@
 // Affichage d'un rôle
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'P';
 $titre = $LG_Menu_Title['Role'];        // Titre pour META
@@ -27,7 +27,7 @@ $x = Lit_Env();
 $Code = Recup_Variable('code', 'A');
 $req_sel = 'select * from ' . nom_table('roles') . ' where Code_Role = "' . $Code . '" limit 1';
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

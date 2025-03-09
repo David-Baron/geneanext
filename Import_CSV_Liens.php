@@ -4,9 +4,8 @@
 // Import ou lecture d'un fichier csv avec des liens
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -29,12 +28,12 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-include('fonctions_maj.php');
+require(__DIR__ . '/fonctions_maj.php');
 $acces = 'L';
 $titre = $LG_Menu_Title['Imp_CSV_Links'];
 $x = Lit_Env();
 $niv_requis = 'G';
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -66,7 +65,7 @@ if ($bt_OK) Ecrit_Entete_Page($titre, '', '');
 $compl = Ajoute_Page_Info(600, 300);
 Insere_Haut($titre, $compl, 'Import_Gedcom', '');
 
-include('Commun_Import_CSV.php');
+require(__DIR__ . '/Commun_Import_CSV.php');
 
 //Demande de chargement
 if ($ok == 'OK') {
@@ -152,8 +151,6 @@ if ($ok == 'OK') {
                     '"' . $val_statut . '",' .    // Statut_Fiche
                     '0' .                    // Sur_Accueil
                     ')';
-
-                //include('Commun_Import_CSV.php');
                 insert_champs();
 
                 fclose($fp);

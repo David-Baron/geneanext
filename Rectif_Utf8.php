@@ -3,18 +3,16 @@
 //  Rectification après import fichier en UTF-8
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
-// Fonction de recctification UTF8
-include('Rectif_Utf8_Commun.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/Rectif_Utf8_Commun.php');
 
 $acces = 'M';
 //$titre = 'Rectification des caractères UTF-8';
 $titre = $LG_Menu_Title['Rect_Utf'];
 $x = Lit_Env();
 $niv_requis = 'G';                // Page réservée au profil gestionnaire
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $compl = Ajoute_Page_Info(600, 250);
 Insere_Haut(my_html($titre), $compl, 'Rectif_Utf8', '');

@@ -4,10 +4,9 @@
 // Liste des personnes vivantes portant un nom ou tous les noms
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-// Gestion standard des pages
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Living_Pers'];
 $x = Lit_Env();
@@ -22,12 +21,12 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
 
-if (!$texte) include('jscripts/Liste_Patro.js');        // Même javascript que la liste patronymique
+if (!$texte) include(__DIR__ . '/assets/js/Liste_Patro.js');        // Même javascript que la liste patronymique
 
 $Nom = 0;
 // Récupération des variables de l'affichage précédent

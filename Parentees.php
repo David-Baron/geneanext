@@ -4,6 +4,9 @@
 // Affichage des oncles et tantes ou cousins
 //=====================================================================
 
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 function add_pers($enreg)
 {
     global $refs, $noms, $prenoms;
@@ -19,8 +22,6 @@ function affiche_pers($nb)
     echo '&nbsp;<a ' . Ins_Edt_Pers($refs[$nb]) . '>' . $echo_modif;
 }
 
-session_start();
-include('fonctions.php');
 $acces = 'L';
 $index_follow = 'ON';        // NOFOLLOW demandé pour les moteurs
 
@@ -63,9 +64,7 @@ $n_personnes = nom_table('personnes');
 
 $req_sel = 'select Nom, Prenoms, Diff_Internet from ' . $n_personnes . ' where Reference = ' . $Refer . ' limit 1';
 
-include('Gestion_Pages.php');
-
-//var_dump($bt_An);
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

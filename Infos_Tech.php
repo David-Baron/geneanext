@@ -4,15 +4,15 @@
 // Affichage des informations techniques
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';
 $titre = $LG_Menu_Title['Tech_Info'];
 $niv_requis = 'G';
 $x = Lit_Env();
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut($titre, $compl, 'Infos_Tech', '');

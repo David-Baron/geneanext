@@ -9,7 +9,8 @@
 // - refDoc : référence du document (-1 pour la création du lien) TODO: lol
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 function Lire_Nom_Prenoms_Unions($refUnion)
 {
@@ -53,8 +54,6 @@ function lire_Evenement($refEvt)
     }
 }
 
-include('fonctions.php');
-
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
@@ -76,7 +75,7 @@ foreach ($tab_variables as $nom_variables) {
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Edition liaison document';   // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Sécurisation des variables postées
 $ok        = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
@@ -173,7 +172,7 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 250);
 
-    include('jscripts/Edition_Lier_Doc.js');
+    include(__DIR__ . '/assets/js/Edition_Lier_Doc.js');
 
     Insere_Haut($entete, $compl, 'Edition_Lier_Doc', $refObjet);
     $ArefDoc = $refDoc;

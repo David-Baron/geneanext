@@ -3,7 +3,8 @@
 // Liste des utilisateurs
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 function aff_option_niveau($niv_option)
 {
@@ -13,13 +14,11 @@ function aff_option_niveau($niv_option)
     echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
 }
 
-include('fonctions.php');
-
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Users_List'];        // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'G';                        // réservé aux gestionnaires
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 Insere_Haut($titre, '', 'Liste_utilisateurs', '');
 

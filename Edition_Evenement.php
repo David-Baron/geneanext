@@ -3,8 +3,8 @@
 // Création et modification d'un evenement
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -69,7 +69,7 @@ if ($actualite) {
 }
 
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -223,9 +223,9 @@ if (!$est_contributeur) {
     Insere_Bas('');
     return;
 } else {
-    include('jscripts/Edition_Evenement.js');
-    include('gest_onglets.js');
-    include('Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Edition_Evenement.js');
+    include(__DIR__ . '/assets/js/gest_onglets.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
     // Récupération des données de l'évènement
     if ($Modif) {
@@ -573,7 +573,7 @@ if (!$est_contributeur) {
 
     echo '</form>' . "\n";
 
-    //include ('gest_onglets.js');
+    // include(__DIR__ . '/assets/js/gest_onglets.js');
     echo '<!-- On positionne l\'onglet par défaut -->' . "\n";
     echo '<script type="text/javascript">' . "\n";
     echo '	setupPanes("container1", "tab1", 40);' . "\n";

@@ -3,8 +3,8 @@
 // Edition d'un lieu-dit (subdivision)
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -45,7 +45,7 @@ $acces = 'M';                          // Type d'accès de la page : (M)ise à j
 if (!$Modif) $titre = $LG_Menu_Title['Subdiv_Edit'];
 else $titre = $LG_Menu_Title['Subdiv_Add'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -381,7 +381,7 @@ if (($ok == '') && ($annuler == '')) {
     }
     Insere_Bas($compl);
 }
-include('gest_onglets.js');
+include(__DIR__ . '/assets/js/gest_onglets.js');
 
 function champ_carte($libelle, $nom_champ, $valeur)
 {

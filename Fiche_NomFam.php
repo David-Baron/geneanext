@@ -3,9 +3,9 @@
 // Fiche d'un nom de famille
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Name'];       // Titre pour META
 
@@ -28,7 +28,7 @@ $idNomFam = Recup_Variable('idNom', 'N');
 $req_sel = 'SELECT * FROM ' . nom_table('noms_famille') . ' WHERE idNomFam =' . $idNomFam . ' limit 1';
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -38,11 +38,8 @@ else {
 
     else {
 
-        include_once('phonetique.php');        //	Traitements phonétiques
-
-        //	Initialisation d'un objet de la classe
-        $codePho = new phonetique();
-        //
+        require(__DIR__ . '/app/Phonetique.php');
+        $codePho = new Phonetique();
 
         $compl = Ajoute_Page_Info(600, 150);
         if ($est_gestionnaire) {

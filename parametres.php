@@ -11,12 +11,12 @@ $cr = "\n";   // version Unix
 $SiteGratuit = false;
 if (strpos($_SERVER['SERVER_NAME'], '.geneamania.net') !== false) $SiteGratuit = true;
 else {
-    if (file_exists('site_gratuit.txt')) $SiteGratuit = true;
+    if (file_exists(__DIR__ . '/site_gratuit.txt')) $SiteGratuit = true;
 }
 
 // Est-on sur un site de type premium ==> présence d'un fichier premium.txt
 $Premium = false;
-if (file_exists('premium.txt')) $Premium = true;
+if (file_exists(__DIR__ . '/premium.txt')) $Premium = true;
 
 // Taille maxi d'une image à télécharger
 $taille_maxi_image = 150 * 1024; // 150Ko
@@ -38,14 +38,14 @@ $lim_temps = 60;
 if ($Premium) $lim_temps *= 2;
 
 // Paramétrage du répertoire de stockage de TinyMCE à des fins de mutualisation
-$rep_Tiny = 'jscripts/tiny_mce/';
+$rep_Tiny = 'assets/js/tiny_mce/';
 
 // Paramétrage du répertoire de stockage des sources
 $rep_src = '';
 
 // Chemins des images
 $chemin_images_util = 'Images_Util/';
-$chemin_images      = $rep_src . 'Images/';
+$chemin_images      = 'assets/img/';
 $chemin_images_a_asc = $chemin_images . 'arbres_asc/';
 $chemin_images_lettres = $chemin_images . 'lettres/';
 $chemin_images_barres = $chemin_images . 'fonds_barre/';
@@ -70,17 +70,16 @@ $chemin_docs_TXT = 'documents/TXT/';
 // Ajout automatique de sous-répertoire en local
 $ajout = '';
 $self  = my_self();
-// var_dump($self);
+
 if ($self[strlen($self) - 1] == '/') $self = substr($self, 0, strlen($self) - 1); // Au cas où l'utilsateur mettrait un / en dernière position on le supprime...
 $dpos  = strrpos($self, '/');
 if ($dpos !== false) {
     if ($dpos > 0) {
         $ajout = substr($self, 1, $dpos);
     }
-    // var_dump($ajout);
 }
 $RepGenSiteLoc = $ajout;
-// $RepGenSiteLoc = 'http://localhost/'.$ajout;		// Ne fonctionne pas avec les virtual host locaux
+// $RepGenSiteLoc = 'http://localhost/'.$ajout;	// Ne fonctionne pas avec les virtual host locaux TODO: lol so it's useless.
 $RepGenSiteInt = '';
 
 // Nombre de générations maximum à remonter pour la recherche de cousinage
@@ -161,13 +160,12 @@ $FromTo_Mail = 'support@geneamania.net';
 $FromTo_Texte = 'Support Geneamania';
 
 // Encodage par défaut pour htmlentities
-// $def_enc = 'ISO-8859-1';
-$def_enc = 'UTF-8';
+$def_enc = 'UTF-8'; // UTF-8|ISO-8859-1
 
 // Polices intallées par défaut pour les pdf
 $list_font_pdf = array('Courier', 'Helvetica', 'Arial', 'Times');
 $list_font_pdf_plus = array();
-//$coul_pdf = '#4F95B0';
+# $coul_pdf = '#4F95B0';
 
 // Proposition pour les graphismes pré-définis
 $dominantes = array('bleu', 'rouge', 'marron', 'vert', 'violet', 'gris');
@@ -255,7 +253,7 @@ $rupt_Fiche_Indiv = '';
 //$offset_info = '../';
 
 // Répertoire des langues
-$rep_lang = 'languages';
+$rep_lang = 'languages'; // TODO: not a language rep but tranlations rep lol
 
 // Date de naissance par défaut pour l'export de la recherche des décès
 $death_def_min_year = 1970 - $annees_maxi_vivant;
@@ -264,10 +262,9 @@ $url_matchid_link = $url_matchid . '/link';
 $url_matchid_sch = $url_matchid . '/deces/api/v1/search';
 
 // Paramétrages particuliers
-if (file_exists('param_part.php')) include('param_part.php');
+if (file_exists(__DIR__ . '/param_part.php')) include(__DIR__ . '/param_part.php');
 if ($SiteGratuit) {
-    $empl_param = '../param_gratuit.php';
-    if (file_exists($empl_param)) include($empl_param);
+    if (file_exists(__DIR__ . '/../param_gratuit.php')) include(__DIR__ . '/../param_gratuit.php');
 }
 
 if ($debug) $f_log = open_log();

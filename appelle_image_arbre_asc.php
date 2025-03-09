@@ -1,12 +1,13 @@
 <?php
 // Appel de l'image générée pour un arbre ascendant
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                    // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_assc_tree;            // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $compl = '';
 

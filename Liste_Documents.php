@@ -3,14 +3,14 @@
 //  Affichage de la liste des documents classement par type
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'acc�s de la page : (M)ise � jour, (L)ecture
 $titre = $LG_Menu_Title['Documents_List'];        // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'I';                       // Page r�serv�e � partir du profil invit�
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -21,7 +21,7 @@ Insere_Haut(my_html($titre), $compl, 'Liste_Documents', '');
 
 // Lien direct sur le dernier document saisi
 if ($_SESSION['estGestionnaire']) {
-    include('fonctions_maj.php');
+    require(__DIR__ . '/fonctions_maj.php');
     $MaxRef = Nouvel_Identifiant('id_document', 'documents') - 1;
 }
 

@@ -3,108 +3,106 @@
 // Prise en compte d'une contribution du net
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
-$tab_variables
-    = array(
-        'ok',
-        'annuler',
-        'supprimer',
-        'Horigine',
+$tab_variables = array(
+    'ok',
+    'annuler',
+    'supprimer',
+    'Horigine',
 
-        'Ref_Pers',
-        'Sexe',
+    'Ref_Pers',
+    'Sexe',
 
-        'referencepere_ini',
-        'idNomFampere_ini',
-        'nompere_ini',
-        'prenomspere_ini',
-        'ne_lepere_ini',
-        'id_ne_zonepere_ini',
-        'ne_zonepere_ini',
-        'decede_lepere_ini',
-        'id_decede_zonepere_ini',
-        'decede_zonepere_ini',
+    'referencepere_ini',
+    'idNomFampere_ini',
+    'nompere_ini',
+    'prenomspere_ini',
+    'ne_lepere_ini',
+    'id_ne_zonepere_ini',
+    'ne_zonepere_ini',
+    'decede_lepere_ini',
+    'id_decede_zonepere_ini',
+    'decede_zonepere_ini',
 
-        'choix_pere',  // radio button Ajouter, Remplacer, Ignorer
-        'presence_prop_pere',
-        'nompere_prop',
-        'prenomspere_prop',
-        'maj_pere',
-        'ne_lepere_prop',
-        'id_ne_zonepere_prop',
-        'ne_zonepere_prop',
-        'decede_lepere_prop',
-        'id_decede_zonepere_prop',
-        'decede_zonepere_prop',
+    'choix_pere',  // radio button Ajouter, Remplacer, Ignorer
+    'presence_prop_pere',
+    'nompere_prop',
+    'prenomspere_prop',
+    'maj_pere',
+    'ne_lepere_prop',
+    'id_ne_zonepere_prop',
+    'ne_zonepere_prop',
+    'decede_lepere_prop',
+    'id_decede_zonepere_prop',
+    'decede_zonepere_prop',
 
-        'referencemere_ini',
-        'idNomFammere_ini',
-        'nommere_ini',
-        'prenomsmere_ini',
-        'ne_lemere_ini',
-        'id_ne_zonemere_ini',
-        'ne_zonemere_ini',
-        'decede_lemere_ini',
-        'id_decede_zonemere_ini',
-        'decede_zonemere_ini',
+    'referencemere_ini',
+    'idNomFammere_ini',
+    'nommere_ini',
+    'prenomsmere_ini',
+    'ne_lemere_ini',
+    'id_ne_zonemere_ini',
+    'ne_zonemere_ini',
+    'decede_lemere_ini',
+    'id_decede_zonemere_ini',
+    'decede_zonemere_ini',
 
-        'choix_mere',  // radio button Ajouter, Remplacer, Ignorer
-        'presence_prop_mere',
-        'nommere_prop',
-        'prenomsmere_prop',
-        'maj_mere',
-        'ne_lemere_prop',
-        'id_ne_zonemere_prop',
-        'ne_zonemere_prop',
-        'decede_lemere_prop',
-        'id_decede_zonemere_prop',
-        'decede_zonemere_prop',
+    'choix_mere',  // radio button Ajouter, Remplacer, Ignorer
+    'presence_prop_mere',
+    'nommere_prop',
+    'prenomsmere_prop',
+    'maj_mere',
+    'ne_lemere_prop',
+    'id_ne_zonemere_prop',
+    'ne_zonemere_prop',
+    'decede_lemere_prop',
+    'id_decede_zonemere_prop',
+    'decede_zonemere_prop',
 
-        'nb_conj',    // Nombre de conjoints en base
+    'nb_conj',    // Nombre de conjoints en base
 
-        'choix_conj', // radio button Ajouter, Remplacer conjoint 1 à nb_conj, Ignorer
-        'presence_prop_conj',
-        'nomconj_prop',
-        'prenomsconj_prop',
-        'maj_conj',
-        'ne_leconj_prop',
-        'id_ne_zoneconj_prop',
-        'ne_zoneconj_prop',
-        'decede_leconj_prop',
-        'id_decede_zoneconj_prop',
-        'decede_zoneconj_prop',
+    'choix_conj', // radio button Ajouter, Remplacer conjoint 1 à nb_conj, Ignorer
+    'presence_prop_conj',
+    'nomconj_prop',
+    'prenomsconj_prop',
+    'maj_conj',
+    'ne_leconj_prop',
+    'id_ne_zoneconj_prop',
+    'ne_zoneconj_prop',
+    'decede_leconj_prop',
+    'id_decede_zoneconj_prop',
+    'decede_zoneconj_prop',
 
-        'nb_enf',
+    'nb_enf',
 
-        'choix_enfant1', // radio button Ajouter, Remplacer enfant 1, Remplacer enfant 2, Ignorer
-        'presence_prop_enfant1',
-        'nomenfant1_prop',
-        'prenomsenfant1_prop',
-        'maj_enfant1',
-        'ne_leenfant1_prop',
-        'id_ne_zoneenfant1_prop',
-        'ne_zoneenfant1_prop',
-        'decede_leenfant1_prop',
-        'id_decede_zoneenfant1_prop',
-        'decede_zoneenfant1_prop',
+    'choix_enfant1', // radio button Ajouter, Remplacer enfant 1, Remplacer enfant 2, Ignorer
+    'presence_prop_enfant1',
+    'nomenfant1_prop',
+    'prenomsenfant1_prop',
+    'maj_enfant1',
+    'ne_leenfant1_prop',
+    'id_ne_zoneenfant1_prop',
+    'ne_zoneenfant1_prop',
+    'decede_leenfant1_prop',
+    'id_decede_zoneenfant1_prop',
+    'decede_zoneenfant1_prop',
 
-        'choix_enfant2', // radio button Ajouter, Remplacer enfant 1, Remplacer enfant 2, Ignorer
-        'presence_prop_enfant2',
-        'nomenfant2_prop',
-        'prenomsenfant2_prop',
-        'maj_enfant2',
-        'ne_leenfant2_prop',
-        'id_ne_zoneenfant2_prop',
-        'ne_zoneenfant2_prop',
-        'decede_leenfant2_prop',
-        'id_decede_zoneenfant2_prop',
-        'decede_zoneenfant2_prop',
+    'choix_enfant2', // radio button Ajouter, Remplacer enfant 1, Remplacer enfant 2, Ignorer
+    'presence_prop_enfant2',
+    'nomenfant2_prop',
+    'prenomsenfant2_prop',
+    'maj_enfant2',
+    'ne_leenfant2_prop',
+    'id_ne_zoneenfant2_prop',
+    'ne_zoneenfant2_prop',
+    'decede_leenfant2_prop',
+    'id_decede_zoneenfant2_prop',
+    'decede_zoneenfant2_prop',
 
-    );
+);
 
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) {
@@ -138,7 +136,7 @@ $titre = LG_CONTRIB_EDIT_TITLE;
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 //	Gestion des droits
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -218,9 +216,9 @@ function Traite_nom_Ins(&$nom_traite, $indic_maj, $ANom = '')
                 // Initialisation technique des noms
                 if ($premier_nom) {
                     // Appel du fichier contenant la classe
-                    include 'phonetique.php';
+                    require(__DIR__ . '/app/Phonetique.php');
                     // Initialisation d'un objet de la classe
-                    $codePho = new phonetique();
+                    $codePho = new Phonetique();
                     $idNom = Nouvel_Identifiant('idNomFam', 'noms_famille') - 1;
                     $premier_nom = false;
                 }
@@ -1529,7 +1527,7 @@ if ((!$bt_OK) && (!$bt_An)) {
                 echo '</td></tr></table></div>' . "\n";
 
                 echo '</form>';
-                include('gest_onglets.js');
+                include(__DIR__ . '/assets/js/gest_onglets.js');
                 echo '<!-- On positionne l\'onglet par défaut -->' . "\n";
                 echo '<script type="text/javascript">' . "\n";
                 echo '	setupPanes("container1", "tab1",0);' . "\n";

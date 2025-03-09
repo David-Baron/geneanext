@@ -5,9 +5,8 @@
 // On ne peut que modifier le titre ou supprimer la requête
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -29,7 +28,7 @@ $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Request_Edit'];     // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Recup de la variable passée dans l'URL : référence de la requête
 $reference = Recup_Variable('reference', 'N');

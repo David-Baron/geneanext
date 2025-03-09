@@ -4,13 +4,13 @@
 // Affichage d'un arbre personnalisé
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Pers_Tree'];          // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 //
 //	Lecture des paramètres passés
 //	Si Refer = 0 => appel direct de la page, sans avoir beson de la calculer

@@ -1,5 +1,8 @@
 <?php
 
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 // Remove d'un répertoire non vide
 function rrmdir($dir)
 {
@@ -28,9 +31,6 @@ function memo_fic($nom_fic)
     }
     return $res_memo;
 }
-
-// A retirer lors de l'intégration dans la page d'install
-include_once('fonctions.php');
 
 $lib_bt_OK = 'METTRE A JOUR';
 

@@ -3,9 +3,8 @@
 // Paramétrage graphique du site
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 function Liste_Noms_Images($chemin)
 {
@@ -210,7 +209,7 @@ $acces = 'M';                          // Type d'accès de la page : (M)ise à j
 $niv_requis = 'G';
 $titre = $LG_Menu_Title['Design'];
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) {
@@ -327,7 +326,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $aff_infos = ($debug) ? 'text' : 'hidden';
 
     $all = true;
-    include_once('Degrades_inc.php');
+    include(__DIR__ . '/Degrades_inc.php');
 
     $Ex_Born = array('19020312GL', '18990307GL', '19050416GL', '19070616GL');
     $Ex_Dead = array('19730518GL', '19710512GL', '19791123GL', '19790520GL');
@@ -496,10 +495,10 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     Insere_Bas($compl);
 
-    include('gest_onglets.js');
-    include('jscripts/Edition_Parametres_Graphiques.js');
-    //include('jscripts/jscolor.js');
-    echo '<script type="text/javascript" src="jscripts/jscolor.js"></script>';
+    include(__DIR__ . '/assets/js/gest_onglets.js');
+    include(__DIR__ . '/assets/js/Edition_Parametres_Graphiques.js');
+    # include(__DIR__ . '/assets/js/jscolor.js');
+    echo '<script type="text/javascript" src="assets/js/jscolor.js"></script>';
 }
 
 $ext_poss = '/gif/jpg/png/';
@@ -507,7 +506,6 @@ $ext_poss = '/gif/jpg/png/';
 ?>
 
 <script type="text/javascript">
-    <!--
     <?php
     echo 'var im_stop = "' . $chemin_images_icones . $Icones['stop'] . '";' . "\n";
     echo 'var im_next = "' . $chemin_images_icones . $Icones['next'] . '";' . "\n";
@@ -703,9 +701,6 @@ $ext_poss = '/gif/jpg/png/';
     affiche_cases(1, 'barres');
     affiche_cases(1, 'arbres_asc');
     setupPanes("container1", "tab_gra_pre_def", 50);
-
-    //
-    -->
 </script>
 </body>
 

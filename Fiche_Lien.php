@@ -3,9 +3,9 @@
 // Affichage d'un lien
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
-include('fonctions.php');
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Link'];    // Titre pour META
 $x = Lit_Env();
@@ -26,7 +26,7 @@ $Ref = Recup_Variable('Ref', 'N');
 
 $req_sel = 'select * from ' . nom_table('liens') . ' where Ref_Lien = ' . $Ref . ' limit 1';
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

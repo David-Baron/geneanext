@@ -3,8 +3,8 @@
 // Liste référentiel (rôles, types d'évènements...)
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Recup de la variable passée dans l'URL : type de liste
 $Type_Liste = Recup_Variable('Type_Liste', 'C', 'RTDCQOS');
@@ -38,7 +38,7 @@ $acces = 'L';                        // Type d'accès de la page : (M)ise à jou
 $titre = $entete;                    // Titre pour META
 $niv_requis = 'P';                    // Page réservée au profil privilégié
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Verrouillage de la gestion des documents et des sources sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium) and ($Type_Liste == 'D')) Retour_Ar();

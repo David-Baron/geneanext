@@ -3,7 +3,8 @@
 // Edition d'un utilisateur
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Affiche une option pour le niveau d'autorisation
 function aff_option_niveau($niv_option)
@@ -13,8 +14,6 @@ function aff_option_niveau($niv_option)
     if ($niv_option == $niv) echo ' selected="selected"';
     echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
 }
-
-include('fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -59,7 +58,7 @@ $niv_requis = 'G';                        // Page accessible pour les gestionnai
 if (!$Creation) $titre = $LG_Menu_Title['User_Edit'];
 else $titre = $LG_Menu_Title['User_Add'];
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -159,7 +158,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
         $compl .= Affiche_Icone_Lien('href="Fiche_Utilisateur.php?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Utilisateur', $Code);
-    include 'jscripts/ctrlMotPasse.js';
+    include(__DIR__ . '/assets/js/ctrlMotPasse.js');
 
     echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
 

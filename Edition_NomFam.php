@@ -3,8 +3,8 @@
 // Edition d'un nom de famille
 //=====================================================================
 
-session_start();
-include_once('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -46,7 +46,7 @@ $acces = 'M';                          // Type d'accès de la page : (M)ise à j
 if ($Creation) $titre = $LG_Menu_Title['Name_Add'];
 else $titre = $LG_Menu_Title['Name_Edit'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour arrière sur une demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -89,9 +89,9 @@ if ($bt_Sup) {
     Retour_Ar();
 }
 
-include_once('phonetique.php');
+require(__DIR__ . '/app/Phonetique.php');
 //	Initialisation d'un objet de la classe
-$objetCodePho = new phonetique();
+$objetCodePho = new Phonetique();
 
 function celBouton($lettre, $numAide)
 {
@@ -228,8 +228,8 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An)) {
 
-    include('Insert_Tiny.js');
-    include('jscripts/Edition_NomFam.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Edition_NomFam.js');
 
     $compl = Ajoute_Page_Info(600, 400);
     if ($idNomFam != -1)

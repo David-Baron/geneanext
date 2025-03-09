@@ -3,8 +3,8 @@
 // Edition d'une fiche filiation
 //=====================================================================
 
-session_start();                       // Démarrage de la session
-include('fonctions.php');              // Appel des fonctions générales
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -44,7 +44,7 @@ $Refer = Recup_Variable('Refer', 'N');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Fiche filiation';            // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-include('Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -450,9 +450,9 @@ if ((!$bt_OK) && (!$bt_An)) {
     // Récupération de la liste des types
     Recup_Types_Evt('F');
 
-    include('jscripts/Edition_Filiation.js');
-    include('jscripts/Ajout_Evenement.js');
-    include('Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Edition_Filiation.js');
+    include(__DIR__ . '/assets/js/Ajout_Evenement.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
     $compl = '';
 
     $sql = 'select Nom, Prenoms, Sexe, Ne_le, Decede_Le from ' . nom_table('personnes') . ' where reference = ' . $Refer . ' limit 1';
@@ -487,7 +487,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $x = Aff_Filiation($enreg);
 
     echo '</form>';
-    include('gest_onglets.js');
+    include(__DIR__ . '/assets/js/gest_onglets.js');
     echo '<!-- On positionne l\'onglet par défaut -->' . "\n";
     echo '<script type="text/javascript">' . "\n";
     echo '	setupPanes("container1", "tab1", 40);' . "\n";

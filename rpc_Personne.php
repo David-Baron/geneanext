@@ -2,8 +2,8 @@
 
 // appelé en ajax pour avoir les personnes correspondant à un nom 
 
-session_start();
-include_once('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $debug = false;
 

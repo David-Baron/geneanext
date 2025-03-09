@@ -3,8 +3,9 @@
 // Liste des personnes écran 1/2
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                // Type d'accès de la page : (M)ise à jour, (L)ecture M pour avoir le getXMLHttpRequest pdf
 
 // Recup de la variable passée dans l'URL : type de liste, texte ou non
@@ -50,8 +51,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-// Appel de la gestion standard des pages
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 function Aff_Ne_Dec($row)
 {
@@ -80,7 +80,7 @@ if (! $texte) Insere_Haut(my_html($objet), $compl, 'Liste_Pers', $Type_Liste);
 
 $sortie = 'H';
 
-if (!$texte) include('jscripts/edition_geneamania.js');
+if (!$texte) include(__DIR__ . '/assets/js/edition_geneamania.js');
 
 // Préparation sur la clause de diffusabilité
 $p_diff_int = '';
@@ -204,7 +204,7 @@ if (! $texte) {
     // Sur les sites hébergés, uniquement pour les Premium
     if ((!$SiteGratuit) or ($Premium)) {
         if ((!$texte) and ($Type_Liste == 'P')) {
-            include('jscripts/Liste_Pers.js');
+            include(__DIR__ . '/assets/js/Liste_Pers.js');
             $self = my_self();
             echo '<form id="saisieP" method="post" action="' . $self . '?' . Query_Str() . '">' . "\n";
             echo '<input type="' . $hidden . '" id="page" value = "' . $self . '" />';

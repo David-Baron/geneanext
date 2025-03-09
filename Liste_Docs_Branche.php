@@ -4,9 +4,8 @@
 // Liste des documents pour une branche
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -34,7 +33,7 @@ $acces = 'L';
 $titre = $LG_Menu_Title['Galery_Branch'];        // Titre pour META
 $x = Lit_Env();
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Ecran interdit sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) $bt_An = true;
@@ -53,8 +52,8 @@ else {
         // var_dump($_SESSION['estPrivilegie']);
 
         // Affichage du formulaire de choix sur le 1er affichage
-        include('jscripts/edition_geneamania.js');
-        include('jscripts/Liste_Pers.js');
+        include(__DIR__ . '/assets/js/edition_geneamania.js');
+        include(__DIR__ . '/assets/js/Liste_Pers.js');
 
         echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
 

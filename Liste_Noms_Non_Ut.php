@@ -4,7 +4,8 @@
 // Liste des noms non utilisés par des personnes
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 
 // Récupération des variables de l'affichage précédent
@@ -14,8 +15,6 @@ foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
 }
-
-include('fonctions.php');
 
 // Sécurisation des variables postées
 $ok  = Secur_Variable_Post($ok, strlen($lib_Supprimer), 'S');
@@ -30,7 +29,7 @@ $titre = $LG_Menu_Title['Name_Not_Used'];     // Titre pour META
 $niv_requis = 'C';                               // Page réservée à partir du profil contributeur
 $x = Lit_Env();
 
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();

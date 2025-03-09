@@ -7,9 +7,8 @@
 //   - au format csv pour un import dans un tableur
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -38,7 +37,7 @@ $acces = 'L';                                    // Type d'accès de la page : (
 $titre = $LG_Menu_Title['Search_Comment'];        // Titre pour META
 $niv_requis = 'C';
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -62,7 +61,7 @@ if ($est_gestionnaire) {
     //Demande de recherche
     if ($bt_OK) {
 
-        include_once('Commun_Rech_Com_Util_Docs.php');
+        require(__DIR__ . '/Commun_Rech_Com_Util_Docs.php');
 
         if ($Sortie == 'c') {
             $nom_fic = $chemin_exports . 'recherche_commentaires.csv';
@@ -231,7 +230,7 @@ if ($est_gestionnaire) {
         echo '</table>' . "\n";
         echo '</form>' . "\n";
 
-        include('Insert_Tiny.js');
+        include(__DIR__ . '/assets/js/Insert_Tiny.js');
     }
 
     if ($Sortie != 't') Insere_Bas($compl);

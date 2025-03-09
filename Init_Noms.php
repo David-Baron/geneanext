@@ -4,14 +4,14 @@
 // L'identifiant est alors à null
 //=====================================================================
 
-// Gestion standard des pages
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Init_Names'];
 $x = Lit_Env();
 $niv_requis = 'G';                       // Page réservée au profil gestionnaire
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $n_personnes     = nom_table('personnes');
 $n_noms          = nom_table('noms_famille');
@@ -23,10 +23,8 @@ function Creation_Noms()
     global $idNom, $Init, $existe_null,
         $n_personnes, $n_noms, $n_liens_noms;
 
-    //    Appel du fichier contenant la classe
-    include 'phonetique.php';
-    //    Initialisation d'un objet de la classe
-    $codePho = new phonetique();
+    require(__DIR__ . '/app/Phonetique.php');
+    $codePho = new Phonetique();
 
     $Anom = '';
     $idNom = Nouvel_Identifiant('idNomFam', 'noms_famille') - 1;

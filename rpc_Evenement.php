@@ -2,7 +2,8 @@
 
 // appelé en ajax pour avoir les évènements correspondant à un type
 
-include_once('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $debug = false;
 

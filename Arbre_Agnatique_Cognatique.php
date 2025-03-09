@@ -4,9 +4,9 @@
 // Arbre agnatique (par les hommes) / cognatique (par les femmes)
 //=====================================================================
 
-session_start();
-// Gestion standard des pages
-include('fonctions.php');              // Appel des fonctions générales
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
 // Recup de la variable passée dans l'URL : type d'arbre : "A"gnatique / "C"ognatique
@@ -20,7 +20,7 @@ if ($cognatique) $titre = $LG_Tree_Women_Asc;
 
 $x = Lit_Env();
 $index_follow = 'IN';                    // NOFOLLOW demandé pour les moteurs
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -28,7 +28,7 @@ $texte = Dem_Texte();
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');
 
-include('Commun_Arbre.php');
+require(__DIR__ . '/Commun_Arbre.php');
 
 
 $imp_mar = 0;

@@ -3,9 +3,8 @@
 // Edition d'une personne
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -62,7 +61,7 @@ $acces = 'M';                                              // Type d'accès de l
 if ($Modif) $titre = $LG_Menu_Title['Person_Modify'];    // Titre pour META
 else $titre = $LG_Menu_Title['Person_Add'];
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -808,9 +807,9 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     // Récupération de la liste des types
     Recup_Types_Evt('P');
 
-    include('jscripts/Edition_Personne.js');
-    include('jscripts/Ajout_Evenement.js');
-    include('Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Edition_Personne.js');
+    include(__DIR__ . '/assets/js/Ajout_Evenement.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
     // Récupération des données de la personne
     if ($Modif) {
@@ -904,7 +903,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo "<body bgcolor=\"#FFFFFF\">";
 }
 
-include('gest_onglets.js');
+include(__DIR__ . '/assets/js/gest_onglets.js');
 ?>
 
 <!-- On cache les div d'ajout des villes et du nom et on positionne l'onglet par défaut -->

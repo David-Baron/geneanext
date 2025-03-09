@@ -3,8 +3,8 @@
 // Edition d'un lien
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -57,7 +57,7 @@ if ($Ref != -1) $titre = $LG_Menu_Title['Link_Edit'];
 else $titre = $LG_Menu_Title['Link_Add'];
 
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $Type_Ref = 'L';                        // Type de référence pour les commentaires
 
@@ -373,7 +373,7 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
-    include('Insert_Tiny.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
     $compl = Ajoute_Page_Info(600, 150);
     // Lien vers la fiche uniquement en modification
@@ -412,7 +412,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $x = Aff_Lien($enreg2);
 
     echo '</form>';
-    include('gest_onglets.js');
+    include(__DIR__ . '/assets/js/gest_onglets.js');
     echo '<!-- On positionne l\'onglet par défaut -->' . "\n";
     echo '<script type="text/javascript">' . "\n";
     echo '	setupPanes("container1", "tab1", 40);' . "\n";

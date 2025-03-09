@@ -3,9 +3,8 @@
 // Liste des connexions
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
@@ -23,7 +22,7 @@ $acces = 'L';
 $titre = $LG_Menu_Title['Connections'];
 $x = Lit_Env();
 $niv_requis = 'G';
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Sortie dans un fichier CSV ?
 $csv_dem = Recup_Variable('csv', 'C', 'ce');

@@ -4,8 +4,8 @@
 // Fonction de recherche générique sur les personnes par les parents ou conjoints
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -45,7 +45,7 @@ $acces = 'L';                                // Type d'accès de la page : (L)ec
 $titre = $LG_Menu_Title['Sch_Pers_CP'];        // Titre pour META
 $niv_requis = 'P';                            // Page accessible à partir du niveau privilégié
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -243,8 +243,8 @@ if ($bt_OK) {
         // L'utilisateur a demandé une recherche phonétique
         if ($Son != 'o') {
             // Transformation du nom en phonétique
-            include 'phonetique.php';
-            $codePho = new phonetique();
+            require(__DIR__ . '/app/Phonetique.php');
+            $codePho = new Phonetique();
             $NomP = $codePho->calculer($NomP);
         }
         switch ($Son) {

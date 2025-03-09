@@ -4,7 +4,8 @@
 // 
 //===========================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('annuler', 'Horigine');
@@ -14,7 +15,6 @@ foreach ($tab_variables as $nom_variables) {
     else $$nom_variables = '';
 }
 
-include('fonctions.php');
 
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
@@ -27,7 +27,7 @@ $acces = 'L';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Menu_Title['Check_Pers'];    // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'C';                        // Il faut un niveau contributeur pour accéder à la page
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

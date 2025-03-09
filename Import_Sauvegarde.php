@@ -3,9 +3,8 @@
 // Import d'une sauvegarde de la base éventuellement sur une base distante
 //=====================================================================
 
-// Gestion standard des pages
-session_start();                       // Démarrage de la session
-include('fonctions.php');              // Appel des fonctions générales
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -38,7 +37,7 @@ $acces = 'M';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Menu_Title['Import_Backup'];
 $x = Lit_Env();
 $niv_requis = 'G';                        // Page réservée au gestionnaire
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // $SiteGratuit = true;
 

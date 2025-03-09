@@ -4,15 +4,14 @@
 // Répartition des âges de décès sur une période donnée en fonction de l'année de naissance
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $tab_variables = array('cache', 'annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
 }
-
-include('fonctions.php');
 
 // Sécurisation des variables postées
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
@@ -29,7 +28,7 @@ $Fin = Recup_Variable('Fin', 'N');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_CH_HISTO_DEATH_TITLE . $Debut . '-' . $Fin;      // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -134,7 +133,7 @@ $largeur = 300;
 $hauteur = 250;
 $largeur_labels = 180;
 
-include('piechart3.php');
+require(__DIR__ . '/piechart3.php');
 echo '<br />';
 echo '<table align="center" border="0">';
 echo '<tr>';

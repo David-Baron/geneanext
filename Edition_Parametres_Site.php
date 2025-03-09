@@ -3,9 +3,8 @@
 // Gestion des paramètres généraux du site
 //=====================================================================
 
-session_start();
-
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -50,7 +49,7 @@ $acces = 'M';                                    // Type d'accès de la page : (
 $niv_requis = 'G';
 $titre = $LG_Menu_Title['Site_parameters'];    // Titre pour META
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -151,8 +150,8 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An)) {
 
-    // include('jscripts/Edition_Parametres_Graphiques.js');
-    include('Insert_Tiny.js');
+    # include(__DIR__ . '/assets/js/Edition_Parametres_Graphiques.js');
+    include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
     $compl = Ajoute_Page_Info(600, 150);
     Insere_Haut(my_html($titre), $compl, 'Edition_Parametres_Site', '');
@@ -259,7 +258,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</form>';
     Insere_Bas($compl);
 
-    echo '<script type="text/javascript" src="jscripts/jscolor.js"></script>';
+    echo '<script type="text/javascript" src="assets/js/jscolor.js"></script>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

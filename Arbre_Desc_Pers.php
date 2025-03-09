@@ -4,13 +4,14 @@
 // Arbre descendant d'une personne au format HTML ou au format texte
 //=====================================================================
 
-session_start();
-include('fonctions.php');
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
+
 $acces = 'L';                    // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_desc_tree;            // Titre pour META
 $x = Lit_Env();
 $index_follow = 'IN';            // NOFOLLOW demandé pour les moteurs
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 $n_personnes = nom_table('personnes');
 $n_unions = nom_table('unions');

@@ -3,11 +3,10 @@
 // Saisie du de cujus et de son noyau
 //=====================================================================
 
-session_start();
+require(__DIR__ . '/app/bootstrap.php');
+require(__DIR__ . '/fonctions.php');
 
 $test = false;
-
-include('fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -67,7 +66,7 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour
 $titre = $LG_Menu_Title['Decujus_And_Family'];
 $x = Lit_Env();
-include('Gestion_Pages.php');
+require(__DIR__ . '/Gestion_Pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -346,7 +345,7 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An)) {
 
-    //include('jscripts/Noyau.js');
+    # include(__DIR__ . '/assets/js/Noyau.js');
 
     $compl = Ajoute_Page_Info(650, 250);
 
