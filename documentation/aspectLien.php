@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Document sans nom</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<?php include("include.html") ?>
+<div id="contenu">
+<h2><a name="haut"></a>Aspect des liens</h2>
+<p><a href="#G">Fonctionnement g&eacute;n&eacute;ral</a> - <a href="#L0">Lien union automatique</a> - <a href="#L1">Lien union 1</a> - <a href="#L2">Lien union 2</a> - <a href="#L3">Lien union 3</a> - <a href="#F1">Lien familial automatique</a> - <a href="#F2">Lien familial manuel</a></p>
+<table border="0" cellpadding="1" summary="">
+  <tr>
+    <td><p>Vous pouvez modifier l'aspect du lien de l'union entre deux personnes. Il suffit de faire un clic droit <img src="images/sourisDroite.jpg" width="28" height="47" alt=""> sur un lien d'union et de choisir la forme que vous souhaitez utiliser.</p>
+    <p>Vous avez le choix entre :</p>
+    <ul>
+      <li><a href="#L0">lien automatique</a> ;</li>
+      <li><a href="#L1">lien d'union 1</a> ;</li>
+      <li><a href="#L2">lien d'union 2</a> ;</li>
+      <li><a href="#L3">lien d'union 3</a>.</li>
+    </ul></td>
+    <td><img src="images/lienMenu.jpg" alt="" width="518" height="320" class="imageBord1pt"></td>
+  </tr>
+  <tr>
+    <td><p>Vous pouvez aussi modifier le lien familial (entre les parents et les enfants) en faisant un clic droit et en choisissant une option de pr&eacute;sentation.</p>
+    <p>Vous avez le choix entre :</p>
+    <ul>
+      <li><a href="#F1">lien automatique</a> ;</li>
+      <li><a href="#F2">lien familial manuel</a>. </li>
+    </ul></td>
+    <td><img src="images/lienMenu2.png" width="381" height="304" class="imageBord1pt" alt=""></td>
+  </tr>
+</table>
+<hr>
+<h4><a name="G" id="G"></a>Fonctionnement g&eacute;n&eacute;ral  <a href="#haut"><img src="images/debut.gif" width="16" height="16" class="imageSansBord" alt=""></a></h4>
+<p>Certaines parties des liens sont modifiables manuellement.</p>
+<p>Il suffit de cliquer sur un segment de droite ou sur un point pour le d&eacute;placer. Quand vous d&eacute;placez une personne, le lien conserve ses proportions. Quand vous d&eacute;placez une personne,  les points conservent la position qu'ils ont par rapport &agrave;  la personne la plus proche. </p>
+<p>Le lieu et la date de l'union se positionnent toujours &agrave; mi-distance des deux parents et au-dessus du lien. </p>
+<hr>
+<h4><a name="L0"></a>Lien de l'union automatique <a href="#haut"><img src="images/debut.gif" width="16" height="16" class="imageSansBord" alt=""></a></h4>
+<p>Ce lien se d&eacute;termine automatiquement &agrave; partir des deux parents. Le trait vertical est toujours &agrave; mi-distance des deux parents.</p>
+<hr>
+<h4><a name="L1"></a>Lien de l'union 1 <a href="#haut"><img src="images/debut.gif" width="16" height="16" class="imageSansBord" alt=""></a></h4>
+<p>Par rapport au lien automatique, ce lien permet de positionner manuellement le segment vertical. Exemples :</p>
+<p><img src="images/lien1a.jpg" width="290" height="178" class="imageBord1pt" alt=""> <img src="images/lien1b.jpg" width="298" height="188" class="imageBord1pt" alt=""></p>
+<hr>
+<h4><a name="L2"></a>Lien de l'union 2 <a href="#haut"><img src="images/debut.gif" alt="" width="16" height="16" class="imageSansBord"></a></h4>
+<p>Vous pouvez placer le segment horizontal o&ugrave; vous voulez, au-dessus du parent le plus haut, entre les parents ou en dessous du parent le plus bas. De plus, vous pouvez d&eacute;placer les deux points entre segment horizontal et segment vertical afin que le segment qui part du parent soit oblique. Exemples :</p>
+<p><img src="images/lien2a.jpg" width="315" height="189" class="imageBord1pt" alt=""> <img src="images/lien2b.jpg" width="315" height="233" class="imageBord1pt" alt=""> <img src="images/lien2c.jpg" width="305" height="189" class="imageBord1pt" alt=""> </p>
+<hr>
+<h4><a name="L3" id="L3"></a>Lien de l'union 3 <a href="#haut"><img src="images/debut.gif" alt="" width="16" height="16" class="imageSansBord"></a></h4>
+<p>Ce lien est celui qui offre le plus de possibilit&eacute;s de modifications. Vous pouvez d&eacute;placer trois segments et deux points. Exemples :</p>
+<p><img src="images/lien3a.jpg" width="317" height="201" class="imageBord1pt" alt=""> <img src="images/lien3b.jpg" width="318" height="244" class="imageBord1pt" alt=""> <img src="images/lien3c.jpg" width="367" height="222" class="imageBord1pt" alt=""> </p>
+<hr>
+<h4><a name="F1"></a>Lien familial automatique <a href="#haut"><img src="images/debut.gif" width="16" height="16" class="imageSansBord" alt=""></a></h4>
+<p>Ce lien se d&eacute;termine automatiquement &agrave; partir de la famille.</p>
+<hr>
+<h4><a name="F2"></a>Lien familial manuel <a href="#haut"><img src="images/debut.gif" width="16" height="16" class="imageBord1pt" alt=""></a></h4>
+<p>Vous pouvez d&eacute;placer les 3 segments suivant vos envies. Le logiciel limite certains mouvements pour que :</p>
+<ul>
+  <li>le segment vertical qui relie le lien de l'union reste entre les deux parents ;</li>
+  <li>le segment vertical qui relie la fratrie reste entre les enfants   extr&ecirc;mes.</li>
+</ul>
+<p><img src="images/lienFmanuel.jpg" width="302" height="224" class="imageBord1pt" alt=""></p>
+<hr>
+<p>Les exemples qui figurent sur cette page ne sont pas forc&eacute;ment &agrave; reproduire, ils servent &agrave; illustrer les possibilit&eacute;s du logiciel. </p>
+</div>
+</div>
+</body>
+</html>

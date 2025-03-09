@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation G&eacute;n&eacute;Graphe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body> 
+<h2><a name="haut"></a>Mod&egrave;le d'&eacute;tiquette de personne </h2> 
+<p><a href="#A0">Cr&eacute;er un mod&egrave;le</a> - <a href="#A1">Barre de boutons</a> - <a href="#A2">Choix du type</a> - <a href="#A3">	Mettre en forme</a> - <a href="#A4">Zone de saisie</a> - <a href="#A5">Les donn&eacute;es variables</a> - <a href="#A5a">Conditions</a> - <a href="#A6">Personne d'exemple</a> - <a href="#A7">Exemple</a> - <a href="#A9">Supprimer un mod&egrave;le</a> - <a href="#A10">Mod&egrave;le par d&eacute;faut</a> - <a href="#A11">Appliquer un mod&egrave;le</a> - <a href="exemplesModeles.html">Exemples de mod&egrave;les</a></p>
+<p>Vous pouvez d&eacute;finir des mod&egrave;les pour les &eacute;tiquettes des personnes et pour les &eacute;tiquettes des familles. </p>
+<hr> 
+<h4><a name="A0" id="A0"></a>Cr&eacute;er un mod&egrave;le <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4> 
+<p>Pour cr&eacute;er un mod&egrave;le de personne, il faut que l'arbre en cours d'&eacute;dition contienne au moins une personne. Pour cr&eacute;er un mod&egrave;le de famille, il faut que l'arbre en cours d'&eacute;dition contienne au moins une famille. Cela permet, lors de la d&eacute;finition d'un mod&egrave;le, de voir en temps r&eacute;el un exemple d'&eacute;tiquette appliqu&eacute; &agrave; une des personnes ou &agrave; une des familles de l'arbre courant.</p> 
+<p>Pour cr&eacute;er un mod&egrave;le, il faut aller dans le <a href="fichier.html">menu Fichier</a> et choisir Mod&egrave;les d'&eacute;tiquettes. G&eacute;n&eacute;Graphe ouvre une fen&ecirc;tre pour cr&eacute;er et modifier vos mod&egrave;les. </p> 
+<p><img src="images/modeleEtiq01.png" width="540" height="327"></p> 
+<p>Cet &eacute;cran comprend 7 zones qui sont :</p> 
+<ul> 
+  <li>une <a href="#A2">barre de boutons</a> pour g&eacute;rer les mod&egrave;les (ouvrir, enregistrer, renommer&hellip;) - rep&egrave;re 1 ;</li> 
+  <li>deux boutons radio pour choisir le type du mod&egrave;le (rep&egrave;re 2) ; </li>
+  <li>une barre de boutons pour <a href="#A4">mettre en forme le texte</a> (rep&egrave;re 3) ;</li>
+  <li>une zone o&ugrave; vous <a href="A3">saisissez le mod&egrave;le</a> (rep&egrave;re 4) ;</li> 
+  <li>une liste d&eacute;roulante pour mettre en place<a href="#A5"> les donn&eacute;es variables</a> (rep&egrave;re 5) ;</li> 
+  <li>une liste d&eacute;roulante pour <a href="#A3">choisir la personne ou la famille</a> qui sert d'exemple de l'&eacute;tiquette (rep&egrave;re 6) ;</li> 
+  <li>une <a href="#A">&eacute;tiquette d'exemple</a> dont les donn&eacute;es d&eacute;pendent de la personne ou de la famille choisie (rep&egrave;re 7).</li> 
+</ul> 
+<hr> 
+<h4><a name="A1" class="sansBord" id="A1"></a>Barre de boutons (rep&egrave;re 1) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4> 
+<p>Cette barre contient 7 boutons dont le r&ocirc;le est :</p> 
+<table border="0" cellpadding="5"> 
+  <tr> 
+    <td><img src="images/nouveau.png" width="16" height="16"></td> 
+    <td>Nouveau mod&egrave;le - ce bouton ferme (et &eacute;ventuellement enregistre) le mod&egrave;le courant et permet de d&eacute;finir un nouveau mod&egrave;le. </td> 
+  </tr> 
+  <tr> 
+    <td><img src="images/ouvrir.png" width="16" height="16"></td> 
+    <td>Ouvrir mod&egrave;le - ce bouton ouvre un mod&egrave;le existant (et &eacute;ventuellement enregistre le mod&egrave;le courant) pour le modifier. </td> 
+  </tr> 
+  <tr> 
+    <td><img src="images/enregistrer.png" width="16" height="16"></td> 
+    <td>Enregistrer - permet d'enregistrer le mod&egrave;le courant.</td> 
+  </tr> 
+  <tr> 
+    <td><img src="images/enregistrerSous.png" width="16" height="16"></td> 
+    <td>Enregistre sous - permet d'enregistrer le mod&egrave;le courant sous un nouveau nom. </td> 
+  </tr> 
+  <tr> 
+    <td><img src="images/renommer.gif" width="16" height="16"></td> 
+    <td>Renommer - ce bouton permet de changer le nom et la description du mod&egrave;le courant. Il faut sauvegarder le mod&egrave;le pour que ces modifications soient enregistr&eacute;es. </td> 
+  </tr> 
+  <tr> 
+    <td><img src="images/supprimer.gif" width="16" height="16"></td> 
+    <td>Supprmier - ce bouton supprime le mod&egrave;le courant. Ce bouton n'est accessible que si aucun arbre n'utilise le mod&egrave;le. </td> 
+  </tr> 
+  <tr> 
+    <td><img src="images/modeleDefaut.gif" width="16" height="16"></td> 
+    <td>Mod&egrave;le par d&eacute;faut - permet de d&eacute;finir le <a href="#A8">mod&egrave;le par d&eacute;faut</a> utilis&eacute; lorsque vous ajoutez une personne &agrave; un arbre. </td> 
+  </tr> 
+</table> 
+<p>Ces boutons sont accessibles ou pas. Cela d&eacute;pend de l'&eacute;tat du mod&egrave;le courant. Par exemple, quand le mod&egrave;le est vide, il n'est pas possible de l'enregistrer.</p>
+<hr>
+<h4><a name="A2" id="A2"></a>Choix du type de mod&egrave;le  (rep&egrave;re 2) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>
+<p>Quand vous avez un mod&egrave;le vierge, vous pouvez choisir le type de mod&egrave;le que vous souhaitez cr&eacute;er. Tant que vous ne sauvegardez pas le mod&egrave;le, vous pouvez changer le type. Si vous le faites, tout ce que vous avez d&eacute;j&agrave; saisi sera effac&eacute;.</p>
+<p>Quand vous changez le type de mod&egrave;le, la liste des donn&eacute;es variables (rep&egrave;re 5) change de contenu. </p>
+<hr>
+<h4><a name="A3" id="A3"></a>Mettre en forme le texte (rep&egrave;re 3) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>Ces boutons sont habituels dans un traitement de texte. </p>
+<table>
+  <tr>
+    <td><div align="right"><img src="images/choixPolice.jpg" width="150" height="20"></div></td>
+    <td>choix de la police de caract&egrave;res </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/choixCorps.jpg" width="50" height="20"></div></td>
+    <td>choix du corps (taille) des caract&egrave;res </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/aligneG.jpg" width="16" height="16"></div></td>
+    <td>alignement &agrave; gauche </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/aligneC.jpg" width="16" height="16"></div></td>
+    <td>alignement au centre </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/aligneD.jpg" width="16" height="16"></div></td>
+    <td>alignement &agrave; droite </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/couleurTexte.png" width="16" height="16"></div></td>
+    <td>couleur du texte </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/gras.png" width="16" height="16"></div></td>
+    <td>mise en gras </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/italic.png" width="16" height="16"></div></td>
+    <td>mise en italique </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/souligne.png" width="16" height="16"></div></td>
+    <td>soulignement du texte </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/couper.gif" width="16" height="16"></div></td>
+    <td>coupe le texte s&eacute;lectionn&eacute; dans le presse-papier </td>
+  </tr>
+  <tr>
+    <td><div align="right"> <img src="images/copier.gif" width="16" height="16"></div></td>
+    <td>copie le texte s&eacute;lectionn&eacute; dans le presse-papier </td>
+  </tr>
+  <tr>
+    <td><div align="right"><img src="images/coller.gif" width="16" height="16"></div></td>
+    <td>colle le contenu du presse-papier &agrave; l'emplacement du curseur </td>
+  </tr>
+</table>
+<hr> 
+<h4><a name="A4" id="A4"></a>Zone de saisie de l'&eacute;tiquette (rep&egrave;re 4) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4> 
+<p>Dans cette zone, vous saisissez le texte de l'&eacute;tiquette.<br> 
+  Vous pouvez :
+<ul> 
+  <li>mettre du texte constant (il sera le m&ecirc;me pour toutes les personnes), c'est tout ce que vous saisissez directement ;</li> 
+  <li>utiliser des <a href="#A5">variables</a> ;</li> 
+  <li>afficher du texte en fonction de certaines <a href="#A6">conditions</a>. </li> 
+</ul> 
+<hr> 
+<h4><a name="A5"></a>Les donn&eacute;es variables (rep&egrave;re 5) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4> 
+<p>Les donn&eacute;es variables sont les valeurs qui d&eacute;pendent de chaque personne ou de chaque famille. Les donn&eacute;es variables pour les personnes sont :</p> 
+<table> 
+  <tr> 
+    <td><div align="center">Nom de la variable </div></td> 
+    <td><div align="center">Fonction </div></td> 
+  </tr> 
+  <tr> 
+    <td>&lt;nom&gt;</td> 
+    <td>Nom de la personne</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;prenomUsuel&gt;</td> 
+    <td>Pr&eacute;nom usuel de la personne : si le pr&eacute;nom usuel de la personne n'est pas le premier, il faut modifier la fiche de la personne dans G&eacute;n&eacute;aMania pour le placer entre les caract&egrave;res &laquo; &lt; &raquo; et &laquo; &gt; &raquo;. Quand G&eacute;n&eacute;Graphe trouve un pr&eacute;nom entre ces caract&egrave;res, c'est ce pr&eacute;nom qui sera consid&eacute;r&eacute; comme pr&eacute;nom usuel sinon c'est le premier pr&eacute;nom qui sera pris en compte. </td> 
+  </tr> 
+  <tr> 
+    <td>&lt;prenoms&gt;</td> 
+    <td>Tous les pr&eacute;noms de la personne</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;dateNais&gt;</td> 
+    <td>Date de naissance</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;villeNais&gt;</td> 
+    <td>Ville de naissance</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;dateDeces&gt;</td> 
+    <td>Date de d&eacute;c&egrave;s</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;villeDeces&gt;</td> 
+    <td>Ville de d&eacute;c&egrave;s</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;e&gt;</td> 
+    <td>Accord masculin/f&eacute;minin : pour que certains mots (par exemple &laquo;&nbsp;N&eacute;&nbsp;&raquo; ou &laquo;&nbsp;D&eacute;c&eacute;d&eacute;&nbsp;&raquo;) s'accordent au genre de la personne, il faut mettre la variable &lt;e&gt; l&agrave; o&ugrave; vous voulez que l'accord se fasse (par exemple &laquo;&nbsp;N&eacute;&lt;e&gt;&nbsp;&raquo; ou &laquo;&nbsp;D&eacute;c&eacute;d&eacute;&lt;e&gt;&nbsp;&raquo;). Cette variable &lt;e&gt; s'applique &agrave; n'importe quel texte. (<a href="exemplesModeles.html">Voir des exemples</a>) </td> 
+  </tr> 
+  <tr> 
+    <td>&lt;deptNais&gt;</td> 
+    <td>D&eacute;partement de naissance</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;regionNais&gt;</td> 
+    <td>R&eacute;gion de naissance</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;paysNais&gt;</td> 
+    <td>Pays de naissance</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;deptDeces&gt;</td> 
+    <td>D&eacute;partement de d&eacute;c&egrave;s</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;regionDeces&gt;</td> 
+    <td>R&eacute;gion de d&eacute;c&egrave;s</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;paysDeces&gt;</td> 
+    <td>Pays de d&eacute;c&egrave;s</td> 
+  </tr> 
+  <tr> 
+    <td>&lt;ageDeces&gt;</td> 
+    <td>&Acirc;ge au d&eacute;c&egrave;s</td> 
+  </tr> 
+  <tr>
+    <td>&lt;autresNoms&gt;</td>
+    <td>Liste du ou des autres noms de la personne </td>
+  </tr>
+  <tr> 
+    <td>&lt;SI&gt;</td> 
+    <td>Voir les <a href="#A6">explications</a> sur les conditions (<a href="exemplesModeles.html">Voir des exemples</a>) </td> 
+  </tr> 
+</table> 
+<p> Les donn&eacute;es variables pour les familles sont :</p>
+<table>
+  <tr>
+    <td><div align="center">Nom de la variable </div></td>
+    <td><div align="center">Fonction </div></td>
+  </tr>
+  <tr>
+    <td>&lt;dateMariage&gt;</td>
+    <td>Date du mariage </td>
+  </tr>
+  <tr>
+    <td>&lt;dateActe&gt;</td>
+    <td>Date de l'acte notarial du contrat de mariage </td>
+  </tr>
+  <tr>
+    <td>&lt;nomNotaire&gt;</td>
+    <td>Nom du notaire </td>
+  </tr>
+  <tr>
+    <td>&lt;villeMariage&gt;</td>
+    <td>Ville du mariage</td>
+  </tr>
+  <tr>
+    <td>&lt;deptMariage&gt;</td>
+    <td>D&eacute;partement du mariage</td>
+  </tr>
+  <tr>
+    <td>&lt;regionMariage&gt;</td>
+    <td>R&eacute;gion du mariage</td>
+  </tr>
+  <tr>
+    <td>&lt;paysMariage&gt;</td>
+    <td>Pays du mariage</td>
+  </tr>
+  <tr>
+    <td>&lt;villeNotaire&gt;</td>
+    <td>Ville du notaire </td>
+  </tr>
+  <tr>
+    <td>&lt;deptNotaire&gt;</td>
+    <td>D&eacute;partement du notaire</td>
+  </tr>
+  <tr>
+    <td>&lt;region&gt;</td>
+    <td>R&eacute;gion du notaire</td>
+  </tr>
+  <tr>
+    <td>&lt;paysActe&gt;</td>
+    <td>Pays du notaire</td>
+  </tr>
+  <tr>
+    <td>&lt;SI&gt;</td>
+    <td>Voir les <a href="#A6">explications</a> sur les conditions (<a href="exemplesModeles.html">Voir des exemples</a>) </td>
+  </tr>
+</table>
+<p>Pour mettre en place une variable, vous avez deux possibilit&eacute;s :</p>
+<ul>
+  <li>soit vous saisissez le code en totalit&eacute; (par exemple &laquo;&nbsp;&lt;dateNais&gt;&nbsp;&raquo;) ;</li>
+  <li>soit :</li>
+  <ul>
+    <li>vous placez le curseur &agrave; l'endroit o&ugrave; vous voulez ins&eacute;rer la variable,</li>
+    <li>vous s&eacute;lectionnez le code dans la liste rep&egrave;re 4,</li>
+    <li> vous cliquez sur le bouton &laquo;&nbsp;&lt;&lt; Ajouter&nbsp;&raquo;.<br>
+    </li>
+  </ul>
+</ul>
+<hr>
+<h4><a name="A6" id="A6"></a>Les conditions <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<table>
+  <tr>
+    <td>Les conditions vous permettent de voir du texte si une variable est renseign&eacute;e. Par exemple, si votre &eacute;tiquette affiche la date de d&eacute;c&egrave;s et que la personne n'a pas de date de d&eacute;c&egrave;s, vous obtiendrez cette &eacute;tiquette. </td>
+    <td><img src="images/modeleEtiq02.png" width="145" height="57" border="1"></td>
+  </tr>
+  <tr>
+    <td><p>Pour ne pas afficher la troisi&egrave;me ligne, il faut utiliser une condition. L'&eacute;tiquette doit contenir la formule qui peut se lire : si la date de d&eacute;c&egrave;s est renseign&eacute;e, alors il faut afficher le texte &laquo;&nbsp;D&eacute;c&eacute;d&eacute;&lt;e&gt; le &lt;dateDeces&gt; &agrave; &lt;villeDeces&gt;&nbsp;&raquo;</p></td>
+    <td><p><img src="images/modeleEtiq03.png" width="438" height="50" border="1"> </p></td>
+  </tr>
+  <tr>
+    <td><p>L'&eacute;tiquette affich&eacute;e contiendra alors :</p></td>
+    <td><img src="images/modeleEtiq04.png" width="145" height="38" border="1"></td>
+  </tr>
+</table>
+<p>Suivant les besoins, vous pouvez utiliser une syntaxe du genre :</p>
+<ul>
+  <li>&lt;SI&gt;...&lt;ALORS&gt;...&lt;SINON&gt;...&lt;FINSI&gt; (syntaxe 1) </li>
+  <li>&lt;SI&gt;...&lt;ALORS&gt;...&lt;FINSI&gt; (syntaxe 2)</li>
+  <li>&lt;SI&gt;...&lt;SINON&gt;...&lt;FINSI&gt; (syntaxe 3)</li>
+</ul>
+<p>Entre les mots &lt;SI&gt; et &lt; ALORS&gt;, il faut placer une variable. Cela permet de tenir compte de deux possibilit&eacute;s, soit elle est renseign&eacute;e, soit elle n'est pas renseign&eacute;e. </p>
+<p>Si la variable est renseign&eacute;e, G&eacute;n&eacute;Graphe prend en compte tout ce qui se trouve entre les mots &lt;ALORS&gt; et &lt;SINON&gt; ou &lt;ALORS&gt; et &lt;FINSI&gt; suivant que vous utilisiez la syntaxe 1 ou 2.</p>
+<p>Si la variable n'est pas renseign&eacute;e, G&eacute;n&eacute;Graphe prend en compte tout ce qui se trouve entre les mots &lt;ALORS&gt; et &lt;FINSI&gt; ou &lt;SINON&gt; et &lt;FINSI&gt; suivant que vous utilisiez la syntaxe 2 ou 3.</p>
+<p>Plusieurs <a href="exemplesModeles.html">exemples</a> vous sont propos&eacute;s. </p>
+<hr>
+<h4><a name="A7" id="A7"></a>Choix de la personne ou de la famille utilis&eacute;e pour l'exemple (rep&egrave;re 5) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>Cette liste vous propose de choisir, parmi les personnes ou les familles pr&eacute;sentes dans l'arbre courant, celle qui servira d'exemple. </p>
+<hr>
+<h4><a name="A8" id="A8"></a>Affichage de l'exemple (rep&egrave;re 6) <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>Dans ce cadre, vous voyez imm&eacute;diatement toutes les modifications que vous apportez au mod&egrave;le. La dimension de l'exemple s'adapte au contenu.</p>
+<hr>
+<h4><a name="A8" id="A8"></a>Supprimer un mod&egrave;le <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>Ce bouton (<img src="images/supprimer.gif" width="16" height="16">) est accessible uniquement si l'&eacute;tiquette n'est utilis&eacute;e dans aucun arbre. Quand vous cliquez dessus, le mod&egrave;le est supprim&eacute;.</p>
+<hr>
+<h4><a name="A10" id="A10"></a>Mod&egrave;le par d&eacute;faut <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>Le mod&egrave;le par d&eacute;faut est utilis&eacute; quand vous ajoutez une personne ou une famille &agrave; un arbre. Pour d&eacute;finir le mod&egrave;le &agrave; utiliser par d&eacute;faut, il faut cliquer sur le bouton <img src="images/modeleDefaut.gif" width="16" height="16">. G&eacute;n&eacute;Graphe vous propose la liste des mod&egrave;les existants.</p>
+<p><img src="images/modeleEtiq05.png" width="285" height="281"></p>
+<p>Le type de mod&egrave;le par d&eacute;faut (personne ou famille) d&eacute;pend du choix que vous faites (voir rep&egrave;re 2). </p>
+<p>Choisissez le mod&egrave;le &agrave; utiliser par d&eacute;faut en cliquant dans la colonne Choix et cliquez sur le bouton Valider. </p>
+<hr>
+<h4><a name="A11" id="A11"></a>Appliquer un mod&egrave;le <a href="#haut"><img src="images/debut.gif" width="16" height="16" border="0"></a></h4>
+<p>Pour utliser un mod&egrave;le &agrave; une personne, il faut faire un clic droit <img src="images/sourisDroite.jpg" width="28" height="47"> sur la personne. G&eacute;n&eacute;Graphe vous propose alors la liste des mod&egrave;les disponibles.</p>
+<p><img src="images/etiquette05.png" width="285" height="281"></p>
+<p>Il sufit de s&eacute;lectionner le mod&egrave;le &agrave; utiliser en le s&eacute;lectionnant dans la colonne Choix. Quand vous cliquez sur le bouton Valider, G&eacute;n&eacute;Graphe utilise ce mod&egrave;le pour afficher les renseignements de la personne. </p>
+<p>Pour appliquer un mod&egrave;le &agrave; une famille, faites un clic droit sur l'&eacute;tiquette de la famille. Vous obtenez la m&ecirc;me fen&ecirc;tre que ci-dessus. L'application d'un mod&egrave;le respecte la m&ecirc;me d&eacute;marche. </p>
+</body></html>
