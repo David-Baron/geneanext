@@ -1,6 +1,0 @@
-{
-    "require": {
-        "php": ">=8.1",
-        "symfony/http-foundation": "^7.2"
-    }
-}

@@ -1,5 +1,0 @@
-[ ] In phonetique.php Wrong encodage
-[X] phonetique.php will be a class file
-[ ] In rectif_utf8_commun.php Wrong encodage
-[ ] version.txt will be removed and relaced by database config table row app_version
-[ ] vide_base.php is useless, delete db and create new one.
