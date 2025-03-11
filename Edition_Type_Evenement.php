@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -47,7 +47,7 @@ if ($Creation) $titre = $LG_Menu_Title['Event_Type_Add'];
 else $titre = $LG_Menu_Title['Event_Type_Edit'];
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -124,7 +124,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="Fiche_Type_Evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_type_evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Type_Evenement', $Code);
 
@@ -162,7 +162,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     // Type d'évènement inconnu, supprimé entre temps, retour...
     if ((!$Creation) and (!$enreg)) {
         aff_erreur(LG_EVENT_TYPE_DELETED);
-        echo '<a href="Liste_Referentiel.php?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
+        echo '<a href="'. $root .'/liste_referentiel.php?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
     } else {
 
         // Zone technique de la table non modifiable et non affichée

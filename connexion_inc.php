@@ -2,6 +2,7 @@
 //--- Paramètres de connexion ---
 $ndb      = "geneamania";
 $nutil    = "root";
-$nmdp     = "";
-$nserveur = "localhost";
+$nmdp     = "secret";
+$nserveur = "localhost:3306";
 //------------- fin -------------
+?>

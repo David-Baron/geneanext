@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'P';
@@ -27,7 +27,7 @@ $x = Lit_Env();
 $Ident = Recup_Variable('ident', 'N');
 $req_sel = 'select * from ' . nom_table('depots') . ' where Ident = ' . $Ident . ' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -43,7 +43,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_contributeur) {
-        $compl .= Affiche_Icone_Lien('href="Edition_Depot.php?ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Repo_Sources_Edit'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_depot.php?ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Repo_Sources_Edit'])) . '&nbsp;';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Depot', $Ident);
@@ -63,7 +63,7 @@ else {
         Aff_Comment_Fiche($Commentaire, $Diffusion_Commentaire_Internet);
     }
 
-    echo '<br /><a href="Liste_Sources.php?depot=' . $Ident . '">' . my_html(LG_CH_REPOSITORY_LIST) . '</a>	' . "\n";
+    echo '<br /><a href="'. $root .'/liste_sources.php?depot=' . $Ident . '">' . my_html(LG_CH_REPOSITORY_LIST) . '</a>	' . "\n";
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());

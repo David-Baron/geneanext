@@ -8,7 +8,7 @@
 //===========================================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -53,7 +53,7 @@ $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 $acces = 'M';                                    // Type d'accès de la page : (M)ise à jour
 $titre = $LG_Menu_Title['Link_Ev_Pers'];        // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -253,7 +253,7 @@ if (($bt_Sup) or ($bt_OK)) {
             $idNiveauLu = $enreg['Identifiant_Niveau'];
             $Dans_Etiq_GG = $enreg['Dans_Etiquette_GeneGraphe'];
             // Libellé spécifique pour évènement connu et personne connue
-            echo 'Lien de ' . $Prenoms . ' ' . $Nom . ' avec <a href="Fiche_Evenement.php?refPar=' . $refEvt . '">' . $lib_evt . '</a><br />' . "\n";
+            echo 'Lien de ' . $Prenoms . ' ' . $Nom . ' avec <a href="'. $root .'/fiche_evenement.php?refPar=' . $refEvt . '">' . $lib_evt . '</a><br />' . "\n";
         }
     }
     // Initialisation des variables d'affichage en création

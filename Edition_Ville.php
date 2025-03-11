@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -51,7 +51,7 @@ if ($Modif)
 else
     $titre = $LG_Menu_Title['Town_Add'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -120,7 +120,7 @@ function est_utilisee($aff)
 // Affiche une ville
 function Aff_Ville($enreg2)
 {
-    global $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_ville = $enreg['Nom_Ville'];
     $n_ville_html = $enreg2['Nom_Ville'];
@@ -233,7 +233,7 @@ function Aff_Ville($enreg2)
         $x = Aff_Sources_Objet($Ident, 'V', 'N');
         // Possibilité de lier un document pour la ville
         echo '<br>&nbsp;' . my_html(LG_ICSV_TOWN_LINK_SOURCE) . LG_SEMIC
-            . Affiche_Icone_Lien('href="Edition_Lier_Source.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            . Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -242,8 +242,8 @@ function Aff_Ville($enreg2)
         echo '<div id="pnl_Listes">' . "\n";
         echo '<br>';
 
-        $deb_lien_visu = '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=';
-        $deb_lien_crea = 'href="' . Get_Adr_Base_Ref() . 'Edition_Personnes_Ville.php?evt=';
+        $deb_lien_visu = '<a href="'. $root .'/liste_pers2.php?Type_Liste=';
+        $deb_lien_crea = 'href="'. $root .'/edition_personnes_ville.php?evt=';
         $fin_lien = '&amp;idNom=' . $Ident . '&amp;Nom=' . $n_ville . '"';
 
         echo '<br>';
@@ -262,7 +262,7 @@ function Aff_Ville($enreg2)
         Aff_Documents_Objet($Ident, 'V', 'N');
         // Possibilité de lier un document pour la personne
         echo '<br>' . LG_ICSV_TOWN_LINK_DOCUMENT . LG_SEMIC
-            . Affiche_Icone_Lien('href="Edition_Lier_Doc.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refDoc=-1"', 'ajout', LG_ICSV_TOWN_ADD_DOCUMENT) . "\n";
+            . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refDoc=-1"', 'ajout', LG_ICSV_TOWN_ADD_DOCUMENT) . "\n";
         echo '</div>' . "\n";
     }
 
@@ -362,7 +362,7 @@ if (($ok == '') && ($annuler == '')) {
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
         $compl .= Affiche_Icone_Lien(Ins_Ref_ImagesV($Ident), 'images', 'Images') . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Fiche_Ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . '&nbsp;';
+            Affiche_Icone_Lien('href="'. $root .'/fiche_ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . '&nbsp;';
     }
 
     if ($bt_Sup) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -394,7 +394,7 @@ if (($ok == '') && ($annuler == '')) {
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
         aff_erreur(LG_ICSV_TOWN_UNKNOWN);
-        echo '<a href="Liste_Villes.php?Type_Liste=V">' . LG_SUBDIV_LIST . '</a>';
+        echo '<a href="'. $root .'/liste_villes.php?Type_Liste=V">' . LG_SUBDIV_LIST . '</a>';
     } else {
         include(__DIR__ . '/assets/js/Insert_Tiny.js');
 

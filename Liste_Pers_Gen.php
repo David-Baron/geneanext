@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';
 $titre = $LG_Menu_Title['Pers_Gen'];        // Titre pour META
@@ -21,7 +21,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -270,11 +270,11 @@ if ($simu_invit)    $comp_texte .= '&amp;simu_invit=O';
 
 $m_self = my_self();
 $compl = Ajoute_Page_Info(600, 250) .
-    Affiche_Icone_Lien('href="' . $m_self . '?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen.php?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
 if ((!$SiteGratuit) or ($Premium)) {
-    $compl .= Affiche_Icone_Lien('href="' . $m_self . '?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
     if ($_SESSION['estCnx'])
-        $compl .= Affiche_Icone_Lien('href="' . $m_self . '?csv=c' . $comp_texte . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen.php?csv=c' . $comp_texte . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
 }
 
 $Ind_Ref = 0;
@@ -486,7 +486,7 @@ if($sortie_pdf) {
             if ($nb_gen > $max_gen_AD) {
                 echo '<br />' . Affiche_Icone('tip', my_html($LG_tip)) .
                     my_html($LG_LPersG_limited_max_gen_1 . $max_gen_AD . $LG_LPersG_limited_max_gen_2) .
-                    '<a href="Vue_Personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' .
+                    '<a href="' . $root . '/vue_personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' .
                     my_html($LG_LPersG_limited_max_gen_4) . "\n";
             }
             include(__DIR__ . '/assets/js/Liste_Patro.js');        // Même javascript que la liste patronymique

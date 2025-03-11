@@ -150,7 +150,7 @@
                         <tr>
                             <td style="padding:0px; border-width:0px; border-style:none;">
                                 <img id="color_picker" src="<?php
-                                                            require(__DIR__ . '/app/fonctions.php');
+                                                            require(__DIR__ . '/app/ressources/fonctions.php');
                                                             echo $chemin_images;
                                                             $zone = Recup_Variable('zone', 'S');
                                                             ?>

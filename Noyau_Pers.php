@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $test = false;
 
@@ -66,7 +66,7 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour
 $titre = $LG_Menu_Title['Decujus_And_Family'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -361,7 +361,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if (!$vide) {
         Affiche_Stop(LG_DECUJUS_ERR_NO_EMPTY);
     } else {
-        echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'NomP,PrenomsP\')" action="' . my_self() . '" >' . "\n";
+        echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'NomP,PrenomsP\')">';
 
         $texte_im_maj = LG_PERS_NAME_TO_UPCASE;
         $icone_maj = $chemin_images_icones . $Icones['majuscule'];
@@ -381,7 +381,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         case_personne('MDec');
         echo '</fieldset>';
         echo '</td>';
-        echo '</tr>' . "\n";
+        echo '</tr>';
 
         echo '<tr>';
         echo '<td colspan="2">';
@@ -390,7 +390,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         case_personne('Dec');
         echo '</fieldset>';
         echo '</td>';
-        echo '</tr>' . "\n";
+        echo '</tr>';
 
         echo '<tr>';
         echo '<td colspan="2">';
@@ -399,7 +399,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         case_personne('Conj');
         echo '</fieldset>';
         echo '</td>';
-        echo '</tr>' . "\n";
+        echo '</tr>';
 
         echo '<tr>';
         echo '<td>';
@@ -414,14 +414,14 @@ if ((!$bt_OK) && (!$bt_An)) {
         case_personne('MConj');
         echo '</fieldset>';
         echo '</td>';
-        echo '</tr>' . "\n";
+        echo '</tr>';
 
         echo '</table>';
         echo '</div>';
 
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
-        echo '</form>' . "\n";
+        echo '</form>';
     }
 }
 

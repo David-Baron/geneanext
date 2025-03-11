@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -19,7 +19,7 @@ if ($professions) $titre = $LG_Menu_Title['Jobs_List'];
 
 $x = Lit_Env();
 $niv_requis = 'P';                        // Page réservée au profil privilégié
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Recup de la variable passée dans l'URL : sortie dans un fichier CSV ?
 $csv_dem = Recup_Variable('csv', 'C', 'ce');
@@ -30,7 +30,7 @@ if (($SiteGratuit) and (!$Premium)) $CSV = false;
 $compl = Ajoute_Page_Info(600, 200);
 if ((!$SiteGratuit) or ($Premium)) {
     if ($_SESSION['estCnx'])
-        $compl .= Affiche_Icone_Lien('href="' . my_self() . '?csv=c"', 'exp_tab', $LG_csv_export) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_evenement.php?csv=c"', 'exp_tab', $LG_csv_export) . '&nbsp;';
 }
 
 Insere_Haut(my_html($titre), $compl, 'Liste_Evenements', '');
@@ -43,7 +43,7 @@ $n_unions = nom_table('unions');
 
 // Optimisation : préparation echo des images
 $texte = $LG_add;
-$echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $texte . '" title="' . $texte . '"/></a>';
+$echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $texte . '" title="' . $texte . '"/></a>';
 
 // Lien direct sur le dernier évènement saisi et possibilité d'insérer un évènement
 if ($est_gestionnaire) {
@@ -56,12 +56,12 @@ if ($est_gestionnaire) {
     $MaxRef = $enrmax[0];
     // Lien direct sur le dernièr évènement saisi
     if ($MaxRef > 0) {
-        echo my_html(LG_EVENT_LIST_lAST) . LG_SEMIC . '<a href="Fiche_Evenement.php?refPar=' . $MaxRef . '">' .
+        echo my_html(LG_EVENT_LIST_lAST) . LG_SEMIC . '<a href="' . $root . '/fiche_evenement.php?refPar=' . $MaxRef . '">' .
             my_html($enrmax[1]) . '</a>&nbsp;';
-        echo '&nbsp;<a href="Edition_Evenement.php?refPar=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+        echo '&nbsp;<a href="' . $root . '/edition_evenement.php?refPar=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
     }
     // Possibilité d'insérer un evenement
-    echo my_html($LG_Menu_Title['Event_Add']) . LG_SEMIC . Affiche_Icone_Lien('href="Edition_Evenement.php?refPar=-1"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
+    echo my_html($LG_Menu_Title['Event_Add']) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_evenement.php?refPar=-1"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
 }
 
 // Récupération du type sélectionné sur l'affichage précédent
@@ -82,7 +82,7 @@ if ((!$actualites) and (!$professions)) {
         'order by t.Libelle_Type';
 
     echo '<form action="' . my_self() . '" method="post">' . "\n";
-    echo '<table border="0" width="50%" align="center">' . "\n";
+    echo '<table width="50%" align="center">' . "\n";
     echo '<tr align="center" class="rupt_table">';
     echo '<td width="50%">' . my_html(LG_EVENT_LIST_TYPE) . LG_SEMIC . "\n";
     echo '<select name="TypeEv">' . "\n";
@@ -159,9 +159,9 @@ if ($result->rowCount() > 0) {
             $ligne .= $enreg['Libelle_Type'] . ';';
             ecrire($fp, $ligne);
         } else {
-            $page = 'Fiche_Evenement';
-            if (($actualites) or ($enreg['Code_Type'] == 'AC3U')) $page = 'Fiche_Actualite';
-            echo '<a href="' . $page . '.php?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
+            $page = 'fiche_evenement';
+            if (($actualites) or ($enreg['Code_Type'] == 'AC3U')) $page = 'fiche_actualite';
+            echo '<a href="' . $root . '/' . $page . '.php?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
             echo Etend_2_dates($enreg['Debut'], $enreg['Fin'], true) . '&nbsp';
 
             $cible = $enreg['Objet_Cible'];
@@ -241,7 +241,7 @@ if ($result->rowCount() > 0) {
             if ($est_gestionnaire) {
                 $ajout = '';
                 if (($actualites) or ($enreg['Code_Type'] == 'AC3U')) $ajout = '&amp;actu=o';
-                echo '&nbsp;<a href="Edition_Evenement.php?refPar=' . $ref_evt . $ajout . '">' . $echo_modif . "\n";
+                echo '&nbsp;<a href="' . $root . '/edition_evenement.php?refPar=' . $ref_evt . $ajout . '">' . $echo_modif . "\n";
             }
             echo '<br />';
         }

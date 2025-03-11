@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -66,7 +66,7 @@ else
     $titre = LG_UNION_EDIT;
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -149,7 +149,7 @@ function dernier($Sexe)
 // Affiche l'union
 function Aff_Union($enreg2, $Ref_Union, $Decalage)
 {
-    global $chemin_images_icones, $Icones, $Images, $chemin_images, $hidden, $max_enf_rapides, $Commentaire, $Diffusion_Commentaire_Internet, $lib_OK, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_add, $def_enc, $Uni_Sexe, $Conjoint, $Conjoint_1, $Conjoint_2, $Sexe_1, $Sexe_2, $LG_birth, $LG_death
+    global $root, $chemin_images_icones, $Icones, $Images, $chemin_images, $hidden, $max_enf_rapides, $Commentaire, $Diffusion_Commentaire_Internet, $lib_OK, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_add, $def_enc, $Uni_Sexe, $Conjoint, $Conjoint_1, $Conjoint_2, $Sexe_1, $Sexe_2, $LG_birth, $LG_death
         // Info de la personne dont on vient
         , $Personne, $Nom, $Prenoms, $Ne_Pers, $Dec_Pers, $P_Sexe;
 
@@ -330,7 +330,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ref_Union, 'U', 'N');
         echo '<br />&nbsp;Lier une nouvelle source &agrave; l\'union : ' .
-            Affiche_Icone_Lien('href="Edition_Lier_Source.php?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -410,10 +410,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     Aff_Documents_Objet($Ref_Union, 'U', 'N');
     // Possibilité de lier un document à l'union
     echo '<br />&nbsp;' . my_html(LG_UNION_ADD_DOC) . LG_SEMIC
-        . Affiche_Icone_Lien('href="Edition_Lier_Doc.php?refObjet=' . $Ref_Union .
+        . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ref_Union .
             '&amp;typeObjet=U&amp;refDoc=-1"', 'ajout', $LG_add) . "\n";
     echo '<br />&nbsp;' . my_html(LG_UNION_ADD_DOC_NEW) . LG_SEMIC
-        . Affiche_Icone_Lien('href="Edition_Document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
+        . Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
             '&amp;typeObjet=U"', 'ajout', $LG_add) . "\n";
     echo '</div>' . "\n";
 

@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -47,7 +47,7 @@ else
     $titre = $LG_Menu_Title['Repo_Sources_Add'];
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -128,7 +128,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="Fiche_Depot.php?ident=' . $Ident . '"', 'page', my_html($LG_Menu_Title['Repo_Sources'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_depot.php?ident=' . $Ident . '"', 'page', my_html($LG_Menu_Title['Repo_Sources'])) . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Depot', $Ident);
 

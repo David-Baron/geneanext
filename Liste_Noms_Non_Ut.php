@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 
 // Récupération des variables de l'affichage précédent
@@ -29,7 +29,7 @@ $titre = $LG_Menu_Title['Name_Not_Used'];     // Titre pour META
 $niv_requis = 'C';                               // Page réservée à partir du profil contributeur
 $x = Lit_Env();
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -71,7 +71,7 @@ $nb_lignes = $res->rowCount();
 
 if ($nb_lignes > 0) {
 
-    echo '<form action="' . my_self() . '" id="saisie" method="post">';
+    echo '<form id="saisie" method="post">';
 
     bt_ok_an_sup($lib_Supprimer, $lib_Annuler, '', '', false);
 
@@ -86,8 +86,8 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = '&nbsp;<a href="Fiche_NomFam.php?idNom=';
-    $deb_modif = 'href="Edition_NomFam.php?idNom=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam.php?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
     $numLig = 0;
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {

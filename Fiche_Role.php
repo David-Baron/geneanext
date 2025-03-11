@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'P';
@@ -27,7 +27,7 @@ $x = Lit_Env();
 $Code = Recup_Variable('code', 'A');
 $req_sel = 'select * from ' . nom_table('roles') . ' where Code_Role = "' . $Code . '" limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -43,7 +43,7 @@ if ($enreg_sel) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="Edition_Role.php?code=' . $Code . '"', 'fiche_edition', 'Edition rôle') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_role.php?code=' . $Code . '"', 'fiche_edition', 'Edition rôle') . '&nbsp;';
     }
 
     Insere_Haut($titre, $compl, 'Fiche_Role', $Code);
@@ -64,7 +64,7 @@ if ($enreg_sel) {
     echo '</table>';
 
     // Appel de la liste des personnes pour ce rôle
-    echo '<br /><a href="Liste_Pers_Role.php?Role=' . $c_role . '">' . LG_ROLE_PERSONS . '</a>' . "\n";
+    echo '<br /><a href="' . $root . '/liste_pers_role.php?Role=' . $c_role . '">' . LG_ROLE_PERSONS . '</a>' . "\n";
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);

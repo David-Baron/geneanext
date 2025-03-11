@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -36,7 +36,7 @@ switch ($Type_Liste) {
 }
 $titre = $objet;                       // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Sortie dans un fichier CSV ?
 $csv_dem = Recup_Variable('csv', 'C', 'ce');
@@ -47,7 +47,7 @@ if (($SiteGratuit) and (!$Premium)) $CSV = false;
 $compl = Ajoute_Page_Info(600, 150);
 if ((!$SiteGratuit) or ($Premium)) {
     if ($_SESSION['estCnx']) {
-        $compl .= Affiche_Icone_Lien('href="' . my_self() . '?' . Query_Str() . '&amp;csv=c' . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_villes.php?' . Query_Str() . '&amp;csv=c' . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
     }
 }
 Insere_Haut(my_html($objet), $compl, 'Liste_Villes', $Type_Liste);
@@ -99,20 +99,20 @@ if ($est_gestionnaire) {
         $aff_nom = my_html($enrmax[1]);
         switch ($Type_Liste) {
             case 'S':
-                echo my_html(LG_LAREAS_SUBDIV_LAST) . LG_SEMIC . '<a href="Fiche_Subdivision.php?Ident=' . $MaxRef . '">' . $aff_nom . '</a>';
-                echo '&nbsp;<a href="Edition_Subdivision.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo my_html(LG_LAREAS_SUBDIV_LAST) . ' ' . '<a href="' . $root . '/fiche_subdivision.php?Ident=' . $MaxRef . '">' . $aff_nom . '</a>';
+                echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
                 break;
             case 'V':
-                echo my_html(LG_LAREAS_TOWN_LAST) . LG_SEMIC . '<a href="Fiche_Ville.php?Ident=' . $MaxRef . '">' . $aff_nom . '</a>';
-                echo '&nbsp;<a href="Edition_Ville.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo my_html(LG_LAREAS_TOWN_LAST) . ' ' . '<a href="' . $root . '/fiche_ville.php?Ident=' . $MaxRef . '">' . $aff_nom . '</a>';
+                echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
                 break;
             case 'D':
-                echo my_html(LG_LAREAS_COUNTY_LAST) . LG_SEMIC . '<a href="Liste_Villes.php?Type_Liste=V#' . $enrmax[1] . '">' . my_html($enrmax[1]) . '</a>';
-                echo '&nbsp;<a href="Edition_Depart.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo my_html(LG_LAREAS_COUNTY_LAST) . ' ' . '<a href="' . $root . '/liste_villes.php?Type_Liste=V#' . $enrmax[1] . '">' . my_html($enrmax[1]) . '</a>';
+                echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
                 break;
             case 'R':
-                echo my_html(LG_LAREAS_REGION_LAST) . LG_SEMIC . '<a href="Liste_Villes.php?Type_Liste=D#' . $enrmax[1] . '">' . my_html($enrmax[1]) . '</a>';
-                echo '&nbsp;<a href="Edition_Region.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo my_html(LG_LAREAS_REGION_LAST) . ' ' . '<a href="' . $root . '/liste_villes.php?Type_Liste=D#' . $enrmax[1] . '">' . my_html($enrmax[1]) . '</a>';
+                echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
                 break;
                 //case 'P' : $n_table = $n_pays; $n_rub_nom = 'Nom_Pays'; break;
         }
@@ -120,16 +120,16 @@ if ($est_gestionnaire) {
     $resmax->closeCursor();
     switch ($Type_Liste) {
         case 'S':
-            echo my_html(LG_LAREAS_SUBDIV_ADD) . LG_SEMIC . '<a href="Edition_Subdivision.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_SUBDIV_ADD) . ' ' . '<a href="' . $root . '/edition_subdivision.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
             break;
         case 'V':
-            echo my_html(LG_LAREAS_TOWN_ADD) . LG_SEMIC . '<a href="Edition_Ville.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_TOWN_ADD) . ' ' . '<a href="' . $root . '/edition_ville.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
             break;
         case 'D':
-            echo my_html(LG_LAREAS_COUNTY_ADD) . LG_SEMIC . ' <a href="Edition_Depart.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_COUNTY_ADD) . ' ' . ' <a href="' . $root . '/edition_depart.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
             break;
         case 'R':
-            echo my_html(LG_LAREAS_REGION_ADD) . LG_SEMIC . '<a href="Edition_Region.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_REGION_ADD) . ' ' . '<a href="' . $root . '/edition_region.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
             break;
     }
 }
@@ -271,40 +271,40 @@ if ($res->rowCount() > 0) {
             }
             switch ($Type_Liste) {
                 case 'S':
-                    echo $tab . '<a href="Fiche_Subdivision.php?Ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                    echo $tab . '<a href="' . $root . '/fiche_subdivision.php?Ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[3];
                     $Long_V = $row[4];
                     appelle_carte_osm();
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="Edition_Subdivision.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
                     }
                     break;
                 case 'V':
-                    echo $tab . '<a href="Fiche_Ville.php?Ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                    echo $tab . '<a href="' . $root . '/fiche_ville.php?Ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[3];
                     $Long_V = $row[4];
                     appelle_carte_osm();
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="Edition_Ville.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
                     }
                     break;
                 case 'D':
                     $n_dep = str_replace($interdits, '', $row[1]);
-                    echo $tab . '<a href="Liste_Villes.php?Type_Liste=V#' . $n_dep . '">' . my_html($row[1]) . "</a>";
+                    echo $tab . '<a href="' . $root . '/liste_villes.php?Type_Liste=V#' . $n_dep . '">' . my_html($row[1]) . "</a>";
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="Edition_Depart.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
                     }
                     break;
                 case 'R':
                     $n_reg = str_replace($interdits, '', $row[1]);
-                    echo $tab . '<a href="Liste_Villes.php?Type_Liste=D#' . $n_reg . '">' . my_html($row[1]) . "</a>";
+                    echo $tab . '<a href="' . $root . '/liste_villes.php?Type_Liste=D#' . $n_reg . '">' . my_html($row[1]) . "</a>";
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="Edition_Region.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
                     }
                     break;
                 case 'P':
                     $n_pays = str_replace($interdits, '', $row[0]);
-                    echo $tab . '<a href="Liste_Villes.php?Type_Liste=R#' . $n_pays . '">' . my_html($row[0]) . "</a>";
+                    echo $tab . '<a href="' . $root . '/liste_villes.php?Type_Liste=R#' . $n_pays . '">' . my_html($row[0]) . "</a>";
                     break;
                 default:
                     break;

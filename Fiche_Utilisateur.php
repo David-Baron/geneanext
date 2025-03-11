@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['User'];
@@ -28,7 +28,7 @@ $niv_requis = 'G';
 $code = Recup_Variable('code', 'N');
 $req_sel = 'select * from ' . nom_table('utilisateurs') . " where idUtil = $code limit 1";
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -38,7 +38,7 @@ else {
     if ((!$enreg_sel) or ($code == 0)) Retour_Ar();
 
     $enreg = $enreg_sel;
-    $compl = Affiche_Icone_Lien('href="Edition_Utilisateur.php?code=' . $code . '"', 'fiche_edition', 'Edition fiche utilisateur') . '&nbsp;';
+    $compl = Affiche_Icone_Lien('href="' . $root . '/edition_utilisateur.php?code=' . $code . '"', 'fiche_edition', 'Edition fiche utilisateur') . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Fiche_utilisateur', '');
     echo '<br>';
@@ -73,7 +73,7 @@ else {
     echo '</table>' . "\n";
 
     if (($Environnement == 'I') and ($Last_cnx != ''))
-        echo '<br><a href="' . Get_Adr_Base_Ref() . 'Liste_Connexions.php?Util=' . $code . '">' . my_html(LG_UTIL_CONNEXIONS) . '</a>';
+        echo '<br><a href="' . $root . '/liste_connexions.php?Util=' . $code . '">' . my_html(LG_UTIL_CONNEXIONS) . '</a>';
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);

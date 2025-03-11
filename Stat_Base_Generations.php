@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                // Type d'accès de la page
 
@@ -27,7 +27,7 @@ $Gen_F = Secur_Variable_Post($Gen_F, 1, 'N');
 $titre = $LG_Menu_Title['Gen_Is_Complete'];    // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'P';                // Page accessible à partir du niveau privilégié
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -119,7 +119,7 @@ echo "</table>\n";
 
 $res->closeCursor();
 
-echo '<a href="Liste_Pers_Gen.php?mq=O">' . my_html($LG_Menu_Title['Pers_Gen']) . '</a>';
+echo '<a href="' . $root . '/liste_pers_gen.php?mq=O">' . my_html($LG_Menu_Title['Pers_Gen']) . '</a>';
 
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour, '');

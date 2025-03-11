@@ -5,13 +5,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $x = Lit_Env();
 $titre = $LG_Menu_Title['Calc_Sosa'];
 $mots = 'Sosa';
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 function aff_bouton($nb, $evt, $txt)
 {

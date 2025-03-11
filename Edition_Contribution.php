@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -136,7 +136,7 @@ $titre = LG_CONTRIB_EDIT_TITLE;
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 //	Gestion des droits
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

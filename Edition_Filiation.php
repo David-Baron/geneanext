@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -44,7 +44,7 @@ $Refer = Recup_Variable('Refer', 'N');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Fiche filiation';            // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -110,7 +110,7 @@ function dernier($Sexe)
 // Affiche une union
 function Aff_Filiation($enreg)
 {
-    global $chemin_images_icones, $Comportement, $Icones, $Images, $Refer, $Nom,
+    global $root, $chemin_images_icones, $Comportement, $Icones, $Images, $Refer, $Nom,
         $enreg, $Sexe, $chemin_images,
         $Commentaire, $Diffusion_Commentaire_Internet,
         $lib_Okay, $lib_Annuler, $lib_Supprimer,
@@ -302,10 +302,10 @@ function Aff_Filiation($enreg)
     Aff_Documents_Objet($Refer, 'F', 'N');
     // Possibilité de lier un document à la filiation
     echo '<br />&nbsp;' . my_html($LG_Ch_Filiation_Link_Doc . ' : ') .
-        Affiche_Icone_Lien('href="Edition_Lier_Doc.php?refObjet=' . $Refer .
+        Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Refer .
             '&amp;typeObjet=F&amp;refDoc=-1"', 'ajout', 'Ajout d\'un document') . "\n";
     echo '<br />&nbsp;' . my_html($LG_Ch_Filiation_Link_New_Doc . ' : ') .
-        Affiche_Icone_Lien('href="Edition_Document.php?Reference=-1&amp;refObjet=' . $Refer .
+        Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=-1&amp;refObjet=' . $Refer .
             '&amp;typeObjet=F"', 'ajout', $LG_Ch_Filiation_Add_Doc) . "\n";
     echo '</div>' . "\n";
 
@@ -318,7 +318,7 @@ function Aff_Filiation($enreg)
     $x = Aff_Sources_Objet($Refer, 'F', 'N');
     // Possibilité de lier une source pour la filiation
     echo '<br />&nbsp;Lier une nouvelle source &agrave; la filiation : ' .
-        Affiche_Icone_Lien('href="Edition_Lier_Source.php?refObjet=' . $Refer . '&amp;typeObjet=F&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+        Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Refer . '&amp;typeObjet=F&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     echo '</div>' . "\n";
 
     echo '</div>' . "\n";    // <!-- panes -->

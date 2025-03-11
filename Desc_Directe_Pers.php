@@ -5,13 +5,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';								// Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Direct_Desc'];		// Titre pour META
 $x = Lit_Env();
 $index_follow = 'IN';						// NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $n_filiations = nom_table('filiations');
 $n_personnes = nom_table('personnes');
@@ -101,7 +101,7 @@ $comp_texte = '';
 if ($conj_demandes) $comp_texte .= '&amp;avec_conjoints=O';
 
 $compl = Ajoute_Page_Info(600,250) .
-		Affiche_Icone_Lien('href="'.my_self().'?Numero='.$Numero.'&amp;texte=O'.$comp_texte.'"','text',$LG_printable_format).'&nbsp;';
+		Affiche_Icone_Lien('href="'. $root .'/desc_directe_pers.php?Numero='.$Numero.'&amp;texte=O'.$comp_texte.'"','text',$LG_printable_format).'&nbsp;';
 
 if (! $texte) Insere_Haut($titre,$compl,'Desc_Directe_Pers',$Numero);
 else          Insere_Haut_texte ('&nbsp;');

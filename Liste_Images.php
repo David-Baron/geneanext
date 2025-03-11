@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -23,7 +23,7 @@ if ($annuler == $lib_Retour) $annuler = 'Annuler';
 
 $titre = $LG_Menu_Title['Image_List'];        // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -76,7 +76,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     echo '</td>';
 
     if ($est_contributeur) {
-        echo '<td valign="middle">' . Affiche_Icone_Lien('href="Edition_Image.php?ident_image=' . $row['ident_image'] . '&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'fiche_edition', 'Modifier l\'image') . '</td>';
+        echo '<td valign="middle">' . Affiche_Icone_Lien('href="' . $root . '/edition_image.php?ident_image=' . $row['ident_image'] . '&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'fiche_edition', 'Modifier l\'image') . '</td>';
     }
     echo "</tr>\n";
 }
@@ -90,7 +90,7 @@ if ($presence) {
 // Possibilité de lier une image
 if ($est_contributeur) {
     echo '<br />' . $LG_add . '&nbsp;' .
-        Affiche_Icone_Lien('href="Edition_Image.php?ident_image=-1&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'ajouter', $LG_add) .
+        Affiche_Icone_Lien('href="' . $root . '/edition_image.php?ident_image=-1&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'ajouter', $LG_add) .
         '<br />';
 }
 

@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function affiche_image($ref)
 {
@@ -46,7 +46,7 @@ if ((!$SiteGratuit) or ($Premium)) {
 
 if ($sortie_pdf) $no_entete = true;        // Pas d'entête HTML sinon le PDF ne s'affichera pas
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : référence de l'union, et pdf o ?
 $Reference = Recup_Variable('Reference', 'N');

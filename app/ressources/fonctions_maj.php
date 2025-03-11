@@ -244,7 +244,7 @@ function Ajoute_Nom($idNom, $Nom)
             }
         }
         if ($idNom == 0) {
-            require(__DIR__ . '/app/Phonetique.php');
+            require(__DIR__ . '/../Phonetique.php');
             $objetCodePho = new Phonetique();
             $codePho = $objetCodePho->calculer($Nom);
             $codePho = addslashes($codePho);
@@ -886,7 +886,7 @@ function Creation_Noms_Commun()
     global $Cre_Noms, $idNom, $Init,
         $n_personnes, $n_noms, $n_liens_noms, $nb_cre_noms;
 
-    require(__DIR__ . '/app/Phonetique.php');
+    require(__DIR__ . '/../Phonetique.php');
     $codePho = new Phonetique();
 
     $Anom = '';

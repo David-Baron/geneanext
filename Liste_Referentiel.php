@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Recup de la variable passée dans l'URL : type de liste
 $Type_Liste = Recup_Variable('Type_Liste', 'C', 'RTDCQOS');
@@ -38,7 +38,7 @@ $acces = 'L';                        // Type d'accès de la page : (M)ise à jou
 $titre = $entete;                    // Titre pour META
 $niv_requis = 'P';                    // Page réservée au profil privilégié
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents et des sources sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium) and ($Type_Liste == 'D')) Retour_Ar();
@@ -92,19 +92,19 @@ if ($est_contributeur) {
     switch ($Type_Liste) {
         case 'R':
             $txt = $LG_Menu_Title['Role_Add'];
-            echo $txt . ' : ' . affiche_Icone_Lien('href="Edition_Role.php?code=-----"', 'ajouter', $txt);
+            echo $txt . ' : ' . affiche_Icone_Lien('href="' . $root . '/edition_role.php?code=-----"', 'ajouter', $txt);
             break;
         case 'T':
             $txt = $LG_Menu_Title['Event_Type_Add'];
-            echo $txt . ' : ' . Affiche_Icone_Lien('href="Edition_Type_Evenement.php?code=-----"', 'ajouter', $txt);
+            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_type_evenement.php?code=-----"', 'ajouter', $txt);
             break;
         case 'D':
             $txt = $LG_Menu_Title['Doc_Type_Add'];
-            echo $txt . ' : ' . Affiche_Icone_Lien('href="Edition_Type_Document.php?code=-----"', 'ajouter', $txt);
+            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_type_document.php?code=-----"', 'ajouter', $txt);
             break;
         case 'O':
             $txt = $LG_Menu_Title['Repo_Sources_Add'];
-            echo $txt . ' : ' . Affiche_Icone_Lien('href="Edition_Depot.php?ident=-1"', 'ajouter', $txt);
+            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_depot.php?ident=-1"', 'ajouter', $txt);
             break;
     }
 }
@@ -119,41 +119,41 @@ if ($res->rowCount() > 0) {
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         switch ($Type_Liste) {
             case 'R':
-                echo '<a href="Fiche_Role.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
+                echo '<a href="' . $root . '/fiche_role.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
                 if ($est_contributeur) {
-                    echo '&nbsp;<a href="Edition_Role.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo '&nbsp;<a href="' . $root . '/edition_role.php?code=' . $row[0] . '">' . $echo_modif . "\n";
                 }
                 break;
             case 'T':
-                echo '<a href="Fiche_Type_Evenement.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
+                echo '<a href="' . $root . '/fiche_type_evenement.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
                 if (($est_contributeur) and ($row[2] == 'O')) {
-                    echo '&nbsp;<a href="Edition_Type_Evenement.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo '&nbsp;<a href="' . $root . '/edition_type_evenement.php?code=' . $row[0] . '">' . $echo_modif . "\n";
                 }
                 break;
             case 'D':
-                echo '<a href="Fiche_Type_Document.php?code=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                echo '<a href="' . $root . '/fiche_type_document.php?code=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                 if (($est_contributeur)) {
-                    echo '&nbsp;<a href="Edition_Type_Document.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo '&nbsp;<a href="' . $root . '/edition_type_document.php?code=' . $row[0] . '">' . $echo_modif . "\n";
                 }
                 break;
             case 'C':
                 $lib = my_html($row[1]);
                 echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[2]] . '" border="0" alt="' . $lib . '" title="' . $lib . '"/>' . '&nbsp;';
-                echo '<a href="Fiche_Categorie.php?categ=' . $row[0] . '">' . $lib . '</a>';
+                echo '<a href="' . $root . '/fiche_categorie.php?categ=' . $row[0] . '">' . $lib . '</a>';
                 if (($est_gestionnaire)) {
-                    echo '&nbsp;<a href="Edition_Categorie.php?categ=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo '&nbsp;<a href="' . $root . '/edition_categorie.php?categ=' . $row[0] . '">' . $echo_modif . "\n";
                 }
                 break;
             case 'Q':
-                echo '<a href="Fiche_Requete.php?reference=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                echo '<a href="' . $root . '/fiche_requete.php?reference=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                 if ($est_gestionnaire) {
-                    echo '&nbsp;<a href="Edition_Requete.php?reference=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo '&nbsp;<a href="' . $root . '/edition_requete.php?reference=' . $row[0] . '">' . $echo_modif . "\n";
                 }
                 break;
             case 'O':
-                echo '<a href="Fiche_Depot.php?ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                echo '<a href="' . $root . '/fiche_depot.php?ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                 if ($est_contributeur) {
-                    echo '&nbsp;<a href="Edition_Depot.php?ident=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo '&nbsp;<a href="' . $root . '/edition_depot.php?ident=' . $row[0] . '">' . $echo_modif . "\n";
                 }
                 break;
             default:

@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Category'];    // Titre pour META
@@ -23,7 +23,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $niv_requis = 'P';
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -38,7 +38,7 @@ if ($res = lect_sql($sql)) {
     if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
         $TitreF = my_html($enreg['Titre']);
         $OrdreF = $enreg['Ordre_Tri'];
-        $compl .= '<a href="Edition_Categorie.php?categ=' . $Categ . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
+        $compl .= '<a href="'. $root .'/edition_categorie.php?categ=' . $Categ . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
 
         Insere_Haut(my_html($titre), $compl, 'Fiche_Categorie', $Categ);
 
@@ -61,7 +61,7 @@ if ($res = lect_sql($sql)) {
 
         // Appel de la liste des personnes présentes dans cette catégorie
         $_SESSION['NomP'] = $enreg['Titre']; // Pour le pdf histoire d'avoir les bons caractères...
-        echo '<br /><a href="Liste_Pers2.php?Type_Liste=C&amp;idNom=' . $enreg['Identifiant'] . '&amp;Nom=' . $TitreF . '">Personnes de cette cat&eacute;gorie</a>' . "\n";
+        echo '<br /><a href="'. $root .'/liste_pers2.php?Type_Liste=C&amp;idNom=' . $enreg['Identifiant'] . '&amp;Nom=' . $TitreF . '">Personnes de cette cat&eacute;gorie</a>' . "\n";
 
         // Formulaire pour le bouton retour
         Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);

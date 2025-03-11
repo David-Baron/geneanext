@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $max_emails = 49;
 // R�duction du nombre d'emails autoris�s sur le site de test
@@ -37,7 +37,7 @@ $acces = 'M';                        // Type d'acc�s de la page : (M)ise � j
 $titre = 'Envoi d\'un mail';        // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 $niv_requis = 'G';                    // Les contributions sont ouvertes � tout le monde
-require(__DIR__ . '/Gestion_Pages.php');        // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Interdit sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();

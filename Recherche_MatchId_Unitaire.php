@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Recup de la variable passée dans l'URL : référence de la personne
 $ref = Recup_Variable('ref', 'N');
@@ -15,7 +15,7 @@ $titre = $LG_Menu_Title['MatchId_Sch'];
 $x = Lit_Env();
 // On ne chargera pas la page dans la liste des pages afin de ne pas rompre le fil des pages d'appel
 $not_memo = false;
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

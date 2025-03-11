@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -33,7 +33,7 @@ $acces = 'L';
 $titre = $LG_Menu_Title['Galery_Branch'];        // Titre pour META
 $x = Lit_Env();
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Ecran interdit sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) $bt_An = true;

@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -61,7 +61,7 @@ $acces = 'M';                                              // Type d'accès de l
 if ($Modif) $titre = $LG_Menu_Title['Person_Modify'];    // Titre pour META
 else $titre = $LG_Menu_Title['Person_Add'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -72,11 +72,11 @@ $largP = 16;
 
 function lien_aj_union($unisexe)
 {
-    global $SexePers, $Refer;
+    global $root, $SexePers, $Refer;
     $lib = 'Ajouter une union';
     if ($unisexe == 'o') $lib .= ' unisexe';
     //echo my_html($lib).'&nbsp;:&nbsp;';
-    $lien = 'href="Edition_Union.php?Conjoint=' . $Refer . '&amp;Ref_Union=-1';
+    $lien = 'href="'. $root .'/edition_union.php?Conjoint=' . $Refer . '&amp;Ref_Union=-1';
     if ($unisexe == 'o') {
         $us = 'o';
         echo my_html(LG_PERS_UNION_UNISEX);
@@ -91,7 +91,7 @@ function lien_aj_union($unisexe)
 // Affiche une personne et ses parents
 function Aff_PersonneI($enreg2, $Personne, $Decalage)
 {
-    global $Refer, $Pere_GP, $Mere_GP, $Rang_GP, $Comportement, $Icones, $Images, $chemin_images_util, $chemin_images, $chemin_images_icones, $Commentaire, $Diffusion_Commentaire_Internet, $Modif, $Existe_Filiation, $Existe_Union, $Existe_Enfants, $SexePers, $SiteGratuit, $Premium, $LG_Data_tab, $LG_File, $lib_OK, $lib_Annuler, $LG_at, $LG_with, $LG_tip, $LG_of, $LG_andof, $largP, $death_def_min_year, $url_matchid, $url_matchid_sch, $LG_Menu_Title;
+    global $root, $Refer, $Pere_GP, $Mere_GP, $Rang_GP, $Comportement, $Icones, $Images, $chemin_images_util, $chemin_images, $chemin_images_icones, $Commentaire, $Diffusion_Commentaire_Internet, $Modif, $Existe_Filiation, $Existe_Union, $Existe_Enfants, $SexePers, $SiteGratuit, $Premium, $LG_Data_tab, $LG_File, $lib_OK, $lib_Annuler, $LG_at, $LG_with, $LG_tip, $LG_of, $LG_andof, $largP, $death_def_min_year, $url_matchid, $url_matchid_sch, $LG_Menu_Title;
 
     $Existe_Filiation = false;
     $Existe_Enfants = false;
@@ -256,7 +256,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
                 // .'&sex='.strtoupper($enreg2['Sexe'])
                 // .'&birthDate='.substr($date_naissance,6,2).'%2F'.substr($date_naissance,4,2).'%2F'.substr($date_naissance,0,4).'"'
                 // .' target="_blank">Match Id</a> ';
-                echo '<a href="Recherche_MatchId_Unitaire.php'
+                echo '<a href="'. $root .'/recherche_matchid_unitaire.php'
                     . '?ref=' . $Refer . '"'
                     . ' target="_blank">' . $LG_Menu_Title['MatchId_Sch'] . '</a>';
             }
@@ -354,7 +354,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         $x = Aff_Sources_Objet($Refer, 'P', 'N');
         // Possibilité de lier une source pour la personne
         echo '<br />&nbsp;' . my_html(LG_PERS_LINK_SOURCE) . ' : ' .
-            Affiche_Icone_Lien('href="Edition_Lier_Source.php?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refSrc=-1"', 'ajout', LG_PERS_LINK_SOURCE) . "\n";
+            Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refSrc=-1"', 'ajout', LG_PERS_LINK_SOURCE) . "\n";
     }
 
     echo '</div>' . "\n";
@@ -384,13 +384,13 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
             $LG_of_h = my_html($LG_of);
             if ($Pere != 0) {
                 if (Get_Nom_Prenoms($Pere, $Nom, $Prenoms)) {
-                    echo ' ' . $LG_of_h . ' <a href="' . my_self() . '?Refer=' . $Pere . '">' . $Prenoms . '&nbsp;' . $Nom . '</a>' . "\n";
+                    echo ' ' . $LG_of_h . ' <a href="'. $root .'/edition_personne.php?Refer=' . $Pere . '">' . $Prenoms . '&nbsp;' . $Nom . '</a>' . "\n";
                 }
             }
             if ($Mere != 0) {
                 if ($Pere != 0) echo ' ' . my_html($LG_andof);
                 if (Get_Nom_Prenoms($Mere, $Nom, $Prenoms)) {
-                    echo ' ' . $LG_of_h . ' <a href="' . my_self() . '?Refer=' . $Mere . '">' . $Prenoms . '&nbsp;' . $Nom . '</a>' . "\n";
+                    echo ' ' . $LG_of_h . ' <a href="'. $root .'/edition_personne.php?Refer=' . $Mere . '">' . $Prenoms . '&nbsp;' . $Nom . '</a>' . "\n";
                 }
             }
             echo '&nbsp;(' . LG_PERS_RANK . ' :&nbsp;' . $Rang . '&nbsp;)';
@@ -400,11 +400,11 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
             $icone = 'ajout';
             $lib = LG_PERS_CREATE_PARENTS;
             echo my_html($lib) . '&nbsp;:&nbsp;';
-            echo Affiche_Icone_Lien('href="Edition_Filiation.php?Refer=' . $Refer . '"', $icone, $lib);
+            echo Affiche_Icone_Lien('href="'. $root .'/edition_filiation.php?Refer=' . $Refer . '"', $icone, $lib);
         } else {
             $icone = 'fiche_edition';
             $lib = LG_PERS_UPDATE_PARENTS;
-            echo '&nbsp;' . Affiche_Icone_Lien('href="Edition_Filiation.php?Refer=' . $Refer . '"', $icone, $lib);
+            echo '&nbsp;' . Affiche_Icone_Lien('href="'. $root .'/edition_filiation.php?Refer=' . $Refer . '"', $icone, $lib);
         }
 
         echo '</fieldset>' . "\n";
@@ -429,7 +429,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
                 Champ_car($enreg2C, 'Nom');
                 Champ_car($enreg2C, 'Prenoms');
                 $lib = LG_PERS_UPDATE_UNION;
-                echo my_html($LG_with) . ' <a href="' . my_self() . '?Refer=' . $enreg2C['Reference'] . '">' . $enreg2C['Prenoms'] . '&nbsp;' . $enreg2C['Nom'] . "</a>\n";
+                echo my_html($LG_with) . ' <a href="'. $root .'/edition_personne.php?Refer=' . $enreg2C['Reference'] . '">' . $enreg2C['Prenoms'] . '&nbsp;' . $enreg2C['Nom'] . "</a>\n";
                 if ($enreg2C['Sexe'] == $SexePers)
                     $us = 'o';
                 else
@@ -511,14 +511,14 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
             while ($enr_ns = $res_ns->fetch(PDO::FETCH_NUM)) {
                 echo '<tr><td>' . my_html($enr_ns[0]) . '</td><td>' . my_html($enr_ns[1]) . '</td>' . "\n";
                 echo '<td>' .
-                    Affiche_Icone_Lien('href="Edition_Lier_Nom.php?refPers=' . $Personne . '&amp;refNom=' . $enr_ns[2] . '"', 'fiche_edition', 'Modification d\'un nom secondaire') .
+                    Affiche_Icone_Lien('href="'. $root .'/edition_lier_nom.php?refPers=' . $Personne . '&amp;refNom=' . $enr_ns[2] . '"', 'fiche_edition', 'Modification d\'un nom secondaire') .
                     '</td></tr>' . "\n";
             }
             echo '</table>' . "\n";
         }
         // Possibilité de lier un nom secondaire pour la personne
         echo '<br />&nbsp;' . my_html(LG_PERS_ALT_NAME_ADD) . LG_SEMIC .
-            Affiche_Icone_Lien('href="Edition_Lier_Nom.php?refPers=' . $Personne . '&amp;refNom=-1"', 'ajout', LG_PERS_ALT_NAME_ADD) . "\n";
+            Affiche_Icone_Lien('href="'. $root .'/edition_lier_nom.php?refPers=' . $Personne . '&amp;refNom=-1"', 'ajout', LG_PERS_ALT_NAME_ADD) . "\n";
         echo '</div>' . "\n";
 
         //	Documents liés à la personne
@@ -527,9 +527,9 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         Aff_Documents_Objet($Personne, 'P', 'N');
         // Possibilité de lier un document pour la personne
         echo '<br />&nbsp;' . my_html(LG_PERS_DOC_LINK_EXISTS) . LG_SEMIC .
-            Affiche_Icone_Lien('href="Edition_Lier_Doc.php?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refDoc=-1"', 'ajout', LG_PERS_DOC_LINK) . "\n";
+            Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refDoc=-1"', 'ajout', LG_PERS_DOC_LINK) . "\n";
         echo '<br />&nbsp;' . my_html(LG_PERS_DOC_LINK_NEW) . LG_SEMIC .
-            Affiche_Icone_Lien('href="Edition_Document.php?Reference=-1&amp;refObjet=' . $Personne .
+            Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=-1&amp;refObjet=' . $Personne .
                 '&amp;typeObjet=P"', 'ajout', LG_PERS_DOC_LINK) . "\n";
         echo '</div>' . "\n";
     }
@@ -857,8 +857,8 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             Affiche_Icone_Lien(Ins_Ref_ImagesP($Refer), 'images', 'Images') . '&nbsp;' .
             Affiche_Icone_Lien(Ins_Ref_Arbre($Refer), 'arbre_asc', $LG_assc_tree) . '&nbsp;' .
             Affiche_Icone_Lien(Ins_Ref_Arbre_Desc($Refer), 'arbre_desc', $LG_desc_tree) . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Ajout_Rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Verif_Personne.php?Refer=' . $Refer . '"', 'fiche_controle', $LG_LPers_Check_Pers) . '&nbsp;' .
+            Affiche_Icone_Lien('href="'. $root .'/ajout_rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . '&nbsp;' .
+            Affiche_Icone_Lien('href="'. $root .'/verif_personne.php?Refer=' . $Refer . '"', 'fiche_controle', $LG_LPers_Check_Pers) . '&nbsp;' .
             Affiche_Icone_Lien(Ins_Ref_Pers($Refer), 'fiche_fam', 'Fiche familiale') . "\n";
     }
 

@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -37,7 +37,7 @@ if ($ok == $lib_Rechercher) $ok = 'OK';
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Town_Search_Title'];     // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -150,12 +150,12 @@ if ($bt_OK) {
             $ref = $row[0];
             switch ($Sortie) {
                 case 'e':
-                    echo '<a href="Fiche_Ville.php?Ident=' . $ref . '"' . $target . '>' . my_html($row[1]) . '</a>';
+                    echo '<a href="' . $root . '/fiche_ville.php?Ident=' . $ref . '"' . $target . '>' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[2];
                     $Long_V = $row[3];
                     appelle_carte_osm();
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="Edition_Ville.php?Ident=' . $ref . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $ref . '">' . $echo_modif . "\n";
                     }
                     echo '<br>' . "\n";
                     break;
@@ -181,7 +181,7 @@ if ($bt_OK) {
 
     if ($Sortie != 't') {
         // Nouvelle recherche
-        echo '<form id="nouvelle" method="post" action="' . my_self() . '">' . "\n";
+        echo '<form id="nouvelle" method="post">';
         aff_origine();
         echo '<input type="hidden" name="reprise" value=""/>';
         echo '<input type="hidden" name="NomV" value="' . $NomV . '"/>';

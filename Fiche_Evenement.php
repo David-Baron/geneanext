@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                // Type d'accès de la page : (L)ecture
 
@@ -27,7 +27,7 @@ if ($actualite) $titre = $LG_Menu_Title['New'];
 else $titre = $LG_Menu_Title['Event'];
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -41,7 +41,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="Edition_Evenement.php?refPar=' . $refPar . $ajout . '"', 'fiche_edition', $LG_modify) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_evenement.php?refPar=' . $refPar . $ajout . '"', 'fiche_edition', $LG_modify) . '&nbsp;';
     }
     Insere_Haut($titre, $compl, 'Fiche_Evenement', '');
 
@@ -76,7 +76,7 @@ else {
             $larg_titre = 25;
             echo '<table width="80%" class="table_form" align="center">' . "\n";
             echo colonne_titre_tab($LG_Event_Title) . $titreLu . '</td></tr>' . "\n";
-            echo colonne_titre_tab($LG_Event_Type) . '<a href="Fiche_Type_Evenement.php?code=' . $enreg['Code_Type'] . '">' . $LibelleTypeLu . '</a></td></tr>' . "\n";
+            echo colonne_titre_tab($LG_Event_Type) . '<a href="'. $root .'/fiche_type_evenement.php?code=' . $enreg['Code_Type'] . '">' . $LibelleTypeLu . '</a></td></tr>' . "\n";
             if ($nomZone != '')
                 echo colonne_titre_tab($LG_Event_Where) . $nomZone . '</td></tr>' . "\n";
             if (($dDebLu != '') or ($dFinLu != ''))
@@ -104,7 +104,7 @@ else {
 
             // Affichage de la liste des noms pour l'évenement
             if ($objetCibleLu == 'P')
-                echo '<br /><a href="' . Get_Adr_Base_Ref() . 'Liste_Nom_Evenement.php?refPar=' . $refPar . '">Liste des noms pour l\'&eacute;v&egrave;nement</a>';
+                echo '<br /><a href="'. $root .'/liste_nom_evenement.php?refPar=' . $refPar . '">Liste des noms pour l\'&eacute;v&egrave;nement</a>';
 
             echo '<br />' . "\n";
 

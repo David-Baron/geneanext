@@ -5,12 +5,12 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Start'];         // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut($titre, $compl, 'Premiers_Pas_Genealogie', '');
@@ -121,7 +121,7 @@ Pour certaines mairies, il est possible de faire une demande d'acte via Internet
 
 <?php $x = paragraphe(LG_START_CHURCH_RECORDS); ?>
 
-Ils recouvrent 3 types d'actes&nbsp;(<a href="<?php echo Get_Adr_Base_Ref(); ?>Glossaire_Gen.php#BMS">BMS</a>) :<br />
+Ils recouvrent 3 types d'actes&nbsp;(<a href="<?= $root; ?>/glossaire_gen.php#BMS">BMS</a>) :<br />
 <ul>
     <li>acte de Bapt&ecirc;me<br />
         Il comporte :
@@ -146,9 +146,9 @@ Ils recouvrent 3 types d'actes&nbsp;(<a href="<?php echo Get_Adr_Base_Ref(); ?>G
             <li>Les noms et pr&eacute;noms des parents avec la mention d&eacute;c&eacute;d&eacute;(e) ou d&eacute;funt(e) si c'est le cas ;</li>
             <li>Les noms et pr&eacute;noms des t&eacute;moins et &eacute;ventuellement les liens avec les &eacute;poux ;</li>
             <li>Les signatures, ou les marques des personnes ;</li>
-            <li>Des mentions diverses : <a href="<?php echo Get_Adr_Base_Ref(); ?>Glossaire_Gen.php#dispenseC">dispenses de
+            <li>Des mentions diverses : <a href="<?= $root; ?>/glossaire_gen.php#dispenseC">dispenses de
                     consanguinit&eacute;</a>,&nbsp;
-                <a href="<?php echo Get_Adr_Base_Ref(); ?>Glossaire_Gen.php#dispenseA">d'affinit&eacute;</a>, reconnaissance d'un enfant n&eacute; avant le mariage.<br /><br />
+                <a href="<?= $root; ?>/glossaire_gen.php#dispenseA">d'affinit&eacute;</a>, reconnaissance d'un enfant n&eacute; avant le mariage.<br /><br />
             </li>
         </ul>
     </li>
@@ -172,7 +172,7 @@ Plus on remonte dans le temps, plus les actes sont parcellaires...<br />
 <?php $x = paragraphe(LG_START_YOUR_TURN); ?>
 
 Commencez par d&eacute;terminer de qui partira la g&eacute;n&eacute;alogie ; il s'agit de votre
-<a href="<?php echo Get_Adr_Base_Ref(); ?>Glossaire_Gen.php#CUJUS">de cujus</a>.
+<a href="<?= $root; ?>/glossaire_gen.php#CUJUS">de cujus</a>.
 Rassemblez un maximum de documents de famille, pensez &agrave; interroger les t&eacute;moins, utilisez
 les sources d'&eacute;tat civil pour enrichir votre g&eacute;n&eacute;alogie,
 utilisez G&eacute;n&eacute;amania pour organiser vos donn&eacute;es et c'est parti...<br />

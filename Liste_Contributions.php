@@ -4,13 +4,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Contribs_List'];    // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'C';                        // Page accessible aux contributeurs
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ignorer', 'retour');
@@ -128,7 +128,7 @@ while ($i < count($ListFiles)) {
         else            $suffixe = '';
 
         echo '<td align="center">' .
-            '<a href="' . Get_Adr_Base_Ref() . 'Edition_Contribution.php?Contribution=' . $num_contrib0 . $suffixe . '">' .
+            '<a href="'.$root.'/edition_contribution.php?Contribution=' . $num_contrib0 . $suffixe . '">' .
             $echo_modif .
             '</td>';
 

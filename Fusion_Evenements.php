@@ -6,7 +6,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function aff_nb_enr($lib1, $accord)
 {
@@ -57,7 +57,7 @@ if ($simulation == -1) $simulation = false;
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Event_Merging'];       // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $compl = Ajoute_Page_Info(600, 250);
 Insere_Haut(my_html($titre), $compl, 'Fusion_Evenements', '');
@@ -65,17 +65,17 @@ Insere_Haut(my_html($titre), $compl, 'Fusion_Evenements', '');
 // La simulation sera cochée par défaut
 if ($ok != $lib_OK) $simulation = 1;
 
-echo '<form action="' . my_self() . '" method="post">' . "\n";
-echo '<table border="0" width="60%" align="center">' . "\n";
+echo '<form method="post">';
+echo '<table width="60%" align="center">';
 echo '<tr align="center">';
-echo '<td class="rupt_table"><label for="simulation">' . LG_EVT_MERGE_SIMULATE . '</label>&nbsp;:&nbsp;' . "\n";
+echo '<td class="rupt_table"><label for="simulation">' . LG_EVT_MERGE_SIMULATE . '</label>&nbsp;:&nbsp;';
 echo '<input type="checkbox"';
 if ($simulation) echo ' checked="checked"';
-echo ' id="simulation" name="simulation" value="1"/></td>' . "\n";
-echo '<td class="rupt_table"><input type="submit" name="ok" value="' . $lib_OK . '"/></td>' . "\n";
+echo ' id="simulation" name="simulation" value="1"/></td>';
+echo '<td class="rupt_table"><input type="submit" name="ok" value="' . $lib_OK . '"/></td>';
 echo '</tr></table>';
 // echo '<input type="hidden" name="init" value="x" />'
-echo '</form>' . "\n";
+echo '</form>';
 
 echo Affiche_Icone('tip', 'Information') . '&nbsp;' . my_html(LG_EVT_MERGE_TIP) . '<br />';
 
@@ -118,10 +118,10 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
 
             if ($premier) {
                 echo '<br />' . my_html(LG_EVT_MERGE_PROCESS . ' ' . $enreg[4]) . '<br />';
-                echo $tab . '<a href="Fiche_Evenement.php?refPar=' . $ident_premier . '">' . $h_LG_EVT_MERGE_REF . '</a><br />';
+                echo $tab . '<a href="' . $root . '/fiche_evenement.php?refPar=' . $ident_premier . '">' . $h_LG_EVT_MERGE_REF . '</a><br />';
                 $premier = false;
             }
-            echo $tab . '<a href="Fiche_Evenement.php?refPar=' . $id_courant . '">' . $h_LG_EVT_MERGE_OTHER . '</a><br />';
+            echo $tab . '<a href="' . $root . '/fiche_evenement.php?refPar=' . $id_courant . '">' . $h_LG_EVT_MERGE_OTHER . '</a><br />';
 
 
             // Etape 1 : on bascule les participations sur le commentaire le plus ancien
@@ -188,7 +188,7 @@ $plu = pluriel($nb_fus);
 $plu = is_pluriel($nb_fus);
 if (is_pluriel($nb_fus)) $msg = $lg_evt_nb_events;
 else $msg = $lg_evt_nb_event;
-echo '<br />' . $nb_fus . ' ' . my_html($msg) . '<br />';
+echo '<br>' . $nb_fus . ' ' . my_html($msg) . '<br />';
 $nb_fus++;
 
 Insere_Bas($compl);

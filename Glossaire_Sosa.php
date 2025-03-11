@@ -5,12 +5,12 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Sosa'];       // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 ?>
 <style type="text/css">
@@ -37,7 +37,7 @@ Insere_Haut($titre, $compl, 'Glossaire_Sosa', '');
 ?>
 R&egrave;gles de base :
 <ul>
-    <li>La personne dont on part est le num&eacute;ro 1 (Cf. <a href="Glossaire_Gen.php#CUJUS">De cujus</a>).</li>
+    <li>La personne dont on part est le num&eacute;ro 1 (Cf. <a href="<?= $root; ?>/glossaire_gen.php#CUJUS">De cujus</a>).</li>
     <li>Pour obtenir le num&eacute;ro d'un p&egrave;re, on multiplie par 2 le num&eacute;ro de la personne.</li>
     <li>Pour obtenir le num&eacute;ro d'un m&egrave;re, on multiplie par 2 le num&eacute;ro de la personne et on ajoute 1.</li>
     <li>Seuls les ascendants directs font l'objet d'une num&eacute;rotation.</li>
@@ -72,7 +72,7 @@ Ce qui nous donne :
         <td class="femme">Grand-m&egrave;re maternelle<br />Sosa : 7<br />(=3*2+1)</td>
     </tr>
 </table>
-<br /><a href="<?php echo Get_Adr_Base_Ref() ?>Calc_So.php">Calculette Sosa</a><br />
+<br /><a href="<?= $root; ?>/calc_so.php">Calculette Sosa</a><br />
 <?php
 Insere_Bas($compl); ?>
 </body>

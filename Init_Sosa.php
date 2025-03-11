@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -33,7 +33,7 @@ $acces = 'M';                                // Type d'accès de la page : (M)is
 $niv_requis = 'G';                            // Niveau gestionnaire requis
 $titre = $LG_Menu_Title['Delete_Sosa'];    // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -52,7 +52,7 @@ if ($bt_OK) {
 $compl = Ajoute_Page_Info(600, 200);
 Insere_Haut(my_html($titre), $compl, 'Init_Sosa', '');
 
-echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+echo '<form id="saisie" method="post">' . "\n";
 aff_origine();
 echo '<br /><br />';
 echo '<table width="50%" class="table_form">' . "\n";
@@ -65,7 +65,7 @@ echo '</table>';
 echo '<br />';
 echo '</form>';
 
-echo '<br /><a href="Verif_Sosa.php">' . my_html($LG_Menu_Title['Check_Sosa']) . '</a>';
+echo '<br /><a href="' . $root . '/verif_sosa.php">' . my_html($LG_Menu_Title['Check_Sosa']) . '</a>';
 
 Insere_Bas($compl);
 ?>

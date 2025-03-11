@@ -4,13 +4,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_assc_tree;
 $x = Lit_Env();
 $index_follow = 'IN';                // NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');        // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');        // Appel de la gestion standard des pages
 
 function Retourne_Pers($Num)
 {
@@ -44,7 +44,7 @@ function Charge_Parents($Personne)
 
 $imp_mar = 0;
 
-require(__DIR__ . '/Commun_Arbre.php');
+require(__DIR__ . '/app/ressources/commun_arbre.php');
 
 // Coordonnée gauche par génération
 $Coord_X = array(40, 260, 480, 700);
@@ -73,8 +73,8 @@ $Refer = Recup_Variable('Refer', 'N');
 $compl = Ajoute_Page_Info(600, 150);
 if (!$is_bot) {
     $compl .=
-        Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'appelle_image_arbre_asc.php?Refer=' . $Refer . '"', 'text', $LG_printable_format) . '&nbsp;' .
-        Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Arbre_Asc_PDF.php?Refer=' . $Refer . '"', 'PDF', $LG_Tree_Pdf_7Gen) . '&nbsp;';
+        Affiche_Icone_Lien('href="' . $root . '/appelle_image_arbre_asc.php?Refer=' . $Refer . '"', 'text', $LG_printable_format) . '&nbsp;' .
+        Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pdf.php?Refer=' . $Refer . '"', 'PDF', $LG_Tree_Pdf_7Gen) . '&nbsp;';
 }
 Insere_Haut('Arbre ascendant', $compl, 'nouv_arbre_asc', $Refer);
 

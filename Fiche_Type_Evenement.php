@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Event_Type'];       // Titre pour META
@@ -29,7 +29,7 @@ $Code = Recup_Variable('code', 'A');
 
 $req_sel = 'select * from ' . nom_table('types_evenement') . ' where Code_Type = \'' . $Code . '\' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -44,7 +44,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($enreg2['Code_Modifiable'] == 'O') {
-        $compl .= '<a href="Edition_Type_Evenement.php?code=' . $Code . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
+        $compl .= '<a href="' . $root . '/edition_type_evenement.php?code=' . $Code . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
     }
 
     Insere_Haut($titre, $compl, 'Fiche_Type_Evenement', $Code);
@@ -110,7 +110,7 @@ else {
 
     echo '</table>' . "\n";
 
-    echo '<br><a href="Liste_Evenements.php?tev=' . $Code . '">' . LG_EVENT_TYPE_EVENTS . '</a>';
+    echo '<br><a href="' . $root . '/liste_evenements.php?tev=' . $Code . '">' . LG_EVENT_TYPE_EVENTS . '</a>';
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);

@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Name_Is_Complete'];         // Titre pour META
@@ -23,7 +23,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
 $niv_requis = 'P';                // Page accessible à partir du niveau privilégié
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -41,13 +41,13 @@ $titre .= $NomL;
 
 $n_unions = nom_table('unions');
 
-$lien = 'href="' . my_self() . '?texte=O' .
+$lien = 'href="' . $root . '/completude_nom.php?texte=O' .
     '&amp;idNom=' . $idNom .
     '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 
 $compl = Ajoute_Page_Info(700, 250) .
     Affiche_Icone_Lien($lien . '"', 'text', 'Format imprimable') . '&nbsp;' .
-    Affiche_Icone_Lien('href="' . my_self() . '?idNom=' . $idNom . '&amp;Nom=' . $NomL . '&amp;Sortie=c"', 'exp_tab', 'Export CSV') . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/completude_nom.php?idNom=' . $idNom . '&amp;Nom=' . $NomL . '&amp;Sortie=c"', 'exp_tab', 'Export CSV') . '&nbsp;';
 
 if (! $texte) {
     Insere_Haut(my_html($titre), $compl, 'Completude_Nom', $NomL);
@@ -152,7 +152,7 @@ if ($res = lect_sql($sql)) {
                 if (!$texte) {
                     echo '&nbsp;<a ' . Ins_Ref_Pers($Ref) . '>' . my_html($row['Prenoms']) . '</a>' . "\n";
                     echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '>' . $echo_modif;
-                    echo '&nbsp;<a href="Verif_Personne.php?Refer=' . $Ref . '">' . $echo_verif;
+                    echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '">' . $echo_verif;
                 } else echo my_html($row['Prenoms']) . "\n";
                 echo '</td>';
             } else {

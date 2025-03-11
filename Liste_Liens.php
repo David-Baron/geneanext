@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'supprimer', 'S_Sup', 'idLien');
@@ -21,7 +21,7 @@ $x = Lit_Env();
 $lib_sup = my_html(LG_LINKS_DEL);
 
 $niv_requis = 'I';
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $compl = Ajoute_Page_Info(600, 150);
 
@@ -63,12 +63,12 @@ $suf = 0;
 
 $ent_table = '<table width="95%" border="0" class="classic" align="center">' . "\n";
 $fin_mod = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $LG_modify . '" title="' . $LG_modify . '"/></a>' . "\n";
-$deb_mod = '<td align="center" width="10%"><a href="' . Get_Adr_Base_Ref() . 'Edition_Lien.php?Ref=';
+$deb_mod = '<td align="center" width="10%"><a href="' . $root . '/edition_lien.php?Ref=';
 
 // Possibilité d'insérer un lien
 if ($est_gestionnaire) {
-    echo my_html(LG_LINKS_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="Edition_Lien.php?Ref=-1"', 'ajouter', $LG_add) . '<br />' . "\n";
-    echo my_html(LG_LINKS_IMPORT) . LG_SEMIC . Affiche_Icone_Lien('href="Import_CSV_Liens.php"', 'ajout_multiple', $LG_csv_import) . '<br /><br />' . "\n";
+    echo my_html(LG_LINKS_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_lien.php?Ref=-1"', 'ajouter', $LG_add) . '<br />' . "\n";
+    echo my_html(LG_LINKS_IMPORT) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/import_csv_liens.php"', 'ajout_multiple', $LG_csv_import) . '<br /><br />' . "\n";
     echo '<form action="' . my_self() . '" id="saisie" method="post">';
     echo '<input name="compteur" type="' . $hidden . '" value="0"/>';
 }
@@ -107,7 +107,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
             Survole_Clic_Div('div' . $suf) . '/>' . "\n";
         // Possibilité d'extraire les liens du type de lien. Page interdite sur les gratuits non Premium
         if (($est_gestionnaire) and ((!$SiteGratuit) or ($Premium))) {
-            echo '&nbsp;' . Affiche_Icone_Lien('href="Export_Liens.php?Categ=' . $row['type_lien'] . '"', 'exp_tab', my_html($LG_csv_export));
+            echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/export_liens.php?Categ=' . $row['type_lien'] . '"', 'exp_tab', my_html($LG_csv_export));
         }
         echo '</td></tr></table>' . "\n";
         echo '<div id="div' . $suf . '">' . "\n";
@@ -119,7 +119,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     $style = 'liste2';
     if (pair($num_lig_coul++)) $style = 'liste';
     echo '<tr class="' . $style . '">' . "\n";
-    echo '<td width="25%"><a href="Fiche_Lien.php?Ref=' . $id_lien . '">' . my_html($row['description']) . "</a></td>\n";
+    echo '<td width="25%"><a href="' . $root . '/fiche_lien.php?Ref=' . $id_lien . '">' . my_html($row['description']) . "</a></td>\n";
     echo "<td";
     if ($image == '') {
         echo " colspan=\"2\"";

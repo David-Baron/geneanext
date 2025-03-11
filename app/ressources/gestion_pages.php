@@ -8,7 +8,7 @@ function Ecrit_Entete_Page($titre, $contenu, $mots, $index_follow = 'IF')
     global $langue_min;
     echo '<!DOCTYPE html>';
     echo '<html lang="' . $langue_min . '">';
-    echo '<head>' . "\n";
+    echo '<head>';
     Ecrit_Meta($titre, $contenu, $mots, $index_follow);
 }
 
@@ -134,7 +134,7 @@ if (isset($Environnement)) {
         else {
             $avec_js = true;
             Ecrit_Entete_Page($titre, $contenu, $mots, $index_follow);
-            include(__DIR__ . '/assets/js/edition_geneamania.js');
+            include(__DIR__ . '/../../assets/js/edition_geneamania.js');
         }
     }
 

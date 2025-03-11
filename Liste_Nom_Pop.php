@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -24,7 +24,7 @@ $acces = 'L';                                      // Type d'accès de la page :
 $titre = $LG_Menu_Title['Most_Used_Names'];     // Titre pour META
 $x = Lit_Env();
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -60,8 +60,8 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = '&nbsp;<a href="Fiche_NomFam.php?idNom=';
-    $deb_modif = 'href="Edition_NomFam.php?idNom=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam.php?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 

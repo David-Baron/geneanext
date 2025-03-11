@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                    // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -28,7 +28,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $titre = $LG_Menu_Title['Galery'];     // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -181,12 +181,12 @@ else {
                     $sqlE = 'SELECT Reference, Titre FROM ' . nom_table('evenements') . ' WHERE reference = ' . $ref_objet . ' limit 1';
                     $resE = lect_sql($sqlE);
                     if ($rowE = $resE->fetch(PDO::FETCH_NUM)) {
-                        echo '<br /><a href="Fiche_Evenement.php?refPar=' . $rowE[0] . '">' . my_html($rowE[1]) . '</a>';
+                        echo '<br /><a href="'.$root.'/fiche_evenement.php?refPar=' . $rowE[0] . '">' . my_html($rowE[1]) . '</a>';
                     }
                     break;
                 // Ville
                 case 'V':
-                    echo '<br /><a href="Fiche_Ville.php?Ident=' . $ref_objet . '">' . lib_ville($ref_objet) . '</a>';
+                    echo '<br /><a href="'.$root.'/fiche_ville.php?Ident=' . $ref_objet . '">' . lib_ville($ref_objet) . '</a>';
                     break;
             }
 

@@ -5,7 +5,7 @@
 // ============================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -30,7 +30,7 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 $acces = 'M';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Internet_Cheking'];    // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 if ($bt_An) Retour_Ar();
 
@@ -86,10 +86,10 @@ echo '<form action="' . my_self() . '" id="saisie" method="post">';
 bt_ok_an_sup($lib_Rectifier, $lib_Annuler, '', '', false);
 
 $plu = pluriel($nbPers);
-echo '<br>' . $nbPers . LG_CHK_INTERNET_PRES_1 . ' ' . $Lim_Diffu . ' ' . LG_CHK_INTERNET_PRES_2 . LG_SEMIC
+echo '<br>' . $nbPers . LG_CHK_INTERNET_PRES_1 . ' ' . $Lim_Diffu . ' ' . LG_CHK_INTERNET_PRES_2 . ' '
     . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/>&nbsp;' . LG_CHK_INTERNET_YEARS . "\n";
 echo '<input type="submit" name="re" value="' . $LG_Check_Again . '"/>' . "\n";
-echo '<br><br><a href="Verif_Internet_Absente.php">' . $LG_Menu_Title['Internet_Hidding_Cheking'] . '</a>';
+echo '<br><br><a href="' . $root . '/verif_internet_absente.php">' . $LG_Menu_Title['Internet_Hidding_Cheking'] . '</a>';
 echo '<br><br>';
 
 echo '<table border="0" class="classic" cellspacing="1" cellpadding="3" align="center">' . "\n";

@@ -6,7 +6,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -28,7 +28,7 @@ $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Request_Edit'];     // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : référence de la requête
 $reference = Recup_Variable('reference', 'N');
@@ -65,7 +65,7 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 150) .
-        Affiche_Icone_Lien('href="Fiche_Requete.php?reference=' . $reference . '"', 'page', my_html($LG_Menu_Title['Request'])) . '&nbsp;';
+        Affiche_Icone_Lien('href="'. $root .'/fiche_requete.php?reference=' . $reference . '"', 'page', my_html($LG_Menu_Title['Request'])) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Requete', $reference);
 

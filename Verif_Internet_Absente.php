@@ -5,7 +5,7 @@
 // =================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -30,7 +30,7 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 $acces = 'M';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Internet_Hidding_Cheking'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -99,9 +99,9 @@ bt_ok_an_sup($lib_Rectifier, $lib_Annuler, '', '', false);
 $pluriel = pluriel($nbPers);
 
 echo '<br>' . $nbPers . LG_CHK_INTERNET_ABS_1 . ' ' . $Lim_Diffu . ' ' . LG_CHK_INTERNET_ABS_2 . ' ' . $Lim_Diffu_Dec . ' ' . LG_CHK_INTERNET_ABS_3;
-echo '&nbsp;' . LG_CHK_INTERNET_ABS_CHG_LIMIT . LG_SEMIC . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/>&nbsp;ans' . "\n";
+echo '&nbsp;' . LG_CHK_INTERNET_ABS_CHG_LIMIT . ' ' . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/>&nbsp;ans' . "\n";
 echo '<input type="submit" name="re" value="' . $LG_Check_Again . '"/>' . "\n";
-echo '<br><br><a href="Verif_Internet.php">' . $LG_Menu_Title['Internet_Cheking'] . '</a>';
+echo '<br><br><a href="' . $root . '/verif_internet.php">' . $LG_Menu_Title['Internet_Cheking'] . '</a>';
 echo '<br><br>';
 
 if ($nbPers > 0) {

@@ -4,11 +4,11 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $titre = $LG_function_noavailable_profile;        // Titre pour META
 $acces = 'L';                                    // Type d'accès de la page : (M)ise à jour, (L)ecture
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 $x = Lit_Env();
 
 Insere_Haut($titre, '', 'Erreur_Profil', '');

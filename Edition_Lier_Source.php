@@ -10,7 +10,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Lire_Nom_Prenoms_Unions($refUnion)
 {
@@ -75,7 +75,7 @@ foreach ($tab_variables as $nom_variables) {
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Edition liaison source';   // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Sécurisation des variables postées
 $ok        = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');

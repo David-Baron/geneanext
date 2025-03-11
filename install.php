@@ -1,7 +1,6 @@
 <?php
 
-require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $cnx = false;
 $msg_cnx_ok = 'Connexion OK';
@@ -28,7 +27,7 @@ function db_connect($host, $dbname, $user, $pswd)
 function req_maj_vers($numvers)
 {
     global $req;
-    $req[] = 'update ' . nom_table('general') . ' set version=\'' . $numvers . '\'';
+    $req[] = 'UPDATE ' . nom_table('general') . ' SET version=\'' . $numvers . '\'';
     return $numvers;
 }
 
@@ -42,7 +41,7 @@ function cre_rep($nom_rep)
         copy('Images/index.html', $nom_rep . '/index.html');
     }
     if (!is_writable($nom_rep)) {
-        echo 'Le r&acute;pertoire ' . $nom_rep . 'n\'est pas accessible en &eacute;criture ; veuillez corriger le probl&egrave;me.';
+        echo 'Le répertoire ' . $nom_rep . 'n\'est pas accessible en écriture, veuillez corriger le problème.';
     }
 }
 function Traite_Commentaire($type_objet)
@@ -65,7 +64,7 @@ function Traite_Commentaire($type_objet)
             $n_table = $n_evenements;
             break;
     }
-    $sql = 'SELECT Reference, Divers, Diff_Internet_Note  FROM ' . $n_table . ' where Divers is not null and Divers <> \'\'';
+    $sql = 'SELECT Reference, Divers, Diff_Internet_Note  FROM ' . $n_table . ' WHERE Divers IS NOT NULL AND Divers <> \'\'';
 
     if ($res = lect_sql($sql)) {
         while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
@@ -174,7 +173,7 @@ $msg = '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Installation de Généamania</title>
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= $root; ?>/assets/favicon.ico" type="image/x-icon">
     <style type="text/css">
         body {
             background-color: #e8fbe5;
@@ -268,7 +267,7 @@ $msg = '';
     <table cellpadding="0" width="100%">
         <tr>
             <td align="center">
-                <h1>Installation de G&eacute;n&eacute;amania v<?= $LaVersion; ?></h1>
+                <h1>Installation de Généamania v<?= $LaVersion; ?></h1>
             </td>
         </tr>
     </table>
@@ -280,9 +279,9 @@ $msg = '';
         $cnx = db_connect($serveurs, $dbs, $utils, $mdps);
         if (!$cnx) {
             $erreur = true;
-            echo 'les param&egrave;tres saisis ne sont pas corrects.<br>';
+            echo 'les paramètres saisis ne sont pas corrects.<br>';
         } else {
-            echo 'les param&egrave;tres saisis sont corrects, vous pouvez les enregistrer...<br><br>';
+            echo 'les paramètres saisis sont corrects, vous pouvez les enregistrer...<br><br>';
         }
     }
 
@@ -316,7 +315,7 @@ $msg = '';
                 $nom_fic = 'param_part.php';
                 // $nom_fic = $dirPathTarget.'param_part.php';
                 $fic = fopen($nom_fic, 'w');
-                if (! $fic) die("Impossible de cr&eacute;er $nom_fic. !");
+                if (! $fic) die("Impossible de créer $nom_fic. !");
                 else {
                     fwrite($fic, '<?php' . $cr);
                     fwrite($fic, '$pref_tables = \'' . $prefixe . '\';' . $cr);
@@ -403,7 +402,7 @@ $msg = '';
                 }
             }
 
-            if ($Num_Gen == $LaVersion) $msg = 'La base est d&eacute;j&agrave; en version ' . $LaVersion;
+            if ($Num_Gen == $LaVersion) $msg = 'La base est déjà en version ' . $LaVersion;
             if ($Num_Gen == '1.3') {
                 $req[] = 'ALTER TABLE ' . nom_table('personnes') . ' ADD `Diff_Internet_Note` CHAR( 1 ) DEFAULT \'O\' AFTER `Divers` ;';
                 $req[] = 'ALTER TABLE ' . nom_table('unions') . ' ADD `Divers` VARCHAR( 200 ) AFTER `Ville_Notaire` ;';
@@ -600,7 +599,7 @@ $msg = '';
                 $ref_evt = 0;
                 $sql = 'SELECT Reference, B_Le FROM ' . nom_table('personnes') . ' where B_Le is not null and B_LE <> \'\'';
                 if ($res = lect_sql($sql)) {
-                    //echo $res->rowCount().' personnes &agrave; traiter.<br>'
+                    //echo $res->rowCount().' personnes à traiter.<br>'
                     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
                         $req[] = 'INSERT INTO ' . nom_table('evenements') .
                             ' (Code_Type,Titre,Debut,Fin,Date_Creation,Date_Modification,Statut_Fiche)' .
@@ -617,7 +616,7 @@ $msg = '';
                 // Passage des professions en évènement
                 $sql = 'SELECT Reference, Profession  FROM ' . nom_table('personnes') . ' where Profession is not null and Profession  <> \'\'';
                 if ($res = lect_sql($sql)) {
-                    //echo $res->rowCount().' personnes &agrave; traiter.<br>'
+                    //echo $res->rowCount().' personnes à traiter.<br>'
                     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
                         $req[] = 'INSERT INTO ' . nom_table('evenements') .
                             ' (Code_Type,Titre,Debut,Fin,Date_Creation,Date_Modification,Statut_Fiche)' .
@@ -1876,7 +1875,7 @@ $msg = '';
             $utils    = $nutil;
             $mdps     = $nmdp;
         }
-        echo '<b>Constitution du fichier de connexion &agrave; la base de donn&eacute;es :<br></b>' . "\n";
+        echo '<b>Constitution du fichier de connexion à la base de données :<br></b>' . "\n";
 
         echo '<form id="saisie" method="post" ENCTYPE="multipart/form-data" action="' . my_self() . '">' . "\n";
 
@@ -1902,7 +1901,7 @@ $msg = '';
 
         echo "</form>";
 
-        if ($msgMaj == "OKMaj") echo '<br><font color="green">Cr&eacute;ation du fichier des param&egrave;tres de connexion OK</font><br>';
+        if ($msgMaj == "OKMaj") echo '<br><font color="green">Création du fichier des paramètres de connexion OK</font><br>';
 
         if (($msg != "") and ($msg != "OKMod") and ($msg != "OKIni") and ($msg != "OKMaj")) {
             if ($erreur) {
@@ -1914,11 +1913,11 @@ $msg = '';
     } else {
 
         // Récupération des derniers sources
-        echo '<fieldset><legend>R&eacute;cup&eacute;ration de la derni&egrave;re version de r&eacute;f&eacute;rence du logiciel</legend>';
+        echo '<fieldset><legend>Récupération de la dernière version de référence du logiciel</legend>';
         if ($is_windows)
             echo Affiche_Icone('tip', 'Information') .
-                'Si vous utilisez le lanceur Windows, vous pouvez mettre &agrave; jour  G&eacute;n&eacute;amania en 1 clic &agrave; partir de l\'onglet "Versions" du lanceur.<br>Sinon,&nbsp;';
-        echo '<a href="recup_sources.php">Cliquez ici</a>';
+                'Si vous utilisez le lanceur Windows, vous pouvez mettre à jour  Généamania en 1 clic à partir de l\'onglet "Versions" du lanceur.<br>Sinon,&nbsp;';
+        echo '<a href="' . $root . '/recup_sources.php">Cliquez ici</a>';
         echo '</fieldset>';
 
         // Recherche de la version éventuelle locale de Généamania
@@ -1934,8 +1933,8 @@ $msg = '';
         $chInt = ($envir == 'I') ? 'checked="checked"' : '';
 
         echo '<br>';
-        echo '<fieldset><legend>Initialisation de la base de donn&eacute;es</legend>';
-        echo Affiche_Icone('tip', 'Information') . ' Uniquement pour une premi&egrave;re installation de G&eacute;n&eacute;amania :<br>' . "\n";
+        echo '<fieldset><legend>Initialisation de la base de données</legend>';
+        echo Affiche_Icone('tip', 'Information') . ' Uniquement pour une première installation de Généamania :<br>' . "\n";
         echo '<form id="form_modI" method="post" action="' . my_self() . '">' . "\n";
         echo '<table width="25%"><tr align="center"><td>' . "\n";
         echo '  <fieldset>' . "\n";
@@ -1945,13 +1944,13 @@ $msg = '';
         echo '  </fieldset>' . "\n";
         echo '</td></tr>';
         echo '<tr><td>&nbsp;</td></tr>';
-        echo '<tr><td>Pr&eacute;fixe des tables : <input type="text" name="prefixe" value="' . $pref_tables . '"/></td></tr>' . "\n";
+        echo '<tr><td>Préfixe des tables : <input type="text" name="prefixe" value="' . $pref_tables . '"/></td></tr>' . "\n";
         echo '</table>' . "\n";
         echo '<br><input type="submit" name="maj" value="Initialisation"/>' . "\n";
         echo '</form>' . "\n";
         if ($msgIni != '') {
             if ($msgIni == "OKIni") {
-                echo '<br><font color="green">Initialisation de la base effectu&eacute;e en environnement ';
+                echo '<br><font color="green">Initialisation de la base effectuée en environnement ';
                 if ($envir == 'I') echo 'internet';
                 else               echo 'local';
                 echo '</font><br>';
@@ -1960,33 +1959,33 @@ $msg = '';
         echo '</fieldset>';
 
         echo '<br>';
-        echo '<fieldset><legend>Migration de la base de donn&eacute;es</legend>';
+        echo '<fieldset><legend>Migration de la base de données</legend>';
         if ($Version != '') {
             if ($Version != $LaVersion) {
                 echo 'Version ' . $Version . ' vers ' . $LaVersion . ' : <br></b>' . "\n";
-                echo '<i>NB : un <a href="Export.php">export</a> complet de la base est conseill&eacute; avant de demander la migration.</i>' . "\n";
+                echo '<i>NB : un <a href="' . $root . '/export.php">export</a> complet de la base est conseillé avant de demander la migration.</i>' . "\n";
                 echo '<form id="form_modM" method="post" action="' . my_self() . '">' . "\n";
                 echo '<input type="submit" name="maj" value="Migration"/>' . "\n";
                 echo "</form>";
-            } else echo 'Pas de migration n&eacute;cessaire.' . "\n";
+            } else echo 'Pas de migration nécessaire.' . "\n";
         }
         if ($msgMod != '') {
-            if ($msgMod == 'OKMod') echo '<br><font color="green">Migration de la base effectu&eacute;e</font><br>';
+            if ($msgMod == 'OKMod') echo '<br><font color="green">Migration de la base effectuée</font><br>';
             else                    echo '<br><font color="red">' . $msgMod . '</font><br>';
         }
         echo '</fieldset>';
 
         echo '<br>';
         echo '<fieldset><legend>Liens</legend>';
-        echo '<a href="https://forum.geneamania.net/" target="_blank">Forum G&eacute;n&eacute;amania</a><br>' . "\n";
+        echo '<a href="https://forum.geneamania.net/" target="_blank">Forum Généamania</a><br>' . "\n";
         if ($Version != '') {
-            echo '<a href="index.php">Accueil de votre généalogie</a>';
+            echo '<a href="' . $root . '/">Accueil de votre généalogie</a>';
         }
         echo '</fieldset>';
 
         // Message d'avertissement en  environnement internet
         if ($envir == 'I') {
-            echo '<br>' . Affiche_Icone('tip', 'Information') . '<b> Sur internet, pensez &agrave; supprimer la page install.php une fois que vous avez fini de l\'utiliser.</b><br>';
+            echo '<br>' . Affiche_Icone('tip', 'Information') . '<b> Sur internet, pensez à supprimer la page install.php une fois que vous avez fini de l\'utiliser.</b><br>';
         }
     }
 

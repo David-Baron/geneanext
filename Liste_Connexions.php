@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
@@ -12,7 +12,7 @@ foreach ($tab_variables as $nom_variables) {
     else $$nom_variables = '';
 }
 // Sécurisation des variables postées
-$annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
+$annuler = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
@@ -22,7 +22,7 @@ $acces = 'L';
 $titre = $LG_Menu_Title['Connections'];
 $x = Lit_Env();
 $niv_requis = 'G';
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Sortie dans un fichier CSV ?
 $csv_dem = Recup_Variable('csv', 'C', 'ce');
@@ -47,7 +47,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($_SESSION['estCnx']) {
         $filtre = '';
         if ($id_Util != -1) $filtre = '&amp;Util=' . $id_Util;
-        $compl .= Affiche_Icone_Lien('href="' . my_self() . '?csv=c' . $filtre . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_connexions.php?csv=c' . $filtre . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
     }
 }
 
@@ -105,8 +105,8 @@ if (!$CSV) {
             echo '</tr>' . "\n";
         }
         echo '<tr>';
-        echo '<td><a href="Fiche_Utilisateur.php?code=' . $row[0] . '">' . $row[3];
-        echo '</a>&nbsp;<a href="Edition_Utilisateur.php?code=' . $row[0] . '">' . $echo_modif . '</td>';
+        echo '<td><a href="'.$root.'/fiche_utilisateur.php?code=' . $row[0] . '">' . $row[3];
+        echo '</a>&nbsp;<a href="'.$root.'/edition_utilisateur.php?code=' . $row[0] . '">' . $echo_modif . '</td>';
         echo '<td>' . DateTime_Fr($row[1]) . '</td>';
         echo '<td>' . $row[2] . '</td>';
         echo '</tr>' . "\n";

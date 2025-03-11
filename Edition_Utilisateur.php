@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Affiche une option pour le niveau d'autorisation
 function aff_option_niveau($niv_option)
@@ -58,7 +58,7 @@ $niv_requis = 'G';                        // Page accessible pour les gestionnai
 if (!$Creation) $titre = $LG_Menu_Title['User_Edit'];
 else $titre = $LG_Menu_Title['User_Add'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -155,7 +155,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     $compl = Ajoute_Page_Info(900, 450);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="Fiche_Utilisateur.php?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_utilisateur.php?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Utilisateur', $Code);
     include(__DIR__ . '/assets/js/ctrlMotPasse.js');

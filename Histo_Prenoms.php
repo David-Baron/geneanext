@@ -6,7 +6,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine', 'tri');
 foreach ($tab_variables as $nom_variables) {
@@ -24,7 +24,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_STAT_SURNAMES;      // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();

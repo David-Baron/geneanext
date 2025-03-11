@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -46,7 +46,7 @@ $acces = 'M';                          // Type d'accès de la page : (M)ise à j
 if ($Creation) $titre = $LG_Menu_Title['Name_Add'];
 else $titre = $LG_Menu_Title['Name_Edit'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour arrière sur une demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -233,7 +233,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 400);
     if ($idNomFam != -1)
-        $compl .= Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Fiche_NomFam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_nomfam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_NomFam', $idNomFam);
 

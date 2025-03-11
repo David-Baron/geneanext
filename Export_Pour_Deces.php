@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';
 
@@ -36,7 +36,7 @@ $niv_requis = 'G';        // Niveau minimum : Gestionnaire
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 if ($ok == $lib_ok) $ok = 'OK';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -120,7 +120,7 @@ if ($bt_OK) {
                     . UnPrenom($row[1]) . ' '
                     . lib_sexe_born($row[5]) . ' ' . etend_date($row[2]) . ' ' . LG_AT . ' ' . $row[4];
                 echo '&nbsp;<a ' . Ins_Edt_Pers($row[6]) . '>' . $echo_modif;
-                echo LG_SEMIC . '<a href="Recherche_MatchId_Unitaire.php'
+                echo LG_SEMIC . '<a href="'. $root .'/recherche_matchid_unitaire.php'
                     . '?ref=' . $row[6] . '"'
                     . ' target="_blank">'
                     . $LG_Menu_Title['MatchId_Sch'] . '</a>';

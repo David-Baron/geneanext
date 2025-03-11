@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('cache', 'annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -28,7 +28,7 @@ $Fin = Recup_Variable('Fin', 'N');
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_CH_HISTO_DEATH_TITLE . $Debut . '-' . $Fin;      // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -133,9 +133,9 @@ $largeur = 300;
 $hauteur = 250;
 $largeur_labels = 180;
 
-require(__DIR__ . '/piechart3.php');
+require(__DIR__ . '/app/ressources/piechart3.php');
 echo '<br />';
-echo '<table align="center" border="0">';
+echo '<table align="center">';
 echo '<tr>';
 echo '<th class="titre_hommes" align="center">' . LG_CH_HISTO_AGE_MEN . '</th>';
 echo '<th class="titre_femmes" align="center">' . LG_CH_HISTO_AGE_WOMEN . '</th>';

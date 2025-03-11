@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Name'];       // Titre pour META
@@ -28,7 +28,7 @@ $idNomFam = Recup_Variable('idNom', 'N');
 $req_sel = 'SELECT * FROM ' . nom_table('noms_famille') . ' WHERE idNomFam =' . $idNomFam . ' limit 1';
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -43,7 +43,7 @@ else {
 
         $compl = Ajoute_Page_Info(600, 150);
         if ($est_gestionnaire) {
-            $compl = Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Edition_NomFam.php?idNom=' . $idNomFam . '"', 'fiche_edition', $LG_Menu_Title['Name_Edit']) . '&nbsp;';
+            $compl = Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=' . $idNomFam . '"', 'fiche_edition', $LG_Menu_Title['Name_Edit']) . '&nbsp;';
         }
         Insere_Haut($titre, $compl, 'Fiche_NomFam', $idNomFam);
 
@@ -74,14 +74,14 @@ else {
             $utilise = ($enreg = $res->fetch(PDO::FETCH_ASSOC));
             $res->closeCursor();
             if ($utilise) {
-                $deb_lien = '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=';
+                $deb_lien = '<a href="' . $root . '/liste_pers2.php?Type_Liste=';
                 $fin_lien = '&amp;idNom=' . $idNomFam . '&amp;Nom=' . $r_nom . '">';
                 echo '<br />' . $deb_lien . 'P' . $fin_lien . LG_LPERS_OBJ_P . ' ' . $r_nom . '</a>';
                 echo '<br />' . $deb_lien . 'p' . $fin_lien . LG_LPERS_OBJ_PC . ' ' . $r_nom . '</a>';
                 echo '<br />' . "\n";
                 if ((!$SiteGratuit) or ($Premium))
                     if ($est_contributeur)
-                        echo '<br /><a href="' . Get_Adr_Base_Ref() . 'Completude_Nom.php?idNom=' . $idNomFam . '&amp;Nom=' . $r_nom . '">' . my_html($LG_Menu_Title['Name_Is_Complete']) . $r_nom . '</a><br />' . "\n";
+                        echo '<br /><a href="' . $root . '/completude_nom.php?idNom=' . $idNomFam . '&amp;Nom=' . $r_nom . '">' . my_html($LG_Menu_Title['Name_Is_Complete']) . $r_nom . '</a><br />' . "\n";
             }
 
             // Recherche du nom sur les sites gratuits ; pas sur les sites gratuits non premium

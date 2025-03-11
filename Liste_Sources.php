@@ -4,13 +4,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Source_List'];            // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'C';                        // Page réservée au profil contributeur
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -36,10 +36,10 @@ if ($depot == -1) {
 
 $sql = 'select Ident, Nom from ' . nom_table('depots') . ' order by Nom';
 
-echo '<form action="' . my_self() . '" method="post">' . "\n";
-echo '<table border="0" width="50%" align="center">' . "\n";
+echo '<form method="post">' . "\n";
+echo '<table width="50%" align="center">' . "\n";
 echo '<tr align="center" class="rupt_table">';
-echo '<td width="50%">' . my_html(LG_SRC_REPO) . LG_SEMIC . "\n";
+echo '<td width="50%">' . my_html(LG_SRC_REPO) . ' ' . "\n";
 echo '<select name="depot">' . "\n";
 echo '<option value="' . $defaut . '"';
 if ($depot == $defaut) {
@@ -63,37 +63,32 @@ echo '</tr>' . "\n";
 echo '</table>' . "\n";
 echo '</form>' . "\n";
 
-$ed_source = 'Edition_Source.php?ident=';
-$lec_source = 'Fiche_Source.php?ident=';
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
-
 // Lien direct sur la dernière source saisie
 $MaxRef = 0;
-$requete = 'select MAX(Ident) FROM ' . $n_sources;
+$requete = 'SELECT MAX(Ident) FROM ' . $n_sources;
 $result = lect_sql($requete);
 if ($enreg = $result->fetch(PDO::FETCH_NUM)) {
     $MaxRef = $enreg[0];
 }
 if ($MaxRef > 0) {
-    echo '<a href="' . $ed_source . $MaxRef . '">' . my_html(LG_SRC_LAST) . '</a><br />';
+    echo '<a href="' . $root . '/edition_source.php?ident=' . $MaxRef . '">' . my_html(LG_SRC_LAST) . '</a><br />';
 }
 
 // Possibilité d'insérer une source
-echo my_html(LG_SRC_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="' . $ed_source . '-1"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
+echo my_html(LG_SRC_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_source.php?ident=-1"', 'ajouter', $LG_add) . '<br /><br />';
 
 //  Affichage des sources
-
 $crit_depot = '';
-if ($depot != -1) $crit_depot = ' where Ident_Depot = ' . $depot;
+if ($depot != -1) $crit_depot = ' WHERE Ident_Depot = ' . $depot;
 
 // Constitution de la requête d'extraction
-$requete = 'select Ident,Titre from ' . $n_sources . $crit_depot . ' order by Titre';
+$requete = 'SELECT Ident,Titre FROM ' . $n_sources . $crit_depot . ' ORDER BY Titre';
 $result = lect_sql($requete);
 
 while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
     $ident = $enreg[0];
-    echo '<a href="' . $lec_source . $ident . '">' . my_html($enreg[1]) . '</a>&nbsp;';
-    echo '&nbsp;<a href="' . $ed_source . $ident . '">' . $echo_modif . "\n";
+    echo '<a href="' . $root . '/fiche_source.php?ident=' . $ident . '">' . my_html($enreg[1]) . '</a>&nbsp;';
+    echo '&nbsp;<a href="' . $root . '/edition_source.php?ident=' . $ident . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
     echo '<br />' . "\n";
 }
 Insere_Bas($compl);

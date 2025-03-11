@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function fin_fs()
 {
@@ -155,7 +155,7 @@ $Reference = Recup_Variable('Reference', 'N');
 // Récupération des informations concernant la personne
 $req_sel = 'select * from ' . nom_table('personnes') . ' where Reference = ' . $Reference . ' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Dans le cas de la sortie pdf, l'accès n'est pas réalisé dans Gestion_Pages...
 if ($sortie_pdf) {

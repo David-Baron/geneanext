@@ -5,12 +5,12 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Glossary'];       // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Entête sur changement d'initiale
 function Lettre($lettre)
@@ -19,13 +19,13 @@ function Lettre($lettre)
     $num_lig = 0;
     echo '</table>';
     if ($lettre != 'A') echo '</div>';
-    echo '<table width="95%" border="0" cellspacing="1" cellpadding="3" align="center">';
+    echo '<table width="95%" cellspacing="1" cellpadding="3" align="center">';
     echo '<tr><td align="center" colspan="2" class="rupt_table">' . "\n";
     echo '<b><a name="' . $lettre . '"></a>' . $lettre . '</b>' . "\n";
     echo '&nbsp;&nbsp;' . Affiche_Icone_Lien('href="#top"', 'page_haut', 'Haut de page');
     echo '&nbsp;&nbsp;<img id="ajout' . $lettre . '" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="Fl&egrave;che"' . Survole_Clic_Div('div' . $lettre) . '/>' . "\n";
     echo '</td></tr></table>' . "\n";
-    echo '<div id="div' . $lettre . '"><table width="95%" border="0" cellspacing="1" cellpadding="3" align="center">' . "\n";
+    echo '<div id="div' . $lettre . '"><table width="95%" cellspacing="1" cellpadding="3" align="center">' . "\n";
     return 0;
 }
 
@@ -45,8 +45,8 @@ function Mot($mot, $Ancre = '', $premier = false)
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut($titre, $compl, 'glossaire_gen', '');
 
-$ent_table = '<table border="0" width="95%" cellspacing="1" cellpadding="3" align="center">' . "\n";
-$ent_table = '<table border="0" width="95%" cellspacing="1" align="center">' . "\n";
+$ent_table = '<table width="95%" cellspacing="1" cellpadding="3" align="center">' . "\n";
+$ent_table = '<table width="95%" cellspacing="1" align="center">' . "\n";
 
 $exclus_liens = 'JKWXYZ';
 $alpha = '';
@@ -62,7 +62,7 @@ for ($nb = ord('A'); $nb <= ord('Z'); $nb++) {
 
 echo $ent_table . '<tr>' .
     '<td colspan="26" align="center">' . Affiche_Icone('tip', 'Conseil') . '&nbsp;' . LG_GLOSS_TIP_1 . ' <font color="blue">' . LG_GLOSS_TIP_2 . '</font>, '
-    . LG_GLOSS_TIP_3 . ' <img src="' . $chemin_images_icones . $Icones['loupe'] . '" border="0" alt="' . LG_GLOSS_MORE_INFO
+    . LG_GLOSS_TIP_3 . ' <img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO
     . '"/> ' . LG_GLOSS_TIP_4
     . '</td></tr><tr>' . $alpha . '</tr><tr><td colspan="26">&nbsp;</td></tr>' . "\n";
 
@@ -497,8 +497,8 @@ $x = Mot(LG_GLOSS_CENSUS, 'REC', 1); ?>
 $x = Mot(LG_GLOSS_SOSA, 'SOSA', 1); ?>
 <td>
     Num&eacute;ro que l'on attribue &agrave; un anc&ecirc;tre.
-    <?php echo '<a href="' . Get_Adr_Base_Ref() . 'Glossaire_Sosa.php">'
-        . '<img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO . '" border="0"/>'; ?>
+    <?php echo '<a href="'.$root.'/glossaire_sosa.php">'
+        . '<img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO . '"/>'; ?>
     </a>
 </td>
 <?php $x = Mot(LG_GLOSS_SOURCES); ?>

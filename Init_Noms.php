@@ -5,13 +5,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Init_Names'];
 $x = Lit_Env();
 $niv_requis = 'G';                       // Page réservée au profil gestionnaire
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $n_personnes     = nom_table('personnes');
 $n_noms          = nom_table('noms_famille');

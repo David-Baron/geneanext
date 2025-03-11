@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -38,7 +38,7 @@ if ($Creation) $titre = $LG_Menu_Title['Doc_Type_Add'];
 else $titre = $LG_Menu_Title['Doc_Type_Edit'];
 $x = Lit_Env();
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -95,7 +95,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 300);
     if ($Code != $code_crea)
-        $compl .= Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Fiche_Type_Document.php?code=' . $Code . '"', 'page', 'Fiche évènement') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_type_document.php?code=' . $Code . '"', 'page', 'Fiche évènement') . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Type_Document', $Code);
 

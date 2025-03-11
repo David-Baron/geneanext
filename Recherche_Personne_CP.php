@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -45,7 +45,7 @@ $acces = 'L';                                // Type d'accès de la page : (L)ec
 $titre = $LG_Menu_Title['Sch_Pers_CP'];        // Titre pour META
 $niv_requis = 'P';                            // Page accessible à partir du niveau privilégié
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -139,7 +139,7 @@ if ($bt_OK) {
     }
     $tab = '&nbsp;&nbsp;&nbsp;';
     // Init des zones de requête
-    echo my_html(LG_PERS_REQ_FIELDS) . LG_SEMIC . '<br />';
+    echo my_html(LG_PERS_REQ_FIELDS) . ' ' . '<br />';
     $req = '';
     $memo_criteres = '';
     $crit_type = LG_PERS_SCH_TYPE_PARENT;
@@ -405,7 +405,7 @@ if ($bt_OK) {
                 echo '<br />' . my_html($LG_csv_available_in) . ' <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
             }
         } else {
-            echo '<br />' . my_html(LG_PERS_REQ) . LG_SEMIC . $req;
+            echo '<br />' . my_html(LG_PERS_REQ) . ' ' . $req;
             aff_erreur(LG_PERS_REQ_ERROR);
         }
     }

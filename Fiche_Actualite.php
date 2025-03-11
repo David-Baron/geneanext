@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['New'];        // Titre pour META
@@ -22,7 +22,7 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
@@ -35,7 +35,7 @@ if (($SiteGratuit) and (!$Premium)) $centralise = true;
 
 $compl = Ajoute_Page_Info(600, 150);
 if (($est_gestionnaire) and (!$centralise)) {
-    $compl .= Affiche_Icone_Lien('href="Edition_Evenement.php?refPar=' . $refPar . '&amp;actu=o"', 'fiche_edition', $LG_Menu_Title['New_Edit']) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_evenement.php?refPar=' . $refPar . '&amp;actu=o"', 'fiche_edition', $LG_Menu_Title['New_Edit']) . '&nbsp;';
 }
 
 Insere_Haut($titre, $compl, 'Fiche_Actualite', '');

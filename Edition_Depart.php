@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -49,7 +49,7 @@ else
     $titre = $LG_Menu_Title['County_Add'];
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -158,7 +158,7 @@ if (($ok == '') && ($annuler == '')) {
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
         aff_erreur(LG_DEPART_UNKNOWN);
-        echo '<a href="Liste_Villes.php?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
+        echo '<a href="'. $root .'/liste_villes.php?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
     } else {
         if ($Modif)
             Champ_car($enreg2, 'Nom_Depart_Min');

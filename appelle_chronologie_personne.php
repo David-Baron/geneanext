@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Lien_vers_Pers()
 {
@@ -62,7 +62,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -76,16 +76,15 @@ $Refer = Recup_Variable('Refer', 'N');
 $m_self = my_self();
 
 $compl = Ajoute_Page_Info(600, 150) .
-    '<a href="' . $m_self . '?texte=O&amp;Refer=' . $Refer . '">' .
+    '<a href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;Refer=' . $Refer . '">' .
     Affiche_Icone('text', 'Format imprimable') . '</a>' . "\n";
 
 if ((!$SiteGratuit) or ($Premium))
-    //$compl .= Affiche_Icone_Lien('href="'.$m_self.'?texte=O&amp;pdf=O.'"','PDF',my_html($LG_pdf_format)).'&nbsp;';
-    $compl .= Affiche_Icone_Lien('href="' . $m_self . '?texte=O&amp;pdf=O&amp;Refer=' . $Refer . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;pdf=O&amp;Refer=' . $Refer . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
 
 $sortie = 'H';
 
-if (! $texte) Insere_Haut($titre, $compl, 'appelle_chronologie_personne', $Refer);
+if (!$texte) Insere_Haut($titre, $compl, 'appelle_chronologie_personne', $Refer);
 else {
     // Sortie dans un PDF
     if ($sortie_pdf) {

@@ -5,12 +5,12 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Pers_Tree'];          // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 //
 //	Lecture des paramètres passés
 //	Si Refer = 0 => appel direct de la page, sans avoir beson de la calculer
@@ -32,7 +32,7 @@ $row = $res->fetch(PDO::FETCH_NUM);
 $nbPers = $row[0];
 if ($nbPers > 0 and !$_SESSION['estPrivilegie']) {
     echo aff_erreur(LG_PERS_TREE_ERROR_NO_SHOW) . '<br />' .
-        '<a href="' . Get_Adr_Base_Ref() . '">' . my_html($LG_back_to_home) . '</a><br />';
+        '<a href="' . $root . '/">' . my_html($LG_back_to_home) . '</a><br />';
     return 0;
 }
 

@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Fiche d\'un type de document';    // Titre pour META
@@ -29,7 +29,7 @@ $Code = Recup_Variable('code', 'N');
 
 $req_sel = 'select * from ' . nom_table('types_doc') . ' where Id_Type_Document = \'' . $Code . '\' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -43,7 +43,7 @@ else {
     Champ_car($enreg2, 'Libelle_Type');
 
     $compl = Ajoute_Page_Info(600, 150);
-    $compl .= '<a href="Edition_Type_Document.php?code=' . $Code . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
+    $compl .= '<a href="' . $root . '/edition_type_document.php?code=' . $Code . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
 
     Insere_Haut($titre, $compl, 'Fiche_Type_Document', $Code);
 
@@ -65,9 +65,9 @@ else {
         echo '<fieldset>';
         aff_legend(LG_DOC_DOCS);
         while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
-            echo '<a href="Fiche_Document.php?Reference=' . $enreg[0] . '">'
+            echo '<a href="' . $root . '/fiche_document.php?Reference=' . $enreg[0] . '">'
                 . my_html($enreg[2]) . ' (' . $Natures_Docs[$enreg[1]] . ')</a>'
-                . '&nbsp;<a href="Edition_Document.php?Reference=' . $enreg[0] . $icone_mod . '</a><br />'
+                . '&nbsp;<a href="' . $root . '/edition_document.php?Reference=' . $enreg[0] . $icone_mod . '</a><br />'
                 . "\n";
         }
         echo '</fieldset>' . "\n";

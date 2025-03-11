@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -22,7 +22,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 // Gestion standard des pages
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -66,8 +66,8 @@ if ($nb_lignes > 0) {
     echo '<th>' . LG_NAMES_FOR_EVENT_PERS_COUNT . '</th>';
     echo '</tr>' . "\n";
 
-    $deb_visu  = '&nbsp;<a href="' . Get_Adr_Base_Ref() . 'Fiche_NomFam.php?idNom=';
-    $deb_modif = 'href="' . Get_Adr_Base_Ref() . 'Edition_NomFam.php?idNom=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam.php?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
         $nom = $enr[1];

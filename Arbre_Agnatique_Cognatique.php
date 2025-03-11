@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -20,7 +20,7 @@ if ($cognatique) $titre = $LG_Tree_Women_Asc;
 
 $x = Lit_Env();
 $index_follow = 'IN';                    // NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -28,7 +28,7 @@ $texte = Dem_Texte();
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');
 
-require(__DIR__ . '/Commun_Arbre.php');
+require(__DIR__ . '/app/ressources/commun_arbre.php');
 
 
 $imp_mar = 0;
@@ -58,10 +58,10 @@ if (!$texte) {
         $Autre = 'A';
         $lib = $LG_Tree_Men_Asc;
     }
-    $compl = '<a href="Arbre_Agnatique_Cognatique.php?Refer=' . $Refer .  '&amp;Type=' . $Autre . '">' . $lib . '</a>&nbsp;';
+    $compl = '<a href="' . $root . '/arbre_agnatique_cognatique.php?Refer=' . $Refer .  '&amp;Type=' . $Autre . '">' . $lib . '</a>&nbsp;';
 } else $compl = '';
 $compl .= Ajoute_Page_Info(600, 150) .
-    Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Arbre_Agnatique_Cognatique.php?Refer=' . $Refer . '&amp;Type=' . $Type_Arbre . '&amp;texte=O"', 'text', $LG_printable_format) .
+    Affiche_Icone_Lien('href="' . $root . '/arbre_agnatique_cognatique.php?Refer=' . $Refer . '&amp;Type=' . $Type_Arbre . '&amp;texte=O"', 'text', $LG_printable_format) .
     '&nbsp;';
 
 if (! $texte) Insere_Haut($titre, $compl, 'Arbre_Agnatique_Cognatique', $Refer);
@@ -225,7 +225,7 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
 
 if ($nb_gen > $max_gen_AD) {
     echo '<br />' . Affiche_Icone('tip', $LG_tip) .
-        $LG_Tree_Lim_1 . $max_gen_AD . $LG_Tree_Lim_2 . '<a href="Vue_Personnalisee.php">' . $LG_Tree_Lim_3 . '</a>' . $LG_Tree_Lim_4 . '.' . "\n";
+        $LG_Tree_Lim_1 . $max_gen_AD . $LG_Tree_Lim_2 . '<a href="' . $root . '/vue_personnalisee.php">' . $LG_Tree_Lim_3 . '</a>' . $LG_Tree_Lim_4 . '.' . "\n";
 }
 
 if (!$texte) {

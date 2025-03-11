@@ -60,7 +60,7 @@ if ($nom_page == 'index.php') {
 }
 
 // Spécifique Liste des personnes 1/2
-if ($nom_page == 'Liste_Pers.php') {
+if ($nom_page == 'liste_pers.php') {
     define('LG_CREATE_PERS_BORN_IN', 'Création de personnes nées à');
     define('LG_CREATE_PERS_DEAD_IN', 'Création de personnes décédées à');
     define('LG_LPERS_OBJ_C', 'Personnes par catégorie');
@@ -81,10 +81,10 @@ if ($nom_page == 'Liste_Pers.php') {
 // Spécifique Liste des personnes 2/2 ou fiche ville
 // if (($nom_page == 'Liste_Pers2.php') or ($nom_page == 'Fiche_NomFam.php') or ($nom_page == 'Fiche_Ville.php')) {
 if (in_array($nom_page, array(
-    'Liste_Pers2.php',
-    'Fiche_NomFam.php',
-    'Fiche_Ville.php',
-    'Edition_Ville.php'
+    'liste_pers2.php',
+    'fiche_nomfam.php',
+    'fiche_ville.php',
+    'edition_ville.php'
 ))) {
     define('LG_LPERS_OBJ_P', 'Personnes s\'appelant');
     define('LG_LPERS_OBJ_PC', 'Personnes [avec leur conjoints] s\'appelant');
@@ -96,7 +96,7 @@ if (in_array($nom_page, array(
     define('LG_LPERS_OBJ_E', 'Personnes avec un évènement à');
 }
 
-if (($nom_page == 'Edition_NomFam.php') or ($nom_page == 'Fiche_NomFam.php')) {
+if (($nom_page == 'edition_nomfam.php') or ($nom_page == 'fiche_nomfam.php')) {
     define('LG_NAME', 'Nom de famille');
     define('LG_NAME_PHONETIC', 'Code phonétique');
     define('LG_NAME_SEARCH', 'Recherche du nom sur les sites hébergés Généamania');
@@ -111,7 +111,7 @@ if (($nom_page == 'Edition_NomFam.php') or ($nom_page == 'Fiche_NomFam.php')) {
 }
 
 // Spécifique Liste des personnes par génération
-if (($nom_page == 'Liste_Pers_Gen.php') or ($nom_page == 'Arbre_Desc_Pers.php')) {
+if (($nom_page == 'liste_pers_gen.php') or ($nom_page == 'arbre_desc_pers.php')) {
     $LG_LPersG_object = 'Liste par génération';
     $LG_LPersG_Implex_or_error = 'Implex ou erreur de numéro probable, le numéro calculé est entre parenthèses';
     $LG_LPersG_first = 'ère';
@@ -139,7 +139,7 @@ if (($nom_page == 'Liste_Pers_Gen.php') or ($nom_page == 'Arbre_Desc_Pers.php'))
     $LG_LPersG_hint_eye = 'Afficher / masquer toutes les générations';
 }
 
-if (($nom_page == 'Fiche_Lien.php') or ($nom_page == 'Edition_Lien.php')) {
+if (($nom_page == 'fiche_lien.php') or ($nom_page == 'edition_lien.php')) {
     define('LG_LINK_AVAIL_HOME', 'Présent sur la page d\'accueil');
     define('LG_LINK_DESCRIPTION', 'Description');
     define('LG_LINK_NO_REFRESH', 'non rafraîchie');
@@ -170,12 +170,12 @@ if ($nom_page == 'cal.php') {
     define('LG_CAL_ERROR_BOUNDARIES', 'hors limites');
 }
 
-if ($nom_page == 'Rectif_Utf8.php') {
+if ($nom_page == 'rectif_utf8.php') {
     $LG_Rect_Utf_Msg_Beg = 'Fin de la rectification ; ';
     $LG_Rect_Utf_Msg_End = ' requêtes passées';
 }
 
-if ($nom_page == 'Edition_Lier_Eve.php') {
+if ($nom_page == 'edition_lier_eve.php') {
     $LG_Link_Ev_Link_Pers = 'Personne';
     $LG_Link_Ev_Link_Event_Type = 'Type d\'évènement';
     $LG_Link_Ev_Link_Event = 'Evènement';
@@ -191,7 +191,7 @@ if ($nom_page == 'Edition_Lier_Eve.php') {
     $LG_Link_Ev_Main_Pers = 'Personnage principal';
 }
 
-if ($nom_page == 'Edition_Lier_Nom.php') {
+if ($nom_page == 'edition_lier_nom.php') {
     $LG_Link_Name_Pers = 'Personne concernée';
     $LG_Link_Name_New = 'Nouveau nom';
     $LG_Link_Name_Upper = 'Mettre le nom en majuscules';
@@ -200,7 +200,7 @@ if ($nom_page == 'Edition_Lier_Nom.php') {
     $LG_Link_Name_Not_Found = 'Personne non trouvée';
 }
 
-if ($nom_page == 'Edition_Lier_Pers.php') {
+if ($nom_page == 'edition_lier_pers.php') {
     $LG_Link_Pers_Pers = 'Personne';
     $LG_Link_Pers_Last_Pers = 'Dernière personne pour le nom';
     $LG_Link_Pers_Role = 'Rôle';
@@ -212,7 +212,7 @@ if ($nom_page == 'Edition_Lier_Pers.php') {
     $LG_Link_Pers_Copy_Date = 'Copier la date de début';;
 }
 
-if (($nom_page == 'Fiche_Document.php') or ($nom_page == 'Edition_Document.php')
+if (($nom_page == 'fiche_document.php') or ($nom_page == 'edition_document.php')
     or ($nom_page == 'Create_Multiple_Docs.php') or ($nom_page == 'Edition_Lier_Doc.php')
 ) {
     $LG_Docs_Doc = 'Document';
@@ -226,7 +226,7 @@ if (($nom_page == 'Fiche_Document.php') or ($nom_page == 'Edition_Document.php')
     $LG_Docs_Error_No_Type = ' Vous n\'avez pas cr&eacute;&eacute; de type de document';
 }
 
-if ($nom_page == 'Liste_Documents.php') {
+if ($nom_page == 'liste_documents.php') {
     define('LG_DOC_LIST_TYPE', 'Type');
     define('LG_DOC_LIST_LAST', 'Dernier document saisi');
     define('LG_DOC_LIST_ADD_1', 'Ajouter : un document');
@@ -235,7 +235,7 @@ if ($nom_page == 'Liste_Documents.php') {
     define('LG_DOC_LIST_DISPLAY', 'Voir le document');
 }
 
-if (($nom_page == 'Edition_Lier_Doc.php')
+if (($nom_page == 'edition_lier_doc.php')
     or ($nom_page == 'Edition_Lier_Source.php')
 ) {
     $LG_Link_Doc_Role = 'Rôle';
@@ -261,7 +261,7 @@ if (($nom_page == 'Edition_Lier_Doc.php')
     $LG_Link_Source_Title_End = 'Pas de source à lier';
 }
 
-if (in_array($nom_page, array('Fiche_Actualite.php', 'Fiche_Evenement.php', 'Edition_Evenement.php', 'Liste_Evenements.php'))) {
+if (in_array($nom_page, array('fiche_actualite.php', 'fiche_evenement.php', 'edition_evenement.php', 'liste_evenements.php'))) {
     $LG_Event_Title = 'Titre';
     $LG_Event_Type = 'Type d\'évènement';
     $LG_Event_Where = 'A eu lieu à';
@@ -274,7 +274,7 @@ if (in_array($nom_page, array('Fiche_Actualite.php', 'Fiche_Evenement.php', 'Edi
     $LG_Event_New_This = 'cette actualité';
 }
 
-if (($nom_page == 'Edition_Type_Evenement.php') or ($nom_page == 'Fiche_Type_Evenement.php')) {
+if (($nom_page == 'edition_type_evenement.php') or ($nom_page == 'fiche_type_evenement.php')) {
     define('LG_EVENT_TYPE_CODE', 'Code');
     define('LG_EVENT_TYPE_LABEL', 'Libellé');
     define('LG_EVENT_TYPE_UNIQ', 'Unicité des évènements du type');
@@ -285,7 +285,7 @@ if (($nom_page == 'Edition_Type_Evenement.php') or ($nom_page == 'Fiche_Type_Eve
     define('LG_EVENT_TYPE_EVENTS', ' Liste des évènements du type');
 }
 
-if ($nom_page == 'Liste_Evenements.php') {
+if ($nom_page == 'liste_evenements.php') {
     define('LG_EVENT_LIST_lAST', 'Dernier évènement saisi');
     define('LG_EVENT_LIST_TYPE', 'Type');
     define('LG_EVENT_LIST_BEG_PREC', 'Précision Début');
@@ -295,19 +295,19 @@ if ($nom_page == 'Liste_Evenements.php') {
     define('LG_EVENT_LIST_TYPE_LABEL', 'Libellé type');
 }
 
-if ($nom_page == 'Import_CSV.php') {
+if ($nom_page == 'import_csv.php') {
     $LG_ICSV_Pers_Ville_Naissance = 'Né(e) à';
     $LG_ICSV_Pers_Ville_Deces = 'Décédé(e) à';
     $LG_ICSV_Pers_Numero = 'Numéro';
     $LG_ICSV_Pers_Surnom = 'Surnom';
 }
-if ($nom_page == 'Import_CSV_Liens.php') {
+if ($nom_page == 'import_csv_liens.php') {
     $LG_ICSV_Link_Type = 'Type de lien';
     $LG_ICSV_Link_Desciption = 'Description';
     $LG_ICSV_Link_URL = 'Adresse';
 }
 
-if (($nom_page == 'Import_CSV_Evenements.php') or ($nom_page == 'appelle_chronologie_personne.php')) {
+if (($nom_page == 'import_csv_evenements.php') or ($nom_page == 'appelle_chronologie_personne.php')) {
     $LG_ICSV_Event_Type = "Type d'évènement";
     $LG_ICSV_Event_Where = 'Lieu';
     $LG_ICSV_Event_Title = 'Titre';
@@ -322,10 +322,10 @@ if (($nom_page == 'Import_CSV_Evenements.php') or ($nom_page == 'appelle_chronol
 }
 
 if (in_array($nom_page, array(
-    'Import_CSV_Villes.php',
-    'Fusion_Villes.php',
-    'Fiche_Ville.php',
-    'Edition_Ville.php'
+    'import_csv_villes.php',
+    'fusion_villes.php',
+    'fiche_ville.php',
+    'edition_ville.php'
 ))) {
     define('LG_ICSV_TOWN_ADD_DOCUMENT', 'Ajout d\'un document');
     define('LG_ICSV_TOWN_COL_CALC', 'Colonne du tableur');
@@ -364,7 +364,7 @@ if (in_array($nom_page, array(
     define('LG_CH_FUSION_TARGET', 'Ville cible de la fusion');
 }
 
-if ($nom_page == 'Liste_Villes.php') {
+if ($nom_page == 'liste_villes.php') {
     define('LG_LAREAS_SUBDIVS', 'Liste des subdivisions');
     define('LG_LAREAS_TOWNS', 'Liste des villes');
     define('LG_LAREAS_COUNTIES', 'Liste des départements');
@@ -382,8 +382,8 @@ if ($nom_page == 'Liste_Villes.php') {
 }
 
 if (in_array($nom_page, array(
-    'Edition_Subdivision.php',
-    'Fiche_Subdivision.php'
+    'edition_subdivision.php',
+    'fiche_subdivision.php'
 ))) {
     define('LG_SUBDIV_ADD_DOCUMENT', 'Ajout d\'un document');
     define('LG_SUBDIV_GEO_COORDS', 'Coordonnées géographiques');
@@ -401,7 +401,7 @@ if (in_array($nom_page, array(
     define('LG_SUBDIV_ZIP_LONGITUDE', 'Longitude');
 }
 
-if (($nom_page == 'Edition_Role.php') or ($nom_page == 'Liste_Pers_Role.php') or ($nom_page == 'Fiche_Role.php')) {
+if (($nom_page == 'edition_role.php') or ($nom_page == 'liste_pers_role.php') or ($nom_page == 'fiche_role.php')) {
     define('LG_ROLE_CODE', 'Code');
     define('LG_ROLE_ERROR_EXISTS', 'Attention, code déjà utilisé (codes présents');
     define('LG_ROLE_LABEL', 'Libellé');
@@ -411,7 +411,7 @@ if (($nom_page == 'Edition_Role.php') or ($nom_page == 'Liste_Pers_Role.php') or
     define('LG_ROLE_PERSONS', 'Personnes ayant ce rôle');
 }
 
-if (($nom_page == 'Edition_Type_Document.php') or ($nom_page == 'Fiche_Type_Document.php')) {
+if (($nom_page == 'edition_type_document.php') or ($nom_page == 'fiche_type_document.php')) {
     define('LG_DOC_TYPE_LABEL', 'Libellé');
     define('LG_DOC_TYPE_THIS', 'ce type de document');
     define('LG_DOC_DOCS', 'Documents du type');
@@ -420,19 +420,19 @@ if (($nom_page == 'Edition_Type_Document.php') or ($nom_page == 'Fiche_Type_Docu
 // Factoriser les variables sur les personnes
 
 if (in_array($nom_page, array(
-    'Liste_Pers_Gen.php',
-    'Import_CSV.php',
-    'Ajout_Enfants.php',
-    'Noyau_Pers.php',
-    'Completude_Nom.php',
-    'Edition_Personne.php',
-    'Ajout_Rapide.php',
+    'liste_pers_gen.php',
+    'import_csv.php',
+    'ajout_enfants.php',
+    'noyau_pers.php',
+    'completude_nom.php',
+    'edition_personne.php',
+    'ajout_rapide.php',
     'index.php',
-    'Edition_Personnes_Ville.php',
-    'Fiche_Homonymes.php',
-    'Ajout_Contribution.php',
-    'Recherche_Personne.php',
-    'Recherche_Personne_CP.php'
+    'edition_personnes_ville.php',
+    'fiche_homonymes.php',
+    'ajout_contribution.php',
+    'recherche_personne.php',
+    'recherche_personne_cp.php'
 ))) {
     define('LG_PERS_ADD_NAME', 'Ajout d\'un nom');
     define('LG_PERS_ALT_NAMES', 'Noms secondaires');
@@ -501,7 +501,7 @@ if (in_array($nom_page, array(
     define('LG_PERS_AUTO_CALC_SOSA', 'Calcul automatique du numéro sosa');
 }
 
-if ($nom_page == 'Ajout_Contribution.php') {
+if ($nom_page == 'ajout_contribution.php') {
     define('LG_CONTRIBS_COPY_REF_NAME', 'Copier le nom de la personne initiale');
     define('LG_CONTRIBS_CHILDREN', 'Enfants');
     define('LG_CONTRIBS_CHILD_1', 'Enfant 1');
@@ -519,7 +519,7 @@ if ($nom_page == 'Ajout_Contribution.php') {
     define('LG_CONTRIBS_EMPTY', 'Contribution vide');
 }
 
-if (($nom_page == 'Recherche_Personne.php') or ($nom_page == 'Recherche_Personne_CP.php')) {
+if (($nom_page == 'recherche_personne.php') or ($nom_page == 'recherche_personne_cp.php')) {
     define('LG_PERS_REQ', 'Requête');
     define('LG_PERS_REQ_ALIVE', 'Vivant');
     define('LG_PERS_REQ_BORN_IN', 'naissance en ');
@@ -566,7 +566,7 @@ if ($nom_page == 'sel_zone_geo.php') {
     define('LG_CHOOSE_AREA_SUBDIVISION', 'Choix d\'une subdivision');
 }
 
-if ($nom_page == 'Liste_Referentiel.php') {
+if ($nom_page == 'liste_referentiel.php') {
     define('LG_REF_LIST_ROLES', 'Liste des rôles');
     define('LG_REF_LIST_EV_TYPES', 'Liste des types d\'évènements');
     define('LG_REF_LIST_DOC_TYPES', 'Liste des types de documents');
@@ -575,7 +575,7 @@ if ($nom_page == 'Liste_Referentiel.php') {
     define('LG_REF_LIST_REPO_SOURCES', 'Liste des dépôts de sources');
 }
 
-if ($nom_page == 'Edition_Rangs.php') {
+if ($nom_page == 'edition_rangs.php') {
     $LG_Rank_Born = 'Né(e)';
     $LG_Rank_Dead = 'Décédé(e)';
     $LG_Rank_Calc_Duration = 'Ecart calculé';
@@ -590,7 +590,7 @@ if ($nom_page == 'Edition_Rangs.php') {
     $LG_Rank_Parents_Union = 'Union des parents';
 }
 
-if (($nom_page == 'Fiche_Source.php') or ($nom_page == 'Edition_Source.php') or ($nom_page == 'Liste_Sources.php')) {
+if (($nom_page == 'fiche_source.php') or ($nom_page == 'edition_source.php') or ($nom_page == 'liste_sources.php')) {
     define('LG_SRC_TITLE', 'Titre');
     define('LG_SRC_AUTHOR', 'Auteur');
     define('LG_SRC_CLASS', 'Classement');
@@ -606,7 +606,7 @@ if (($nom_page == 'Fiche_Source.php') or ($nom_page == 'Edition_Source.php') or 
     define('LG_SRC_ADD', 'Ajouter une source');
 }
 
-if ($nom_page == 'Stat_Base_Generations.php') {
+if ($nom_page == 'stat_base_generations.php') {
     define('LG_STAT_GEN_DEC', 'Diminuer la génération');
     define('LG_STAT_GEN_FIRST_GEN', 'Génération de début');
     define('LG_STAT_GEN_GEN', 'Génération');
@@ -620,17 +620,17 @@ if ($nom_page == 'Stat_Base_Generations.php') {
     define('LG_STAT_GEN_RESULT_RELATED', 'Par rapport à la génération précédente');
 }
 
-if ($nom_page == 'Stat_Base_Depart.php') {
+if ($nom_page == 'stat_base_depart.php') {
     define('LG_STAT_COUNTY_WITH', 'Avec le département renseigné');
     define('LG_STAT_COUNTY_MAP', 'Carte de France');
 }
 
-if ($nom_page == 'Stat_Base_Villes.php') {
+if ($nom_page == 'stat_base_villes.php') {
     define('LG_STAT_TOWN_COUNTY', 'Statistiques par ville pour le département');
     define('LG_STAT_TOWN_FILLED', 'Avec la ville renseignée');
 }
 
-if (($nom_page == 'Stat_Base.php') or ($nom_page == 'Histo_Prenoms.php')) {
+if (($nom_page == 'stat_base.php') or ($nom_page == 'histo_prenoms.php')) {
     define('LG_STAT_ALL_BY_AGE', 'Statistiques par âge');
     define('LG_STAT_ALL_BY_PLACE', 'Statistiques géographiques');
     define('LG_STAT_ALL_CHILDREN', 'Filiations');
@@ -657,17 +657,17 @@ if (($nom_page == 'Stat_Base.php') or ($nom_page == 'Histo_Prenoms.php')) {
     define('LG_STAT_SURNAMES_ALL', 'Tous les prénoms');
 }
 
-if ($nom_page == 'Liste_Nom_Evenement.php') {
+if ($nom_page == 'liste_nom_evenement.php') {
     define('LG_NAMES_FOR_EVENT_PERS_COUNT', 'Nombre de personnes');
     define('LG_NAMES_FOR_EVENT_EVENT', 'Evènement');
 }
 
-if ($nom_page == 'Liste_Noms_Non_Ut.php') {
+if ($nom_page == 'liste_noms_non_ut.php') {
     $LG_Names_NU_Del = 'suppression';
     $LG_Names_NU_Req = 'demandée';
 }
 
-if (($nom_page == 'Naissances_Mariages_Deces_Mois.php') or ($nom_page == 'Anniversaires.php')) {
+if (($nom_page == 'naissances_mariages_deces_mois.php') or ($nom_page == 'anniversaires.php')) {
     $LG_birth_many = 'Naissances';
     $LG_death_many = 'Décès';
     $LG_wedding_many = 'Mariages';
@@ -679,7 +679,7 @@ if (($nom_page == 'Naissances_Mariages_Deces_Mois.php') or ($nom_page == 'Annive
     $LG_Day_Death = 'Anniversaire de décès';
 }
 
-if ($nom_page == 'Enfants_Femme_Histo.php') {
+if ($nom_page == 'enfants_femme_histo.php') {
     define('LG_CH_PER_MOTHER_BORN', 'Année de naissance de la mère');
     define('LG_CH_PER_MOTHER_AVG', 'Nombre moyen d\'enfants');
     define('LG_CH_PER_MOTHER_MAX_WOMAN', 'Femme ayant eu le plus grand nombre d\'enfants');
@@ -687,11 +687,11 @@ if ($nom_page == 'Enfants_Femme_Histo.php') {
 }
 
 if (in_array($nom_page, array(
-    'Pyramide_Ages_Mar_Histo.php',
-    'Histo_Ages_Mariage.php',
-    'Pyramide_Ages_Histo.php',
-    'Histo_Ages_Deces.php',
-    'Pyramide_Ages.php'
+    'pyramide_ages_mar_histo.php',
+    'histo_ages_mariage.php',
+    'pyramide_ages_histo.php',
+    'histo_ages_deces.php',
+    'pyramide_ages.php'
 ))) {
     define('LG_CH_HISTO_AGE', 'Age');
     define('LG_CH_HISTO_AGE_ALL', 'Ensemble');
@@ -714,13 +714,13 @@ if (in_array($nom_page, array(
     define('LG_CH_HISTO_AGE_CTL_BIRTH', 'Contrôle des personnes recommandé car au moins une personne est décédée avant sa naissance !');
 }
 
-if ($nom_page == 'Liste_Connexions.php') {
+if ($nom_page == 'liste_connexions.php') {
     define('LG_CH_CONN_LIST_USER', 'Utilisateur');
     define('LG_CH_CONN_LIST_DATE', 'Date de connexion');
     define('LG_CH_CONN_LIST_IP', 'Adresse IP');
 }
 
-if ($nom_page == 'Recherche_Cousinage.php') {
+if ($nom_page == 'recherche_cousinage.php') {
     define('LG_CH_RELATED_2PERS', 'Vous devez saisir 2 personnes ...');
     define('LG_CH_RELATED_AND', 'Et');
     define('LG_CH_RELATED_BETWEEN', 'Entre');
@@ -739,9 +739,9 @@ if ($nom_page == 'Recherche_Cousinage.php') {
 }
 
 if (in_array($nom_page, array(
-    'Edition_Utilisateur.php',
-    'Fiche_Utilisateur.php',
-    'Liste_Utilisateurs.php'
+    'edition_utilisateur.php',
+    'fiche_utilisateur.php',
+    'liste_utilisateurs.php'
 ))) {
     define('LG_UTIL_CODE', 'Code');
     define('LG_UTIL_CONNEXIONS', 'Liste des connexions de la personne');
@@ -767,14 +767,14 @@ if (in_array($nom_page, array(
     define('LG_UTIL_CHK_MAIL', 'Si vous voulez envoyer un mail, vous devez sélectionner les utilisateurs concernés');
 }
 
-if (($nom_page == 'Edition_Utilisateur.php') or ($nom_page == 'index.php')) {
+if (($nom_page == 'edition_utilisateur.php') or ($nom_page == 'index.php')) {
     define('LG_USER_MANDATORY', 'Pensez à remplir les champs obligatoires...');
     define('LG_USER_DIFF_PSW', 'Les deux mots de passe ne sont pas identiques');
     define('LG_USER_SHORT_PSW', 'Le mot de passe doit faire au moins 6 caractères');
     define('LG_USER_PSW_REQUESTED', 'Il faut saisir un mot de passe');
 }
 
-if ($nom_page == 'Import_Gedcom.php') {
+if ($nom_page == 'import_gedcom.php') {
     $LG_Ch_UTF8 = 'Fichier au format UTF-8';
     $LG_Ch_Encoding = 'Encodage des caractères';
     define('LG_IMP_GED_DEFAULT_STATUS', 'Valeur par défaut du statut des fiches créées');
@@ -799,14 +799,14 @@ if ($nom_page == 'Import_Gedcom.php') {
     define('LG_IMP_GED_RESUME', 'Résumé du traitement');
 }
 
-if ($nom_page == 'Liste_Docs_Branche.php') {
+if ($nom_page == 'liste_docs_branche.php') {
     define('LG_DOC_BRANCH_ORIGINE', 'Personne origine de la branche');
     define('LG_DOC_BRANCH_DOC_TYPE', 'Type de document image');
     define('LG_DOC_BRANCH_SEL_TYPE', 'Type...');
     define('LG_DOC_BRANCH_SEL_NAME', 'Sélectionnez un nom...');
 }
 
-if (($nom_page == 'Edition_Image.php') or ($nom_page == 'Liste_Images.php')) {
+if (($nom_page == 'edition_image.php') or ($nom_page == 'liste_images.php')) {
     $LG_Ch_Image_Script_Title = 'Liaison d\'une image';
     $LG_Ch_Image_Title = 'Titre';
     $LG_Ch_Image = 'Image';
@@ -817,7 +817,7 @@ if (($nom_page == 'Edition_Image.php') or ($nom_page == 'Liste_Images.php')) {
     $LG_Ch_Image_This = 'cette image';
 }
 
-if ($nom_page == 'Fiche_Homonymes.php') {
+if ($nom_page == 'fiche_homonymes.php') {
     define('LG_CH_FUSIONNER', 'Fusionner');
     define('LG_CH_FUSION_TIP1', 'La fusion, si elle est demandée, est effectuée sur la personne 1 (à gauche).');
     define('LG_CH_FUSION_TIP2', 'L\'utilisateur sélectionne à gauche ou à droite les données à copier / ajouter.');
@@ -831,7 +831,7 @@ if ($nom_page == 'Fiche_Homonymes.php') {
     define('LG_CH_COUPLE', 'Fiche couple');
 }
 
-if ($nom_page == 'Recherche_Personne_Archive.php') {
+if ($nom_page == 'recherche_personne_archive.php') {
     $LG_Ch_Search_Town = 'Ville de recherche';
     $LG_Ch_Search_Beg = 'Année de début';
     $LG_Ch_Search_End = 'Année de fin';
@@ -852,7 +852,7 @@ if ($nom_page == 'Recherche_Personne_Archive.php') {
     $LG_Ch_Search_Pers_2 = 'trouvée';
 }
 
-if ($nom_page == 'Recherche_Commentaire.php') {
+if ($nom_page == 'recherche_commentaire.php') {
     define('LG_SCH_COMMENT_RESTRICTION', 'Restriction aux fiches de type');
     define('LG_SCH_COMMENT_NO_RESTRICTION', '-- Pas de restriction --');
     define('LG_SCH_COMMENT', 'Recherche des commentaires contenant');
@@ -864,7 +864,7 @@ if ($nom_page == 'Recherche_Commentaire.php') {
     define('LG_SCH_COMMENT_AND', ' et ');
 }
 
-if (($nom_page == 'Edition_Categorie.php') or ($nom_page == 'Fiche_Categorie.php')) {
+if (($nom_page == 'edition_categorie.php') or ($nom_page == 'fiche_categorie.php')) {
     $LG_Ch_Categ_Title = 'Titre';
     $LG_Ch_Categ_Order = 'Ordre de tri';
     $LG_Ch_Categ_Inc_Order = 'Augmenter l\'ordre';
@@ -872,7 +872,7 @@ if (($nom_page == 'Edition_Categorie.php') or ($nom_page == 'Fiche_Categorie.php
     $LG_Ch_Categ_Image = 'Image';
 }
 
-if ($nom_page == 'Edition_Depart.php') {
+if ($nom_page == 'edition_depart.php') {
     $LG_County_Data = 'Général';
     $LG_County_Name = 'Nom';
     $LG_County_Id = 'Code';
@@ -881,19 +881,19 @@ if ($nom_page == 'Edition_Depart.php') {
     define('LG_LAREAS_COUNTIES', 'Liste des départements');
 }
 
-if (($nom_page == 'Edition_Depot.php') or ($nom_page == 'Fiche_Depot.php')) {
+if (($nom_page == 'edition_depot.php') or ($nom_page == 'fiche_depot.php')) {
     define('LG_CH_REPOSITORY_NAME', 'Nom');
     define('LG_CH_REPOSITORY_LIST', 'Liste des sources du dépôt');
     define('LG_CH_REPOSITORY_THIS', 'ce dépôt');
 }
 
-if (($nom_page == 'Edition_Requete.php') or ($nom_page == 'Fiche_Requete.php')) {
+if (($nom_page == 'edition_requete.php') or ($nom_page == 'fiche_requete.php')) {
     define('LG_QUERY_CODE', 'Code');
     define('LG_QUERY_THIS', 'cette requête');
     define('LG_QUERY_TITLE', 'Titre');
 }
 
-if ($nom_page == 'Admin_Tables.php') {
+if ($nom_page == 'admin_tables.php') {
     $LG_Ch_Adm_T_lib_ok = 'Procéder à l\'action';
     $LG_Ch_Adm_T_Err_List = 'Erreur DB, impossible de lister les tables';
     $LG_Ch_Adm_T_Action = 'Action';
@@ -909,11 +909,11 @@ if ($nom_page == 'appelle_image_france_dep.php') {
     $LG_Img_FR_Death = 'Répartition des décès';
 }
 
-if (($nom_page == 'Arbre_Agnatique_Cognatique.php')
-    or ($nom_page == 'Arbre_Asc_Pers.php')
-    or ($nom_page == 'Arbre_Noyau.php')
-    or ($nom_page == 'Desc_Directe_Pers.php')
-    or ($nom_page == 'Arbre_Desc_Pers.php')
+if (($nom_page == 'arbre_agnatique_cognatique.php')
+    or ($nom_page == 'arbre_asc_pers.php')
+    or ($nom_page == 'arbre_noyau.php')
+    or ($nom_page == 'desc_directe_pers.php')
+    or ($nom_page == 'arbre_desc_pers.php')
 ) {
     $LG_Tree_Men_Asc = 'Arbre agnatique';
     $LG_Tree_Women_Asc  = 'Arbre cognatique';
@@ -931,12 +931,12 @@ if (($nom_page == 'Arbre_Agnatique_Cognatique.php')
     $LG_Tree_Show_Desc = 'Afficher la descendance';
 }
 
-if ($nom_page == 'Noyau_Pers.php') {
+if ($nom_page == 'noyau_pers.php') {
     define('LG_DECUJUS_ERR_NO_EMPTY', 'Fonctionnalité non disponible ; des personnes et / ou des villes existent.');
     define('LG_DECUJUS_DECUJUS', 'Personnage central - decujus');
 }
 
-if ($nom_page == 'Calcul_Distance.php') {
+if ($nom_page == 'calcul_distance.php') {
     $LG_Ch_Dist_Between = 'Entre';
     $LG_Ch_Dist_And = 'Et';
     $LG_Ch_Dist_Tip = 'On ne peut calculer une distance qu\'entre deux villes dont on a saisi la latitude et la longitude';
@@ -946,7 +946,7 @@ if ($nom_page == 'Calcul_Distance.php') {
     $LG_Ch_Dist_Res4 = ' km ';
 }
 
-if ($nom_page == 'Edition_Parametres_Graphiques.php') {
+if ($nom_page == 'edition_parametres_graphiques.php') {
     $LG_Graphics_3Gen = '3ème Génération';
     $LG_Graphics_BG = 'Fond de page et première lettre accueil';
     $LG_Graphics_BG_Label = 'Fond des libellés';
@@ -974,7 +974,7 @@ if ($nom_page == 'Edition_Parametres_Graphiques.php') {
     $LG_Graphics_Welcome = 'ienvenue sur le site de';
 }
 
-if ($nom_page == 'Edition_Filiation.php') {
+if ($nom_page == 'edition_filiation.php') {
     $LG_Ch_Filiation_Events = 'Evènements';
     $LG_Ch_Filiation_Docs = 'Documents';
     $LG_Ch_Filiation_Parent_Choice = 'Choix par les parents';
@@ -991,8 +991,8 @@ if ($nom_page == 'Edition_Filiation.php') {
     $LG_Ch_Filiation_Add_Doc = 'Ajout d\'un document';
 }
 
-if (($nom_page == 'Conv_Romain.php')
-    or ($nom_page == 'Calc_So.php')
+if (($nom_page == 'conv_romain.php')
+    or ($nom_page == 'calc_so.php')
 ) {
     $LG_Ch_Calc_Max = 'Borne maxi';
     $LG_Ch_Calc_Clear = 'Effacement de la saisie';
@@ -1008,7 +1008,7 @@ if (($nom_page == 'Conv_Romain.php')
     $LG_Ch_Calc_Husb_Wif_Of = 'Conjoint de';
 }
 
-if ($nom_page == 'Edition_Parametres_Site.php') {
+if ($nom_page == 'edition_parametres_site.php') {
     $LG_Site_Param_Name = 'Nom';
     $LG_Site_Param_Mail = 'Adresse mail';
     $LG_Site_Param_Year_Only = 'Affichage de l\'année seule dans les dates sur Internet';
@@ -1030,13 +1030,13 @@ if ($nom_page == 'Edition_Parametres_Site.php') {
     $LG_Site_Param_Error = 'Erreur';
 }
 
-if ($nom_page == 'Edition_Region.php') {
+if ($nom_page == 'edition_region.php') {
     $LG_Edit_Region_Name = 'Nom';
     $LG_Edit_Region_Code = 'Code';
     $LG_Edit_Region_Country = 'Pays';
 }
 
-if ($nom_page == 'Edition_Union.php') {
+if ($nom_page == 'edition_union.php') {
     define('LG_UNION_ADD', 'Ajout d\'une union');
     define('LG_UNION_ADD_DOC', 'Lier un document existant à l\'union');
     define('LG_UNION_ADD_DOC_NEW', 'Lier un document à l\'union en créant la fiche document');
@@ -1059,7 +1059,7 @@ if ($nom_page == 'Edition_Union.php') {
     define('LG_UNION_WHERE_WHEN', 'Date et lieu');
 }
 
-if (($nom_page == 'Edition_Union.php') or ($nom_page == 'Fiche_Couple_txt.php')) {
+if (($nom_page == 'edition_union.php') or ($nom_page == 'fiche_couple_txt.php')) {
     define('LG_COUPLE_REPORT_TITLE', 'Fiche couple format texte');
     define('LG_COUPLE_REPORT_PERSON', 'Personne');
     define('LG_COUPLE_REPORT_NICK_M', 'dit');
@@ -1076,7 +1076,7 @@ if (($nom_page == 'Edition_Union.php') or ($nom_page == 'Fiche_Couple_txt.php'))
 }
 
 
-if ($nom_page == 'exp_GenWeb.php') {
+if ($nom_page == 'exp_genweb.php') {
     define('LG_GENWEB_ERROR_FILE', 'impossible de créer');
     define('LG_GENWEB_EXTRACT', 'Extraire la liste');
     define('LG_GENWEB_FILE', 'dans un fichier');
@@ -1085,7 +1085,7 @@ if ($nom_page == 'exp_GenWeb.php') {
     define('LG_GENWEB_SUFFIX', 'ajouter le nom du département en suffixe');
 }
 
-if ($nom_page == 'Galerie_Images.php') {
+if ($nom_page == 'galerie_images.php') {
     define('LG_IMAGES_GAL_CHOOSE_TYPE', 'Choisissez le type du document image');
     define('LG_IMAGES_GAL_UNION', 'Union de');
     define('LG_IMAGES_GAL_UNION_AND', 'et de');
@@ -1095,7 +1095,7 @@ if ($nom_page == 'Galerie_Images.php') {
     define('LG_IMAGES_GAL_FILIATION', 'Filiation');
 }
 
-if (($nom_page == 'Export_Liens.php') or ($nom_page == 'Liste_Liens.php')) {
+if (($nom_page == 'export_liens.php') or ($nom_page == 'liste_liens.php')) {
     define('LG_LINKS_DEL', 'Supprimer les liens sélectionnés');
     define('LG_LINKS_DEL_REP1', 'suppression');
     define('LG_LINKS_DEL_REP2', 'de liens effectuée');
@@ -1111,7 +1111,7 @@ if (($nom_page == 'Export_Liens.php') or ($nom_page == 'Liste_Liens.php')) {
     define('LG_LINKS_EXTRACT_ERROR2', "n'a pas pu être créé ; assurez vous qu'il n'est pas déjà ouvert par ailleurs et que vous avez les droits.");
 }
 
-if (($nom_page == 'Verif_Internet.php') or ($nom_page == 'Verif_Internet_Absente.php')) {
+if (($nom_page == 'verif_internet.php') or ($nom_page == 'verif_internet_absente.php')) {
     define('LG_CHK_INTERNET_BORN', 'Date de naissance');
     define('LG_CHK_INTERNET_DEATH', 'Date de décès');
     define('LG_CHK_INTERNET_PERSON', 'Personne');
@@ -1128,7 +1128,7 @@ if (($nom_page == 'Verif_Internet.php') or ($nom_page == 'Verif_Internet_Absente
     define('LG_CHK_INTERNET_ABS_CHG_LIMIT', 'Changer la limite pour cette vérification');
 }
 
-if ($nom_page == 'Verif_Sosa.php') {
+if ($nom_page == 'verif_sosa.php') {
     define('LG_CHK_SOSA_CALC_NUMBER', 'Numéro théorique');
     define('LG_CHK_SOSA_NON_MATCHING', 'Liste des écarts constatés');
     define('LG_CHK_SOSA_NUMBER', 'Numéro lu');
@@ -1137,14 +1137,14 @@ if ($nom_page == 'Verif_Sosa.php') {
     define('LG_CHK_SOSA_RESULT_2', 'rectification(s) effectuée(s).');
 }
 
-if ($nom_page == 'Vue_Personnalisee.php') {
+if ($nom_page == 'vue_personnalisee.php') {
     define('LG_CUST_VIEW_DEFAULT', 'De cujus par défaut');
     define('LG_CUST_VIEW_OTHER', 'Autre de cujus');
     define('LG_CUST_VIEW_PRIVATE', 'Données non publiques');
     define('LG_CUST_VIEW_SELECT', 'Sélectionnez un de cujus');
 }
 
-if ($nom_page == 'Arbre_Perso.php') {
+if ($nom_page == 'arbre_perso.php') {
     define('LG_PERS_TREE_CHOOSE_OTHER', 'Voir une autre page ...');
     define('LG_PERS_TREE_ERROR_NO_SHOW', 'Cet arbre contient des données non disponibles sur Internet');
     define('LG_PERS_TREE_MISSING_DIR', "Dans la table arbreParam, il manque l\'enregistrement de clés 'repertoire' et genImg");
@@ -1153,7 +1153,7 @@ if ($nom_page == 'Arbre_Perso.php') {
     define('LG_PERS_TREE_OPEN_ERROR', 'Ouverture impossible de ');
 }
 
-if ($nom_page == 'Edition_Lier_Objet.php') {
+if ($nom_page == 'edition_lier_objet.php') {
     define('LG_LINK_EVT_TITLE', 'Lier un évènement');
     define('LG_LINK_TO_PARENTS', 'Lier un évènement à la filiation');
     define('LG_LINK_TO_UNION', "Lier un évènement à l'union");
@@ -1163,7 +1163,7 @@ if ($nom_page == 'Edition_Lier_Objet.php') {
     define('LG_LINK_THIS', 'cette liaison');
 }
 
-if ($nom_page == 'Calendriers.php') {
+if ($nom_page == 'calendriers.php') {
     define('LG_CALEND_ASCENSION', 'Ascension');
     define('LG_CALEND_AUTUMN', "d'automne,");
     define('LG_CALEND_BROWSER_DEP', '(visible selon les navigateurs)');
@@ -1187,7 +1187,7 @@ if ($nom_page == 'Calendriers.php') {
     define('LG_CALEND_YEAR', 'Année');
 }
 
-if ($nom_page == 'Verif_Homonymes.php') {
+if ($nom_page == 'verif_homonymes.php') {
     define('LG_NAMESAKE_CRITERIA', 'Critères complémentaires');
     define('LG_NAMESAKE_BIRTH', 'Date de naissance');
     define('LG_NAMESAKE_DEATH', 'Date de décès');
@@ -1198,13 +1198,13 @@ if ($nom_page == 'Verif_Homonymes.php') {
     define('LG_NAMESAKE_PERS2', "Personne 2, celle qui faisait l'objet du doublon potentiel");
 }
 
-if ($nom_page == 'Utilisations_Document.php') {
+if ($nom_page == 'utilisations_document.php') {
     define('LG_DOC_UT_COUNT', 'utilisation(s) trouvée(s)');
     define('LG_DOC_UT_NO', "Pas d'utilisation du document");
     define('LG_DOC_UT_ON', 'Pour');
 }
 
-if ($nom_page == 'Recherche_Ville.php') {
+if ($nom_page == 'recherche_ville.php') {
     define('LG_TOWN_FOUND', 'ville(s) trouvée(s)');
     define('LG_TOWN_NEW_TAB', 'Nouvel onglet pour les fiches');
     define('LG_TOWN_SCH_NAME', 'Nom');
@@ -1212,7 +1212,7 @@ if ($nom_page == 'Recherche_Ville.php') {
     define('LG_TOWN_SCH_ZIP', 'Code Postal');
 }
 
-if ($nom_page == 'Recherche_Document.php') {
+if ($nom_page == 'recherche_document.php') {
     define('LG_DOC_SCH_ON', 'sur les documents de nature');
     define('LG_DOC_SCH_TYPE', 'de type');
     define('LG_DOC_SCH_TITLES', 'des titres contenant');
@@ -1225,22 +1225,22 @@ if ($nom_page == 'Recherche_Document.php') {
     define('LG_DOC_SCH_LB_TYPE', 'Type');
 }
 
-if ($nom_page == 'Pers_Isolees.php') {
+if ($nom_page == 'pers_isolees.php') {
     define('LG_PERS_NO_LK_FOUND_MEN', ' homme(s) isolé(s) trouvé(s)');
     define('LG_PERS_NO_LK_FOUND_WOMEN', ' femme(s) isolée(s) trouvée(s)');
     define('LG_PERS_NO_LK_FOUND_UNDEF', ' personnes(s) isolée(s) de sexe indéterminé trouvé(s)');
 }
 
-if ($nom_page == 'Notaires_Ville.php') {
+if ($nom_page == 'notaires_ville.php') {
     define('LG_NOTARY_TITLE', 'Notaires dans les unions sur la ville de ');
 }
 
-if ($nom_page == 'Liste_Pers_Mod.php') {
+if ($nom_page == 'liste_pers_mod.php') {
     define('LG_PERS_MOD_PERS', 'Personnes');
     define('LG_PERS_MOD_WHEN', 'Date de modification');
 }
 
-if (($nom_page == 'Liste_Nom_Pop.php') or ($nom_page == 'Liste_Prof_Pop.php')) {
+if (($nom_page == 'liste_nom_pop.php') or ($nom_page == 'liste_prof_pop.php')) {
     define('LG_MOST_JOBS', 'Profession');
     define('LG_MOST_NAMES', 'Nom');
     define('LG_MOST_PERS', 'Nombre de personnes');
@@ -1248,7 +1248,7 @@ if (($nom_page == 'Liste_Nom_Pop.php') or ($nom_page == 'Liste_Prof_Pop.php')) {
     define('LG_MOST_JOBS_TIP2', 'fusionnés');
 }
 
-if ($nom_page == 'Liste_Nom_Vivants.php') {
+if ($nom_page == 'liste_nom_vivants.php') {
     define('LG_LIVING_IGNORE', 'Ignorer les personnes sans date de naissance');
     define('LG_LIVING_SHOW_HIDE', 'Afficher / masquer tous les noms');
     define('LG_LIVING_REF_DATE', 'Date pivot de naissance');
@@ -1256,12 +1256,12 @@ if ($nom_page == 'Liste_Nom_Vivants.php') {
     define('LG_LIVING_YEARS', 'ans');
 }
 
-if ($nom_page == 'Liste_NomFam.php') {
+if ($nom_page == 'liste_nomfam.php') {
     define('LG_NAMES_LIST_LAST', 'Dernier nom de famille saisi');
     define('LG_NAMES_LIST_ADD', 'Ajouter un nom de famille');
 }
 
-if ($nom_page == 'Liste_Patro.php') {
+if ($nom_page == 'liste_patro.php') {
     define('LG_PATRO_THEN', 'puis');
     define('LG_PATRO_DISP_PLACE', 'Afficher les lieux');
     define('LG_PATRO_RESTRICT', 'Limiter au nom du de cujus');
@@ -1269,13 +1269,13 @@ if ($nom_page == 'Liste_Patro.php') {
     define('LG_PATRO_FILIATION', 'Filiation patronymique');
 }
 
-if ($nom_page == 'Liste_Eclair.php') {
+if ($nom_page == 'liste_eclair.php') {
     define('LG_COUNTY_LIST_SHOW_HIDE', 'Afficher / masquer tous les noms');
     define('LG_COUNTY_LIST_ONE', 'Liste éclair pour le département');
     define('LG_COUNTY_LIST_ALL', 'Liste éclair pour tous les départements');
 }
 
-if ($nom_page == 'Liste_Contributions.php') {
+if ($nom_page == 'liste_contributions.php') {
     define('LG_CONTRIB_LIST_WHEN', 'Date de la contribution');
     define('LG_CONTRIB_LIST_PROCESS', 'Traiter la contribution');
     define('LG_CONTRIB_LIST_PERSON', 'Personne concernée');
@@ -1284,7 +1284,7 @@ if ($nom_page == 'Liste_Contributions.php') {
     define('LG_CONTRIB_LIST_CONTRIB', 'Contribution');
 }
 
-if ($nom_page == 'Edition_Contribution.php') {
+if ($nom_page == 'edition_contribution.php') {
     define('LG_CONTRIB_EDIT_BROWSER', 'Navigateur');
     define('LG_CONTRIB_EDIT_CHILD', 'Enfants');
     define('LG_CONTRIB_EDIT_DATAS', 'Données du contributeur');
@@ -1313,14 +1313,14 @@ if ($nom_page == 'Edition_Contribution.php') {
     define('LG_CONTRIB_EDIT_REPLACE_CHILDREN', 'Remplacer enfant');
 }
 
-if ($nom_page == 'Infos_Tech.php') {
+if ($nom_page == 'infos_tech.php') {
     define('LG_TECH_INFO_VERSION', 'Version de Génémania');
     define('LG_TECH_INFO_ENVIR_LOCAL', 'Environnement : Local');
     define('LG_TECH_INFO_ENVIR_INTERNET', 'Environnement : Internet');
 }
 
 // if (($nom_page == 'Import_CSV_Liens.php') or ($nom_page == 'Import_CSV_Evenements.php') or ($nom_page == 'Import_CSV_Villes.php')) {
-if (strpos($nom_page, 'Import_CSV') !== false) {
+if (strpos($nom_page, 'import_CSV') !== false) {
     define('LG_IMP_CSV_REQ_FIELDS', 'Champs demandés');
     define('LG_IMP_CSV_IN_COL', 'dans la colonne');
     define('LG_IMP_CSV_ERR_MATCH_1', 'Erreur de correspondance avec entête présente ; champ ');
@@ -1347,7 +1347,7 @@ if (strpos($nom_page, 'Import_CSV') !== false) {
     define('LG_IMP_CSV_NO_PREMIUM', 'Option non disponible sur les sites non Premium');
 }
 
-if (($nom_page == 'exp_Gedcom_Personne.php') or ($nom_page == 'exp_Gedcom.php') or ($nom_page == 'xx.php')) {
+if (($nom_page == 'exp_gedcom_personne.php') or ($nom_page == 'exp_gedcom.php') or ($nom_page == 'xx.php')) {
     define('LG_GEDCOM_FORM', 'Ville,Code lieu,Département,Région,Pays');
     define('LG_GEDCOM_FILE', "L'export Gedcom est disponible dans le fichier");
     define('LG_GEDCOM_FILE_ERROR', "Fichier impossible à créer");
@@ -1403,7 +1403,7 @@ function lib_sexe_nickname($sexe)
     }
     return my_html($ret);
 }
-if (($nom_page == 'Fiche_Indiv_txt.php') or ($nom_page == 'Fiche_Fam_Pers.php') or ($nom_page == 'Fiche_Couple_txt.php')) {
+if (($nom_page == 'fiche_indiv_txt.php') or ($nom_page == 'fiche_fam_pers.php') or ($nom_page == 'fiche_couple_txt.php')) {
     define('LG_PERS_PERS', 'Personne');
     define('LG_PERS_BROTHERS_SISTERS', 'Frères et soeurs');
     define('LG_PERS_CHILDREN', 'Enfants');
@@ -1419,7 +1419,7 @@ if (($nom_page == 'Fiche_Indiv_txt.php') or ($nom_page == 'Fiche_Fam_Pers.php') 
 }
 
 // Spécifique Fiche familiale
-if ($nom_page == 'Fiche_Fam_Pers.php') {
+if ($nom_page == 'fiche_fam_pers.php') {
     define('LG_FFAM_OBJECT', 'Fiche familiale');
     define('LG_FFAM_CHILDREN_WITH', 'Enfants avec le conjoint');
     define('LG_FFAM_ADD_CHILDREN', 'Créer des enfants pour le couple');
@@ -1444,7 +1444,7 @@ if ($nom_page == 'Fiche_Fam_Pers.php') {
     define('LG_FFAM_NOSHOW_INTERNET', "Interdit l'affichage de la personne sur Internet");
 }
 
-if ($nom_page == 'Fusion_Evenements.php') {
+if ($nom_page == 'fusion_evenements.php') {
     define('LG_EVT_MERGE_OK', 'Fusionner');
     define('LG_EVT_MERGE_PROCESS', 'Traitements des évènements');
     define('LG_EVT_MERGE_REF', 'Référence');
@@ -1464,25 +1464,25 @@ if ($nom_page == 'Fusion_Evenements.php') {
     $lg_evt_done = array("m" => "basculé", "ms" => "basculés", "f" => "basculée", "fs" => "basculées");
 }
 
-if ($nom_page == 'Init_Sosa.php') {
+if ($nom_page == 'init_sosa.php') {
     define('LG_DEL_SOSA_KEEP', 'Garder le de cujus éventuel');
 }
 
-if ($nom_page == 'Init_Noms.php') {
+if ($nom_page == 'init_noms.php') {
     define('LG_INIT_NAMES_DONE', 'Identifiants recalculés');
     define('LG_INIT_NAMES_NONE', "Pas d'identifiant à recalculer");
     define('LG_INIT_NAMES_REF', 'Référence');
     define('LG_INIT_NAMES_INIT', 'Ré-initialisation demandée');
 }
 
-if ($nom_page == 'Verif_Personne.php') {
+if ($nom_page == 'verif_personne.php') {
     define('LG_CHK_PERS_CTRLS', 'Contrôles de la personne');
     define('LG_CHK_PERS_CTRLS_PARENTS', 'Contrôles des parents');
     define('LG_CHK_PERS_CTRLS_UNIONS', 'Contrôles des unions');
     define('LG_CHK_PERS_CTRLS_CHILDREN', 'Contrôles des enfants');
 }
 
-if ($nom_page == 'Premiers_Pas_Genealogie.php') {
+if ($nom_page == 'premiers_pas_genealogie.php') {
     define('LG_START_DEF', 'Définition de la généalogie');
     define('LG_START_SOURCES', "Sources d'information");
     define('LG_START_CIVIL_REGISTRATION', "L'état civil");
@@ -1490,7 +1490,7 @@ if ($nom_page == 'Premiers_Pas_Genealogie.php') {
     define('LG_START_YOUR_TURN', 'A vous de jouer...');
 }
 
-if ($nom_page == 'Glossaire_Gen.php') {
+if ($nom_page == 'glossaire_gen.php') {
     define('LG_GLOSS_ACT', 'Acte');
     define('LG_GLOSS_ADULTERINE', 'Adultérin');
     define('LG_GLOSS_AGNATIC', 'Agnat, Agnatique');
@@ -1588,7 +1588,7 @@ if ($nom_page == 'Glossaire_Gen.php') {
     define('LG_GLOSS_TIP_4', 'pour avoir plus de détails');
 }
 
-if ($nom_page == 'Export.php') {
+if ($nom_page == 'export.php') {
     define('LG_EXPORT_TYPE', "Type d'export");
     define('LG_EXPORT_FILE_SUFFIXE', "Suffixe du fichier d'export");
     define('LG_EXPORT_FILE_SUFFIXE_WITH', 'Avec');
@@ -1624,11 +1624,11 @@ if ($nom_page == 'Export.php') {
     define('LG_EXPORT_EVT1', "la Revue Française de Généalogie teste Geneamania dans son numéro d'été");
 }
 
-if (($nom_page == 'controle_nomFam.php') or ($nom_page == 'Edition_NomFam.php')) {
+if (($nom_page == 'controle_nomfam.php') or ($nom_page == 'edition_nomfam.php')) {
     define('LG_CTRL_NAME_EXISTS', "Le nom de famille existe déjà dans la base. Voulez-vous fusionner ce nom avec celui existant ?");
 }
 
-if ($nom_page == 'Import_Sauvegarde.php') {
+if ($nom_page == 'import_sauvegarde.php') {
     define('LG_IMP_BACKUP_RESET', 'Vidage préalable de la base actuelle');
     define('LG_IMP_BACKUP_RESET_TIP', 'Ne validez cette option que si vous savez ce que vous faites !');
     define('LG_IMP_BACKUP_FILE', 'Fichier de sauvegarde à télécharger');
@@ -1667,7 +1667,7 @@ if ($nom_page == 'Import_Sauvegarde.php') {
     define('LG_IMP_BACKUP_TABLE_DELETE', 'suppression de la table créée à tort');
 }
 
-if ($nom_page == 'Import_Docs.php') {
+if ($nom_page == 'import_docs.php') {
     define('LG_IMP_DOCS_MISS_IMG', 'Images absentes');
     define('LG_IMP_DOCS_MISS_DOC', 'Documents absents');
     define('LG_IMP_DOCS_MISS_IMG_DOC', 'Image / document');
@@ -1682,7 +1682,7 @@ if ($nom_page == 'Import_Docs.php') {
     define('LG_IMP_DOCS_SIZE', ' octets ');
 }
 
-if ($nom_page == 'Export_Pour_Deces.php') {
+if ($nom_page == 'export_pour_deces.php') {
     define('LG_EXPORT_DEATH_DEAD', 'Ignorer les personnes avec date de décès');
     define('LG_EXPORT_DEATH_EXTRACT', 'Personne(s) exportée(s)');
     define('LG_EXPORT_DEATH_MIN_YEAR', 'Année minimale de naissance');
@@ -1694,7 +1694,7 @@ if ($nom_page == 'Export_Pour_Deces.php') {
     define('LG_EXPORT_DEATH_BIRTH_PLACE', "Lieu de naissance");
 }
 
-if ($nom_page == 'Recherche_MatchId_Unitaire.php') {
+if ($nom_page == 'recherche_matchId_unitaire.php') {
     define('LG_SCH_MATCH_ANSWER', 'Réponse matchId');
     define('LG_SCH_MATCH_PERS', 'Personne');
     define('LG_SCH_MATCH_SHOW_JSON', 'Afficher / masquer la réponse de matchId');
@@ -1703,14 +1703,14 @@ if ($nom_page == 'Recherche_MatchId_Unitaire.php') {
     define('LG_SCH_MATCH_ERROR', 'Erreur retournée par matchId');
 }
 
-if ($nom_page == 'Vide_Base.php') {
+if ($nom_page == 'vide_base.php') {
     define('LG_RESET_CONFIRM', 'Confirmez-vous le vidage de la base ?');
     define('LG_RESET_NOT_CONFIRMED', 'Vidage de la base non confirmé');
     define('LG_RESET_DATA_BEG', 'Données');
     define('LG_RESET_DATA_END', 'supprimées');
 }
 
-if ($nom_page == 'Mail_Ut.php') {
+if ($nom_page == 'mail_ut.php') {
     define('LG_MAIL_SUBJECT', 'Sujet');
     define('LG_MAIL_MSG', 'Sujet');
     define('LG_MAIL_FROM', 'Il est préférable d\'utiliser une autre adresse mail de contact que ');
@@ -1930,151 +1930,151 @@ define('LG_TIP_OPENSTREETMAP', 'Les coordonnées permettent de situer une zone s
 
 // Titres des pages
 if (!is_info()) {
-    $LG_Menu_Title['Rect_Utf']                    = 'Rectification des caractères UTF-8 en base';
-    $LG_Menu_Title['Link_Ev_Pers']                = 'Edition d\'un lien évènement-personne';
-    $LG_Menu_Title['Link_Pers']                    = 'Lier deux personnes';
-    $LG_Menu_Title['Find_Doc']                    = 'Recherche de document';
-    $LG_Menu_Title['Subdiv']                    = 'Fiche d\'une subdivision';
-    $LG_Menu_Title['Subdiv_Edit']                = 'Modification d\'une subdivision';
-    $LG_Menu_Title['Subdiv_Add']                = 'Ajout d\'une subdivision';
-    $LG_Menu_Title['Town']                        = 'Fiche d\'une ville';
-    $LG_Menu_Title['Town_Edit']                    = 'Modification d\'une ville';
-    $LG_Menu_Title['Town_Add']                    = 'Ajout d\'une ville';
-    $LG_Menu_Title['County_Edit']                = 'Modification d\'un département';
-    $LG_Menu_Title['County_Add']                = 'Ajout d\'un département';
-    $LG_Menu_Title['Region_Edit']                = 'Modification d\'une region';
-    $LG_Menu_Title['Region_Add']                = 'Ajout d\'une region';
-    $LG_Menu_Title['Person_Add']                = 'Ajout d\'une personne';
-    $LG_Menu_Title['Person_Modify']                = 'Modification d\'une personne';
-    $LG_Menu_Title['Event_Add']                    = 'Ajout d\'un évènement';
-    $LG_Menu_Title['Name_Is_Complete']            = 'Complétude des informations des ';
-    $LG_Menu_Title['Gen_Is_Complete']            = 'Complétude des personnes par génération';
-    $LG_Menu_Title['Names_For_Event']            = 'Liste des noms pour un évènement';
-    $LG_Menu_Title['Delete_Sosa']                = 'Supprimer les numéros sosa';
-    $LG_Menu_Title['Site_parameters']            = 'Paramètres généraux du site';
-    $LG_Menu_Title['Name']                         = 'Fiche d\'un nom de famille';
-    $LG_Menu_Title['Name_Edit']                 = 'Modification d\'un nom de famille';
-    $LG_Menu_Title['Name_Add']                     = 'Ajout d\'un nom de famille';
-    $LG_Menu_Title['Document_Multiple_Add']        = 'Ajout multiple de documents';
-    $LG_Menu_Title['Check_Persons']                = 'Contrôle des personnes';
-    $LG_Menu_Title['Convert_Roman_To_Arabic']    = 'Convertisseur de nombres romains - arabes';
-    $LG_Menu_Title['Category']                    = 'Fiche d\'une catégorie';
-    $LG_Menu_Title['Category_Edit']                = 'Edition d\'une catégorie';
-    $LG_Menu_Title['First_Wedding']                = 'Age de premier mariage pour la période de naissance';
-    $LG_Menu_Title['Namesake_Cheking']            = 'Vérification des homonymes';
-    $LG_Menu_Title['Internet_Cheking']            = 'Vérification des visibilités Internet';
-    $LG_Menu_Title['Internet_Hidding_Cheking']    = 'Vérification des visibilités Internet restreintes';
-    $LG_Menu_Title['Documents_List']            = 'Liste des documents';
-    $LG_Menu_Title['Document']                    = 'Fiche d\'un document';
-    $LG_Menu_Title['Document_Edit']                = 'Modification d\'une fiche document';
-    $LG_Menu_Title['Document_Add']                = 'Création d\'une fiche document';
-    $LG_Menu_Title['Document_Utils']            = 'Utilisation(s) du document';
-    $LG_Menu_Title['Request']                    = 'Fiche d\'une requête';
-    $LG_Menu_Title['Request_Edit']                = 'Modification d\'une requête';
-    $LG_Menu_Title['Pers_Uncles']                = 'Oncles et tantes';
-    $LG_Menu_Title['Pers_Cousins']                = 'Cousins et cousines';
-    $LG_Menu_Title['Pers_Gen']                    = 'Liste par génération';
-    $LG_Menu_Title['Calculate_Distance']        = 'Calcul de distance à vol d\'oiseau';
-    $LG_Menu_Title['Death_Age']                    = 'Pyramide des âges au décès';
-    $LG_BDM_Per                                    = 'Naissances, mariages et décès par ';
-    $LG_Menu_Title['BDM_Per_Month']                = $LG_BDM_Per . 'mois';
-    $LG_Menu_Title['BDM_Per_Town']                = $LG_BDM_Per . 'ville';
-    $LG_Menu_Title['BDM_Per_Depart']            = $LG_BDM_Per . 'département';
-    $LG_Histo                                    = 'Historique de l\'âge au ';
-    $LG_Menu_Title['Histo_Death']                = $LG_Histo . 'décès';
-    $LG_Menu_Title['Histo_First_Wedding']        = $LG_Histo . 'premier mariage';
-    $LG_Menu_Title['Histo_First_Child']            = $LG_Histo . 'premier enfant';
-    $LG_Menu_Title['Children_Per_Mother']        = 'Historique des enfants par femme';
-    $LG_Menu_Title['Statistics']                 = 'Statistiques de la base';
-    $LG_Menu_Title['Last_Mod_Pers']             = 'Liste des dernières personnes modifiées';
-    $LG_Menu_Title['Most_Used_Names']             = 'Noms les plus portés';
-    $LG_Menu_Title['Most_Used_jobs']             = 'Professions les plus exercées';
-    $LG_Menu_Title['Connections']                 = 'Liste des connexions';
-    $LG_Menu_Title['Links']                     = 'Liste des liens';
-    $LG_Menu_Title['Living_Pers']                 = 'Liste par nom des personnes vivantes';
-    $LG_Menu_Title['Search_Related']             = 'Recherche de parenté';
-    $LG_Menu_Title['Search_Comment']             = 'Recherche dans les commentaires';
-    $LG_Menu_Title['Galery']                     = 'Galerie de documents images';
-    $LG_Menu_Title['Galery_Branch']             = 'Galerie de documents images par branche';
-    $LG_Menu_Title['Compare_Persons']             = 'Comparaison de 2 personnes';
-    $LG_Menu_Title['Decujus_And_Family']         = 'Saisie du de cujus et de son noyau familial';
-    $LG_Menu_Title['Archive_Preparation']         = 'Préparation de recherche aux archives';
-    $LG_Menu_Title['Rank_Edit']                 = 'Edition des rangs';
-    $LG_Menu_Title['Name_Not_Used']             = 'Noms non utilisés';
-    $LG_Menu_Title['Tables_Admin']                = 'Administration des tables';
-    $LG_Menu_Title['Calc_Sosa']                    = 'Calculatrice Sosa';
-    $LG_Menu_Title['Direct_Desc']                = 'Descendance directe';
-    $LG_Menu_Title['Event']                        = 'Fiche d\'un évènement';
-    $LG_Menu_Title['Event_Edit']                = 'Modification d\'un évènement';
-    $LG_Menu_Title['Event_Add']                    = 'Ajout d\'un évènement';
-    $LG_Menu_Title['New']                        = 'Fiche d\'une actualité';
-    $LG_Menu_Title['New_Edit']                    = 'Modification d\'une actualité';
-    $LG_Menu_Title['New_Add']                    = 'Ajout d\'une actualité';
-    $LG_Menu_Title['Link']                        = 'Fiche d\'un lien';
-    $LG_Menu_Title['Link_Edit']                    = 'Modification d\'un lien';
-    $LG_Menu_Title['Link_Add']                    = 'Ajout d\'un lien';
-    $LG_Menu_Title['Alt_Name']                    = 'Nom secondaire d\'une personne';
-    $LG_Menu_Title['Role']                        = 'Fiche d\'un rôle';
-    $LG_Menu_Title['Role_Edit']                    = 'Modification d\'un rôle';
-    $LG_Menu_Title['Role_Add']                    = 'Création d\'un rôle';
-    $LG_Menu_Title['Event_Type']                = 'Fiche d\'un type d\'évènement';
-    $LG_Menu_Title['Event_Type_Edit']            = "Modification d'un type d'évènement";
-    $LG_Menu_Title['Event_Type_Add']            = "Création d'un type d'évènement";
-    $LG_Menu_Title['Event_Type_List']            = "Liste des types d'évènements";
-    $LG_Menu_Title['Doc_Type']                    = 'Fiche d\'un type de document';
-    $LG_Menu_Title['Doc_Type_Edit']                = 'Modification d\'un type de document';
-    $LG_Menu_Title['Doc_Type_Add']                = 'Création d\'un type de document';
-    $LG_Menu_Title['Repo_Sources']                 = 'Fiche d\'un dépôt de sources';
-    $LG_Menu_Title['Repo_Sources_Edit']         = 'Création d\'un dépôt de sources';
-    $LG_Menu_Title['Repo_Sources_Add']             = 'Modification d\'un dépôt de sources';
-    $LG_Menu_Title['Source']                     = 'Fiche d\'une source';
-    $LG_Menu_Title['Source_Add']                 = 'Création d\'une source';
-    $LG_Menu_Title['Source_Edit']                 = 'Modification d\'une source';
-    $LG_Menu_Title['Source_List']                 = 'Liste des sources';
-    $LG_Menu_Title['User']                         = 'Fiche d\'un utilisateur';
-    $LG_Menu_Title['User_Add']                     = 'Création d\'un utilisateur';
-    $LG_Menu_Title['User_Edit']                 = 'Modification d\'un utilisateur';
-    $LG_Menu_Title['Users_List']                 = 'Liste des utilisateurs';
-    $LG_Menu_Title['exp_GenWeb']                 = 'Export cousins GenWeb';
-    $LG_Menu_Title['Sch_Pers']                     = 'Recherche de personnes';
-    $LG_Menu_Title['Sch_Pers_CP']                 = 'Recherche de personnes par les conjoints ou parents';
-    $LG_Menu_Title['Image_List']                 = 'Liste des images';
-    $LG_Menu_Title['Custom_View']                 = 'Vue personnalisée';
-    $LG_Menu_Title['Check_Sosa']                 = 'Vérification de la numérotation sosa';
-    $LG_Menu_Title['Pers_Tree']                 = "Affichage d''un arbre personnalisé";
-    $LG_Menu_Title['Town_Search_Title']         = 'Recherche de villes';
-    $LG_Menu_Title['Town_Search']                 = 'De villes';
-    $LG_Menu_Title['Non_Linked_Pers']             = 'Liste des personnes isolées';
-    $LG_Menu_Title['Names_List']                 = 'Liste des noms de famille';
-    $LG_Menu_Title['Patronymic_List']             = 'Liste patronymique';
-    $LG_Menu_Title['Event_List']                = 'Liste des évènements';
-    $LG_Menu_Title['Event_List_Area']            = 'Liste des évènements pour une zone';
-    $LG_Menu_Title['News_List']                    = 'Liste des actualités';
-    $LG_Menu_Title['Jobs_List']                    = 'Liste des professions';
-    $LG_Menu_Title['County_List']                = 'Liste éclair';
-    $LG_Menu_Title['Contribs_List']                = 'Liste des contributions';
-    $LG_Menu_Title['Tech_Info']                    = 'Informations techniques';
-    $LG_Menu_Title['Imp_CSV_Links']                = 'Import CSV de liens (tableur)';
-    $LG_Menu_Title['Imp_CSV_Events']            = "Import CSV d'évènements (tableur)";
-    $LG_Menu_Title['Imp_CSV_Towns']                = 'Import CSV de villes (tableur)';
-    $LG_Menu_Title['Exp_Ged_Pers']                = 'Export Gedcom personne';
-    $LG_Menu_Title['Exp_Ged']                    = 'Export Gedcom';
-    $LG_Menu_Title['Exp_Ged_Light']                = 'Export Gedcom "léger"';
-    $LG_Menu_Title['Indiv_Text_Report']            = 'Fiche individuelle format texte';
-    $LG_Menu_Title['Nuclear_Family']            = 'Noyau familial';
-    $LG_Menu_Title['Partners_Ancestors']        = 'Ascendants des conjoints';
-    $LG_Menu_Title['Event_Merging']                = "Fusion d'évènements";
-    $LG_Menu_Title['Init_Names']                = 'Identifiants manquants pour les noms de famille';
-    $LG_Menu_Title['Check_Pers']                = "Contrôle d'une personne";
-    $LG_Menu_Title['Start']                        = 'Premiers pas en généalogie';
-    $LG_Menu_Title['Glossary']                    = 'Glossaire de généalogie';
-    $LG_Menu_Title['Sosa']                        = 'Numérotation Sosa';
-    $LG_Menu_Title['Import_Backup']                = "Import d'une sauvegarde";
-    $LG_Menu_Title['Import_Docs']                = "Import de documents et d'images";
-    $LG_Menu_Title['Role_List_Pers']            = 'Personnes pour un rôle';
-    $LG_Menu_Title['Design']                    = 'Graphisme du site';
-    $LG_Menu_Title['Export_Death']                = 'Export pour recherche des dates de décès';
-    $LG_Menu_Title['Reset_DB']                    = 'Vidage de la base';
-    $LG_Menu_Title['MatchId_Sch']                = 'Recherche matchId';
-    $LG_Menu_Title['Town_Merging']                = 'Fusion de villes';
+    $LG_Menu_Title['Rect_Utf'] = 'Rectification des caractères UTF-8 en base';
+    $LG_Menu_Title['Link_Ev_Pers'] = 'Edition d\'un lien évènement-personne';
+    $LG_Menu_Title['Link_Pers'] = 'Lier deux personnes';
+    $LG_Menu_Title['Find_Doc'] = 'Recherche de document';
+    $LG_Menu_Title['Subdiv'] = 'Fiche d\'une subdivision';
+    $LG_Menu_Title['Subdiv_Edit'] = 'Modification d\'une subdivision';
+    $LG_Menu_Title['Subdiv_Add'] = 'Ajout d\'une subdivision';
+    $LG_Menu_Title['Town'] = 'Fiche d\'une ville';
+    $LG_Menu_Title['Town_Edit'] = 'Modification d\'une ville';
+    $LG_Menu_Title['Town_Add'] = 'Ajout d\'une ville';
+    $LG_Menu_Title['County_Edit'] = 'Modification d\'un département';
+    $LG_Menu_Title['County_Add'] = 'Ajout d\'un département';
+    $LG_Menu_Title['Region_Edit'] = 'Modification d\'une region';
+    $LG_Menu_Title['Region_Add'] = 'Ajout d\'une region';
+    $LG_Menu_Title['Person_Add'] = 'Ajout d\'une personne';
+    $LG_Menu_Title['Person_Modify'] = 'Modification d\'une personne';
+    $LG_Menu_Title['Event_Add'] = 'Ajout d\'un évènement';
+    $LG_Menu_Title['Name_Is_Complete'] = 'Complétude des informations des ';
+    $LG_Menu_Title['Gen_Is_Complete'] = 'Complétude des personnes par génération';
+    $LG_Menu_Title['Names_For_Event'] = 'Liste des noms pour un évènement';
+    $LG_Menu_Title['Delete_Sosa'] = 'Supprimer les numéros sosa';
+    $LG_Menu_Title['Site_parameters'] = 'Paramètres généraux du site';
+    $LG_Menu_Title['Name'] = 'Fiche d\'un nom de famille';
+    $LG_Menu_Title['Name_Edit'] = 'Modification d\'un nom de famille';
+    $LG_Menu_Title['Name_Add'] = 'Ajout d\'un nom de famille';
+    $LG_Menu_Title['Document_Multiple_Add'] = 'Ajout multiple de documents';
+    $LG_Menu_Title['Check_Persons'] = 'Contrôle des personnes';
+    $LG_Menu_Title['Convert_Roman_To_Arabic'] = 'Convertisseur de nombres romains - arabes';
+    $LG_Menu_Title['Category'] = 'Fiche d\'une catégorie';
+    $LG_Menu_Title['Category_Edit'] = 'Edition d\'une catégorie';
+    $LG_Menu_Title['First_Wedding'] = 'Age de premier mariage pour la période de naissance';
+    $LG_Menu_Title['Namesake_Cheking'] = 'Vérification des homonymes';
+    $LG_Menu_Title['Internet_Cheking'] = 'Vérification des visibilités Internet';
+    $LG_Menu_Title['Internet_Hidding_Cheking'] = 'Vérification des visibilités Internet restreintes';
+    $LG_Menu_Title['Documents_List'] = 'Liste des documents';
+    $LG_Menu_Title['Document'] = 'Fiche d\'un document';
+    $LG_Menu_Title['Document_Edit'] = 'Modification d\'une fiche document';
+    $LG_Menu_Title['Document_Add'] = 'Création d\'une fiche document';
+    $LG_Menu_Title['Document_Utils'] = 'Utilisation(s) du document';
+    $LG_Menu_Title['Request'] = 'Fiche d\'une requête';
+    $LG_Menu_Title['Request_Edit'] = 'Modification d\'une requête';
+    $LG_Menu_Title['Pers_Uncles'] = 'Oncles et tantes';
+    $LG_Menu_Title['Pers_Cousins'] = 'Cousins et cousines';
+    $LG_Menu_Title['Pers_Gen'] = 'Liste par génération';
+    $LG_Menu_Title['Calculate_Distance'] = 'Calcul de distance à vol d\'oiseau';
+    $LG_Menu_Title['Death_Age'] = 'Pyramide des âges au décès';
+    $LG_BDM_Per = 'Naissances, mariages et décès par ';
+    $LG_Menu_Title['BDM_Per_Month'] = $LG_BDM_Per . 'mois';
+    $LG_Menu_Title['BDM_Per_Town'] = $LG_BDM_Per . 'ville';
+    $LG_Menu_Title['BDM_Per_Depart'] = $LG_BDM_Per . 'département';
+    $LG_Histo = 'Historique de l\'âge au ';
+    $LG_Menu_Title['Histo_Death'] = $LG_Histo . 'décès';
+    $LG_Menu_Title['Histo_First_Wedding'] = $LG_Histo . 'premier mariage';
+    $LG_Menu_Title['Histo_First_Child'] = $LG_Histo . 'premier enfant';
+    $LG_Menu_Title['Children_Per_Mother'] = 'Historique des enfants par femme';
+    $LG_Menu_Title['Statistics'] = 'Statistiques de la base';
+    $LG_Menu_Title['Last_Mod_Pers'] = 'Liste des dernières personnes modifiées';
+    $LG_Menu_Title['Most_Used_Names'] = 'Noms les plus portés';
+    $LG_Menu_Title['Most_Used_jobs'] = 'Professions les plus exercées';
+    $LG_Menu_Title['Connections'] = 'Liste des connexions';
+    $LG_Menu_Title['Links'] = 'Liste des liens';
+    $LG_Menu_Title['Living_Pers'] = 'Liste par nom des personnes vivantes';
+    $LG_Menu_Title['Search_Related'] = 'Recherche de parenté';
+    $LG_Menu_Title['Search_Comment'] = 'Recherche dans les commentaires';
+    $LG_Menu_Title['Galery'] = 'Galerie de documents images';
+    $LG_Menu_Title['Galery_Branch'] = 'Galerie de documents images par branche';
+    $LG_Menu_Title['Compare_Persons'] = 'Comparaison de 2 personnes';
+    $LG_Menu_Title['Decujus_And_Family'] = 'Saisie du de cujus et de son noyau familial';
+    $LG_Menu_Title['Archive_Preparation'] = 'Préparation de recherche aux archives';
+    $LG_Menu_Title['Rank_Edit'] = 'Edition des rangs';
+    $LG_Menu_Title['Name_Not_Used'] = 'Noms non utilisés';
+    $LG_Menu_Title['Tables_Admin'] = 'Administration des tables';
+    $LG_Menu_Title['Calc_Sosa'] = 'Calculatrice Sosa';
+    $LG_Menu_Title['Direct_Desc'] = 'Descendance directe';
+    $LG_Menu_Title['Event'] = 'Fiche d\'un évènement';
+    $LG_Menu_Title['Event_Edit'] = 'Modification d\'un évènement';
+    $LG_Menu_Title['Event_Add'] = 'Ajout d\'un évènement';
+    $LG_Menu_Title['New'] = 'Fiche d\'une actualité';
+    $LG_Menu_Title['New_Edit'] = 'Modification d\'une actualité';
+    $LG_Menu_Title['New_Add'] = 'Ajout d\'une actualité';
+    $LG_Menu_Title['Link'] = 'Fiche d\'un lien';
+    $LG_Menu_Title['Link_Edit'] = 'Modification d\'un lien';
+    $LG_Menu_Title['Link_Add'] = 'Ajout d\'un lien';
+    $LG_Menu_Title['Alt_Name'] = 'Nom secondaire d\'une personne';
+    $LG_Menu_Title['Role'] = 'Fiche d\'un rôle';
+    $LG_Menu_Title['Role_Edit'] = 'Modification d\'un rôle';
+    $LG_Menu_Title['Role_Add'] = 'Création d\'un rôle';
+    $LG_Menu_Title['Event_Type'] = 'Fiche d\'un type d\'évènement';
+    $LG_Menu_Title['Event_Type_Edit'] = "Modification d'un type d'évènement";
+    $LG_Menu_Title['Event_Type_Add'] = "Création d'un type d'évènement";
+    $LG_Menu_Title['Event_Type_List'] = "Liste des types d'évènements";
+    $LG_Menu_Title['Doc_Type'] = 'Fiche d\'un type de document';
+    $LG_Menu_Title['Doc_Type_Edit'] = 'Modification d\'un type de document';
+    $LG_Menu_Title['Doc_Type_Add'] = 'Création d\'un type de document';
+    $LG_Menu_Title['Repo_Sources'] = 'Fiche d\'un dépôt de sources';
+    $LG_Menu_Title['Repo_Sources_Edit'] = 'Création d\'un dépôt de sources';
+    $LG_Menu_Title['Repo_Sources_Add'] = 'Modification d\'un dépôt de sources';
+    $LG_Menu_Title['Source'] = 'Fiche d\'une source';
+    $LG_Menu_Title['Source_Add'] = 'Création d\'une source';
+    $LG_Menu_Title['Source_Edit'] = 'Modification d\'une source';
+    $LG_Menu_Title['Source_List'] = 'Liste des sources';
+    $LG_Menu_Title['User'] = 'Fiche d\'un utilisateur';
+    $LG_Menu_Title['User_Add'] = 'Création d\'un utilisateur';
+    $LG_Menu_Title['User_Edit'] = 'Modification d\'un utilisateur';
+    $LG_Menu_Title['Users_List'] = 'Liste des utilisateurs';
+    $LG_Menu_Title['exp_GenWeb'] = 'Export cousins GenWeb';
+    $LG_Menu_Title['Sch_Pers'] = 'Recherche de personnes';
+    $LG_Menu_Title['Sch_Pers_CP'] = 'Recherche de personnes par les conjoints ou parents';
+    $LG_Menu_Title['Image_List'] = 'Liste des images';
+    $LG_Menu_Title['Custom_View'] = 'Vue personnalisée';
+    $LG_Menu_Title['Check_Sosa'] = 'Vérification de la numérotation sosa';
+    $LG_Menu_Title['Pers_Tree'] = "Affichage d''un arbre personnalisé";
+    $LG_Menu_Title['Town_Search_Title'] = 'Recherche de villes';
+    $LG_Menu_Title['Town_Search'] = 'De villes';
+    $LG_Menu_Title['Non_Linked_Pers'] = 'Liste des personnes isolées';
+    $LG_Menu_Title['Names_List'] = 'Liste des noms de famille';
+    $LG_Menu_Title['Patronymic_List'] = 'Liste patronymique';
+    $LG_Menu_Title['Event_List'] = 'Liste des évènements';
+    $LG_Menu_Title['Event_List_Area'] = 'Liste des évènements pour une zone';
+    $LG_Menu_Title['News_List'] = 'Liste des actualités';
+    $LG_Menu_Title['Jobs_List'] = 'Liste des professions';
+    $LG_Menu_Title['County_List'] = 'Liste éclair';
+    $LG_Menu_Title['Contribs_List'] = 'Liste des contributions';
+    $LG_Menu_Title['Tech_Info'] = 'Informations techniques';
+    $LG_Menu_Title['Imp_CSV_Links'] = 'Import CSV de liens (tableur)';
+    $LG_Menu_Title['Imp_CSV_Events'] = "Import CSV d'évènements (tableur)";
+    $LG_Menu_Title['Imp_CSV_Towns'] = 'Import CSV de villes (tableur)';
+    $LG_Menu_Title['Exp_Ged_Pers'] = 'Export Gedcom personne';
+    $LG_Menu_Title['Exp_Ged'] = 'Export Gedcom';
+    $LG_Menu_Title['Exp_Ged_Light'] = 'Export Gedcom "léger"';
+    $LG_Menu_Title['Indiv_Text_Report'] = 'Fiche individuelle format texte';
+    $LG_Menu_Title['Nuclear_Family'] = 'Noyau familial';
+    $LG_Menu_Title['Partners_Ancestors'] = 'Ascendants des conjoints';
+    $LG_Menu_Title['Event_Merging'] = "Fusion d'évènements";
+    $LG_Menu_Title['Init_Names'] = 'Identifiants manquants pour les noms de famille';
+    $LG_Menu_Title['Check_Pers'] = "Contrôle d'une personne";
+    $LG_Menu_Title['Start'] = 'Premiers pas en généalogie';
+    $LG_Menu_Title['Glossary'] = 'Glossaire de généalogie';
+    $LG_Menu_Title['Sosa'] = 'Numérotation Sosa';
+    $LG_Menu_Title['Import_Backup'] = "Import d'une sauvegarde";
+    $LG_Menu_Title['Import_Docs'] = "Import de documents et d'images";
+    $LG_Menu_Title['Role_List_Pers'] = 'Personnes pour un rôle';
+    $LG_Menu_Title['Design'] = 'Graphisme du site';
+    $LG_Menu_Title['Export_Death'] = 'Export pour recherche des dates de décès';
+    $LG_Menu_Title['Reset_DB'] = 'Vidage de la base';
+    $LG_Menu_Title['MatchId_Sch'] = 'Recherche matchId';
+    $LG_Menu_Title['Town_Merging'] = 'Fusion de villes';
 }

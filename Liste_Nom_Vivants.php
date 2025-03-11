@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Living_Pers'];
@@ -21,7 +21,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -59,9 +59,9 @@ $comp_texte = '';
 $comp_texte .= '&amp;Nom=' . $Nom;
 
 $compl = Ajoute_Page_Info(600, 180) .
-    Affiche_Icone_Lien('href="' . my_self() . '?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/liste_nom_vivants.php?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
 if ((!$SiteGratuit) or ($Premium)) {
-    $compl .= Affiche_Icone_Lien('href="' . my_self() . '?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_nom_vivants.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
 }
 
 if (! $texte) {
@@ -205,7 +205,7 @@ if ($Nom != '-1') {
                 if ($debug) echo 'Nouv_Nom : ' . $Nouv_Nom . '<br />';
                 if (! $texte) {
                     echo $ent_table . '<tr align="center"><td class="rupt_table">';
-                    echo '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=P&amp;idNom=' . $row[7] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . "</a>\n";
+                    echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=' . $row[7] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . "</a>\n";
                 } else {
                     if ($debug) echo 'Entête<br />';
                     HTML_ou_PDF($ent_table_texte . '<thead><tr><th>' . $Nouv_Nom . '</th></tr></thead>', $sortie);

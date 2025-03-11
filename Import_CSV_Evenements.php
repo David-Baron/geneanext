@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -30,12 +30,12 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-require(__DIR__ . '/fonctions_maj.php');
+require(__DIR__ . '/app/ressources/fonctions_maj.php');
 $acces = 'L';
 $titre = $LG_Menu_Title['Imp_CSV_Events'];
 $x = Lit_Env();
 $niv_requis = 'G';
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -68,7 +68,7 @@ if ($bt_OK) Ecrit_Entete_Page($titre, '', '');
 $compl = Ajoute_Page_Info(600, 300);
 Insere_Haut($titre, $compl, 'Import_CSV_Evenements', '');
 
-require(__DIR__ . '/Commun_Import_CSV.php');
+require(__DIR__ . '/app/ressources/commun_import_csv.php');
 
 //Demande de chargement
 if ($ok == 'OK') {
@@ -169,7 +169,6 @@ if ($ok == 'OK') {
                 //(Titre,Debut,FinTitre,Debut,Fin,Date_Creation,Date_Modification,Statut_Fiche,Identifiant_zone,Identifiant_Niveau,Code_Type) 
                 //("Evt 1",19400101GL,19400211GL,current_timestamp,current_timestamp,"O","71","1","ADOP")
 
-                // require(__DIR__ . '/Commun_Import_CSV.php');
                 insert_champs();
 
                 fclose($fp);

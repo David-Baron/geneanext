@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 require(__DIR__ . '/app/Phonetique.php');
 
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
@@ -14,7 +14,7 @@ $texte = Dem_Texte();
 
 $titre = $LG_Menu_Title['Names_List'];  // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $codePho = new Phonetique();
 
@@ -26,8 +26,8 @@ $h_mod = my_html($LG_modify);
 
 if (! $texte) {
 
-    $deb_visu  = '<a href="' . Get_Adr_Base_Ref() . 'Fiche_NomFam.php?idNom=';
-    $deb_modif = 'href="' . Get_Adr_Base_Ref() . 'Edition_NomFam.php?idNom=';
+    $deb_visu  = '<a href="' . $root . '/fiche_nomfam.php?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
     $icone_modifier = Affiche_Icone('fiche_edition', $h_mod);
 
     // Lien direct sur le dernier nom de personne saisi et possibilité d'insérer un nom de famille

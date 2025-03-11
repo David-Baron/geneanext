@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Check_Persons']; // Titre pour META
@@ -28,7 +28,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
 $niv_requis = 'C';                // Page accessible à partir du niveau contributeur
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -71,13 +71,13 @@ else $al_texte .= 'N';
 
 
 
-$lien = 'href="' . my_self() . '?texte=O' .
+$lien = 'href="'. $root .'/controle_personnes.php?texte=O' .
     '&amp;al=' . $al_texte .
     '&CT=O';
 
 $compl = Ajoute_Page_Info(700, 250) .
     Affiche_Icone_Lien($lien . '"', 'text', $LG_printable_format) . '&nbsp;'
-    //.Affiche_Icone_Lien('href="'.my_self().'?idNom='.$idNom.'&amp;Nom='.$NomL.'&amp;Sortie=c"','exp_tab','Export CSV').'&nbsp;'
+    //.Affiche_Icone_Lien('href="'. $root .'/controle_personnes.php?idNom='.$idNom.'&amp;Nom='.$NomL.'&amp;Sortie=c"','exp_tab','Export CSV').'&nbsp;'
 ;
 
 
@@ -279,7 +279,7 @@ if ($controle) {
             if (!$texte) {
                 $ligne_P =  '<a ' . Ins_Ref_Pers($Ref, true) . '>' . my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '</a>'
                     . '&nbsp;<a ' . Ins_Edt_Pers($Ref, true) . '>' . $echo_modif
-                    . '&nbsp;<a href="Verif_Personne.php?Refer=' . $Ref . '" target="_blank">' . $echo_verif;
+                    . '&nbsp;<a href="'. $root .'/verif_personne.php?Refer=' . $Ref . '" target="_blank">' . $echo_verif;
             } else {
                 $ligne_P = my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '&nbsp;';
             }

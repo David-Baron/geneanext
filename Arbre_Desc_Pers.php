@@ -5,13 +5,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                    // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_desc_tree;            // Titre pour META
 $x = Lit_Env();
 $index_follow = 'IN';            // NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $n_personnes = nom_table('personnes');
 $n_unions = nom_table('unions');
@@ -26,7 +26,7 @@ else $max_gen_AD = $max_gen_AD_int;
 // Renvoye 1 si personne trouvée
 function Retourne_Pers($num)
 {
-    global $References, $Sexes, $Pers, $n_personnes, $n_unions, $Lignes, $Rang_P, $conj_demandes, $Diff_Internet_P, $res, $texte;
+    global $root, $References, $Sexes, $Pers, $n_personnes, $n_unions, $Lignes, $Rang_P, $conj_demandes, $Diff_Internet_P, $res, $texte;
     $sql = 'select Nom, Prenoms, Sexe, Diff_Internet, Ne_Le, Decede_Le from ' . $n_personnes . ' where reference = ' . $num . ' limit 1';
     $Conjs_Pers = '';
     $conj = '';
@@ -64,7 +64,7 @@ function Retourne_Pers($num)
                                             if ($Conjs_Pers != '') $Conjs_Pers .= ', ';
                                             $Conjs_Pers = $Conjs_Pers . $Nom . ' ' . $Prenoms . '&nbsp;';
                                             if (!$texte)
-                                                $Conjs_Pers .= Affiche_Icone_Lien('href="Arbre_Noyau.php?Reference=' . $enreg[1] . '"', 'groupe', 'Noyau') . '&nbsp;';
+                                                $Conjs_Pers .= Affiche_Icone_Lien('href="' . $root . '/arbre_noyau.php?Reference=' . $enreg[1] . '"', 'groupe', 'Noyau') . '&nbsp;';
                                         }
                                     }
                                 }
@@ -131,27 +131,27 @@ if ($conj_demandes) $comp_texte .= '&amp;avec_conjoints=O';
 
 $compl = Ajoute_Page_Info(600, 150);
 if (!$is_bot) {
-    $compl .= Affiche_Icone_Lien('href="' . my_self() . '?Refer=' . $Refer . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
 }
 
 if (! $texte) Insere_Haut('Arbre descendant', $compl, 'Arbre_Desc_Pers', $Refer);
 else          Insere_Haut_texte('&nbsp;');
 
 if (! $texte) {
-    echo '<form action="' . my_self() . '?Refer=' . $Refer . '" method="post">' . "\n";
-    echo '<table border="0" width="60%" align="center">' . "\n";
+    echo '<form action="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '" method="post">';
+    echo '<table border="0" width="60%" align="center">';
     echo '<tr align="center">';
 
-    echo '<td class="rupt_table"><label for="conj_demandes">' . $LG_Tree_Show_Partners . '</label>&nbsp;:&nbsp;' . "\n";
+    echo '<td class="rupt_table"><label for="conj_demandes">' . $LG_Tree_Show_Partners . '</label>&nbsp;:&nbsp;';
     echo '<input type="checkbox"';
     if ($conj_demandes) echo ' checked="checked"';
-    echo ' id="conj_demandes" name="conj_demandes" value="1"/></td>' . "\n";
+    echo ' id="conj_demandes" name="conj_demandes" value="1"/></td>';
 
     echo '<td class="rupt_table"><input type="submit" value="' . $LG_Tree_Show_Tree . '"/>';
-    echo '</td>' . "\n";
+    echo '</td>';
     echo '</tr></table>';
     echo '<input type="hidden" id="memo_etat" name="memo_etat"/>';
-    echo '</form>' . "\n";
+    echo '</form>';
 }
 
 $Debut    = 0;
@@ -193,7 +193,7 @@ if (!$x) {
 
     // Préparation des liens pour optimisation
     $fin_arbres_asc = '><img src="' . $chemin_images_icones . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/></a>';
-    $fin_arbres_desc = '><img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" alt="' . $LG_desc_tree . '" border="0" title="' . $LG_desc_tree . '"/></a>' . "\n";
+    $fin_arbres_desc = '><img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" alt="' . $LG_desc_tree . '" border="0" title="' . $LG_desc_tree . '"/></a>';
 
     // Préparation image ligne pour optimisation
     if ($texte)
@@ -258,7 +258,7 @@ if (!$x) {
     if (($nb_gen == $max_gen_AD) and ($nb_Ajouts > 0)) {
         echo '<br />' . Affiche_Icone('tip', my_html($LG_tip)) .
             my_html($LG_LPersG_limited_max_gen_1 . $max_gen_AD . $LG_LPersG_limited_max_gen_2) .
-            '<a href="Vue_Personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' . "\n";
+            '<a href="' . $root . '/vue_personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>';
     }
 }
 

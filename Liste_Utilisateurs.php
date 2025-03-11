@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function aff_option_niveau($niv_option)
 {
@@ -18,12 +18,12 @@ $acces = 'L';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Menu_Title['Users_List'];        // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'G';                        // réservé aux gestionnaires
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 Insere_Haut($titre, '', 'Liste_utilisateurs', '');
 
 // Possibilité d'insérer un utilisateur
-echo my_html(LG_USERS_LIST_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="Edition_Utilisateur.php?code=-----"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
+echo my_html(LG_USERS_LIST_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_utilisateur.php?code=-----"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
 
 // Récupération du dépôt sélectionné sur l'affichage précédent
 $profil = 'X';
@@ -42,9 +42,9 @@ if ($Environnement == 'I') {
 $mails = true;
 
 echo '<form action="' . my_self() . '" method="post">' . "\n";
-echo '<table border="0" width="50%" align="center">' . "\n";
+echo '<table width="50%" align="center">' . "\n";
 echo '<tr align="center" class="rupt_table">';
-echo '<td width="50%">' . my_html(LG_UTIL_PROFILE) . LG_SEMIC . "\n";
+echo '<td width="50%">' . my_html(LG_UTIL_PROFILE) . ' ' . "\n";
 echo '<select name="profil">' . "\n";
 echo '<option value="' . $defaut . '"';
 if ($profil == $defaut) {
@@ -79,8 +79,8 @@ if ($res->rowCount() > 0) {
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         if ($mails)
             echo '<input type="checkbox" name="msg_ut_' . $row[0] . '" value="x" onclick="chkSel(this)"/>&nbsp;';
-        echo '<a href="Fiche_Utilisateur.php?code=' . $row[0] . '">' . my_html($row[1] . ' - ' . $row[2]);
-        echo '</a>&nbsp;<a href="Edition_Utilisateur.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+        echo '<a href="' . $root . '/fiche_utilisateur.php?code=' . $row[0] . '">' . my_html($row[1] . ' - ' . $row[2]);
+        echo '</a>&nbsp;<a href="' . $root . '/edition_utilisateur.php?code=' . $row[0] . '">' . $echo_modif . "\n";
         echo "<br />\n";
     }
 

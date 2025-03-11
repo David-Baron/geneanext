@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Document'];    // Titre pour META
@@ -29,7 +29,7 @@ $req_sel = 'SELECT * FROM ' . nom_table('documents') . ' d, ' . nom_table('types
     ' AND d.Id_Type_Document = t.Id_Type_Document limit 1';
 
 $x = Lit_Env();                    // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -46,7 +46,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="Edition_Document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
     }
 
     //
@@ -74,7 +74,7 @@ else {
             echo $nomFic . '</td></tr>' . "\n";
 
             colonne_titre_tab($LG_Docs_Doc_Type);
-            echo '<a href="Fiche_Type_Document.php?code=' . $enreg['Id_Type_Document'] . '">'
+            echo '<a href="'. $root .'/fiche_type_document.php?code=' . $enreg['Id_Type_Document'] . '">'
                 . my_html($enreg['Libelle_Type'])
                 . '</a></td></tr>' . "\n";
 
@@ -100,7 +100,7 @@ else {
                 $req = 'SELECT 1 FROM ' . nom_table('concerne_doc') . ' WHERE id_document = ' . $Reference . ' limit 1';
                 $result = lect_sql($req);
                 if ($result->rowCount() > 0) {
-                    echo '<br /><a href="Utilisations_Document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a>';
+                    echo '<br /><a href="'. $root .'/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a>';
                 }
             }
         } else aff_erreur($LG_Data_noavailable_profile);

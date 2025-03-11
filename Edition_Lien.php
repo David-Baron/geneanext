@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -57,7 +57,7 @@ if ($Ref != -1) $titre = $LG_Menu_Title['Link_Edit'];
 else $titre = $LG_Menu_Title['Link_Add'];
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $Type_Ref = 'L';                        // Type de référence pour les commentaires
 
@@ -378,7 +378,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
     // Lien vers la fiche uniquement en modification
     if ($Ref != -1)
-        $compl .= Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Fiche_Lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Lien', $Ref);
 

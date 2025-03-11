@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                        // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Town'];
@@ -28,7 +28,7 @@ $req_sel = 'SELECT v.*, d.Nom_Depart_Min FROM ' . nom_table('villes') . ' v, ' .
     ' AND d.Identifiant_zone = v.Zone_Mere limit 1';
 
 $x = Lit_Env();                    // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -46,7 +46,7 @@ else {
 
         $compl = Ajoute_Page_Info(600, 150);
         if ($est_gestionnaire) {
-            $compl = Affiche_Icone_Lien('href="Edition_Ville.php?Ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Town_Edit']) . '&nbsp;';
+            $compl = Affiche_Icone_Lien('href="' . $root . '/edition_ville.php?Ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Town_Edit']) . '&nbsp;';
         }
         Insere_Haut($titre, $compl, 'Fiche_Ville', '');
 
@@ -107,8 +107,8 @@ else {
         echo '<br>' . "\n";
         $x = Aff_Documents_Objet($Ident, 'V', 'O');
 
-        $deb_lien_visu = '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=';
-        $deb_lien_crea = 'href="' . Get_Adr_Base_Ref() . 'Edition_Personnes_Ville.php?evt=';
+        $deb_lien_visu = '<a href="' . $root . '/liste_pers2.php?Type_Liste=';
+        $deb_lien_crea = 'href="' . $root . '/edition_personnes_ville.php?evt=';
         $fin_lien = '&amp;idNom=' . $Ident . '&amp;Nom=' . $n_ville_html . '"';
 
         $_SESSION['NomP'] = $n_ville; // Pour le pdf histoire d'avoir les bons caractères...
@@ -124,17 +124,17 @@ else {
 
         //http://localhost/Liste_Villes.php?Type_Liste=V#BasRhin
         // $n_dep = str_replace($interdits,'',$row[1]);
-        // echo '&nbsp;&nbsp;&nbsp;<a href="Liste_Villes.php?Type_Liste=V#'.$n_dep .'">'.my_html($row[1])."</a>";
+        // echo '&nbsp;&nbsp;&nbsp;<a href="' . $root . '/liste_villes.php?Type_Liste=V#'.$n_dep .'">'.my_html($row[1])."</a>";
 
         $interdits = array("-", "'", " ");
         $n_ville2 = str_replace($interdits, '', $n_ville);
-        echo '<br><a href="Liste_Villes.php?Type_Liste=S#' . $n_ville2 . '">' . LG_ICSV_TOWN_SUBDIV . "</a><br><br>";
+        echo '<br><a href="' . $root . '/liste_villes.php?Type_Liste=S#' . $n_ville2 . '">' . LG_ICSV_TOWN_SUBDIV . "</a><br><br>";
 
         if ($est_contributeur)
-            echo '<a href="Fusion_Villes.php?Ident=' . $Ident . '">' . $LG_Menu_Title['Town_Merging'] . "</a><br>";
+            echo '<a href="' . $root . '/fusion_villes.php?Ident=' . $Ident . '">' . $LG_Menu_Title['Town_Merging'] . "</a><br>";
 
         if ($est_contributeur)
-            echo '<br><a href="Liste_Evenements_Zone.php?zone=' . $Ident . '&niveau=4">' . $LG_Menu_Title['Event_List_Area'] . '</a><br>';
+            echo '<br><a href="' . $root . '/liste_evenements_zone.php?zone=' . $Ident . '&niveau=4">' . $LG_Menu_Title['Event_List_Area'] . '</a><br>';
 
         // Recherche de la ville dans les sites gratuits
         if ((!$SiteGratuit) or ($Premium)) {

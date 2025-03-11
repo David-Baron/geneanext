@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -25,12 +25,12 @@ $acces = 'L';                                // Type d'accès de la page : (M)is
 $titre = $LG_Menu_Title['Document_Utils'];    // Titre pour META
 $niv_requis = 'G';                            // Page accessible uniquement au gestionnaire
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-require(__DIR__ . '/Commun_Rech_Com_Util_Docs.php');
+require(__DIR__ . '/app/ressources/commun_rech_com_util_docs.php');
 
 // Recup des variables passées dans l'URL : référence du document
 $Reference = Recup_Variable('Doc', 'N');

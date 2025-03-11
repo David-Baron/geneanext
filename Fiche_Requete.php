@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Request'];       // Titre pour META
@@ -28,7 +28,7 @@ $reference = Recup_Variable('reference', 'N');
 
 $req_sel = 'select Titre, Criteres, Code_SQL from ' . nom_table('requetes') . ' where Reference = ' . $reference . ' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -44,7 +44,7 @@ else {
 
     // Possibilité de venir en modification pour les gestionnaires
     if ($est_gestionnaire)
-        $compl .= '<a href="Edition_Requete.php?reference=' . $reference . '">' . Affiche_Icone('fiche_edition', my_html($LG_Menu_Title['Request_Edit'])) . '</a>' . "\n";
+        $compl .= '<a href="' . $root . '/edition_requete.php?reference=' . $reference . '">' . Affiche_Icone('fiche_edition', my_html($LG_Menu_Title['Request_Edit'])) . '</a>' . "\n";
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Requete', $reference);
 

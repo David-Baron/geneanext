@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -25,7 +25,7 @@ $acces = 'L';                                // Type d'accès de la page : (M)is
 $titre = $LG_Menu_Title['Histo_Death'];        // Titre pour META
 $x = Lit_Env();
 $index_follow = 'ON';        // NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -41,7 +41,7 @@ function affiche($donnee)
 
 function calcul_precedent()
 {
-    global $nb_F, $nb_H, $moy_F, $moy_H, $ref_annee_anc, $num_lig, $deb_barre_h, $deb_barre_f;
+    global $root, $nb_F, $nb_H, $moy_F, $moy_H, $ref_annee_anc, $num_lig, $deb_barre_h, $deb_barre_f;
     if ($nb_F != 0) $moy_F = $moy_F / $nb_F;
     if ($nb_H != 0) $moy_H = $moy_H / $nb_H;
     echo '<tr>' . "\n";
@@ -56,7 +56,7 @@ function calcul_precedent()
     echo '<td align="center">';
     if ($ref_annee_anc != 'ensemble') {
         $fin_annee = $ref_annee_anc + 19;
-        echo '<a href="Histo_Ages_Deces.php?Debut=' . $ref_annee_anc . '&amp;Fin=' . $fin_annee . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $ref_annee_anc . '-' . $fin_annee . '</a>';
+        echo '<a href="' . $root . '/histo_ages_deces.php?Debut=' . $ref_annee_anc . '&amp;Fin=' . $fin_annee . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $ref_annee_anc . '-' . $fin_annee . '</a>';
     } else echo '<b>' . ucfirst($ref_annee_anc) . '</b>';
     echo '</td>';
     $larg = intval($moy_F / 5);

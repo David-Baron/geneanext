@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // On simule le bouton OK pour ne pas écrire l'entête de la page
 $ok = 'OK';
@@ -13,7 +13,7 @@ $ok = 'OK';
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Vue personnalisée rapide';    // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $Refer = Recup_Variable('Refer', 'N');
 

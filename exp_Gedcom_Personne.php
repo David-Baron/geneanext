@@ -4,9 +4,9 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
+require(__DIR__ . '/app/ressources/commun_gedcom.php');
 
-require(__DIR__ . '/Commun_Gedcom.php');        // Appel des fonctions communes Gedcom
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Exp_Ged_Pers'];        // Titre pour META
 $x = Lit_Env();
@@ -25,7 +25,7 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

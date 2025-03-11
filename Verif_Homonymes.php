@@ -4,13 +4,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Namesake_Cheking']; // Titre pour META
 $niv_requis = 'C';
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $D_Nais = false;
 if (isset($_POST['D_Nais'])) $D_Nais = true;
@@ -29,7 +29,7 @@ $texte = Dem_Texte();
 
 $compl = Ajoute_Page_Info(600, 300);
 if ($_SESSION['estGestionnaire']) {
-    $compl .= '<a href="' . my_self() . '?texte=O' . $compl_texte . '">' . Affiche_Icone('text', $LG_printable_format) . '</a>' . "\n";
+    $compl .= '<a href="' . $root . '/verif_homonymes.php?texte=O' . $compl_texte . '">' . Affiche_Icone('text', $LG_printable_format) . '</a>' . "\n";
 }
 
 # include(__DIR__ . '/assets/js/Verif_Homonymes.js');
@@ -86,14 +86,14 @@ $x_Ref = my_html($LG_Reference);
 
 if ($res = lect_sql($sql)) {
     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
-        if (!$texte) echo '<form action="' . Get_Adr_Base_Ref() . 'Fiche_Homonymes.php" id="frm_' . $nb . '">' . "\n";
+        if (!$texte) echo '<form action="' . $root . '/fiche_homonymes.php" id="frm_' . $nb . '">';
         echo '<fieldset>';
         $nom = $enreg[1];
         $prenom = $enreg[2];
         $nb_homonymes = $enreg[0];
         echo '<legend>';
         if (!$texte) {
-            echo '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=P&amp;idNom=' . $enreg[3] . '&amp;Nom=' . $nom . '">' . my_html($nom) . '</a>';
+            echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=' . $enreg[3] . '&amp;Nom=' . $nom . '">' . my_html($nom) . '</a>';
         } else {
             echo my_html($nom) . '';
         }

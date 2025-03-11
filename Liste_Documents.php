@@ -4,13 +4,13 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'acc�s de la page : (M)ise � jour, (L)ecture
 $titre = $LG_Menu_Title['Documents_List'];        // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'I';                       // Page r�serv�e � partir du profil invit�
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -21,7 +21,7 @@ Insere_Haut(my_html($titre), $compl, 'Liste_Documents', '');
 
 // Lien direct sur le dernier document saisi
 if ($_SESSION['estGestionnaire']) {
-    require(__DIR__ . '/fonctions_maj.php');
+    require(__DIR__ . '/app/ressources/fonctions_maj.php');
     $MaxRef = Nouvel_Identifiant('id_document', 'documents') - 1;
 }
 
@@ -37,9 +37,9 @@ $sql = 'select distinct d.id_type_document, Libelle_Type ' .
     'order by Libelle_Type';
 //  
 echo '<form action="' . my_self() . '" method="post">' . "\n";
-echo '<table border="0" width="50%" align="center">' . "\n";
+echo '<table width="50%" align="center">' . "\n";
 echo '<tr align="center" >';
-echo '<td width="50%" class="rupt_table">' . LG_DOC_LIST_TYPE . LG_SEMIC . "\n";
+echo '<td width="50%" class="rupt_table">' . LG_DOC_LIST_TYPE . ' ' . "\n";
 echo '<select name="TypeEv">' . "\n";
 echo '<option value="' . $defaut . '">' . my_html($LG_All) . '</option>' . "\n";
 if ($res = lect_sql($sql)) {
@@ -73,18 +73,18 @@ $result = lect_sql($requete);
 // Lien direct sur le dernier evenement saisi
 if ($_SESSION['estGestionnaire']) {
     if ($MaxRef > 0) {
-        echo '<a href="Edition_Document.php?Reference=' . $MaxRef .
+        echo '<a href="' . $root . '/edition_document.php?Reference=' . $MaxRef .
             '">' . my_html(LG_DOC_LIST_LAST) . '</a><br />';
     }
     // Possibilit� d'ins�rer un document
-    echo my_html(LG_DOC_LIST_ADD_1) . LG_SEMIC . Affiche_Icone_Lien('href="Edition_Document.php?Reference=-1"', 'ajouter', $LG_add) . '&nbsp;;&nbsp;';
-    echo my_html(LG_DOC_LIST_ADD_MANY) . LG_SEMIC . Affiche_Icone_Lien('href="Create_Multiple_Docs.php"', 'ajout_multiple', LG_DOC_LIST_ADD_MANY_TIP) . '<br /><br />' . "\n";
+    echo my_html(LG_DOC_LIST_ADD_1) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1"', 'ajouter', $LG_add) . '&nbsp;;&nbsp;';
+    echo my_html(LG_DOC_LIST_ADD_MANY) . ' ' . Affiche_Icone_Lien('href="' . $root . '/create_multiple_docs.php"', 'ajout_multiple', LG_DOC_LIST_ADD_MANY_TIP) . '<br /><br />' . "\n";
 }
 //
 //  Affichage des documents
 if ($result->rowCount() > 0) {
     // Optimisation : pr�paration echo des images
-    $echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $LG_modify . '"  title="' . $LG_modify . '"/></a>';
+    $echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '"  title="' . $LG_modify . '"/></a>';
 
     $premier = 1;
     while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -96,13 +96,13 @@ if ($result->rowCount() > 0) {
             $affiche = true;
         }
         if ($affiche) {
-            echo '<a href="Fiche_Document.php?Reference=' . $refDoc . '">' . $x_Titre . '</a>';
+            echo '<a href="' . $root . '/fiche_document.php?Reference=' . $refDoc . '">' . $x_Titre . '</a>';
         } else {
             echo $x_Titre;
         }
-        echo ' (' . LG_DOC_LIST_TYPE . LG_SEMIC . $typologie . ', ' . $Natures_Docs[$enreg['Nature_Document']] . ")\n";
+        echo ' (' . LG_DOC_LIST_TYPE . ' ' . $typologie . ', ' . $Natures_Docs[$enreg['Nature_Document']] . ")\n";
         if ($affiche) {
-            echo '&nbsp;<a href="Edition_Document.php?Reference=' . $refDoc . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_document.php?Reference=' . $refDoc . '">' . $echo_modif;
             $nature = Get_Type_Mime($enreg['Nature_Document']);
             $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
             echo '&nbsp;&nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $enreg['Nom_Fichier'] . '" type="' . $nature . '"', 'oeil', LG_DOC_LIST_DISPLAY, 'n');

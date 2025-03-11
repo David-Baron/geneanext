@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Subdiv'];    // Titre pour META
@@ -28,7 +28,7 @@ $req_sel = 'SELECT s.*, v.Nom_Ville, v.Identifiant_zone as id_Ville FROM ' . nom
     ' AND v.Identifiant_zone = s.Zone_Mere limit 1';
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -47,7 +47,7 @@ else {
 
         $compl = Ajoute_Page_Info(600, 150);
         if ($est_gestionnaire) {
-            $compl = Affiche_Icone_Lien('href="Edition_Subdivision.php?Ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Subdiv_Edit'])) . '&nbsp;';
+            $compl = Affiche_Icone_Lien('href="' . $root . '/edition_subdivision.php?Ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Subdiv_Edit'])) . '&nbsp;';
         }
         Insere_Haut($titre, $compl, 'Fiche_Subdivision', '');
 
@@ -60,11 +60,11 @@ else {
         $ville = $enreg['Nom_Ville'];
         if ($ville == '') $ville = '?';
         //else $ville = my_html($ville);
-        else $ville = '<a href="' . Get_Adr_Base_Ref() . 'Fiche_Ville.php?Ident=' . $enreg['id_Ville'] . '">' . my_html($ville) . '</a>';
+        else $ville = '<a href="' . $root . '/fiche_ville.php?Ident=' . $enreg['id_Ville'] . '">' . my_html($ville) . '</a>';
 
         //http://localhost/Liste_Villes.php?Type_Liste=V#BasRhin
         // $n_dep = str_replace($interdits,'',$row[1]);
-        // echo '&nbsp;&nbsp;&nbsp;<a href="Liste_Villes.php?Type_Liste=V#'.$n_dep .'">'.my_html($row[1])."</a>";
+        // echo '&nbsp;&nbsp;&nbsp;<a href="' . $root . '/liste_villes.php?Type_Liste=V#'.$n_dep .'">'.my_html($row[1])."</a>";
 
         $Lat_V = $enreg['Latitude'];
         $Long_V = $enreg['Longitude'];

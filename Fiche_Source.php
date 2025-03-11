@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'P';
@@ -31,7 +31,7 @@ $req_sel = 'select s.*, d.Nom from ' . nom_table('sources') . ' s left outer joi
     . ' where s.Ident = ' . $Ident
     . ' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -45,7 +45,7 @@ else {
         $Fiabilite_Source = $enreg_sel['Fiabilite_Source'];
         $compl = Ajoute_Page_Info(600, 150);
         if ($est_contributeur) {
-            $compl .= Affiche_Icone_Lien('href="Edition_Source.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Source_Edit']) . '&nbsp;';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_source.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Source_Edit']) . '&nbsp;';
         }
 
         Insere_Haut($titre, $compl, 'Fiche_Source', $Ident);
@@ -60,7 +60,7 @@ else {
         echo colonne_titre_tab(LG_SRC_TITLE) . $enreg_sel['Titre'] . $fin_ligne;
         echo colonne_titre_tab(LG_SRC_AUTHOR) . $enreg_sel['Auteur'] . $fin_ligne;
         echo colonne_titre_tab(LG_SRC_CLASS) . $enreg_sel['Classement'] . $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_REPO) . '<a href="Fiche_Depot.php?ident=' . $enreg_sel['Ident_Depot'] . '">' . $enreg_sel['Nom'] . '</a>' . $fin_ligne;
+        echo colonne_titre_tab(LG_SRC_REPO) . '<a href="' . $root . '/fiche_depot.php?ident=' . $enreg_sel['Ident_Depot'] . '">' . $enreg_sel['Nom'] . '</a>' . $fin_ligne;
         echo colonne_titre_tab(LG_SRC_REFER) . $enreg_sel['Cote'] . $fin_ligne;
         echo colonne_titre_tab(LG_SRC_WEB);
         if ($Adresse_Web != '') echo '<a href="' . $Adresse_Web . '">' . $Adresse_Web . '</a>';

@@ -1,10 +1,14 @@
 <?php
-//=====================================================================
-// Paramétrage graphique du site
-//=====================================================================
+
+/**
+ * Paramétrage graphique du site
+ * 
+ * @deprecated Use themes and templates insteed
+ * 
+ */
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Liste_Noms_Images($chemin)
 {
@@ -209,7 +213,7 @@ $acces = 'M';                          // Type d'accès de la page : (M)ise à j
 $niv_requis = 'G';
 $titre = $LG_Menu_Title['Design'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) {
@@ -326,7 +330,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $aff_infos = ($debug) ? 'text' : 'hidden';
 
     $all = true;
-    include(__DIR__ . '/Degrades_inc.php');
+    include(__DIR__ . '/app/ressources/degrades_inc.php');
 
     $Ex_Born = array('19020312GL', '18990307GL', '19050416GL', '19070616GL');
     $Ex_Dead = array('19730518GL', '19710512GL', '19791123GL', '19790520GL');

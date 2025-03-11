@@ -5,12 +5,12 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                    // Type d'accès de la page : (L)ecture
 $titre = 'Aide Généamania';
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 function Affiche_Image_Aide($nom_image, $texte_image, $explications)
 {
@@ -43,7 +43,7 @@ else
 if (($Environnement == 'I') and ($SiteGratuit))
     $lien = 'http://www.geneamania.net/';
 else
-    $lien = Get_Adr_Base_Ref();
+    $lien = $root . '/';
 
 $compl = Affiche_Icone_Lien('href="' . $lien . 'Geneamania.pdf"', 'manuel', 'manuel Généamania') . '&nbsp;';
 Insere_Haut($titre, $compl, 'Aide_Geneamania', $compl);

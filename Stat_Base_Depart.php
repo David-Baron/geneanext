@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
@@ -22,7 +22,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['BDM_Per_Depart'];   // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -114,7 +114,7 @@ $tot_N = 0;
 $tot_M = 0;
 $tot_D = 0;
 
-$deb_visu = '&nbsp;<a href="' . Get_Adr_Base_Ref() . 'Stat_Base_Villes.php?dep=';
+$deb_visu = '&nbsp;<a href="' . $root . '/stat_base_villes.php?dep=';
 
 // Balayage du résultat
 $res = lect_sql($sql);
@@ -159,7 +159,7 @@ echo '<td>' . $tot_D . '</td>';
 echo '</tr>' . "\n";
 
 $img_carte = '<img src="' . $chemin_images . $Icones['carte_france'] . '" alt="' . LG_STAT_COUNTY_MAP . '" title="' . LG_STAT_COUNTY_MAP . '" border="0"/></a>' . "\n";
-$deb_carte = '<a href="' . Get_Adr_Base_Ref() . 'appelle_image_france_dep.php?Type_Liste=';
+$deb_carte = '<a href="' . $root . '/appelle_image_france_dep.php?Type_Liste=';
 
 echo '<tr  class="' . $style . '" align="center">';
 echo '<td>&nbsp;</td>';

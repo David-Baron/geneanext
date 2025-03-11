@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -51,7 +51,7 @@ if ($ok == $lib_Rechercher) $ok = 'OK';
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Sch_Pers'];     // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -166,7 +166,7 @@ if ($bt_OK) {
         $fp = ouvre_fic($nom_fic, 'w+');
     }
     // Init des zones de requête
-    echo my_html(LG_PERS_REQ_FIELDS) . LG_SEMIC . '<br />';
+    echo my_html(LG_PERS_REQ_FIELDS) . ' ' . '<br />';
     $req = '';
     $memo_criteres = '';
     // Constitution de la requête d'extraction
@@ -301,7 +301,7 @@ if ($bt_OK) {
         }
         // L'utilisateur a demandé à mémoriser la requête
         if ($Memo_Req == 'O') {
-            require(__DIR__ . '/fonctions_maj.php');
+            require(__DIR__ . '/app/ressources/fonctions_maj.php');
             echo my_html(LG_PERS_REQ_SAVE) . ' ' . $TitreReq . '<br />';
             $req_memo = '';
             Ins_Zone_Req($TitreReq, 'A', $req_memo);
@@ -446,7 +446,7 @@ if ($bt_OK) {
                 echo '<br />' . my_html($LG_csv_available_in) . ' <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
             }
         } else {
-            echo '<br />' . my_html(LG_PERS_REQ) . LG_SEMIC . $req;
+            echo '<br />' . my_html(LG_PERS_REQ) . ' ' . $req;
             aff_erreur(LG_PERS_REQ_ERROR);
         }
     }

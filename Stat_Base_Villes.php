@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -24,7 +24,7 @@ if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 $acces = 'L';                          // Page en lecture
 $titre = $LG_Menu_Title['BDM_Per_Town'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -108,12 +108,6 @@ $tot_N = 0;
 $tot_M = 0;
 $tot_D = 0;
 
-$deb = '<a href="' . Get_Adr_Base_Ref();
-$deb_Ville  = $deb . 'Fiche_Ville.php?Ident=';
-$deb_Nes = $deb . 'Liste_Pers2.php?Type_Liste=N&amp;Nom=';
-$deb_Maries = $deb . 'Liste_Pers2.php?Type_Liste=M&amp;Nom=';
-$deb_Decedes = $deb . 'Liste_Pers2.php?Type_Liste=D&amp;Nom=';
-
 // Balayage du résultat
 $res = lect_sql($sql);
 $num_lig = 0;
@@ -131,19 +125,19 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
     $premier = false;
     switch ($enreg[3]) {
         case 'N':
-            $case_N = $deb_Nes . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
+            $case_N = '<a href="' . $root . '/liste_pers2.php?Type_Liste=N&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
             if ($Num_Ville != 0) $tot_N += $nb;
             break;
         case 'M':
-            $case_M = $deb_Maries . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
+            $case_M = '<a href="' . $root . '/liste_pers2.php?Type_Liste=M&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
             if ($Num_Ville != 0) $tot_M += $nb;
             break;
         case 'D':
-            $case_D = $deb_Decedes . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
+            $case_D = '<a href="' . $root . '/liste_pers2.php?Type_Liste=D&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
             if ($Num_Ville != 0) $tot_D += $nb;
             break;
     }
-    $case_V = $deb_Ville . $Num_Ville . '">' . my_html($enreg[1]) . '</a>&nbsp;';
+    $case_V = '<a href="' . $root . '/fiche_ville.php?Ident=' . $Num_Ville . '">' . my_html($enreg[1]) . '</a>&nbsp;';
 }
 Rupt_Ville();
 

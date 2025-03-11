@@ -21,7 +21,7 @@ function aff_degrade($datas, $labels, $couleur, $larg_image, $haut_image, $suffi
     // Par défaut, on n'a que rouge et bleu pour limiter les calculs
 
     // Allocation des couleurs en fonction du dégradé du site
-    include_once(__DIR__ . '/Degrades_inc.php');
+    include_once(__DIR__ . '/degrades_inc.php');
 
     if ($debug) {
         echo 'datas : ' . $datas . '<br />';
@@ -64,19 +64,19 @@ function aff_degrade($datas, $labels, $couleur, $larg_image, $haut_image, $suffi
         echo 'couleurs : ' . $couleurs . '<br />';
     }
 
-    echo '<table border="0">';
+    echo '<table>';
     echo '<tr>';
     echo '<td><canvas id="canvas' . $suffixe . '" width="' . $larg_image . '" height="' . $haut_image . '" /></td>';
     echo '<td><canvas id="canvas_leg' . $suffixe . '" width="' . $larg_legende . '" height="' . $haut_image . '" /></td>';
     echo '</tr>';
     echo '</table>';
 
-    echo '<script type="text/javascript" src="jscripts/moncanvas.js"></script>' . "\n";
-    echo '<script type="text/javascript">' . "\n";
-    echo '	var mesDonnees = [' . $datas . '];' . "\n";
-    echo '	var mesLabels = ["' . $labels . '"];' . "\n";
-    echo '	var pieColor = [' . $couleurs . '];' . "\n";
-    echo '	pie(' . $suffixe . ',pieColor, mesDonnees);' . "\n";
-    echo '	legende(' . $suffixe . ',"' . $texte_ajout . '", mesDonnees, mesLabels, true);' . "\n";
-    echo '</script>' . "\n";
+    echo '<script type="text/javascript" src="jscripts/moncanvas.js"></script>';
+    echo '<script type="text/javascript">';
+    echo '	var mesDonnees = [' . $datas . '];';
+    echo '	var mesLabels = ["' . $labels . '"];';
+    echo '	var pieColor = [' . $couleurs . '];';
+    echo '	pie(' . $suffixe . ',pieColor, mesDonnees);';
+    echo '	legende(' . $suffixe . ',"' . $texte_ajout . '", mesDonnees, mesLabels, true);';
+    echo '</script>';
 }

@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['County_List'];               // Titre pour META
@@ -20,7 +20,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;                        // Pas d'entête HTML sinon le PDF ne s'affichera pas
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 $Depart = -1;
 if (isset($_POST['Depart'])) $Depart = $_POST['Depart'];
@@ -34,10 +34,10 @@ if ($texte) $Depart = Recup_Variable('Depart', 'N', 1);
 
 $comp_texte = '&amp;Depart=' . $Depart;
 $compl = Ajoute_Page_Info(600, 150) .
-    '<a href="' . my_self() . '?texte=O' . $comp_texte .
+    '<a href="' . $root . '/liste_eclair.php?texte=O' . $comp_texte .
     '">' . Affiche_Icone('text', $LG_printable_format) . '</a>' . "\n";
 if ((!$SiteGratuit) or ($Premium))
-    $compl .= Affiche_Icone_Lien('href="' . my_self() . '?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', $LG_pdf_format) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_eclair.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', $LG_pdf_format) . '&nbsp;';
 
 $sortie = 'H';
 
@@ -152,7 +152,7 @@ if ($Depart != -1) {
     $existe_div = 0;
     $num_div = 0;
 
-    $deb_lien = '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=P&amp;idNom=';
+    $deb_lien = '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=';
 
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         $Nouv_Nom = my_html($row[0]);

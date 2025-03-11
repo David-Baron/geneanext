@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -37,7 +37,7 @@ $acces = 'M';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Menu_Title['Import_Backup'];
 $x = Lit_Env();
 $niv_requis = 'G';                        // Page réservée au gestionnaire
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // $SiteGratuit = true;
 

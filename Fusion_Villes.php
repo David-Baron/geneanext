@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -38,7 +38,7 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -46,12 +46,6 @@ if ($bt_An) Retour_Ar();
 else {
 
     $Ident = Recup_Variable('Ident', 'N');    // Identifiant de la ville à fusionner
-
-    if ($debug) {
-        var_dump($Ident);
-        var_dump($sel_ville);
-        var_dump($cible);
-    }
 
     if ($bt_OK) {
         Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -129,7 +123,7 @@ else {
         if ($maj_site) maj_date_site();
     }
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post" action="' . $root . '/fusion_villes.php?' . Query_Str() . '">';
 
     $ref1 = 0;
     $ref2 = 0;
@@ -138,8 +132,7 @@ else {
     $num_ligne = 0;
 
     echo '<br>';
-    echo '<table width="85%" align="center" border="0" class="classic"  >' . "\n";
-
+    echo '<table width="85%" align="center" class="classic">';
     echo '<tbody>';
     echo '<tr>';
     echo '<td class="rupt_table" >&nbsp;</td>';
@@ -162,7 +155,6 @@ else {
         ' AND d.Identifiant_zone = v.Zone_Mere limit 1';
     if ($res = lect_sql($req_sel)) {
         if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
-            // var_dump($enreg);
             $n_ville = $enreg['Nom_Ville'];
             $cp = $enreg['Code_Postal'];
             $dep = $enreg['Nom_Depart_Min'];
@@ -183,32 +175,28 @@ else {
         }
     }
 
-    echo '<tr><td>' . LG_ICSV_TOWN_NAME . '<td>' . $n_ville . '</td>';
-    // Récup de la liste des villes
-    echo '<td><select name="sel_ville" id="sel_ville" onchange="updateVille(this.value)">' . "\n";
     $req_sel = 'SELECT v.Identifiant_zone, v.Nom_Ville, v.Code_Postal, d.Nom_Depart_Min'
         . ' FROM ' . $nom_villes . ' v, ' . $nom_departements . ' d'
         . ' WHERE v.Identifiant_zone <> 0'
         . ' AND v.Identifiant_zone <> ' . $Ident
         . ' AND d.Identifiant_zone = v.Zone_Mere'
         . ' ORDER by v.Nom_Ville';
-    var_dump($req_sel);
+
+    echo '<tr><td>' . LG_ICSV_TOWN_NAME . '<td>' . $n_ville . '</td>';
+    // Récup de la liste des villes
+    echo '<td><select name="sel_ville" id="sel_ville" onchange="updateVille(this.value)">';
     if ($res_lv = lect_sql($req_sel)) {
         while ($row = $res_lv->fetch(PDO::FETCH_NUM)) {
-            echo '<option value="' . $row[0] . '">' . $row[1] . '/' . $row[2] . '/' . $row[3] . '</option>' . "\n";
+            echo '<option value="' . $row[0] . '">' . $row[1] . '/' . $row[2] . '/' . $row[3] . '</option>';
         }
     }
-    echo "</select></td>\n";
-    $ro = ' readonly = "readonly"';
+    echo "</select></td>";
     echo '<tr>';
-    echo '<tr><td>' . LG_ICSV_TOWN_ZIP_CODE . '<td>' . $cp . '</td><td><input type="text" id="cp" value="-" ' . $ro . '></td>' . '<tr>';
-    echo '<tr><td>' . LG_COUNTY . '<td>' . $dep . '</td><td><input type="text" id="dep" value="-" ' . $ro . '></td>' . '<tr>';
-    echo '<tr><td>' . LG_ICSV_TOWN_ZIP_LATITUDE . '<td>' . $Lat_V . '</td><td><input type="text" id="Lat_V" value="-" ' . $ro . '></td>' . '<tr>';
-    echo '<tr><td>' . LG_ICSV_TOWN_ZIP_LONGITUDE . '<td>' . $Long_V . '</td><td><input type="text" id="Long_V" value="-" ' . $ro . '></td>' . '<tr>';
-    $deb_rad = '<input type="radio" name="cible" value="';
-    echo '<tr><td>' . LG_CH_FUSION_TARGET . '<td>' . $deb_rad . 'G" checked="checked"/>' . '</td><td>' . $deb_rad . 'D" />' . '</td>' . '<tr>';
-
-
+    echo '<tr><td>' . LG_ICSV_TOWN_ZIP_CODE . '<td>' . $cp . '</td><td><input type="text" id="cp" value="-" readonly></td><tr>';
+    echo '<tr><td>' . LG_COUNTY . '<td>' . $dep . '</td><td><input type="text" id="dep" value="-" readonly></td><tr>';
+    echo '<tr><td>' . LG_ICSV_TOWN_ZIP_LATITUDE . '<td>' . $Lat_V . '</td><td><input type="text" id="Lat_V" value="-" readonly></td><tr>';
+    echo '<tr><td>' . LG_ICSV_TOWN_ZIP_LONGITUDE . '<td>' . $Long_V . '</td><td><input type="text" id="Long_V" value="-" readonly></td><tr>';
+    echo '<tr><td>' . LG_CH_FUSION_TARGET . '<td><input type="radio" name="cible" value="G" checked></td><td><input type="radio" name="cible" value="D"></td><tr>';
     echo '</table>';
 
     /*
@@ -220,17 +208,14 @@ else {
 		;
 	*/
 
-    echo '<br>' . "\n";
+    echo '<br>';
 
     // Formulaire pour le bouton retour
     //Bouton_Retour($lib_Retour,'?'.Query_Str());
     bt_ok_an_sup(LG_CH_FUSIONNER, $lib_Retour, '', '', false, false);
 
     Insere_Bas('');
-}
-
-
-?>
+} ?>
 </body>
 
 </html>

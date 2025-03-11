@@ -1,5 +1,5 @@
 <?php
-require('fpdf.php');
+require(__DIR__ . '/../../exlibs/FPDF.php');
 
 $red = array(255, 0, 0);
 $green = array(0, 255, 0);

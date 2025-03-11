@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -92,7 +92,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -101,7 +101,7 @@ $n_personnes = nom_table('personnes');
 $n_villes = nom_table('villes');
 $n_unions = nom_table('unions');
 
-$lien = 'href="' . my_self() . '?Type_Liste=' . $Type_Liste .
+$lien = 'href="' . $root . '/liste_pers2.php?Type_Liste=' . $Type_Liste .
     '&amp;texte=O' .
     '&amp;idNom=' . $idNom .
     '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
@@ -260,9 +260,9 @@ if ((!$texte) and ($est_contributeur)) {
 
     if ($Type_Liste == 'P') {
         if ($est_contributeur)
-            echo '<a href="' . Get_Adr_Base_Ref() . 'Completude_Nom.php?idNom=' . $idNom . '&amp;Nom=' . $NomL . '">' . $LG_Menu_Title['Name_Is_Complete'] . $LG_name_pers . '</a><br>' . "\n";
+            echo '<a href="' . $root . '/completude_nom.php?idNom=' . $idNom . '&amp;Nom=' . $NomL . '">' . $LG_Menu_Title['Name_Is_Complete'] . $LG_name_pers . '</a><br>' . "\n";
         if ((!$SiteGratuit) or ($Premium)) {
-            echo '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=p'
+            echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=p'
                 . '&amp;idNom=' . $idNom . '&amp;Nom=' . $NomL . '">'
                 . LG_LPERS_OBJ_PC . ' ' . stripslashes($NomL) . '</a><br>';
         }
@@ -411,7 +411,7 @@ if ($nb_lig > 0) {
                 }
                 if (($est_gestionnaire) and (! $texte)) {
                     echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '>' . $echo_modif;
-                    echo '&nbsp;<a href="Verif_Personne.php?Refer=' . $Ref . '">' . $echo_verif;
+                    echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '">' . $echo_verif;
                 }
                 break;
             case 'M':

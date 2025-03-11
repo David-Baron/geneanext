@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -40,7 +40,7 @@ switch ($Type_Histo) {
 }
 $x = Lit_Env();
 $index_follow = 'ON';        // NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -222,7 +222,7 @@ if (!$vide) {
         }
 
         echo '<td align="center">';
-        echo '<a href="Histo_Ages_Mariage.php?Type=' . $Type_Histo . '&amp;Debut=' . $nb . '&amp;Fin=' . $borne_max . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $nb . '-' . $borne_max . '</a>';
+        echo '<a href="' . $root . '/histo_ages_mariage.php?Type=' . $Type_Histo . '&amp;Debut=' . $nb . '&amp;Fin=' . $borne_max . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $nb . '-' . $borne_max . '</a>';
         echo '</td>';
 
         // Femme : moyenne en barre et moyenne en nombre

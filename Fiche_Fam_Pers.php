@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';
 $titre = LG_FFAM_OBJECT;        // Titre pour META
@@ -15,12 +15,12 @@ $index_follow = 'IN';            // NOFOLLOW demandé pour les moteurs
 $Refer = Recup_Variable('Refer', 'N');
 $req_sel = 'select * from ' . nom_table('personnes') . ' where Reference = ' . $Refer . ' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Affichage des enfants avec le conjoint éventuel
 function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
 {
-    global $chemin_images_util, $est_contributeur, $SiteGratuit, $Premium, $premier_enf, $lst_conj, $premier_lib_v, $h_LG_AT, $LG_Data_noavailable_profile, $Commentaire, $Diffusion_Commentaire_Internet, $rech_comment_ville, $debug;
+    global $root, $chemin_images_util, $est_contributeur, $SiteGratuit, $Premium, $premier_enf, $lst_conj, $premier_lib_v, $h_LG_AT, $LG_Data_noavailable_profile, $Commentaire, $Diffusion_Commentaire_Internet, $rech_comment_ville, $debug;
     if (($Mari) or ($Femme)) {
         $crit = '';
         if ($type_aff == 'E') {
@@ -68,7 +68,7 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                     echo my_html(LG_FFAM_CHILDREN_WITH) . '&nbsp;:';
                     if ($est_contributeur) {
                         if ((!$SiteGratuit) or ($Premium))
-                            echo '&nbsp;' . Affiche_Icone_Lien('href="Ajout_Enfants.php?mari=' . $Mari . '&amp;femme=' . $Femme . '"', 'ajout', LG_FFAM_ADD_CHILDREN);
+                            echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/ajout_enfants.php?mari=' . $Mari . '&amp;femme=' . $Femme . '"', 'ajout', LG_FFAM_ADD_CHILDREN);
                     }
                 } else {
                     if ($nb_enreg > 0) {
@@ -148,10 +148,9 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                         $icone_encadre = '';
                         $numero_enf = trim($enregEnf['Numero']);
                         if (is_numeric($numero_enf)) $gen = Calc_Gener($numero_enf);
-                        if ($gen != '') $icone_encadre = Affiche_Icone_Lien('href="Desc_Directe_Pers.php?Numero=' . $numero_enf . '"', 'fleche_haut', $gen);
-                        echo '<td width="' . $w3 . '%">' . $icone_encadre . '<a href="' . my_self() . '?Refer=' . $Enfant . '">' . $enregEnf['Prenoms'] . ' ' . $enregEnf['Nom'] . '</a>' . $sur . $icone_encadre . '&nbsp;';
-                        // echo '<td width="'.$w3.'%">'.$icone_encadre.'<a href="'.my_self().'?Refer='.$Enfant.'">'.my_html($enregEnf['Prenoms'].' '.$enregEnf['Nom']).'</a>'.my_html($sur).$icone_encadre.'&nbsp;';
-
+                        if ($gen != '') $icone_encadre = Affiche_Icone_Lien('href="'. $root .'/desc_directe_pers.php?Numero=' . $numero_enf . '"', 'fleche_haut', $gen);
+                        echo '<td width="' . $w3 . '%">' . $icone_encadre . '<a href="'. $root .'/fiche_fam_pers.php?Refer=' . $Enfant . '">' . $enregEnf['Prenoms'] . ' ' . $enregEnf['Nom'] . '</a>' . $sur . $icone_encadre . '&nbsp;';
+                        
                         $Ne = $enregEnf['Ne_le'];
                         $Date_Nai = Etend_date_2($Ne);
                         $Date_Dec = Etend_date_2($enregEnf['Decede_Le']);
@@ -210,7 +209,7 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
             if ($nb_enfants > 0) {
                 echo '</table>' . "\n";
                 if ($type_aff == 'E') //and ((! $rangs_OK) or (! $dates_OK)))
-                    echo '<a href="Edition_Rangs.php?Pere=' . $Mari . '&amp;Mere=' . $Femme . '">' . Affiche_Icone('arrange', LG_FFAM_RANK_REORG) . '</a>';
+                    echo '<a href="'. $root .'/edition_rangs.php?Pere=' . $Mari . '&amp;Mere=' . $Femme . '">' . Affiche_Icone('arrange', LG_FFAM_RANK_REORG) . '</a>';
             }
         }
         unset($enregEnf);
@@ -224,7 +223,7 @@ $compl = '';
 // Personne inconnue, circulez...
 if ((!$enreg_sel) or ($Refer == 0)) {
     echo '</head><body>';
-    echo '<a href="' . Get_Adr_Base_Ref() . 'index.php">' . $LG_back_to_home . '</a>';
+    echo '<a href="'. $root .'/">' . $LG_back_to_home . '</a>';
     echo '<div id="bonus"></div>';
 } else {
 
@@ -235,7 +234,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
     $diff_int = $enreg2['Diff_Internet'];
 
     if (!$est_privilegie and $diff_int != 'O') {
-        echo aff_erreur($LG_Data_noavailable_profile) . '<br />' . '<a href="' . Get_Adr_Base_Ref() . '">' . my_html($LG_back_to_home) . '</a><br />';
+        echo aff_erreur($LG_Data_noavailable_profile) . '<br />' . '<a href="'. $root .'/">' . my_html($LG_back_to_home) . '</a><br />';
         return;
     }
 
@@ -248,30 +247,30 @@ if ((!$enreg_sel) or ($Refer == 0)) {
     // NB : tout le monde peut contribuer sur Internet
     if ($Environnement == 'I') {
         $txt_im = LG_FFAM_CONTRIBUTE . ' ' . $enreg['Prenoms'] . ' ' . $enreg['Nom'];
-        $compl .= '<a href="' . Get_Adr_Base_Ref() . 'Ajout_Contribution.php?Refer=' . $Refer . '">' . Affiche_Icone('contribuer', $txt_im) . '</a>&nbsp;&nbsp;';
+        $compl .= '<a href="'. $root .'/ajout_contribution.php?Refer=' . $Refer . '">' . Affiche_Icone('contribuer', $txt_im) . '</a>&nbsp;&nbsp;';
     }
     if (!$is_bot)
-        $compl .= Affiche_Icone_Lien('href="Vue_Personnalisee_Rapide.php?Refer=' . $Refer . '"', 'vue_pers', LG_FFAM_SET_AS_DECUJUS) . "\n";
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/vue_personnalisee_Rapide.php?Refer=' . $Refer . '"', 'vue_pers', LG_FFAM_SET_AS_DECUJUS) . "\n";
 
     // Cache la personne ou la montre sur internet
     if ($est_contributeur) {
         if ($diff_int == 'O')
-            $compl .= Affiche_Icone_Lien('href="Cache_Montre_Rapide.php?Refer=' . $Refer . '&amp;Diff=N"', 'internet_non', LG_FFAM_NOSHOW_INTERNET) . "\n";
+            $compl .= Affiche_Icone_Lien('href="'. $root .'/cache_montre_rapide.php?Refer=' . $Refer . '&amp;Diff=N"', 'internet_non', LG_FFAM_NOSHOW_INTERNET) . "\n";
         else
-            $compl .= Affiche_Icone_Lien('href="Cache_Montre_Rapide.php?Refer=' . $Refer . '&amp;Diff=O"', 'internet_oui', LG_FFAM_SHOW_INTERNET) . "\n";
+            $compl .= Affiche_Icone_Lien('href="'. $root .'/cache_montre_rapide.php?Refer=' . $Refer . '&amp;Diff=O"', 'internet_oui', LG_FFAM_SHOW_INTERNET) . "\n";
     }
 
     $compl .= Lien_Chrono_Pers($Refer) . "\n";
     $compl .= Ajoute_Page_Info(600, 150);
     if ($est_privilegie)
-        $compl .= Affiche_Icone_Lien('href="exp_Gedcom_Personne.php?Refer=' . $Refer . '"', 'gedcom', $LG_Menu_Title['Exp_Ged_Pers']) . "\n";
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/exp_gedcom_personne.php?Refer=' . $Refer . '"', 'gedcom', $LG_Menu_Title['Exp_Ged_Pers']) . "\n";
     $compl .= '<a ' . Ins_Ref_Arbre($Refer) . '>' .
         '<img border="0" src="' . $chemin_images_icones . $Icones['arbre_ascP'] . '" alt="Arbres" onmouseover="inverse_div(\'bonus\');"/>' .
         '</a>&nbsp;' .
         Affiche_Icone_Lien(Ins_Ref_Arbre_Desc($Refer), 'arbre_desc', $LG_desc_tree) . "\n";
     if ($est_contributeur) {
         $compl .= Affiche_Icone_Lien(Ins_Edt_Pers($Refer), 'fiche_edition', $LG_modify) . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Ajout_Rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . '&nbsp;';
+            Affiche_Icone_Lien('href="'. $root .'/ajout_rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . '&nbsp;';
     }
 
     if (Presence_ImagesP($Refer)) {
@@ -283,13 +282,11 @@ if ((!$enreg_sel) or ($Refer == 0)) {
     $icone_encadre = '';
     $numero_pers = trim($enreg2['Numero']);
     if (is_numeric($numero_pers)) $gen = Calc_Gener($numero_pers);
-    //if ($gen != '') $icone_encadre = Affiche_Icone_Lien('href="Desc_Directe_Pers.php?Numero='.$numero_pers.'"','fleche_haut',html_entity_decode($gen, ENT_QUOTES, $def_enc));
-    if ($gen != '') $icone_encadre = Affiche_Icone_Lien('href="Desc_Directe_Pers.php?Numero=' . $numero_pers . '"', 'fleche_haut', $gen);
+    if ($gen != '') $icone_encadre = Affiche_Icone_Lien('href="'. $root .'/desc_directe_pers.php?Numero=' . $numero_pers . '"', 'fleche_haut', $gen);
 
     $le_nom = str_replace(' ', '%20', $EnrPers['Nom']);
     $params = '&amp;idNom=' . $EnrPers['idNomFam'] . '&amp;Nom=' . $le_nom;
-    // $icone_nom = Affiche_Icone_Lien('href="Liste_Pers2.php?Type_Liste=P'.$params.'"','liste_nom',LG_FFAM_ALL_NAME.' '.$EnrPers['Nom']);
-    $icone_nom = Lien_Icone_Brut('href="Liste_Pers2.php?Type_Liste=P' . $params . '"', 'liste_nom', 'img_nom', '', LG_FFAM_ALL_NAME . ' ' . $EnrPers['Nom']);
+    $icone_nom = Lien_Icone_Brut('href="'. $root .'/liste_pers2.php?Type_Liste=P' . $params . '"', 'liste_nom', 'img_nom', '', LG_FFAM_ALL_NAME . ' ' . $EnrPers['Nom']);
 
     Insere_Haut($icone_encadre . '&nbsp;' . $enreg2['Prenoms'] . '&nbsp;' . $enreg2['Nom'] . '&nbsp;' . $icone_nom, $compl, 'Fiche_Fam_Pers', $Refer);
 
@@ -301,9 +298,9 @@ if ((!$enreg_sel) or ($Refer == 0)) {
         '<option value="Arbre_Asc_Pers.php?Refer=' . $Refer . '">Arbre standard</option>' . "\n" .
         '<option value="Arbre_Agnatique_Cognatique.php?Refer=' . $Refer . '&amp;Type=A">' . my_html(LG_FFAM_MEN_ASC) . '</option>' . "\n" .
         '<option value="Arbre_Agnatique_Cognatique.php?Refer=' . $Refer . '&amp;Type=C">' . my_html(LG_FFAM_WOMEN_ASC) . '</option>' . "\n" .
-        '<option value="' . Get_Adr_Base_Ref() . 'appelle_image_arbre_asc.php?Refer=' . $Refer . '">' . my_html(LG_FFAM_PRINTABLE_TREE) . '</option>' . "\n";
+        '<option value="'. $root .'/appelle_image_arbre_asc.php?Refer=' . $Refer . '">' . my_html(LG_FFAM_PRINTABLE_TREE) . '</option>' . "\n";
     if ((!$SiteGratuit) or ($Premium))
-        echo '<option value="' . Get_Adr_Base_Ref() . 'Arbre_Asc_PDF.php?Refer=' . $Refer . '">PDF 7 g&eacute;n.</option>' . "\n";
+        echo '<option value="'. $root .'/arbre_asc_pdf.php?Refer=' . $Refer . '">PDF 7 g&eacute;n.</option>' . "\n";
 
     //	Traitement des listes personnalisées
     $sql = 'select descArbre ,  nomFichier from ' . nom_table('arbre') . ' AS a, ' . nom_table('arbrepers') . ' AS p where p.idArbre = a.idArbre AND reference = ' . $Refer;
@@ -414,7 +411,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
             if ($est_privilegie or $enreg2['Diff_Internet'] == 'O') {
 
                 // On n'affiche le lien vers le conjoint que s'il est connu
-                if ($Conj != 0) echo '<a href="' . my_self() . '?Refer=' . $Conj . '">' . $enreg2['Prenoms'] . '&nbsp;' . $enreg2['Nom'] . '</a> ; ';
+                if ($Conj != 0) echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Conj . '">' . $enreg2['Prenoms'] . '&nbsp;' . $enreg2['Nom'] . '</a> ; ';
 
                 // Fiche couple et export pdf disponible à partir de privilégié
                 if ($est_privilegie) {
@@ -423,8 +420,8 @@ if ((!$enreg_sel) or ($Refer == 0)) {
                         echo Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union, 'P'), 'PDF', LG_FFAM_COUPLE_REC_PDF) . '&nbsp;';
                     }
                 }
-                echo Affiche_Icone_Lien('href="Arbre_Noyau.php?Reference=' . $Ref_Union . '"', 'groupe', $LG_Menu_Title['Nuclear_Family']) . '&nbsp;';
-                echo Affiche_Icone_Lien('href="Asc_Conjoints.php?Reference=' . $Ref_Union . '"', 'asc_conj', $LG_Menu_Title['Partners_Ancestors']) . '&nbsp;';
+                echo Affiche_Icone_Lien('href="'. $root .'/arbre_noyau.php?Reference=' . $Ref_Union . '"', 'groupe', $LG_Menu_Title['Nuclear_Family']) . '&nbsp;';
+                echo Affiche_Icone_Lien('href="'. $root .'/asc_conjoints.php?Reference=' . $Ref_Union . '"', 'asc_conj', $LG_Menu_Title['Partners_Ancestors']) . '&nbsp;';
 
                 if (($Date_Mar != '') or ($Ville_Mar)) {
                     echo 'mari&eacute;s';
@@ -496,8 +493,8 @@ if ((!$enreg_sel) or ($Refer == 0)) {
     echo '<hr/>';
     Aff_Enfants($le_pere, $la_mere, 'F', $Refer);
     if (!$is_bot) {
-        echo '<a href="Parentees.php?TP=OT&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Uncles']) . '</a><br />';
-        echo '<a href="Parentees.php?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
+        echo '<a href="'. $root .'/parentees.php?TP=OT&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Uncles']) . '</a><br />';
+        echo '<a href="'. $root .'/parentees.php?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
     }
 
     Insere_Bas($compl);

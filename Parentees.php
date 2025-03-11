@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function add_pers($enreg)
 {
@@ -64,7 +64,7 @@ $n_personnes = nom_table('personnes');
 
 $req_sel = 'select Nom, Prenoms, Diff_Internet from ' . $n_personnes . ' where Reference = ' . $Refer . ' limit 1';
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -89,7 +89,7 @@ else {
 
         // Message d'erreur si pas de droits d'accès
         if (!$est_privilegie and $enr_pers['Diff_Internet'] != 'O') {
-            echo aff_erreur($LG_Data_noavailable_profile) . '<br />' . '<a href="' . Get_Adr_Base_Ref() . '">' . my_html($LG_back_to_home) . '</a><br />';
+            echo aff_erreur($LG_Data_noavailable_profile) . '<br />' . '<a href="' . $root . '/">' . my_html($LG_back_to_home) . '</a><br />';
         } else {
             echo '<h3 align="center">' . $PrenomsP . ' ' . $NomP . '</h3>';
 
@@ -219,10 +219,10 @@ else {
 
     switch ($T_Parente) {
         case 'OT':
-            echo '<br /><a href="Parentees.php?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
+            echo '<br /><a href="' . $root . '/parentees.php?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
             break;
         case 'CG':
-            echo '<br /><a href="Parentees.php?TP=OT&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Uncles']) . '</a>';
+            echo '<br /><a href="' . $root . '/parentees.php?TP=OT&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Uncles']) . '</a>';
             break;
     }
 

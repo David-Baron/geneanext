@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Retourne vrai si le nom de la table correspond
 function est_table($nom_compar, $table_name)
@@ -69,7 +69,7 @@ $acces = 'L';                      // Type d'accès de la page : (M)ise à jour,
 $titre = 'Export';                 // Titre pour META
 $niv_requis = 'G';                // Page réservée au gestionnaire
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();

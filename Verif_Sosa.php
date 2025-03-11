@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -30,7 +30,7 @@ if ($ok == $lib_Rectifier) $ok = 'OK';
 $acces = 'M';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Check_Sosa'];    // Titre pour META
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -198,7 +198,7 @@ if ($Personne = $Res->fetch(PDO::FETCH_ASSOC)) {
 
     echo '</form>';
 
-    echo '<br /><a href="Init_Sosa.php">' . my_html($LG_Menu_Title['Delete_Sosa']) . '</a>';
+    echo '<br /><a href="' . $root . '/init_sosa.php">' . my_html($LG_Menu_Title['Delete_Sosa']) . '</a>';
 } else $x = Erreur_DeCujus();
 
 Insere_Bas($compl);

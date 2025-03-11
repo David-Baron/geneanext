@@ -7,7 +7,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                                    // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Patronymic_List'];        // Titre pour META
@@ -22,7 +22,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
@@ -139,7 +139,7 @@ if ($limiter) $comp_texte .= '&amp;nom_decujus=O';
 if ($lieux) $comp_texte .= '&amp;aff_lieux=O';
 if ($simu_invit) $comp_texte .= '&amp;simu_invit=O';
 
-$lien = 'href="' . my_self() . '?texte=O' . $comp_texte;
+$lien = 'href="' . $root . '/liste_patro.php?texte=O' . $comp_texte;
 
 $compl = Ajoute_Page_Info(600, 150) .
     Affiche_Icone_Lien($lien . '"', 'text', $LG_printable_format) . '&nbsp;';
@@ -295,7 +295,7 @@ if ($decujus = get_decujus()) {
     $fin = false;
     $deb = false;
     $aff = true;
-    $deb_lien_nom = '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=P&amp;idNom=';
+    $deb_lien_nom = '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=';
 
     $h_LG_PATRO_FILIATION = my_html(LG_PATRO_FILIATION);
     $h_LG_show_noshow  = my_html($LG_show_noshow);

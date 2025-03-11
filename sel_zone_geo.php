@@ -2,7 +2,7 @@
 // Choix d'une zone géographique
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 //FenCalend=window.open('sel_zone_geo.php?zoneLib='+zoneLib
 //                                     +'&zoneValue='+zoneValue
@@ -83,10 +83,10 @@ if (file_exists($chemin_images . $Image_Fond))
 echo '<body vlink="#0000ff" link="#0000ff" ' . $bg . '>';
 
 // formulaire
-echo '<form id="formZone" method="post" action="">' . "\n";
-echo '<table width="100%" border="0">' . "\n";
-echo '<tr>' . "\n";
-echo '<td align="center">' . "\n";
+echo '<form id="formZone" method="post" action="">';
+echo '<table width="100%" border="0">';
+echo '<tr>';
+echo '<td align="center">';
 
 // En entrée : 
 // $Niveau : niveau de la zone géographique
@@ -119,44 +119,44 @@ switch ($Niveau) {
 $sql = 'select Identifiant_zone, ' . $n_zone . ' from ' . nom_table($n_table) . ' order by ' . $n_zone;
 $res = lect_sql($sql);
 // Affichage d'un select avec le résultat
-echo '<select name="ZoneGeo">' . "\n";
-echo '<option value="0" > </option>' . "\n";
+echo '<select name="ZoneGeo">';
+echo '<option value="0" > </option>';
 while ($row = $res->fetch(PDO::FETCH_NUM)) {
     $idZone_req = $row[0];
     echo '<option value="' . $idZone_req . '"';
     if ($idZone_req == $idZone) echo ' selected="selected" ';
-    echo '>' . my_html($row[1]) . '</option>' . "\n";
+    echo '>' . my_html($row[1]) . '</option>';
 }
 echo "</select>\n";
 if ($modif == 'O') {
     echo '&nbsp;<img id="ajout" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajout zone" ' .
-        'onclick="inverse_div(\'id_div_ajout\');document.getElementById(\'nouvelle_zone\').focus();"/>' . "\n";
+        'onclick="inverse_div(\'id_div_ajout\');document.getElementById(\'nouvelle_zone\').focus();"/>';
     echo '<div id="id_div_ajout">';
-    echo 'Zone &agrave; ajouter &agrave; la liste&nbsp;<input type="text" name="nouvelle_zone"/>' . "\n";
-    echo '<input type="button" name="ferme_OK" value="OK" onclick="ajoute()"/>' . "\n";
-    echo '<input type="button" name="ferme_An" value="Annuler" onclick="inverse_div(\'id_div_ajout\')"/>' . "\n";
+    echo 'Zone &agrave; ajouter &agrave; la liste&nbsp;<input type="text" name="nouvelle_zone"/>';
+    echo '<input type="button" name="ferme_OK" value="OK" onclick="ajoute()"/>';
+    echo '<input type="button" name="ferme_An" value="Annuler" onclick="inverse_div(\'id_div_ajout\')"/>';
     echo '</div>';
-    echo '<script type="text/javascript">' . "\n";
-    echo '<!--' . "\n";
-    echo 'cache_div(\'id_div_ajout\');' . "\n";
-    echo '//-->' . "\n";
-    echo '</script>' . "\n";
+    echo '<script type="text/javascript">';
+    echo '<!--';
+    echo 'cache_div(\'id_div_ajout\');';
+    echo '//-->';
+    echo '</script>';
 }
-echo '</td></tr>' . "\n";
-echo '<tr><td>' . "\n";
+echo '</td></tr>';
+echo '<tr><td>';
 echo '<table class="table_form" align="center"><tr align="center">';
-echo '<tr><td colspan="3">&nbsp;</td></tr>' . "\n";
+echo '<tr><td colspan="3">&nbsp;</td></tr>';
 
-echo '<tr><td colspan="3" align="center">' . "\n";
+echo '<tr><td colspan="3" align="center">';
 echo '<div class="buttons">';
 echo '<button type="submit" class="positive" onclick="lien();"><img src="' . $chemin_images_icones . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
 echo '<button type="submit" onclick="window.close();"><img src="' . $chemin_images_icones . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
 echo '</div>';
-echo '</td></tr>' . "\n";
-echo '</table>' . "\n";
-echo '</td></tr>' . "\n";
-echo '</table>' . "\n";
-echo '</form>' . "\n";
+echo '</td></tr>';
+echo '</table>';
+echo '</td></tr>';
+echo '</table>';
+echo '</form>';
 
 ?>
 </body>

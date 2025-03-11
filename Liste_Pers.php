@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                // Type d'accès de la page : (M)ise à jour, (L)ecture M pour avoir le getXMLHttpRequest pdf
 
@@ -51,7 +51,7 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 function Aff_Ne_Dec($row)
 {
@@ -70,7 +70,7 @@ function Aff_Ne_Dec($row)
     }
 }
 
-$deb_lien = 'href="' . my_self() . '?Type_Liste=' . $Type_Liste . '&amp;texte=O';
+$deb_lien = 'href="' . $root . '/liste_pers.php?Type_Liste=' . $Type_Liste . '&amp;texte=O';
 $compl = Ajoute_Page_Info(600, 300) .
     Affiche_Icone_Lien_TXT_PDF($deb_lien . '"', my_html($LG_printable_format), 'T') . '&nbsp;';
 if ((!$SiteGratuit) or ($Premium))
@@ -223,8 +223,8 @@ if (! $texte) {
             }
             echo '</select>' . "\n";
             echo '<select name="personnes" id="personnes" onchange="updateLiensIcones(this.value)"></select>';
-            echo '<a id="icone_visu" href="Fiche_Fam_Pers.php?Refer=1">' . Affiche_Icone('page', LG_LPERS_PERS_FILE) . '</a>';
-            echo '<a id="icone_modif" href="Edition_Personne.php?Refer=1">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
+            echo '<a id="icone_visu" href="' . $root . '/fiche_fam_pers.php?Refer=1">' . Affiche_Icone('page', LG_LPERS_PERS_FILE) . '</a>';
+            echo '<a id="icone_modif" href="' . $root . '/edition_personne.php?Refer=1">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
             echo '</fieldset>';
             echo '</form>';
         }
@@ -239,7 +239,7 @@ if (! $texte) {
     }
     if ($Type_Liste != 'C') {
         if ($nb_lignes > 0) {
-            echo '<table width="100%" border="0" cellspacing="1">' . "\n";
+            echo '<table width="100%" cellspacing="1">' . "\n";
             echo '<tr align="center">' . "\n";
             $Anc_Lettre = '';
             $premier = true;
@@ -265,8 +265,8 @@ if (! $texte) {
 
     $echo_haut = Affiche_Icone_Lien('href="#top"', 'page_haut', my_html($LG_top)) . '<br>';
 
-    $deb_lien = '<a href="' . Get_Adr_Base_Ref() . 'Liste_Pers2.php?Type_Liste=' . $Type_Liste;
-    $deb_lien_crea = 'href="' . Get_Adr_Base_Ref() . 'Edition_Personnes_Ville.php?evt=';
+    $deb_lien = '<a href="' . $root . '/liste_pers2.php?Type_Liste=' . $Type_Liste;
+    $deb_lien_crea = 'href="' . $root . '/edition_personnes_ville.php?evt=';
 
     if (($Type_Liste == 'M') or ($Type_Liste == 'K')) {
         $echo_femme = Affiche_Icone('femme', my_html(LG_ORDER_BY_WOMEN));
@@ -298,7 +298,7 @@ if (! $texte) {
             }
             // Dans le cas de la catégorie, on affiche l'icone qui correspond
             else {
-                echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[3]] . '" BORDER="0" alt="' . $NomObj . '" title="' . $NomObj . '"/>' . '&nbsp;';
+                echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[3]] . '" alt="' . $NomObj . '" title="' . $NomObj . '"/>' . '&nbsp;';
             }
             // Traitement de chaque nom
             // Récupération de la latitude et de la logitude de la ville
@@ -326,7 +326,7 @@ if (! $texte) {
                     break;
                 case 'M':
                 case 'K':
-                    echo $NomA . '&nbsp;(' . $row[0] . ')&nbsp;' . '<a href="Notaires_Ville.php?Ville=' . $row[2] . '&amp;Nom=' . $le_nom . '">' . LG_LPERS_NOTARIES . '</a>&nbsp;';
+                    echo $NomA . '&nbsp;(' . $row[0] . ')&nbsp;' . '<a href="' . $root . '/notaires_ville.php?Ville=' . $row[2] . '&amp;Nom=' . $le_nom . '">' . LG_LPERS_NOTARIES . '</a>&nbsp;';
                     appelle_carte_osm();
                     echo $deb_lien . $params . '&amp;Tri=F">' . $echo_femme . '</a>';
                     echo $deb_lien . $params . '&amp;Tri=H">' . $echo_homme . '</a>';

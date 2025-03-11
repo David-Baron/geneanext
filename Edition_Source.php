@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -57,7 +57,7 @@ else
     $titre = $LG_Menu_Title['Source_Add'];
 
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -160,7 +160,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="Fiche_Source.php?ident=' . $Ident . '"', 'page', $LG_Menu_Title['Source']) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_source.php?ident=' . $Ident . '"', 'page', $LG_Menu_Title['Source']) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Source', $Ident);
 

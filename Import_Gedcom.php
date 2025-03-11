@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 function suppression($lib, $n_table, $genre, $where, $affichage = true)
 {
@@ -28,7 +28,7 @@ function suppression($lib, $n_table, $genre, $where, $affichage = true)
 }
 
 // Fonction de recctification UTF8
-require(__DIR__ . '/Rectif_Utf8_Commun.php');
+require(__DIR__ . '/app/ressources/rectif_utf8_commun.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -59,7 +59,7 @@ $acces = 'L';                          // Type d'accès de la page : (M)ise à j
 $titre = 'Import GEDCOM';              // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 $niv_requis = 'G';                        // Page accessible au gestionnaire
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -573,7 +573,7 @@ Insere_Haut($titre, $compl, 'Import_Gedcom', '');
 //Demande de chargement
 if ($ok == 'OK') {
 
-    require(__DIR__ . '/fonctions_maj.php');
+    require(__DIR__ . '/app/ressources/fonctions_maj.php');
 
     $temps = time();
     $jour = date('j', $temps);  //format numerique : 1->31
@@ -1704,14 +1704,14 @@ if ($ok == 'OK') {
                 $base_ref = Get_Adr_Base_Ref();
                 $ic_conseil = '<img src="' . $chemin_images_icones . $Icones['tip'] . '" alt="' . LG_TIP . '"/>&nbsp;';
                 echo $ic_conseil . LG_IMP_GED_REMIND_SOSA_1
-                    . '<a href="' . $base_ref . 'Liste_Pers.php?Type_Liste=P">'
+                    . '<a href="' . $root . '/liste_pers.php?Type_Liste=P">'
                     . LG_IMP_GED_REMIND_SOSA_2 . '</a>.&nbsp;' . LG_IMP_GED_REMIND_SOSA_3
-                    . '<a href="' . $base_ref . 'Verif_Sosa.php">'
-                    . $LG_Menu_Title['Check_Sosa'] . '</a>,<br />' . "\n";
+                    . '<a href="' . $root . '/verif_sosa.php">'
+                    . $LG_Menu_Title['Check_Sosa'] . '</a>,<br>';
                 echo $ic_conseil . LG_IMP_GED_REMIND_EVT
-                    . '<a href="' . $base_ref . 'Fusion_Evenements.php">' . $LG_Menu_Title['Event_Merging'] . '</a>.<br />';
+                    . '<a href="' . $root . '/fusion_evenements.php">' . $LG_Menu_Title['Event_Merging'] . '</a>.<br />';
                 echo $ic_conseil . LG_IMP_GED_REMIND_INTERNET
-                    . '<a href="' . $base_ref . 'Verif_Internet.php">' . $LG_Menu_Title['Internet_Cheking'] . '</a>.<br />';
+                    . '<a href="' . $root . '/verif_internet.php">' . $LG_Menu_Title['Internet_Cheking'] . '</a>.<br />';
             }
         }
     }
@@ -1727,24 +1727,24 @@ if ($_SESSION['estGestionnaire']) {
         echo '<br />';
 
         $larg_titre = '35';
-        echo '<form id="saisie" method="post" enctype="multipart/form-data" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post" enctype="multipart/form-data">';
         aff_origine();
 
-        echo '<table width="90%" class="table_form">' . "\n";
+        echo '<table width="90%" class="table_form">';
         colonne_titre_tab(LG_IMP_GED_FILE);
-        echo '<input type="file" name="nom_du_fichier" size="80"/></td></tr>' . "\n";
+        echo '<input type="file" name="nom_du_fichier" size="80"></td></tr>';
         if ($def_enc != 'UTF-8') {
             colonne_titre_tab($LG_Ch_UTF8, $larg_titre);
-            echo '<input type="checkbox" name="fic_utf8"/></td></tr>' . "\n";
+            echo '<input type="checkbox" name="fic_utf8"></td></tr>';
         }
 
         ligne_vide_tab_form(1);
 
         colonne_titre_tab(LG_IMP_GED_INSERT);
-        echo '<input type="checkbox" name="maj_oui"/></td></tr>' . "\n";
+        echo '<input type="checkbox" name="maj_oui"></td></tr>';
 
         colonne_titre_tab(LG_IMP_GED_RESET);
-        echo '<input type="checkbox" name="init_base"/></td></tr>' . "\n";
+        echo '<input type="checkbox" name="init_base"></td></tr>';
 
         // Sur site gratuit non  Premium, on diffuse par défaut sans possibilité de modifier l'indicteur ==> respect de la charte
         if (($SiteGratuit) and (!$Premium))

@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -45,7 +45,7 @@ $acces = 'M';                          // Type d'accès de la page : (M)ise à j
 if (!$Modif) $titre = $LG_Menu_Title['Subdiv_Edit'];
 else $titre = $LG_Menu_Title['Subdiv_Add'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -113,7 +113,7 @@ function est_utilisee($aff)
 // Affiche une subdivision
 function Aff_Subdiv($enreg2)
 {
-    global $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_subdiv = $enreg['Nom_Subdivision'];
     $n_subdiv_html = $enreg2['Nom_Subdivision'];
@@ -222,7 +222,7 @@ function Aff_Subdiv($enreg2)
         $x = Aff_Sources_Objet($Ident, 'S', 'N');
         // Possibilité de lier un document pour la subdivision
         echo '<br />&nbsp;' . my_html(LG_SUBDIV_LINK_SOURCE) . LG_SEMIC
-            . Affiche_Icone_Lien('href="Edition_Lier_Source.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            . Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -233,7 +233,7 @@ function Aff_Subdiv($enreg2)
         Aff_Documents_Objet($Ident, TYPE_OBJET, 'N');
         // Possibilité de lier un document pour la personne
         echo '<br />' . LG_SUBDIV_LINK_DOCUMENT . LG_SEMIC
-            . Affiche_Icone_Lien('href="Edition_Lier_Doc.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refDoc=-1"', 'ajout', LG_SUBDIV_ADD_DOCUMENT) . "\n";
+            . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refDoc=-1"', 'ajout', LG_SUBDIV_ADD_DOCUMENT) . "\n";
         echo '</div>' . "\n";
     }
 
@@ -329,7 +329,7 @@ if (($ok == '') && ($annuler == '')) {
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
         $compl .= Affiche_Icone_Lien(Ins_Ref_Images($Ident, TYPE_OBJET), 'images', 'Images') . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . Get_Adr_Base_Ref() . 'Fiche_Subdivision.php?Ident=' . $Ident . '"', 'page', $LG_Menu_Title['Subdiv']) . '&nbsp;';
+            Affiche_Icone_Lien('href="'. $root .'/fiche_subdivision.php?Ident=' . $Ident . '"', 'page', $LG_Menu_Title['Subdiv']) . '&nbsp;';
     }
 
     if ($bt_Sup) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -360,7 +360,7 @@ if (($ok == '') && ($annuler == '')) {
     // Subdivision inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
         echo '<br/ >Subdivision supprim&eacutee<br/ >';
-        echo '<a href="Liste_Villes.php?Type_Liste=S">' . my_html(LG_SUBDIV_LIST) . '</a>';
+        echo '<a href="'. $root .'/liste_villes.php?Type_Liste=S">' . my_html(LG_SUBDIV_LIST) . '</a>';
     } else {
         include('Insert_Tiny.js');
         // include('jscripts/Edition_Ville.js');

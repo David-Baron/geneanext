@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';
 
@@ -39,12 +39,12 @@ if ((!$SiteGratuit) or ($Premium)) {
     if ($sortie_pdf) $no_entete = true;
 }
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-$lien = 'href="' . my_self() . '?texte=O' .
+$lien = 'href="' . $root . '/notaires_ville.php?texte=O' .
     '&amp;Ville=' . $idVille .
     '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 

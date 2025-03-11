@@ -7,7 +7,7 @@
 //webmaster@streetpc.tk
 //http://www.streetpc.tk
 
-require('fpdf.php');
+require(__DIR__ . '/exlibs/FPDF.php');
 
 // fonction hex2dec
 // retourne un tableau associatif (clés : R,V,B) à
@@ -53,12 +53,9 @@ class PDF_HTML extends FPDF
     var $issetcolor;
 
     function __construct($orientation = 'P', $unit = 'mm', $format = 'A4')
-    //function PDF_HTML($orientation='P', $unit='mm', $format='A4')
     {
-        //Appel au constructeur parent
         parent::__construct($orientation, $unit, $format);
-        //$this->FPDF($orientation,$unit,$format);
-        //Initialisation
+        // $this->FPDF($orientation,$unit,$format);
         $this->B = 0;
         $this->I = 0;
         $this->U = 0;
@@ -264,4 +261,4 @@ class PDF_HTML extends FPDF
             ($h - $y3) * $this->k
         ));
     }
-} //fin classe
+}

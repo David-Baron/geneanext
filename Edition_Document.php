@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -51,7 +51,7 @@ if (!$Modif)
 else
     $titre = $LG_Menu_Title['Document_Edit'];
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -252,12 +252,12 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     include(__DIR__ . '/assets/js/Insert_Tiny.js');
-    include(__DIR__ .'/assets/js/Edition_Document.js');
+    include(__DIR__ . '/assets/js/Edition_Document.js');
 
     $compl = Ajoute_Page_Info(600, 20);
 
     if ($Reference != -1)
-        $compl .= Affiche_Icone_Lien('href="Fiche_Document.php?Reference=' . $Reference . '"', 'page', my_html($LG_Menu_Title['Document'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_document.php?Reference=' . $Reference . '"', 'page', my_html($LG_Menu_Title['Document'])) . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Document', $Reference);
 
@@ -310,7 +310,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         if ($result->rowCount() > 0) {
             $affBtSup = false;
             ligne_vide_tab_form(1);
-            echo '<tr><td colspan="2"><a href="Utilisations_Document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a></td></tr>' . "\n";
+            echo '<tr><td colspan="2"><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a></td></tr>' . "\n";
         }
     }
 

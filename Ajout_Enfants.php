@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'Nom_Defaut', 'Horigine');
@@ -25,7 +25,7 @@ if (!$Reference) $Reference = -1;
 $acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_PERS_CHILDREN_ADD;
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -154,26 +154,26 @@ if ((!$bt_OK) && (!$bt_An)) {
     $nom_pere = '';
     $nom_mere = '';
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post" action="' . $root . '/ajout_enfants.php?' . Query_Str() . '">';
     aff_origine();
 
     echo '<br />';
     if ($Conjoint_1 != 0) {
         if (Get_Nom_Prenoms($Conjoint_1, $Nom, $Prenoms)) {
-            echo my_html(LG_FATHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_1) . '>' . $Prenoms . ' ' . $Nom . '</a>&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_1), 'fiche_edition', 'Modifier') . '<br />' . "\n";
+            echo my_html(LG_FATHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_1) . '>' . $Prenoms . ' ' . $Nom . '</a>&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_1), 'fiche_edition', 'Modifier') . '<br />';
             $nom_pere = $Nom;
         }
     }
     if ($Conjoint_2 != 0) {
         if (Get_Nom_Prenoms($Conjoint_2, $Nom, $Prenoms)) {
-            echo my_html(LG_MOTHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_2) . '>' . $Prenoms . ' ' . $Nom . '</a>&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_2), 'fiche_edition', 'Modifier') . '<br />' . "\n";
+            echo my_html(LG_MOTHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_2) . '>' . $Prenoms . ' ' . $Nom . '</a>&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_2), 'fiche_edition', 'Modifier') . '<br />';
             $nom_mere = $Nom;
         }
     }
     echo '<br />';
 
     // Enfants déjà saisis
-    echo '<hr/>' . my_html(LG_PERS_CHILDREN_PRESENT) . LG_SEMIC . '<br />' . "\n";
+    echo '<hr/>' . my_html(LG_PERS_CHILDREN_PRESENT) . LG_SEMIC . '<br />';
     if (($Conjoint_1 != 0) and ($Conjoint_2 != 0)) {
         $sqlE = 'select Enfant from ' . nom_table('filiations') .
             ' where pere = ' . $Conjoint_1 . ' and mere = ' . $Conjoint_2 . ' order by rang';
@@ -183,7 +183,7 @@ if ((!$bt_OK) && (!$bt_An)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
                     echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>&nbsp;';
-                    echo '<a ' . Ins_Edt_Filiation($Enfant) . '>' . Affiche_Icone('fiche_edition', 'Modifier la filiation') . '</a>' . '<br />' . "\n";
+                    echo '<a ' . Ins_Edt_Filiation($Enfant) . '>' . Affiche_Icone('fiche_edition', 'Modifier la filiation') . '</a>' . '<br />';
                 }
             }
         }
@@ -191,33 +191,33 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     // Ajout rapide d'enfants avec création
     echo '<br />';
-    echo '<hr/>' . my_html(LG_PERS_CHILDREN_ADD) . "\n";
+    echo '<hr/>' . my_html(LG_PERS_CHILDREN_ADD);
     echo '<br />' . my_html(LG_PERS_DEFAULT_NAME) . ' :&nbsp;';
 
     echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . '&nbsp;';
-    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . '&nbsp;' . "\n";
+    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . '&nbsp;';
 
-    echo '<table border="0" id="tblSampleE" width="80%" align="center">' . "\n";
-    echo '<tr align="center">' . "\n";
-    echo '<td class="rupt_table">' . my_html(LG_PERS_FIRST_NAME) . '</td>' . "\n";
-    echo '<td class="rupt_table">' . my_html(LG_PERS_BORN) . '</td>' . "\n";
-    echo '<td class="rupt_table">' . my_html(LG_PERS_DEAD) . '</td>' . "\n";
-    echo '<td class="rupt_table">' . my_html(LG_SEXE) . '</td>' . "\n";
-    echo '</tr>' . "\n";
+    echo '<table border="0" id="tblSampleE" width="80%" align="center">';
+    echo '<tr align="center">';
+    echo '<td class="rupt_table">' . my_html(LG_PERS_FIRST_NAME) . '</td>';
+    echo '<td class="rupt_table">' . my_html(LG_PERS_BORN) . '</td>';
+    echo '<td class="rupt_table">' . my_html(LG_PERS_DEAD) . '</td>';
+    echo '<td class="rupt_table">' . my_html(LG_SEXE) . '</td>';
+    echo '</tr>';
 
     for ($nb = 1; $nb <= $max_enf_rapides; $nb++) {
         if (pair($nb)) $style = 'class="liste"';
         else           $style = 'class="liste2"';
         echo '<tr>';
-        echo '<td ' . $style . '><input type="text" size="20" name="PrenomsE_' . $nb . '" id="PrenomsE_' . $nb . '"/></td>' . "\n";
+        echo '<td ' . $style . '><input type="text" size="20" name="PrenomsE_' . $nb . '" id="PrenomsE_' . $nb . '"/></td>';
         echo '<td ' . $style . '>';
         zone_date2('ANe_leE__' . $nb, 'Ne_leE_' . $nb, 'CNe_leE_' . $nb, '');
         aff_liste_villes('SelVille_Nai_' . $nb, true, false, 0);
-        echo '</td>' . "\n";
+        echo '</td>';
         echo '<td ' . $style . '>';
         zone_date2('ADecede_leE_' . $nb, 'Decede_leE_' . $nb, 'CDecede_leE_' . $nb, '');
         aff_liste_villes('SelVille_Dec_' . $nb, false, false, 0);
-        echo '</td>' . "\n";
+        echo '</td>';
         echo '<td ' . $style . '><input type="radio" name="SexeE_' . $nb . '" value="m"/>H';
         echo '<input type="radio" name="SexeE_' . $nb . '" value="f"/>F</td>';
         echo '</tr>';

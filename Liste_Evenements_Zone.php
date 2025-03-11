@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $niv_requis = 'C';
@@ -24,7 +24,7 @@ $titre = $LG_Menu_Title['Event_List_Area'];       // Titre pour META
 
 $x = Lit_Env();
 $niv_requis = 'P';                        // Page réservée au profil privilégié
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -93,9 +93,9 @@ else {
         while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
             if ($debug) var_dump($enreg);
             $ref_evt = $enreg['Reference'];
-            $page = 'Fiche_Evenement';
-            if ($enreg['Code_Type'] == 'AC3U') $page = 'Fiche_Actualite';
-            echo '<a href="' . $page . '.php?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
+            $page = 'fiche_evenement';
+            if ($enreg['Code_Type'] == 'AC3U') $page = 'fiche_actualite';
+            echo '<a href="' . $root . '/' . $page . '.php?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
             echo Etend_2_dates($enreg['Debut'], $enreg['Fin'], true) . '&nbsp';
             echo '<br>';
         }
@@ -105,8 +105,7 @@ else {
     Bouton_Retour($lib_Retour, '?' . Query_Str());
 
     Insere_Bas($compl);
-}
-?>
+} ?>
 </body>
 
 </html>

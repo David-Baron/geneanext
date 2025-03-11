@@ -11,12 +11,12 @@ $cr = "\n";   // version Unix
 $SiteGratuit = false;
 if (strpos($_SERVER['SERVER_NAME'], '.geneamania.net') !== false) $SiteGratuit = true;
 else {
-    if (file_exists(__DIR__ . '/site_gratuit.txt')) $SiteGratuit = true;
+    if (file_exists(__DIR__ . '/../../site_gratuit.txt')) $SiteGratuit = true;
 }
 
 // Est-on sur un site de type premium ==> présence d'un fichier premium.txt
 $Premium = false;
-if (file_exists(__DIR__ . '/premium.txt')) $Premium = true;
+if (file_exists(__DIR__ . '/../../premium.txt')) $Premium = true;
 
 // Taille maxi d'une image à télécharger
 $taille_maxi_image = 150 * 1024; // 150Ko
@@ -262,9 +262,9 @@ $url_matchid_link = $url_matchid . '/link';
 $url_matchid_sch = $url_matchid . '/deces/api/v1/search';
 
 // Paramétrages particuliers
-if (file_exists(__DIR__ . '/param_part.php')) include(__DIR__ . '/param_part.php');
+if (file_exists(__DIR__ . '/../../param_part.php')) include(__DIR__ . '/../../param_part.php');
 if ($SiteGratuit) {
-    if (file_exists(__DIR__ . '/../param_gratuit.php')) include(__DIR__ . '/../param_gratuit.php');
+    if (file_exists(__DIR__ . '/../../param_gratuit.php')) include(__DIR__ . '/../../param_gratuit.php');
 }
 
 if ($debug) $f_log = open_log();

@@ -9,7 +9,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -39,7 +39,7 @@ $acces = 'L';
 $titre = $LG_Menu_Title['Find_Doc'];        // Titre pour META
 $niv_requis = 'C';                            // Page pour contributeur minimum
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
@@ -63,7 +63,7 @@ if ($est_gestionnaire) {
     //Demande de recherche
     if ($bt_OK) {
 
-        # require(__DIR__ . '/Commun_Rech_Com_Util_Docs.php');
+        # require(__DIR__ . '/app/ressources/commun_rech_com_util_docs.php');
 
         $Recherche = Secur_Variable_Post($Recherche, 80, 'S');
         $Nature    = Secur_Variable_Post($Nature, 3, 'S');
@@ -111,9 +111,9 @@ if ($est_gestionnaire) {
 
             switch ($Sortie) {
                 case 'e':
-                    echo '<a href="Fiche_Document.php?Reference=' . $refDoc . '">' . my_html($Titre) . '</a>';
+                    echo '<a href="' . $root . '/fiche_document.php?Reference=' . $refDoc . '">' . my_html($Titre) . '</a>';
                     echo ' (' . $Natures_Docs[$enreg['Nature_Document']] . ")\n";
-                    echo '&nbsp;<a href="Edition_Document.php?Reference=' . $refDoc . '">' . $echo_modif;
+                    echo '&nbsp;<a href="' . $root . '/edition_document.php?Reference=' . $refDoc . '">' . $echo_modif;
                     $le_type = Get_Type_Mime($enreg['Nature_Document']);
                     $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
                     echo '&nbsp; &nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $Nom_Fichier . '" type="' . $le_type . '"', 'oeil', LG_DOC_SCH_SEE, 'n');

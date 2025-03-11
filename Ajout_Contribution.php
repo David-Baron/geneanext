@@ -5,7 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
@@ -107,7 +107,7 @@ $titre = 'Contribution';               // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 $niv_requis = 'I';                        // Les contributions sont ouvertes à tout le monde
 $index_follow = 'NN';                    // NOINDEX NOFOLLOW demandé pour les moteurs
-require(__DIR__ . '/Gestion_Pages.php');          // Appel de la gestion standard des pages
+require(__DIR__ . '/app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 
 // Retour sur demande d'annulation
@@ -140,7 +140,7 @@ function Aff_Pers($suffixe, $oblig)
     if (($suffixe == 'pere') or ($suffixe == 'mere')) {
         if ($suffixe == 'pere') $val = 'm';
         else                    $val = 'f';
-        echo '<input type="hidden" name="Sexe' . $suffixe . '" value="' . $val . '"/>' . "\n";
+        echo '<input type="hidden" name="Sexe' . $suffixe . '" value="' . $val . '"/>';
     }
     // En fonction du suffixe, accord sur le genre pour les libellés de colonnes
     switch ($suffixe) {
@@ -156,28 +156,28 @@ function Aff_Pers($suffixe, $oblig)
             $accord = '(e)';
             $sexe_lib = '';
     }
-    echo '<table border="0">' . "\n";
+    echo '<table border="0">';
     col_titre_tab_noClass(LG_PERS_NAME, $larg_col);
-    echo '<td><input type="text" size="50" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;' . "\n";
+    echo '<td><input type="text" size="50" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;';
     if ($oblig) Img_Zone_Oblig('imgObligNom');
 
     // Proposition du nom de la personne sauf pour le conjoint
     if ($suffixe != 'conj') {
         $texte_im = LG_CONTRIBS_COPY_REF_NAME;
         echo '<img id="copier_' . $suffixe . '" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
-            ' onclick="document.getElementById(\'Nom' . $suffixe . '\').value = \'' . $Nom . '\'"/>' . "\n";
+            ' onclick="document.getElementById(\'Nom' . $suffixe . '\').value = \'' . $Nom . '\'"/>';
     }
 
-    echo '</td></tr>' . "\n";
+    echo '</td></tr>';
     col_titre_tab_noClass(LG_PERS_FIRST_NAME, $larg_col);
     echo '<td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;';
     if ($oblig) Img_Zone_Oblig('imgObligPrenoms');
-    echo '</td></tr>' . "\n";
+    echo '</td></tr>';
     if (($suffixe != 'pere') and ($suffixe != 'mere')) {
         col_titre_tab_noClass('Sexe', $larg_col);
         echo '<td><input type="radio" name="Sexe' . $suffixe . '" value="m"/>' . LG_SEXE_MAN . '&nbsp;';
         echo '    <input type="radio" name="Sexe' . $suffixe . '" value="f"/>' . LG_SEXE_WOMAN;
-        echo '</td></tr>' . "\n";
+        echo '</td></tr>';
     }
     col_titre_tab_noClass(ucfirst(lib_sexe_born($sexe_lib)), $larg_col);
     // col_titre_tab_noClass('Né'.$accord,$larg_col);
@@ -186,9 +186,9 @@ function Aff_Pers($suffixe, $oblig)
     // echo '<input type="hidden" name="CNe_le'.$suffixe.'" value=""/>'."\n";
     echo '<td colspan="2">';
     zone_date2('ANe_le' . $suffixe, 'Ne_le' . $suffixe, 'CNe_le' . $suffixe, '');
-    echo '<input type="hidden" name="idNeZone' . $suffixe . '" value=""/>' . "\n";
-    echo $at . '<input type="text" readonly="readonly" name="Ne' . $suffixe . '" value=""/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Naissance(\'' . $suffixe . '\')"/>' . "\n";
+    echo '<input type="hidden" name="idNeZone' . $suffixe . '" value=""/>';
+    echo $at . '<input type="text" readonly="readonly" name="Ne' . $suffixe . '" value=""/>';
+    echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Naissance(\'' . $suffixe . '\')"/>';
     echo '</td></tr>';
     col_titre_tab_noClass(ucfirst(lib_sexe_dead($sexe_lib)), $larg_col);
     // echo '<td><input type="text" readonly="readonly" size="25" name="Decede_le'.$suffixe.'" value=""/>'."\n";
@@ -196,9 +196,9 @@ function Aff_Pers($suffixe, $oblig)
     // echo '<input type="hidden" name="CDecede_le'.$suffixe.'" value=""/>'."\n";
     echo '<td colspan="2">';
     zone_date2('ADecede_le' . $suffixe, 'Decede_le' . $suffixe, 'CDecede_le' . $suffixe, '');
-    echo '<input type="hidden" name="idDecedeZone' . $suffixe . '" value=""/>' . "\n";
-    echo $at . '<input type="text" readonly="readonly" name="Decede' . $suffixe . '" value=""/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Deces(\'' . $suffixe . '\')"/>' . "\n";
+    echo '<input type="hidden" name="idDecedeZone' . $suffixe . '" value=""/>';
+    echo $at . '<input type="text" readonly="readonly" name="Decede' . $suffixe . '" value=""/>';
+    echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Deces(\'' . $suffixe . '\')"/>';
     echo '</td></tr>';
     echo '</table>';
 }
@@ -208,97 +208,97 @@ function Aff_Donnees($Refer)
 {
     global $chemin_images, $Comportement, $Icones, $Images, $style_z_oblig, $larg_col, $lib_Okay, $lib_Annuler;
 
-    echo '<div id="content">' . "\n";
-    echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="520" height="1" alt="clear"/>' . "\n";
-    echo '</td></tr>' . "\n";
+    echo '<div id="content">';
+    echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >';
+    echo '<tr>';
+    echo '<td style="border-right:0px solid #9cb0bb">';
+    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="520" height="1" alt="clear"/>';
+    echo '</td></tr>';
 
-    echo '<tr>' . "\n";
-    echo '<td class="left">' . "\n";
-    echo '<div class="tab-container" id="container1">' . "\n";
+    echo '<tr>';
+    echo '<td class="left">';
+    echo '<div class="tab-container" id="container1">';
     // Onglets
-    echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnlParents\', this)" id="tab1">' . my_html(ucfirst(LG_PARENTS)) . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnlConjoint\', this)">' . my_html(ucfirst(LG_HUSB_WIFE)) . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnlEnfants\', this)">' . my_html(LG_CONTRIBS_CHILDREN) . '</a></li>' . "\n";
+    echo '<ul class="tabs">';
+    echo '<li><a href="#" onclick="return showPane(\'pnlParents\', this)" id="tab1">' . my_html(ucfirst(LG_PARENTS)) . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'pnlConjoint\', this)">' . my_html(ucfirst(LG_HUSB_WIFE)) . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'pnlEnfants\', this)">' . my_html(LG_CONTRIBS_CHILDREN) . '</a></li>';
     // Captcha pour autoriser le OK
-    echo '<li><a href="#" onclick="return showPane(\'pnlUnlock\', this)">' . my_html(LG_CONTRIBS_UNLOCK . ' ' . $lib_Okay) . '</a></li>' . "\n";
-    echo '</ul>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnlUnlock\', this)">' . my_html(LG_CONTRIBS_UNLOCK . ' ' . $lib_Okay) . '</a></li>';
+    echo '</ul>';
 
-    echo '<div class="tab-panes">' . "\n";
+    echo '<div class="tab-panes">';
 
     // Onglet parents
-    echo '<div id="pnlParents">' . "\n";
-    echo '  <fieldset>' . "\n";
+    echo '<div id="pnlParents">';
+    echo '  <fieldset>';
     aff_legend(LG_FATHER);
     $x = Aff_Pers('pere', 0);
-    echo '  </fieldset>' . "\n";
-    echo '  <fieldset>' . "\n";
+    echo '  </fieldset>';
+    echo '  <fieldset>';
     aff_legend(LG_MOTHER);
     $x = Aff_Pers('mere', 0);
-    echo '  </fieldset>' . "\n";
-    echo '</div>' . "\n";
+    echo '  </fieldset>';
+    echo '</div>';
 
     // Onglet conjoint
-    echo '<div id="pnlConjoint">' . "\n";
+    echo '<div id="pnlConjoint">';
     $suffixe = 'conj';
     $x = Aff_Pers('conj', 0);
-    echo '</div>' . "\n";
+    echo '</div>';
 
     // Onglet enfants
-    echo '<div id="pnlEnfants">' . "\n";
-    echo '<fieldset>' . "\n";
+    echo '<div id="pnlEnfants">';
+    echo '<fieldset>';
     aff_legend(LG_CONTRIBS_CHILD_1);
     $x = Aff_Pers('enfant1', 0);
-    echo '</fieldset>' . "\n";
-    echo '<fieldset>' . "\n";
+    echo '</fieldset>';
+    echo '<fieldset>';
     aff_legend(LG_CONTRIBS_CHILD_2);
     $x = Aff_Pers('enfant2', 0);
-    echo '</fieldset>' . "\n";
-    echo '</div>' . "\n";
+    echo '</fieldset>';
+    echo '</div>';
 
 
     // Onglet déverrouillage bouton OK
-    echo '<div id="pnlUnlock">' . "\n";
-    echo '<table width="100%">' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td>' . my_html(LG_CONTRIBS_UNLOCK_TIP1) . '<br />' . my_html(LG_CONTRIBS_UNLOCK_TIP2) . '</td>' . "\n";
-    echo '<td>' . "\n";
-    echo '<table>' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td valign="middle"><input name="captcha" type="text" id="captcha" size="6"' . "\n";
-    echo ' onchange="if (this.value != \'\') document.getElementById(\'bouton_ok\').style.visibility = \'visible\';"/>&nbsp;</td>' . "\n";
+    echo '<div id="pnlUnlock">';
+    echo '<table width="100%">';
+    echo '<tr>';
+    echo '<td>' . my_html(LG_CONTRIBS_UNLOCK_TIP1) . '<br />' . my_html(LG_CONTRIBS_UNLOCK_TIP2) . '</td>';
+    echo '<td>';
+    echo '<table>';
+    echo '<tr>';
+    echo '<td valign="middle"><input name="captcha" type="text" id="captcha" size="6"';
+    echo ' onchange="if (this.value != \'\') document.getElementById(\'bouton_ok\').style.visibility = \'visible\';"/>&nbsp;</td>';
     //echo '      <td><img src="captcha_image_gen.php" alt="captcha"></td>'."\n";
     echo '<td valign="top" align="center"><img style="border: 1px dashed #0064A4;" src="captcha_image_gen.php" alt="captcha"/>';
-    echo '<br /><i><a href="http://software.patrick-b.fr/fr/scripts/php/spam-captcha.php" target="blank">' . my_html(LG_CONTRIBS_TRIBUTE) . '</a></i></td>' . "\n";
-    echo '</tr>' . "\n";
-    echo '</table>' . "\n";
-    echo '</td>' . "\n";
-    echo '</tr>' . "\n";
-    echo '</table><br /><br />' . "\n";
-    echo '<table width="100%">' . "\n";
+    echo '<br /><i><a href="http://software.patrick-b.fr/fr/scripts/php/spam-captcha.php" target="blank">' . my_html(LG_CONTRIBS_TRIBUTE) . '</a></i></td>';
+    echo '</tr>';
+    echo '</table>';
+    echo '</td>';
+    echo '</tr>';
+    echo '</table><br /><br />';
+    echo '<table width="100%">';
     col_titre_tab_noClass(LG_CONTRIBS_EMAIL, $larg_col);
     //echo '   <td><input type="text" size=50 name="mail" value="" '.$style_z_oblig.'>&nbsp;';
     echo '<td><input type="text" size="50" name="mail" id="mail" value="" class="oblig"/>&nbsp;';
-    echo Img_Zone_Oblig('imgObligMail') . '</td>' . "\n";
-    echo '</tr>' . "\n";
+    echo Img_Zone_Oblig('imgObligMail') . '</td>';
+    echo '</tr>';
     col_titre_tab_noClass(LG_CONTRIBS_MESSAGE, $larg_col);
-    echo '<td><textarea cols="50" rows="4" name="message"></textarea></td>' . "\n";
-    echo '</tr>' . "\n";
+    echo '<td><textarea cols="50" rows="4" name="message"></textarea></td>';
+    echo '</tr>';
     echo '</table>';
-    echo '<br /><br />' . "\n";
+    echo '<br /><br />';
     echo '<i>' . my_html(LG_CONTRIBS_IP_RECORD) . '</i>';
-    echo '</div>' . "\n";
+    echo '</div>';
 
-    echo '</div> <!-- panes -->' . "\n";
+    echo '</div> <!-- panes -->';
 
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
-    echo '</div> <!-- tab container -->' . "\n";
+    echo '</div> <!-- tab container -->';
 
-    echo '</td></tr></table></div>' . "\n";
+    echo '</td></tr></table></div>';
 }
 
 //Demande de mise à jour ==> création si vérification OK du captcha
@@ -433,19 +433,19 @@ if ($bt_OK) {
                 $expediteur = $mail;
 
                 $ajout = '';
-                if ($SiteGratuit) $ajout = '# Site : ' . $sous_site . "\n";
+                if ($SiteGratuit) $ajout = '# Site : ' . $sous_site;
 
-                $message_texte = '# contribution ' . $num_contrib . "\n" .
-                    '# ' . $date . "\n" .
-                    '# version Génémania ' . $Version . "\n" .
-                    '# IP serveur : ' . $_SERVER['SERVER_ADDR'] . "\n" .
-                    '# Nom serveur : ' . $_SERVER['SERVER_NAME'] . "\n" .
+                $message_texte = '# contribution ' . $num_contrib .
+                    '# ' . $date .
+                    '# version Génémania ' . $Version .
+                    '# IP serveur : ' . $_SERVER['SERVER_ADDR'] .
+                    '# Nom serveur : ' . $_SERVER['SERVER_NAME'] .
                     $ajout .
-                    '# User agent : ' . $_SERVER['HTTP_USER_AGENT'] . "\n" .
-                    '# IP utilisateur : ' . $_SERVER['REMOTE_ADDR'] . "\n" .
-                    '# Mail : ' . $mail . "\n" .
-                    '# Message : ' . $message . "\n" .
-                    '# Reference_Personne : ' . $Refer . "\n";
+                    '# User agent : ' . $_SERVER['HTTP_USER_AGENT'] .
+                    '# IP utilisateur : ' . $_SERVER['REMOTE_ADDR'] .
+                    '# Mail : ' . $mail .
+                    '# Message : ' . $message .
+                    '# Reference_Personne : ' . $Refer;
                 $destinataire = $Adresse_Mail;
                 $sujet = 'Ajout de contribution Geneamania';
 
@@ -555,9 +555,7 @@ if ((!$bt_OK) && (!$bt_An)) {
             $compl = Ajoute_Page_Info(600, 200);
             Insere_Haut($entetePage . '&nbsp;pour&nbsp;' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Contribution', $Refer);
             echo '<br>';
-            // echo '<form id="saisie" method="post" onsubmit="return verification_form(this)" action="'.my_self().'?Refer='.$Refer.'">'."\n";
-            echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . my_self() . '?Refer=' . $Refer . '" >';
-
+            echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . $root . '/ajout_contribution.php?Refer=' . $Refer . '" >';
             echo '<input type="hidden" name="Refer" value="' . $Refer . '"/>';
             aff_origine();
             Aff_Donnees($Refer); // Affichage des données

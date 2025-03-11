@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -24,7 +24,7 @@ $acces = 'L';                                            // Type d'accès de la 
 $titre = $LG_Menu_Title['Most_Used_jobs']; // Titre pour META
 $x = Lit_Env();
 
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
@@ -60,8 +60,8 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = '&nbsp;<a href="Fiche_Evenement.php?refPar=';
-    $deb_modif = 'href="Edition_Evenement.php?refPar=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_evenement.php?refPar=';
+    $deb_modif = 'href="' . $root . '/edition_evenement.php?refPar=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 
@@ -85,7 +85,7 @@ if ($nb_lignes > 0) {
 
     echo '<br>' . Affiche_Icone('tip', LG_TIP) . ' ' . LG_MOST_JOBS_TIP1;
     if ($est_contributeur)
-        echo '<a href="Fusion_Evenements.php">' . LG_MOST_JOBS_TIP2 . '</a>';
+        echo '<a href="' . $root . '/fusion_evenements.php">' . LG_MOST_JOBS_TIP2 . '</a>';
     else
         echo LG_MOST_JOBS_TIP2;
     echo '<br>' . "\n";

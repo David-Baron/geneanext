@@ -5,14 +5,15 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
+require(__DIR__ . '/app/ressources/commun_gedcom.php');
 
-require(__DIR__ . '/Commun_Gedcom.php');
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Exp_Ged'];            // Titre pour META
 $niv_requis = 'G';                    // Disponible pour le gestionnaire
 $x = Lit_Env();
-require(__DIR__ . '/Gestion_Pages.php');
+
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Recup de la variable passée dans l'URL : export léger O/N
 $leger = Recup_Variable('leger', 'C', 'no');

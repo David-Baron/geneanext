@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/fonctions.php');
+require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération de la liste des tables dans un tableau
 function recup_liste_tables()
@@ -60,7 +60,7 @@ $acces = 'L';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Menu_Title['Tables_Admin'];
 $niv_requis = 'G';                        // Page réservée au gestionnaire
 $x = Lit_Env();                            // Lecture de l'indicateur d'environnement
-require(__DIR__ . '/Gestion_Pages.php');
+require(__DIR__ . '/app/ressources/gestion_pages.php');
 
 // Verrouillage de la page sur les gratuits
 if ($SiteGratuit) Retour_Ar();
@@ -106,24 +106,24 @@ if ($bt_OK) {
     }
 }
 
-echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+echo '<form id="saisie" method="post">';
 aff_origine();
 $larg_titre = '25';
-echo '<table width="60%" class="table_form">' . "\n";
+echo '<table width="60%" class="table_form">';
 
 echo colonne_titre_tab($LG_Ch_Adm_T_Action);
 echo '<input type="radio" name="type_action" value="R" checked="checked"/>' . my_html($LG_Ch_Adm_T_Repair);
-echo '<input type="radio" name="type_action" value="O"/>' . my_html($LG_Ch_Adm_T_Optim) . "\n";
-echo '</td></tr>' . "\n";
+echo '<input type="radio" name="type_action" value="O"/>' . my_html($LG_Ch_Adm_T_Optim);
+echo '</td></tr>';
 
 echo colonne_titre_tab($LG_Ch_Adm_T_Tables);
 echo '<input type="checkbox" name="selTous" value="on" onclick="checkUncheckAll(this);"/>&nbsp;' . $LG_Ch_Adm_T_All_None . '<br /><hr/>';
 $nb_tables = count($liste_tables);
 for ($nb = 0; $nb < $nb_tables; $nb++) {
     $tablename = $liste_tables[$nb];
-    echo '<input type="checkbox" name="n_table[]" value="' . $tablename . '"/>' . $tablename . '<br />' . "\n";
+    echo '<input type="checkbox" name="n_table[]" value="' . $tablename . '"/>' . $tablename . '<br />';
 }
-echo '</td></tr>' . "\n";
+echo '</td></tr>';
 
 ligne_vide_tab_form(1);
 bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');
