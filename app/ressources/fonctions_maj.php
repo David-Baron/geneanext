@@ -477,16 +477,20 @@ function Aff_Ajout_Rapide_Evt($Cible)
 // Mise à jour de la date de dernière mise à jour du site
 function maj_date_site($trt_vide = false)
 {
-    $req = 'update ' . nom_table('general') . ' set Date_Modification = current_timestamp';
-    if ($trt_vide) $req .= ', Base_Vide = false';
-    $res = maj_sql($req);
+    $sql = 'UPDATE ' . nom_table('general') . ' SET Date_Modification = current_timestamp';
+    if ($trt_vide) $sql .= ', Base_Vide = false';
+    maj_sql($sql);
 }
 
-// Retourne l'identifiant à attribué : max + 1
+/**
+ * Retourne l'identifiant à attribué : max + 1
+ * 
+ * @deprecated whithout replacement, use autoincrement insteed
+ */
 function Nouvel_Identifiant($Cle, $Table)
 {
     $identifiant = 0;
-    $sql = 'select max(' . $Cle . ') from ' . nom_table($Table);
+    $sql = 'SELECT max(' . $Cle . ') FROM ' . nom_table($Table);
     $resmax = lect_sql($sql);
     $enrmax = $resmax->fetch(PDO::FETCH_NUM);
     $identifiant = $enrmax[0] + 1;
@@ -505,11 +509,11 @@ function Select_Noms($id_nom, $NomSel, $NomCache, $PrDe = 'OO')
     $resSN = lect_sql($sql);
     //}
     //else $resSN->data_seek(0);
-    echo '<option value="-1/" >-- Nom --</option>' . "\n";
+    echo '<option value="-1/" >-- Nom --</option>';
     while ($row = $resSN->fetch(PDO::FETCH_NUM)) {
         echo '<option value="' . $row[0] . '/' . $row[1] . '"';
-        if ($id_nom == $row[0]) echo ' selected="selected" ';
-        echo '>' . $row[1] . "</option>\n";
+        if ($id_nom == $row[0]) echo ' selected';
+        echo '>' . $row[1] . "</option>";
     }
     echo "</select>\n";
     //if ($PrDe[1] == 'O') $resSN->closeCursor();
@@ -667,11 +671,11 @@ function get_file_type($nom_fic, $typeLu)
             break;
     }
     // Contrôle complémentaire sur les images, on écrase le type si le fichier lu ne correspond pas à une image
-    if (($le_type == 'IMG') and ($typeLu != '')) {
+    if (($le_type == 'IMG') && ($typeLu != '')) {
         if (strpos($typeLu, 'image/') !== 0) $le_type = '';
     }
     // Contrôle complémentaire sur les fichiers HTML, on écrase le type si le fichier lu ne correspond pas à une page
-    if (($le_type == 'HTM') and ($typeLu != '')) {
+    if (($le_type == 'HTM') && ($typeLu != '')) {
         if ($typeLu != "text/html")  $le_type = '';
     }
 
@@ -699,13 +703,12 @@ function retourne_var_post($nom_var, $numero)
 // Ajoute des slash au besoin
 function ajoute_sl($cont)
 {
-    $cont = addslashes($cont);
-    return $cont;
+    return addslashes($cont);
+
 }
 function ajoute_sl_rt($cont)
 {
-    $cont = addslashes($cont);
-    return $cont;
+    return addslashes($cont);
 }
 
 function envoi_mail($mail, $sujet, $message_txt, $message_html, $aff = true)

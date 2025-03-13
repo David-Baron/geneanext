@@ -185,15 +185,15 @@
             echo "Cette fonction  n'est accessible que si la filiation de la personne d'origine n'est pas connue.</li>";
             echo "</ul>";
             echo "Les listes de villes sont aliment&eacute;es &agrave; partir des villes de naissance, bapt&ecirc;me et d&eacute;c&egrave;s de la personne d'origine.<br />";
-            echo "Les dates peuvent &ecirc;tre choisies en cliquant sur l'ic&ocirc;ne " . Affiche_Icone('calendrier', 'calendrier') . "<br />";
+            echo "Les dates peuvent &ecirc;tre choisies en cliquant sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="calendrier" title="calendrier">' . "<br />";
             echo $auto_contrib;
             break;
         case 'Anniversaires':
             echo "Cette page permet de visualiser les anniversaires de naissance, mariage et d&eacute;c&egrave;s sur le mois en cours ou un mois choisi par l'utilisateur.";
             echo "Les anniversaires sont tri&eacute;s par ordre chronologique.<br />";
-            echo "Les ic&ocirc;nes " . Affiche_Icone('anniv_nai', 'Anniversaire de naissance') . '&nbsp;'
-                . Affiche_Icone('anniv_mar', 'Anniversaire de mariage') . '&nbsp;'
-                . Affiche_Icone('anniv_dec', 'Anniversaire de décès');
+            echo "Les ic&ocirc;nes " . '<img src="' . $root . '/assets/img/' . $Icones['anniv_nai'] . '" alt="Anniversaire de naissance" title="Anniversaire de naissance">' . '&nbsp;'
+                . '<img src="' . $root . '/assets/img/' . $Icones['anniv_mar'] . '" alt="Anniversaire de mariage" title="Anniversaire de mariage">' . '&nbsp;'
+                . '<img src="' . $root . '/assets/img/' . $Icones['anniv_dec'] . '" alt="Anniversaire de décès" title="Anniversaire de décès">';
             echo " signifient que l'anniversaire de naissance, mariage ou d&eacute;c&egrave;s a lieu le jour m&ecirc;me du mois en cours.<br />";
             echo "L'utilisateur a la possibilit&eacute; de ne pas afficher les personnes d&eacute;c&eacute;d&eacute;es ou pr&eacute;sum&eacute;es d&eacute;c&eacute;d&eacute;es (sur les anniversaires de naissance ou de mariage).<br />";
             echo "NB : l'affichage des personnes dont la visibilit&eacute; internet est restreinte est fonction du profil de l'utilisateur.";
@@ -204,7 +204,7 @@
             echo "De m&ecirc;me, on peut calculer &agrave; quelle g&eacute;n&eacute;ration correspond un num&eacute;ro et si celui-ci est du c&ocirc;t&eacute; paternel ou maternel.<br />";
             echo "L'utilisateur tape un num&eacute;ro via le clavier ou en cliquant sur les boutons ad hoc ;";
             echo "il doit ensuite cliquer sur le bouton voulu.<br />";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('efface', 'efface') . " permet d'effacer la zone de saisie.<br />";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['efface'] . '" alt="efface" title="efface">' . " permet d'effacer la zone de saisie.<br />";
             break;
         case 'Completude_Nom':
             echo "Cette page permet de v&eacute;rifier la compl&eacute;tude des informations sur les personnes portant un nom.<br /><br />";
@@ -222,7 +222,7 @@
             echo "Cette page permet de convertir des nombres romains en nombres arabes et inversement.<br />";
             echo "L'utilisateur tape un nombre romain ou arabe via le clavier ou en cliquant sur les boutons ad hoc ;";
             echo 'il doit ensuite cliquer sur le bouton conversion ou se positionner dans la zone de saisie et appuyer sur la touche "Entr&eacute;e"<br />';
-            echo "L'ic&ocirc;ne " . Affiche_Icone('efface', 'efface') . " permet d'effacer la zone de saisie.<br />";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['efface'] . '" alt="efface" title="efface">' . " permet d'effacer la zone de saisie.<br />";
             echo "Les nombres arabes sont limit&eacute;s &agrave; 3999.<br />";
             echo "Les saisies de lettres romaines peuvent &ecirc;tre faites en minuscules ou majuscules.";
             break;
@@ -232,8 +232,8 @@
             echo "de la personne est renseign&eacute; et s'il s'agit d'un nombre.";
             echo "La descendance est recherch&eacute;e, non pas par les filiations, mais par les num&eacute;ros sosa successifs.<br />";
             echo "La sortie peut se faire au format texte ou au format HTML avec des liens cliquables (personnes,"
-                . Affiche_Icone('arbre_asc', 'arbre ascendant') . " arbre ascendant,"
-                . Affiche_Icone('arbre_desc', 'arbre descendant') . "arbre descendant).<br />";
+                . '<img src="' . $root . '/assets/img/' . $Icones['arbre_asc'] . '" alt="arbre ascendant" title="arbre ascendant">' . " arbre ascendant,"
+                . '<img src="' . $root . '/assets/img/' . $Icones['arbre_desc'] . '" alt="arbre descendant" title="arbre descendant">' . "arbre descendant).<br />";
             echo "Les conjoints sont affichables selon le choix de l'utilisateur.<br />";
             echo "NB : l'affichage des personnes dont la visibilit&eacute; internet est restreinte est fonction du profil de l'utilisateur.";
             break;
@@ -267,9 +267,9 @@
         case 'Edition_Evenement':
             echo "Cette page permet de cr&eacute;er, modifier et supprimer un &eacute;v&egrave;nement.<br />";
             echo "Les zones obligatoires sont le titre de l'&eacute;v&egrave;nement et son type.<br />";
-            echo "Le lieu de survenance de l'&eacute;v&egrave;nement peut &ecirc;tre choisi en cliquant sur l'ic&ocirc;ne " . Affiche_Icone('localisation', 'localisation') . "<br />";
-            echo "Les dates de d&eacute;but et de fin peuvent &ecirc;tre choisis en cliquant sur l'ic&ocirc;ne " . Affiche_Icone('calendrier', 'calendrier') . "&nbsp;";
-            echo "alors que l'ic&ocirc;ne " . Affiche_Icone('copie_calend', 'copie') . " permet de copier la date de début dans la date de fin.<br />";
+            echo "Le lieu de survenance de l'&eacute;v&egrave;nement peut &ecirc;tre choisi en cliquant sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['localisation'] . '" alt="localisation" title="localisation">' . "<br />";
+            echo "Les dates de d&eacute;but et de fin peuvent &ecirc;tre choisis en cliquant sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="calendrier" title="calendrier">' . "&nbsp;";
+            echo "alors que l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['copie_calend'] . '" alt="copie" title="copie">' . " permet de copier la date de début dans la date de fin.<br />";
             echo 'La zone "Visibilit&eacute; Internet du commentaire" permet de masquer ou non l\'affichage de la note sur internet ; elle n\'a aucun effet en local.<br />';
             echo $auto_contrib;
             break;
@@ -301,15 +301,15 @@
             echo "Cette page permet de créer des relations entre deux personnes.<br />";
             echo "Vous pouvez d&eacute;finir plusieurs liens d'une personne avec une autre avec des r&ocirc;les diff&eacute;rents, mais pas avec le m&ecirc;me r&ocirc;le. <br />";
             echo "Les zones obligatoires sont la personne li&eacute;e et le r&ocirc;le.<br />";
-            echo "Les dates de d&eacute;but et de fin peuvent &ecirc;tre choisies en cliquant sur l'ic&ocirc;ne " . Affiche_Icone('calendrier', 'calendrier') . "&nbsp;";
-            echo "alors que l'ic&ocirc;ne " . Affiche_Icone('copie_calend', 'copie') . " permet de copier la date de début dans la date de fin.<br />";
+            echo "Les dates de d&eacute;but et de fin peuvent &ecirc;tre choisies en cliquant sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="calendrier" title="calendrier">' . "&nbsp;";
+            echo "alors que l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['copie_calend'] . '" alt="copie" title="copie">' . " permet de copier la date de début dans la date de fin.<br />";
             echo $auto_contrib;
             break;
         case 'Edition_NomFam':
             echo "Cette page permet de modifier un nom de famille ainsi que sa prononciation.<br /><br />";
             echo "<b>Saisie du nom de famille</b><br />";
             echo "Vous pouvez modifier le nom de famille. Pour placer des caract&egrave;res accentu&eacute;s, vous pouvez les saisir";
-            echo "en minuscules puis cliquer sur l'ic&ocirc;ne " . Affiche_Icone('majuscule', 'majuscule') . " pour mettre le nom en majuscules.<br />";
+            echo "en minuscules puis cliquer sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="majuscule" title="majuscule">' . " pour mettre le nom en majuscules.<br />";
             echo "<br /><b>Prononciation</b><br />";
             echo "Pour la prononciation du nom, le bouton &laquo; Prononciation calcul&eacute;e &raquo; d&eacute;termine une prononciation du nom &agrave; partir des r&egrave;gles de prononciation du fran&ccedil;ais.";
             echo "Ces r&egrave;gles sont complexes et parfois difficiles &agrave; appliquer, ainsi la prononciation propos&eacute;e peut ne pas &ecirc;tre correcte.";
@@ -322,16 +322,16 @@
         case 'Edition_Personne':
             echo "Les zones obligatoires sont le nom et les pr&eacute;noms.<br />";
             echo "Cette page permet de cr&eacute;er ou modifier une personne.<br />";
-            echo "La date de naissance ou de d&eacute;c&egrave;s peut &ecirc;tre choisie en cliquant sur l'ic&ocirc;ne " . Affiche_Icone('calendrier', 'calendrier') . "<br />";
+            echo "La date de naissance ou de d&eacute;c&egrave;s peut &ecirc;tre choisie en cliquant sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="calendrier" title="calendrier">' . "<br />";
             echo "Les professions sont g&eacute;r&eacute;es dans les &eacute;v&egrave;nements.<br />";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('ajout', 'ajout ville') . " permet d'ajouter dynamiquement une ville aux listes des villes de naissance ou de d&eacute;c&egrave;s.<br />";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('calculette', 'calculette') . " permet de calculer le num&eacute;ro sosa &agrave; partir de la saisie effectu&eacute;e par l'utilisateur dans le num&eacute;ro. ";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="ajout ville" title="ajout ville">' . " permet d'ajouter dynamiquement une ville aux listes des villes de naissance ou de d&eacute;c&egrave;s.<br />";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['calculette'] . '" alt="calculette" title="calculette">' . " permet de calculer le num&eacute;ro sosa &agrave; partir de la saisie effectu&eacute;e par l'utilisateur dans le num&eacute;ro. ";
             echo "Les calculs disponibles sont &quot;p&egrave;re&quot; (P), &quot;m&egrave;re&quot; (M), &quot;enfant&quot; (E) ou &quot;conjoint&quot; (C). Par exemple, si l'utilisateur veut calculer la m&egrave;re de la personne de num&eacute;ro ";
             echo "sosa 10, il saisit =M10 dans le num&eacute;ro ; un clic sur l'ic&ocirc;ne transforme le num&eacute;ro saisi en 21 (m&egrave;re de 10 dans la num&eacute;rotation sosa). Il est &agrave; noter que le ";
             echo "calcul est insensible &agrave; la casse ; ainsi =m10 a le m&ecirc;me effet que =M10.";
             echo "<br />";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('decujus', 'de cujus') . " permet d'attribuer automatiquement le num&eacute;ro 1 (de cujus) &agrave; la personne.<br />";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('copier', 'copie') . " permet de coller le nom, la ville de naissance ou de d&eacute;c&egrave;s de la fiche pr&eacute;c&eacute;dente sur laquelle &eacute;tait l'utilisateur en cr&eacute;ation ou modification.<br />";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['decujus'] . '" alt="de cujus" title="de cujus">' . " permet d'attribuer automatiquement le num&eacute;ro 1 (de cujus) &agrave; la personne.<br />";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="copie" title="copie">' . " permet de coller le nom, la ville de naissance ou de d&eacute;c&egrave;s de la fiche pr&eacute;c&eacute;dente sur laquelle &eacute;tait l'utilisateur en cr&eacute;ation ou modification.<br />";
             echo "<br />";
             echo "Le bouton " . $lib_Supprimer . " n'est affich&eacute; que si la personne n'est pas dans une union, qu'elle n'a pas de filiation ";
             echo "et qu'elle n'est pas dans une filiation en tant que parent.<br /><br />";
@@ -340,11 +340,11 @@
         case 'Edition_Rangs':
             echo "Cette page permet rectifier les rangs des enfants d'un couple.<br />";
             echo "Pour chaque enfant, G&eacute;n&eacute;amania calcule un rang th&eacute;orique <b>si la date de naissance est connue de mani&egrave;re pr&eacute;cise</b>.<br />";
-            echo "En cas de divergence entre le rang th&eacute;orique et le rang saisi, la zone du rang calcul&eacute; est suivie de l'icône " . Affiche_Icone('warning', 'Alerte');
+            echo "En cas de divergence entre le rang th&eacute;orique et le rang saisi, la zone du rang calcul&eacute; est suivie de l'icône " . '<img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Alerte" title="Alerte">';
             echo "L'utilisateur peut rectifier en masse les rangs en cliquant sur le bouton &quot;Accepter les rangs calcul&eacute;s&quot;.";
             echo "La mise &agrave; jour n'est effective qu'apr&egrave;s avoir cliqu&eacute; sur le bouton &quot;" . $lib_Okay . "&quot;.<br />";
             echo "De m&ecirc;me, si les dates de naissance sont connues, G&eacute;n&eacute;amania calcule un &eacute;cart th&eacute;orique en mois / ann&eacute;es entre les naissances.";
-            echo 'Si l\'&eacute;cart avec l\'enfant pr&eacute;c&eacute;dent est de moins de 9 mois, la zone "Ecart calcul&eacute;" est suivie de l\'ic&ocirc;ne ' . Affiche_Icone('warning', 'Alerte') . "<br />";
+            echo 'Si l\'&eacute;cart avec l\'enfant pr&eacute;c&eacute;dent est de moins de 9 mois, la zone "Ecart calcul&eacute;" est suivie de l\'ic&ocirc;ne ' .'<img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Alerte" title="Alerte">' . "<br />";
             break;
         case 'Edition_Utilisateur':
             echo "";
@@ -380,7 +380,7 @@
             echo "L'export 'Site gratuit' permet d'exporter ses donn&eacute;es au format texte afin de les charger sur un site personnel h&eacute;berg&eacute; sur la plateforme G&eacute;n&eacute;amania.<br />";
             echo "L'option 'Masquage des dates r&eacute;centes' permet de ne pas exporter les dates trop r&eacute;centes afin de pr&eacute;server la confidentialit&eacute; de certaines donn&eacute;es (personnes vivantes par exemple).<br />";
             echo "L'utilisateur peut sp&eacute;cifier un pr&eacute;fixe &agrave; attacher au nom du fichier (cette possibilit&eacute; n'est pas offerte sur les sites gratuits standard).<br />";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('oeil', 'oeil') . " permet de visualiser la liste des tables &agrave; exporter ; l'utilisateur";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="oeil" title="oeil">' . " permet de visualiser la liste des tables &agrave; exporter ; l'utilisateur";
             echo "peut ainsi choisir les tables qu'il souhaite exporter.<br />";
             echo "Le nom du fichier de sauvegarde par d&eacute;faut est Export_Sauvegarde.sql (Export_Complet.sql pour les versions ant&eacute;rieures &agrave; la 2.1) pour ";
             echo "la sauvegarde et Export_Internet.sql pour l'export Internet ; le suffixe &eacute;ventuel est ins&eacute;r&eacute; avant le point ;";
@@ -445,7 +445,7 @@
             echo "</ul>";
             echo "Le format des lieux permet de s&eacute;lectionner l'arborescence des zones g&eacute;ographiques pr&eacute;sentes dans le fichier. Par d&eacute;faut, le format est compos&eacute; uniquement des villes.";
             echo "Le format est sp&eacute;cifi&eacute; en s&eacute;lectionnant successivement chaque niveau (e.g. ville, d&eacute;partement, r&eacute;gion, pays) dans la liste d&eacute;roulante.";
-            echo "L'ic&ocirc;ne " . Affiche_Icone('efface', 'Efface le format des lieux') . " permet d'effacer le format des lieux pr&eacute;c&eacute;demment s&eacute;lectionn&eacute;.";
+            echo "L'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['efface'] . '" alt="Efface le format des lieux" title="Efface le format des lieux">' . " permet d'effacer le format des lieux pr&eacute;c&eacute;demment s&eacute;lectionn&eacute;.";
             echo "L'arborescence est prise automatiquement en compte si elle est sp&eacute;cifi&eacute;e dans l'ent&ecirc;te du fichier &agrave; charger (balises PLAC/FORM).";
             echo "<br /><br />Cette page n'est disponible que pour le profil gestionnaire.";
             break;
@@ -552,7 +552,7 @@
             echo "Le r&eacute;sultat peut avoir un format :";
             echo "<ul>";
             echo "<li>&eacute;cran : la fiche familiale des personnes est alors accessible en cliquant sur les nom et pr&eacute;noms de la liste";
-            echo "et la fiche personne en cliquant sur l'icone " . Affiche_Icone('fiche_edition', $LG_modify) . "</li>";
+            echo "et la fiche personne en cliquant sur l'icone " . '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">' . "</li>";
             echo "<li>texte : ce format est destin&eacute; &agrave; &ecirc;tre imprim&eacute;.</li>";
             echo "<li>CSV : ce format est destin&eacute; &agrave; &ecirc;tre lu dans un tableur (LibreOffice, Excel...).</li>";
             echo "</ul>";
@@ -604,7 +604,7 @@
         case 'Stat_Base_Depart':
             echo "Cette page permet de visualiser la r&eacute;partition des naissances et des d&eacute;c&egrave;s par d&eacute;partement.";
             echo "En mode Internet, seules sont prises en compte les personnes dont la diffusion Internet est autoris&eacute;e si l'utilisateur n'a pas un profil privil&eacute;gi&eacute;.<br />";
-            echo "L'icone " . Affiche_Icone('carte_france', 'Carte de France') . " permet de visualiser la r&eacute;partition g&eacute;ographique sur la carte de la France.";
+            echo "L'icone " . '<img src="' . $root . '/assets/img/' . $Icones['carte_france'] . '" alt="Carte de France" title="Carte de France">' . " permet de visualiser la r&eacute;partition g&eacute;ographique sur la carte de la France.";
             break;
         case 'Stat_Base_Villes':
             echo "Cette page permet de visualiser la r&eacute;partition des naissances, mariages et des d&eacute;c&egrave;s par villes.<br />";
@@ -667,7 +667,7 @@
         case 'Verif_Homonymes':
             echo "Cette page permet d'afficher les homonymes pr&eacute;sents dans la base. Ceux-ci sont tri&eacute;s par nom, pr&eacute;noms, date de naissance et de date de d&eacute;c&egrave;s.<br />";
             echo 'La liste des personnes peut &ecirc;tre restreinte en cochant les cases "Date de naissance" et "Date de d&eacute;c&egrave;s". Ainsi, si l’on coche la case "Date de naissance", le contr&ocirc;le d’homonymie prendra également en compte la date de naissance ; il s’agit alors d’identifier les doublons r&eacute;els et plus seulement les homonymes.';
-            echo "Pour chaque couple nom – pr&eacute;noms, on peut afficher 2 personnes en parall&egrave;le en les s&eacute;lectionnant via les boutons radio et en cliquant sur l'ic&ocirc;ne " . Affiche_Icone('2personnes', 'Comparaison de 2 personnes') . ".";
+            echo "Pour chaque couple nom – pr&eacute;noms, on peut afficher 2 personnes en parall&egrave;le en les s&eacute;lectionnant via les boutons radio et en cliquant sur l'ic&ocirc;ne " . '<img src="' . $root . '/assets/img/' . $Icones['2personnes'] . '" alt="Comparaison de 2 personnes" title="Comparaison de 2 personnes">' . ".";
             break;
         case 'Import_CSV_Evenements':
             echo "Il est possible de cr&eacute;er des &eacute;v&egrave;nements &agrave; partir d'un fichier csv issu d'un tableur.<br />";

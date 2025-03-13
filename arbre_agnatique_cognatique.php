@@ -166,8 +166,8 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
                     $Dates = $Ne . ' ' . $Decede;
                     $cont_cell .= $Dates . '<br />' . "\n";
                     if (!$texte) {
-                        $cont_cell .= '<a ' . Ins_Ref_Arbre($Refer) . '>' . $img_asc . '</a>';
-                        $cont_cell .= '<a ' . Ins_Ref_Arbre_Desc($Refer) . '>' . $img_desc . '</a>';
+                        $cont_cell .= '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Refer . '">' . $img_asc . '</a>';
+                        $cont_cell .= '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '">' . $img_desc . '</a>';
                         if ($existe_image) {
                             $txt_img = 'Image de ' . $infos[1];
                             $cont_cell .= $img_image . 'title="' . $txt_img . '" alt="' . $txt_img . '" ' . Survole_Clic_Div('div_' . $Refer) . '/>';
@@ -224,7 +224,7 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
 }
 
 if ($nb_gen > $max_gen_AD) {
-    echo '<br />' . Affiche_Icone('tip', $LG_tip) .
+    echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '">' .
         $LG_Tree_Lim_1 . $max_gen_AD . $LG_Tree_Lim_2 . '<a href="' . $root . '/vue_personnalisee.php">' . $LG_Tree_Lim_3 . '</a>' . $LG_Tree_Lim_4 . '.' . "\n";
 }
 
@@ -242,7 +242,10 @@ if ($glob_existe_image) {
     echo '<div id="image">';
     $action = $LG_Tree_Icon_Hover;
     if ($Comportement == 'C') $action = $LG_Tree_Icon_Click;
-    echo Affiche_Icone('tip', $LG_tip) . '&nbsp;' . $action . Affiche_Icone('images', 'Images') . $LG_Tree_Show_Image;
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> '
+     . $action
+     . '<img src="' . $root . '/assets/img/' . $Icones['images'] . '" alt="Images" title="Images"> '
+     . $LG_Tree_Show_Image;
     echo '</div>';
     echo '</table>';
     echo '<script type="text/javascript">';

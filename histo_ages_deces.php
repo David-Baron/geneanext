@@ -162,7 +162,7 @@ if (Get_Nom_Prenoms($ref_max_f, $Nom, $Prenoms)) {
 // Un décès est antérieur à la date de naissance
 if ($est_contributeur) {
     if ($warning_negatif) {
-        echo '<br><br>' . Affiche_Icone('tip', 'Conseil') . ' ' . LG_CH_HISTO_AGE_CTL_BIRTH;
+        echo '<br><br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . LG_CH_HISTO_AGE_CTL_BIRTH;
     }
 }
 

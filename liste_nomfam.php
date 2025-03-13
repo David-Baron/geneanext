@@ -26,9 +26,7 @@ $h_mod = my_html($LG_modify);
 
 if (! $texte) {
 
-    $deb_visu  = '<a href="' . $root . '/fiche_nomfam.php?idNom=';
-    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
-    $icone_modifier = Affiche_Icone('fiche_edition', $h_mod);
+    $icone_modifier = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($h_mod) . '" title="' . my_html($h_mod) . '">';
 
     // Lien direct sur le dernier nom de personne saisi et possibilité d'insérer un nom de famille
     if ($est_gestionnaire) {
@@ -41,11 +39,11 @@ if (! $texte) {
         }
         // Lien direct sur le dernier nom de personne saisi
         if ($MaxRef > 0) {
-            echo my_html(LG_NAMES_LIST_LAST) . LG_SEMIC . $deb_visu . $MaxRef . '">' . my_html($enrmax[1]) . '</a>&nbsp;';
-            echo Affiche_Icone_Lien($deb_modif . $MaxRef . '"', 'fiche_edition', $h_mod) . '<br />';
+            echo my_html(LG_NAMES_LIST_LAST) . ' <a href="' . $root . '/fiche_nomfam.php?idNom=' . $MaxRef . '">' . my_html($enrmax[1]) . '</a>&nbsp;';
+            echo Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=' . $MaxRef . '"', 'fiche_edition', $h_mod) . '<br />';
         }
         $resmax->closeCursor();
-        echo my_html(LG_NAMES_LIST_ADD) . LG_SEMIC . Affiche_Icone_Lien($deb_modif . '-1"', 'ajouter', my_html($LG_add)) . '<br /><br />' . "\n";
+        echo my_html(LG_NAMES_LIST_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=-1"', 'ajouter', my_html($LG_add)) . '<br /><br />' . "\n";
     }
     $echo_haut = Affiche_Icone_Lien('href="#top"', 'page_haut', my_html($LG_top)) . '<br />';
 
@@ -101,10 +99,10 @@ if (! $texte) {
                 echo '<a name="' . $Nouv_Lettre . '">' . $Nouv_Lettre . '</a>&nbsp;' . $echo_haut;
                 $Anc_Lettre = $Nouv_Lettre;
             }
-            //
-            echo $deb_visu . $row[0] . '">' . $NomA . '</a> (' . $codePho->codeVersPhon($row[2]) . ")\n";
+
+            echo '<a href="' . $root . '/fiche_nomfam.php?idNom=' . $row[0] . '">' . $NomA . '</a> (' . $codePho->codeVersPhon($row[2]) . ")\n";
             if (($est_gestionnaire) and (! $texte)) {
-                echo '&nbsp;' . Affiche_Icone_Lien($deb_modif . $row[0] . '"', 'fiche_edition', $h_mod);
+                echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=' . $row[0] . '"', 'fiche_edition', $h_mod);
             }
             echo "<br />\n";
         }

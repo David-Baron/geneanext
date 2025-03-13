@@ -44,7 +44,7 @@ function du_mois($Mois)
 // La requête est du type : select Nom,Prenoms,Reference, Ne_le (...)
 function aff_nai_dec($type, $req)
 {
-    global $db, $Mois, $Auj, $cMois, $chemin_images_util, $ignorer_dec, $LG_birth_many, $LG_death_many, $LG_Day_Birth, $LG_Day_Death;
+    global $root, $Icones, $db, $Mois, $Auj, $cMois, $chemin_images_util, $ignorer_dec, $LG_birth_many, $LG_death_many, $LG_Day_Birth, $LG_Day_Death;
     $affiche = true;
     if ($type == 'N') {
         $lib_titre = $LG_birth_many . ' ';
@@ -55,7 +55,7 @@ function aff_nai_dec($type, $req)
         $icone = 'anniv_dec';
         $lib_icone = $LG_Day_Death;
     }
-    $aff_icone = '&nbsp;&nbsp;' . Affiche_Icone($icone, $lib_icone);
+    $aff_icone = ' <img src="' . $root . '/assets/img/' . $Icones[$icone] . '" alt="' . my_html($lib_icone) . '" title="' . my_html($lib_icone) . '">';
     echo '<tr><th colspan="2">' . $lib_titre . du_mois($Mois) . '</th></tr>';
     $res = lect_sql($req);
     $num_lig = 0;
@@ -143,7 +143,7 @@ $sql = $sql . " order by substr(Maries_Le,7,2)";
 echo '<tr><th colspan="2">' . $LG_wedding_many . ' du mois ' . du_mois($Mois) . '</th></tr>';
 $res = lect_sql($sql);
 $num_lig = 0;
-$aff_icone = '&nbsp;&nbsp;' . Affiche_Icone('anniv_mar', 'Anniversaire de mariage');
+$aff_icone = ' <img src="' . $root . '/assets/img/' . $Icones['anniv_mar'] . '" alt="Anniversaire de mariage" title="Anniversaire de mariage">';
 while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     $affiche = true;
     if ($ignorer_dec) {

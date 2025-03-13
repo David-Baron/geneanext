@@ -120,7 +120,7 @@ function est_utilisee($aff)
 // Affiche une ville
 function Aff_Ville($enreg2)
 {
-    global $root, $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $Icones, $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_ville = $enreg['Nom_Ville'];
     $n_ville_html = $enreg2['Nom_Ville'];
@@ -133,7 +133,7 @@ function Aff_Ville($enreg2)
     echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" align="center">' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";
@@ -189,7 +189,7 @@ function Aff_Ville($enreg2)
     echo '</td></tr>' . "\n";
     champ_carte(LG_ICSV_TOWN_ZIP_LONGITUDE, 'Longitude', $enreg2['Longitude']);
     $id_image = 'carte_osm';
-    echo '&nbsp;' . Affiche_Icone_Clic("map_go", "apelle_carte('Latitude','Longitude')", LG_CALL_OPENSTREETMAP) . "\n";
+    echo ' <img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' .LG_CALL_OPENSTREETMAP . '" title="' . LG_CALL_OPENSTREETMAP . '" onclick="apelle_carte(Latitude, Longitude)">';
     echo "</td></tr>\n";
     echo '<tr><td colspan="2">';
     aff_tip_carte();
@@ -361,7 +361,7 @@ if (($ok == '') && ($annuler == '')) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
-        $compl .= Affiche_Icone_Lien(Ins_Ref_ImagesV($Ident), 'images', 'Images') . '&nbsp;' .
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=V"', 'images', 'Images') . '&nbsp;' .
             Affiche_Icone_Lien('href="'. $root .'/fiche_ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . '&nbsp;';
     }
 

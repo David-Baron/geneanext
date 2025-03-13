@@ -17,9 +17,9 @@ function add_pers($enreg)
 
 function affiche_pers($nb)
 {
-    global $refs, $noms, $prenoms, $echo_modif;
+    global $root, $Icones, $LG_modify, $refs, $noms, $prenoms;
     echo '&nbsp;<a ' . Ins_Ref_Pers($refs[$nb]) . '>' . my_html($noms[$nb] . ' ' . $prenoms[$nb]) . '</a>' . "\n";
-    echo '&nbsp;<a ' . Ins_Edt_Pers($refs[$nb]) . '>' . $echo_modif;
+    echo '&nbsp;<a ' . Ins_Edt_Pers($refs[$nb]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />';
 }
 
 $acces = 'L';
@@ -200,7 +200,6 @@ else {
                         break;
                 }
 
-                $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a><br />';
                 $nb_refs = count($refs);
                 if ($debug) {
                     var_dump($refs);

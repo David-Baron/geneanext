@@ -104,8 +104,8 @@ if (isset($_SESSION['mem_pers'])) {
 }
 
 // Lien direct sur la dernière personne saisie et possibilité d'insérer une personne
-if ((!$texte) and ($est_contributeur)) {
-    $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
+if ((!$texte) && ($est_contributeur)) {
+
     $MaxRef = 0;
     // On va chercher la dernière personne
     if (isset($_SESSION['dern_pers'])) {
@@ -122,7 +122,7 @@ if ((!$texte) and ($est_contributeur)) {
     if ($MaxRef > 0) {
         $aff_nom = UnPrenom($enrmax[2]) . ' ' . $enrmax[1];
         echo $LG_last_pers . ' : <a ' . Ins_Ref_Pers($MaxRef) . '>' . $aff_nom . '</a>&nbsp;';
-        echo '&nbsp;<a ' . Ins_Edt_Pers($MaxRef) . '>' . $echo_modif . '<br>' . "\n";
+        echo '&nbsp;<a ' . Ins_Edt_Pers($MaxRef) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
     }
     $resmax->closeCursor();
     // Possibilité d'insérer une personne
@@ -223,8 +223,8 @@ if (! $texte) {
             }
             echo '</select>' . "\n";
             echo '<select name="personnes" id="personnes" onchange="updateLiensIcones(this.value)"></select>';
-            echo '<a id="icone_visu" href="' . $root . '/fiche_fam_pers.php?Refer=1">' . Affiche_Icone('page', LG_LPERS_PERS_FILE) . '</a>';
-            echo '<a id="icone_modif" href="' . $root . '/edition_personne.php?Refer=1">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
+            echo '<a id="icone_visu" href="' . $root . '/fiche_fam_pers.php?Refer=1"><img src="' . $root . '/assets/img/' . $Icones['page'] . '" alt="' . LG_LPERS_PERS_FILE . '" title="' . LG_LPERS_PERS_FILE . '"></a>';
+            echo '<a id="icone_modif" href="' . $root . '/edition_personne.php?Refer=1"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
             echo '</fieldset>';
             echo '</form>';
         }
@@ -267,12 +267,6 @@ if (! $texte) {
 
     $deb_lien = '<a href="' . $root . '/liste_pers2.php?Type_Liste=' . $Type_Liste;
     $deb_lien_crea = 'href="' . $root . '/edition_personnes_ville.php?evt=';
-
-    if (($Type_Liste == 'M') or ($Type_Liste == 'K')) {
-        $echo_femme = Affiche_Icone('femme', my_html(LG_ORDER_BY_WOMEN));
-        $echo_homme = Affiche_Icone('homme', my_html(LG_ORDER_BY_MEN));
-        $echo_calend = Affiche_Icone('calendrier', my_html(LG_ORDER_BY_DATE));
-    }
 
     if ($count_ok) {
         $res->closeCursor();
@@ -328,9 +322,9 @@ if (! $texte) {
                 case 'K':
                     echo $NomA . '&nbsp;(' . $row[0] . ')&nbsp;' . '<a href="' . $root . '/notaires_ville.php?Ville=' . $row[2] . '&amp;Nom=' . $le_nom . '">' . LG_LPERS_NOTARIES . '</a>&nbsp;';
                     appelle_carte_osm();
-                    echo $deb_lien . $params . '&amp;Tri=F">' . $echo_femme . '</a>';
-                    echo $deb_lien . $params . '&amp;Tri=H">' . $echo_homme . '</a>';
-                    echo $deb_lien . $params . '&amp;Tri=D">' . $echo_calend . '</a><br>' . "\n";
+                    echo $deb_lien . $params . '&amp;Tri=F"><img src="' . $root . '/assets/img/' . $Icones['femme'] . '" alt="' . LG_ORDER_BY_WOMEN . '" title="' . LG_ORDER_BY_WOMEN . '"></a>';
+                    echo $deb_lien . $params . '&amp;Tri=H"><img src="' . $root . '/assets/img/' . $Icones['homme'] . '" alt="' . LG_ORDER_BY_MEN . '" title="' . LG_ORDER_BY_MEN . '"></a>';
+                    echo $deb_lien . $params . '&amp;Tri=D"><img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="' . LG_ORDER_BY_DATE . '" title="' . LG_ORDER_BY_DATE . '"></a><br>' . "\n";
                     break;
                 default:
                     break;

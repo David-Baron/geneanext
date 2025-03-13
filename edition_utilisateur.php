@@ -297,7 +297,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '</table>' . "\n";
 
     if ((!$Creation) and ($Code == $_SESSION['idUtil'])) {
-        echo '<br />' . Affiche_Icone('warning', 'Attention') . ' ' . LG_UTIL_WARN . '.';
+        echo '<br /><img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Attention" title="Attention"> ' . LG_UTIL_WARN . '.';
     }
 
     echo "</form>";

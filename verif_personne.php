@@ -127,12 +127,12 @@ function ctrlDates($date1, $date2, $mes, $lib1, $lib2)
 //  Affichage message d'elerte
 function alerte($mes)
 {
-    global $nbErreurs;
+    global $root, $Icones, $nbErreurs;
     $nbErreurs += 1;
-    echo '<table border="0" cellspacing = "4"><tr>' . "\n";
-    echo '<td>' . Affiche_Icone('drapeau_orange', 'erreur') . '</td>';
-    echo '<td>' . $mes . "</td>\n";
-    echo '</tr></table>' . "\n";
+    echo '<table cellspacing = "4"><tr>';
+    echo '<td><img src="' . $root . '/assets/img/' . $Icones['drapeau_orange'] . '" alt="erreur" title="erreur"></td>';
+    echo '<td>' . $mes . "</td>";
+    echo '</tr></table>';
 }
 
 // Ajoute 15 ans à une date
@@ -165,9 +165,9 @@ function ajout9mois($laDate)
 //  Affichage du message s'il n'y a pas d'erreur
 function pasErreur()
 {
-    global $nbErreurs;
+    global $root, $Icones, $nbErreurs;
     if ($nbErreurs == 0) {
-        echo Affiche_Icone('drapeau_vert', 'ok') . '&nbsp;Pas d\'erreur<br />' . "\n";
+        echo '<img src="' . $root . '/assets/img/' . $Icones['drapeau_vert'] . '" alt="ok" title="ok"> Pas d\'erreur<br />' . "\n";
     }
     $nbErreurs = 0;
 }

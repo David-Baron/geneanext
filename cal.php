@@ -107,7 +107,7 @@ if ($rev) {
     echo ' disabled="disabled"';
 }
 echo '/>';
-echo '&nbsp;' . Affiche_Icone_Clic('aujourdhui', 'aujourdui();', LG_CAL_TODAY) . "\n";
+echo ' <img src="' . $root . '/assets/img/' . $Icones['aujourdhui'] . '" alt="' . LG_CAL_TODAY . '" title="' . LG_CAL_TODAY . '" onclick="aujourdui();">';
 
 echo '</td></tr>';
 echo '<tr class="liste2">';
@@ -165,7 +165,7 @@ echo '<fieldset>';
 aff_legend(LG_CAL_QUICK_FILL);
 echo '<table>';
 echo '<tr><td align="center"><input type="text" name="grego_rapide" size="10" maxlength="10" onkeyup="masqueSaisieDate(this.form.grego_rapide);"/></td></tr>';
-echo '<tr><td>' . Affiche_Icone('tip', 'Conseil') . ' ' . LG_CAL_FILL_TIP . '</td></tr>' . "\n";
+echo '<tr><td><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . LG_CAL_FILL_TIP . '</td></tr>' . "\n";
 echo '</table>';
 echo '</fieldset>';
 

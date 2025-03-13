@@ -57,29 +57,18 @@ if ($bt_Sup) {
 }
 
 # include(__DIR__ . '/assets/js/Liste_Liens.js');
-
-// Suffixe pour les div
-$suf = 0;
-
-$ent_table = '<table width="95%" border="0" class="classic" align="center">' . "\n";
-$fin_mod = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $LG_modify . '" title="' . $LG_modify . '"/></a>' . "\n";
-$deb_mod = '<td align="center" width="10%"><a href="' . $root . '/edition_lien.php?Ref=';
+$suf = 0; // Suffixe pour les div
 
 // Possibilité d'insérer un lien
 if ($est_gestionnaire) {
-    echo my_html(LG_LINKS_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_lien.php?Ref=-1"', 'ajouter', $LG_add) . '<br />' . "\n";
-    echo my_html(LG_LINKS_IMPORT) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/import_csv_liens.php"', 'ajout_multiple', $LG_csv_import) . '<br /><br />' . "\n";
+    echo my_html(LG_LINKS_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_lien.php?Ref=-1"', 'ajouter', $LG_add) . '<br />' . "\n";
+    echo my_html(LG_LINKS_IMPORT) . ' ' . Affiche_Icone_Lien('href="' . $root . '/import_csv_liens.php"', 'ajout_multiple', $LG_csv_import) . '<br /><br />' . "\n";
     echo '<form action="' . my_self() . '" id="saisie" method="post">';
     echo '<input name="compteur" type="' . $hidden . '" value="0"/>';
 }
 
 $num_lig = 0;
-
-$echo_diff_int     = Affiche_Icone('internet_oui', $LG_show_on_internet) . '&nbsp;';
-$echo_diff_int_non = Affiche_Icone('internet_non', $LG_noshow_on_internet) . '&nbsp;';
-
-// Préparation sur la clause de diffusabilité
-$diff_int = '';
+$diff_int = ''; // Préparation sur la clause de diffusabilité
 //$est_privilegie = false;
 if (!$est_privilegie) $diff_int = ' where Diff_Internet = 1 ';
 
@@ -101,7 +90,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
             echo '</div>' . "\n";
             echo "<br />\n";
         }
-        echo $ent_table;
+        echo '<table width="95%" class="classic" align="center">' . "\n";
         echo '<tr align="center" ><td class="rupt_table" colspan="' . $nb_Cols . '">' . $Nouv_Type;
         echo '&nbsp;&nbsp;<img id="ajout' . $suf . '" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . LG_LINKS_EYE . '" ' .
             Survole_Clic_Div('div' . $suf) . '/>' . "\n";
@@ -111,7 +100,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         }
         echo '</td></tr></table>' . "\n";
         echo '<div id="div' . $suf . '">' . "\n";
-        echo $ent_table;
+        echo '<table width="95%" class="classic" align="center">' . "\n";
         $Anc_Type = $Nouv_Type;
         $num_lig_coul = 0;
     }
@@ -134,13 +123,13 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     // Icone de modification et checkbox de suppression pour le gestionnaire
     if ($est_gestionnaire) {
 
-        echo $deb_mod . $row['Ref_lien'] . '">' . $fin_mod;
+        echo '<td align="center" width="10%"><a href="' . $root . '/edition_lien.php?Ref=' . $row['Ref_lien'] . '"><img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"/></a>' . "\n";
         echo '&nbsp;<input type="checkbox" name="S_Sup[' . $num_lig . ']" id="S_Sup_' . $num_lig . '" ';
         echo 'onclick="traite(' . $num_lig . ')"';
         echo "/>\n";
         echo  '<input type="' . $hidden . '" name="idLien[' . $num_lig . ']" value="' . $id_lien . '"/>';
-        if ($row['Diff_Internet'] == 1) echo $echo_diff_int;
-        else                            echo $echo_diff_int_non;
+        if ($row['Diff_Internet'] == 1) echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '"> ';
+        else                            echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '"> ';
         echo '</td>';
     }
     echo "  </tr>\n";
@@ -153,7 +142,7 @@ if ($Anc_Type != '') {
     echo '</div>' . "\n";
 }
 
-echo Affiche_Icone('tip', LG_TIP) . '&nbsp;' . LG_CH_IMAGE_MAGNIFY . '.<br />';
+echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '">' . LG_CH_IMAGE_MAGNIFY . '.<br />';
 
 if ($est_gestionnaire) {
     echo '<div id="boutons">';

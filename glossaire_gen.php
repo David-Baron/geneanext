@@ -61,7 +61,7 @@ for ($nb = ord('A'); $nb <= ord('Z'); $nb++) {
 }
 
 echo $ent_table . '<tr>' .
-    '<td colspan="26" align="center">' . Affiche_Icone('tip', 'Conseil') . '&nbsp;' . LG_GLOSS_TIP_1 . ' <font color="blue">' . LG_GLOSS_TIP_2 . '</font>, '
+    '<td colspan="26" align="center"><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . LG_GLOSS_TIP_1 . ' <font color="blue">' . LG_GLOSS_TIP_2 . '</font>, '
     . LG_GLOSS_TIP_3 . ' <img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO
     . '"/> ' . LG_GLOSS_TIP_4
     . '</td></tr><tr>' . $alpha . '</tr><tr><td colspan="26">&nbsp;</td></tr>' . "\n";

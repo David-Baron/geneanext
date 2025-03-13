@@ -71,13 +71,13 @@ else $al_texte .= 'N';
 
 
 
-$lien = 'href="'. $root .'/controle_personnes.php?texte=O' .
+$lien = 'href="' . $root . '/controle_personnes.php?texte=O' .
     '&amp;al=' . $al_texte .
     '&CT=O';
 
 $compl = Ajoute_Page_Info(700, 250) .
-    Affiche_Icone_Lien($lien . '"', 'text', $LG_printable_format) . '&nbsp;'
-    //.Affiche_Icone_Lien('href="'. $root .'/controle_personnes.php?idNom='.$idNom.'&amp;Nom='.$NomL.'&amp;Sortie=c"','exp_tab','Export CSV').'&nbsp;'
+    Affiche_Icone_Lien($lien . '"', 'text', $LG_printable_format) . ' '
+    //.Affiche_Icone_Lien('href="'. $root .'/controle_personnes.php?idNom='.$idNom.'&amp;Nom='.$NomL.'&amp;Sortie=c"','exp_tab','Export CSV').' '
 ;
 
 
@@ -110,34 +110,34 @@ if (!$controle) {
     $dem_alerte_2 = true;
 }
 
-$img_vert = Affiche_Icone('drapeau_vert', $niv_alerte_0);
-$img_orange = Affiche_Icone('drapeau_orange', $niv_alerte_1);
-$img_rouge = Affiche_Icone('drapeau_rouge', $niv_alerte_2);
+$img_vert =  '<img src="' . $root . '/assets/img/' . $Icones['drapeau_vert'] . '" alt="OK" title="OK">';
+$img_orange =  '<img src="' . $root . '/assets/img/' . $Icones['drapeau_orange'] . '" alt="Alerte" title="Alerte">';
+$img_rouge =  '<img src="' . $root . '/assets/img/' . $Icones['drapeau_rouge'] . '" alt="Erreur" title="Erreur">';
 
 if (! $texte) {
     echo '<form action="' . my_self() . '?CT=O" method="post">' . "\n";
     echo '<input type="hidden" name="deja" value = "O"/>';
     echo '<table border="0" width="60%" align="center">' . "\n";
     echo '<tr align="center" class="rupt_table">';
-    echo '<td>Afficher&nbsp;:&nbsp;' . "\n";
+    echo '<td>Afficher : ' . "\n";
     aff_cbox('ch_alerte_0', $niv_alerte_0, $img_vert,   $dem_alerte_0);
     aff_cbox('ch_alerte_1', $niv_alerte_1, $img_orange, $dem_alerte_1);
     aff_cbox('ch_alerte_2', $niv_alerte_2, $img_rouge,  $dem_alerte_2);
     echo '</td>' . "\n";
     echo '<td><input type="checkbox" name="Ignore" value="I"';
     if ($Ignore) echo ' checked="checked"';
-    echo '/>&nbsp;Ignorer les personnes valid&eacute;es</td>' . "\n";
+    echo '/> Ignorer les personnes validées</td>' . "\n";
     echo '<td><input type="submit" value="Afficher la liste"/></td>' . "\n";
     echo '</tr>' . "\n";
     echo '</table>' . "\n";
     echo '</form>' . "\n";
 } else {
-    echo 'Affichage demand&eacute; :';
-    echo '&nbsp;' . $niv_alerte_0;
+    echo 'Affichage demandé :';
+    echo ' ' . $niv_alerte_0;
     O_N($dem_alerte_0);
-    echo '&nbsp;;&nbsp;' . $niv_alerte_1;
+    echo ' ; ' . $niv_alerte_1;
     O_N($dem_alerte_1);
-    echo '&nbsp;;&nbsp;' . $niv_alerte_2;
+    echo ' ; ' . $niv_alerte_2;
     O_N($dem_alerte_2);
     echo '<br><br>';
 }
@@ -148,15 +148,15 @@ echo '<ul class="puces">';
 echo '<li>' . 'Pour la personne';
 echo '<ul class="puces">';
 echo '<li>' . 'que le sexe soit connu' . '</li>';
-echo '<li>' . 'que la fiche soit valid&eacute;e' . '</li>';
-echo '<li>' . 'que les dates de naissance et de d&eacute;c&egrave;s (dans le cas des personnes non vivantes) soient pr&eacute;sentes et qu\'elles correspondent &agrave; un jour pr&eacute;cis (le ...)' . '</li>';
-echo '<li>' . 'que la date de naissance pr&eacute;c&egrave;de ou soit &eacute;gale &agrave; la date de d&eacute;c&egrave;s' . '</li>';
+echo '<li>' . 'que la fiche soit validée' . '</li>';
+echo '<li>' . 'que les dates de naissance et de déc&egrave;s (dans le cas des personnes non vivantes) soient présentes et qu\'elles correspondent &agrave; un jour précis (le ...)' . '</li>';
+echo '<li>' . 'que la date de naissance préc&egrave;de ou soit égale &agrave; la date de déc&egrave;s' . '</li>';
 echo '</ul></li>';
 echo '<li>' . 'Avec ses parents';
 echo '<ul class="puces">';
-echo '<li>' . 'que la personne soit n&eacute;e apr&egrave;s que le p&egrave;re et la m&egrave;re aient 15 ans' . '</li>';
-echo '<li>' . 'que la personne soit n&eacute;e au plus tard 9 mois apr&egrave;s le d&eacute;c&egrave;s du p&egrave;re' . '</li>';
-echo '<li>' . 'que la personne soit n&eacute;e apr&egrave;s le d&eacute;c&egrave;s de la m&egrave;re' . '</li>';
+echo '<li>' . 'que la personne soit née apr&egrave;s que le p&egrave;re et la m&egrave;re aient 15 ans' . '</li>';
+echo '<li>' . 'que la personne soit née au plus tard 9 mois apr&egrave;s le déc&egrave;s du p&egrave;re' . '</li>';
+echo '<li>' . 'que la personne soit née apr&egrave;s le déc&egrave;s de la m&egrave;re' . '</li>';
 echo '</ul></li></ul>';
 echo '</div>';
 
@@ -182,10 +182,6 @@ if ($controle) {
     // Balayage
     if ($res->RowCount() > 0) {
 
-        // Optimisation : préparation echo des images
-        $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
-        $echo_verif = Affiche_Icone('fiche_controle', $LG_LPers_Check_Pers) . '</a>&nbsp;';
-
         while ($enr = $res->fetch(PDO::FETCH_ASSOC)) {
 
             // Niveau 0 : OK
@@ -199,7 +195,7 @@ if ($controle) {
             if (($sexe != 'm') and ($sexe != 'f')) al_controle(1, 'le sexe de la personne n\'est pas connu');
 
             // Fiche de la personne validée ?
-            if ($enr['Statut_Fiche'] != 0) al_controle(1, 'statut non valid&eacute;');
+            if ($enr['Statut_Fiche'] != 0) al_controle(1, 'statut non validé');
 
             // Dates de naissance et de décès précises et présentes
             $dateN = $enr['NeL0'];
@@ -210,26 +206,26 @@ if ($controle) {
             $lgDateD = strlen($dateD);
             // Contrôle de précision de la date de naissance
             if ($lgDateN == 10) {
-                if ($dateN[9] != 'L') al_controle(1, 'date de naissance non pr&eacute;cise');
+                if ($dateN[9] != 'L') al_controle(1, 'date de naissance non précise');
             } else {
                 // date renseignée et longueur non attendue, aïe...
-                if ($lgDateN > 0) al_controle(2, 'format date de naissance erron&eacute;');
+                if ($lgDateN > 0) al_controle(2, 'format date de naissance erroné');
                 else al_controle(1, 'date de naissance non connue');
             }
             // Contrôle de précision de la date de décès
             if (!$vivant) {
                 if ($lgDateD == 10) {
-                    if ($dateD[9] != 'L') al_controle(1, 'date de d&eacute;c&egrave;s non pr&eacute;cise');
+                    if ($dateD[9] != 'L') al_controle(1, 'date de déc&egrave;s non précise');
                 } else {
                     // date renseignée et longueur non attendue, aïe...
-                    if ($lgDateD > 0) al_controle(2, 'format date de d&eacute;c&egrave;s erron&eacute;');
-                    else al_controle(1, 'date de d&eacute;c&egrave;s non connue');
+                    if ($lgDateD > 0) al_controle(2, 'format date de déc&egrave;s erroné');
+                    else al_controle(1, 'date de déc&egrave;s non connue');
                 }
             }
             // Contrôle cohérence date naissance / date décès
             if (($lgDateN == 10) and ($lgDateD == 10)) {
                 if (($dateN[9] == 'L') and ($dateD[9] == 'L')) {
-                    if ($dateD < $dateN) al_controle(2, 'date de d&eacute;c&egrave;s inf&eacute;rieure &agrave; la date de naissance');
+                    if ($dateD < $dateN) al_controle(2, 'date de déc&egrave;s inférieure &agrave; la date de naissance');
                 }
             }
 
@@ -263,13 +259,13 @@ if ($controle) {
             if (($lgDateN == 10) and ($dateN[9] == 'L')) {
                 if ((strlen($dateDP) == 10) and ($dateDP[9] == 'L')) {
                     $ageP = Age_Mois($dateN, $dateDP);
-                    if ($ageP < 9) al_controle(1, 'p&egrave;re d&eacute;c&eacute;d&eacute; moins de 9 mois avant la naissance');
+                    if ($ageP < 9) al_controle(1, 'p&egrave;re décédé moins de 9 mois avant la naissance');
                 }
             }
             // Contrôle que la personne soit née avant (<=) le décès de la mère
             if (($lgDateN == 10) and ($dateN[9] == 'L')) {
                 if ((strlen($dateDM) == 10) and ($dateDM[9] == 'L')) {
-                    if ($dateN > $dateDM) al_controle(1, 'm&egrave;re d&eacute;c&eacute;d&eacute;e avant la naissance');
+                    if ($dateN > $dateDM) al_controle(1, 'm&egrave;re décédée avant la naissance');
                 }
             }
 
@@ -278,29 +274,29 @@ if ($controle) {
             $ligne_P = '';
             if (!$texte) {
                 $ligne_P =  '<a ' . Ins_Ref_Pers($Ref, true) . '>' . my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '</a>'
-                    . '&nbsp;<a ' . Ins_Edt_Pers($Ref, true) . '>' . $echo_modif
-                    . '&nbsp;<a href="'. $root .'/verif_personne.php?Refer=' . $Ref . '" target="_blank">' . $echo_verif;
+                    . ' <a ' . Ins_Edt_Pers($Ref, true) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>'
+                    . ' <a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . my_html($LG_LPers_Check_Pers) . '" title="' . my_html($LG_LPers_Check_Pers) . '"></a>';
             } else {
-                $ligne_P = my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '&nbsp;';
+                $ligne_P = my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . ' ';
             }
 
             //echo '$dem_alerte_0 : '.$dem_alerte_0.'/'.$alerte_controle.'<br>';
 
             switch ($alerte_controle) {
                 case 0:
-                    if ($dem_alerte_0) echo $img_vert . '&nbsp;' . $ligne_P . '<br>';
+                    if ($dem_alerte_0) echo $img_vert . ' ' . $ligne_P . '<br>';
                     break;
                 case 1:
-                    if ($dem_alerte_1) echo $img_orange . '&nbsp;' . $ligne_P . '<br>&nbsp;&nbsp;' . $msg_ctrl . '<br>';
+                    if ($dem_alerte_1) echo $img_orange . ' ' . $ligne_P . '<br>  ' . $msg_ctrl . '<br>';
                     break;
                 case 2:
-                    if ($dem_alerte_2) echo $img_rouge . '&nbsp;' . $ligne_P . '<br>&nbsp;&nbsp;' . $msg_ctrl . '<br>';
+                    if ($dem_alerte_2) echo $img_rouge . ' ' . $ligne_P . '<br>  ' . $msg_ctrl . '<br>';
                     break;
             }
         }
     }
 
-    echo '<br>' . Affiche_Icone('tip', 'Information') . ' L&eacute;gende :&nbsp;';
+    echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> Légende : ';
     echo $img_vert . ' : ' . $niv_alerte_0 . ' ; ' . $img_orange . ' : ' . $niv_alerte_1 . ' ; ' . $img_rouge . ' : ' . $niv_alerte_2 . "\n";
 }
 
@@ -330,7 +326,7 @@ function aff_cbox($id_n, $lib, $img, $chk)
 {
     echo '<input type="checkbox"';
     if ($chk) echo ' checked="checked"';
-    echo ' name="' . $id_n . '" id="' . $id_n . '" value="1"/><label for="' . $id_n . '">' . $lib . '</label>&nbsp;' . $img . '&nbsp;&nbsp;' . "\n";
+    echo ' name="' . $id_n . '" id="' . $id_n . '" value="1"/><label for="' . $id_n . '">' . $lib . '</label> ' . $img . '  ' . "\n";
 }
 ?>
 </body>

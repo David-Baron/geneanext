@@ -60,7 +60,7 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_evenement.php?refPar=';
+    $deb_visu  = ' <a href="' . $root . '/fiche_evenement.php?refPar=';
     $deb_modif = 'href="' . $root . '/edition_evenement.php?refPar=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
@@ -72,18 +72,18 @@ if ($nb_lignes > 0) {
         echo '<td>' . $deb_visu . $enr[2] . '&amp;Nom=' . $evt . '">' . my_html($evt) . '</a>';
 
         if ($est_contributeur)
-            echo '&nbsp;' . Affiche_Icone_Lien($deb_modif . $enr[2] . '"', 'fiche_edition', my_html($LG_modify));
+            echo ' ' . Affiche_Icone_Lien($deb_modif . $enr[2] . '"', 'fiche_edition', my_html($LG_modify));
 
         echo '</td>';
-        echo '<td align="right">' . $enr[0] . '&nbsp;&nbsp;&nbsp;</td>';
+        echo '<td align="right">' . $enr[0] . '</td>';
         echo '</tr>' . "\n";
     }
 
     $res->closeCursor();
 
     echo '</table>' . "\n";
+    echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '"> ' . LG_MOST_JOBS_TIP1;
 
-    echo '<br>' . Affiche_Icone('tip', LG_TIP) . ' ' . LG_MOST_JOBS_TIP1;
     if ($est_contributeur)
         echo '<a href="' . $root . '/fusion_evenements.php">' . LG_MOST_JOBS_TIP2 . '</a>';
     else

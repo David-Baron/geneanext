@@ -235,8 +235,8 @@ if (!$x) {
                     '<a ' . Ins_Ref_Pers($Ref) . '>' . substr($Ligne, $posb + 1, $pParO - $posb - 2) . '</a>&nbsp;' .
                     substr($Ligne, $pParO, $pParF - $pParO + 1) .
                     "\n";
-                echo '&nbsp;&nbsp;<a ' . Ins_Ref_Arbre($Ref) . $fin_arbres_asc;
-                echo '&nbsp;<a ' . Ins_Ref_Arbre_Desc($Ref) . $fin_arbres_desc;
+                echo '&nbsp;&nbsp;<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref . '"' . $fin_arbres_asc;
+                echo '&nbsp;<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref . '"' . $fin_arbres_desc;
             } else {
                 echo substr($Ligne, 0, $posb) . '&nbsp;' .
                     substr($Ligne, $posb + 1, $pParO - $posb - 2) .
@@ -256,7 +256,7 @@ if (!$x) {
     unset($Lignes);
 
     if (($nb_gen == $max_gen_AD) and ($nb_Ajouts > 0)) {
-        echo '<br />' . Affiche_Icone('tip', my_html($LG_tip)) .
+        echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '">' .
             my_html($LG_LPersG_limited_max_gen_1 . $max_gen_AD . $LG_LPersG_limited_max_gen_2) .
             '<a href="' . $root . '/vue_personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>';
     }

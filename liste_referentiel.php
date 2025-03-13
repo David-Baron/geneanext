@@ -113,47 +113,44 @@ echo '<br /><br />' . "\n";
 
 if ($res->rowCount() > 0) {
 
-    // Optimisation : préparation echo des images
-    $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
-
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         switch ($Type_Liste) {
             case 'R':
                 echo '<a href="' . $root . '/fiche_role.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
                 if ($est_contributeur) {
-                    echo '&nbsp;<a href="' . $root . '/edition_role.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo ' <a href="' . $root . '/edition_role.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'T':
                 echo '<a href="' . $root . '/fiche_type_evenement.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
                 if (($est_contributeur) and ($row[2] == 'O')) {
-                    echo '&nbsp;<a href="' . $root . '/edition_type_evenement.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo ' <a href="' . $root . '/edition_type_evenement.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'D':
                 echo '<a href="' . $root . '/fiche_type_document.php?code=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                 if (($est_contributeur)) {
-                    echo '&nbsp;<a href="' . $root . '/edition_type_document.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo ' <a href="' . $root . '/edition_type_document.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'C':
                 $lib = my_html($row[1]);
-                echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[2]] . '" border="0" alt="' . $lib . '" title="' . $lib . '"/>' . '&nbsp;';
+                echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[2]] . '" border="0" alt="' . $lib . '" title="' . $lib . '"/>' . ' ';
                 echo '<a href="' . $root . '/fiche_categorie.php?categ=' . $row[0] . '">' . $lib . '</a>';
                 if (($est_gestionnaire)) {
-                    echo '&nbsp;<a href="' . $root . '/edition_categorie.php?categ=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo ' <a href="' . $root . '/edition_categorie.php?categ=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'Q':
                 echo '<a href="' . $root . '/fiche_requete.php?reference=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                 if ($est_gestionnaire) {
-                    echo '&nbsp;<a href="' . $root . '/edition_requete.php?reference=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo ' <a href="' . $root . '/edition_requete.php?reference=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'O':
                 echo '<a href="' . $root . '/fiche_depot.php?ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                 if ($est_contributeur) {
-                    echo '&nbsp;<a href="' . $root . '/edition_depot.php?ident=' . $row[0] . '">' . $echo_modif . "\n";
+                    echo ' <a href="' . $root . '/edition_depot.php?ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             default:

@@ -123,7 +123,7 @@ else {
     echo '</table>';
 
     if ((!$SiteGratuit) and ($FromTo_Mail = 'support@geneamania.net'))
-        echo '<br>' . Affiche_Icone('tip', 'Information') . ' ' . LG_MAIL_FROM . $FromTo_Mail . '<br>' . "\n";
+        echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_MAIL_FROM . $FromTo_Mail . '<br>' . "\n";
 
     echo '</form>';
 }

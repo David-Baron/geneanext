@@ -87,10 +87,10 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     $affiche = false;
 
     if ($erreur != '') {
-        echo '<br>' . LG_SCH_MATCH_ERROR . LG_SEMIC . $erreur . '<br>';
+        echo '<br>' . LG_SCH_MATCH_ERROR . ' ' . $erreur . '<br>';
         $erreur = strtoupper($erreur);
         if (strpos($erreur, 'COULD NOT RESOLVE HOST') !== false)
-            echo Affiche_Icone('tip', 'Information') . '&nbsp;' . LG_SCH_MATCH_NO_INTERNET;
+            echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_SCH_MATCH_NO_INTERNET;
     } else {
 
         $affiche = true;
@@ -114,8 +114,8 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
             // echo $sortie['response']['persons'][$nb]['source'].'<br>';
             // echo $sortie['response']['persons'][$nb]['birth']['date'].' à ';
 
-            echo $LG_Name . LG_SEMIC . $sortie['response']['persons'][$nb]['name']['last'] . '<br>';;
-            echo LG_FIRST_NAME . LG_SEMIC;
+            echo $LG_Name . ' ' . $sortie['response']['persons'][$nb]['name']['last'] . '<br>';;
+            echo LG_FIRST_NAME . ' ';
             $nb_prenoms = count($sortie['response']['persons'][$nb]['name']['first']);
             for ($nb_p = 0; $nb_p < $nb_prenoms; $nb_p++) {
                 echo $sortie['response']['persons'][$nb]['name']['first'][$nb_p] . ' ';
@@ -128,12 +128,12 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
             $date_deces = retourne_date($d_dec);
             echo '<br>' . ucfirst(lib_sexe_dead($sex)) . ' ' . Etend_date($d_dec . 'GL') . ' (' . $date_deces . ') ' . LG_AT . ' ';
             affiche_lieu($sortie['response']['persons'][$nb]['death']['location']);
-            echo '&nbsp;' . Affiche_Icone_Clic('copie_calend', "copyTextToClipboard('$date_deces')", LG_SCH_MATCH_COPY_DATE) . "\n";
+            echo ' <img src="' . $root . '/assets/img/' . $Icones['copie_calend'] . '" alt="' . LG_SCH_MATCH_COPY_DATE . '" title="' . LG_SCH_MATCH_COPY_DATE . '" onclick="copyTextToClipboard(' . $date_deces .');">';
             echo '<hr>';
         }
 
         oeil_div_simple('ajout_json', 'ajout_json', 'le json', 'div_json');
-        echo '&nbsp;' . LG_SCH_MATCH_SHOW_JSON;
+        echo ' ' . LG_SCH_MATCH_SHOW_JSON;
         echo '<div id="div_json">';
         echo $json . '<br>';
         echo '</div>';

@@ -1253,7 +1253,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     // Contrôle de l'existence du fichier qui normalement devrait être présent
     // vu que le nom en a été passé par la liste qui accède au répertoire
     if (!file_exists($nom_fic)) {
-        aff_erreur(LG_CONTRIB_EDIT_FILE_N_EXISTS . LG_SEMIC . $nom_fic);
+        aff_erreur(LG_CONTRIB_EDIT_FILE_N_EXISTS . ' ' . $nom_fic);
     }
     // Le fichier existe, on peut le traiter ==> récupération des données présentes dans le fichier
     else {
@@ -1383,7 +1383,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
                 echo '<div class="tab-panes">' . "\n";
 
-                $icone_tip = Affiche_Icone('tip', my_html(LG_TIP));
+                $icone_tip = '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '">';
 
                 // Connait-on les parents de la personne ?
                 $pere = 0;
@@ -1433,7 +1433,7 @@ if ((!$bt_OK) && (!$bt_An)) {
                 $x = Aff_Pers2('mere', $donnees_ini, $donnees_prop);
                 echo '</fieldset>' . "\n";
 
-                echo '<br />' . $icone_tip . ' ' . my_html(LG_CONTRIB_EDIT_TIP1) . LG_SEMIC . '<br />';
+                echo '<br />' . $icone_tip . ' ' . my_html(LG_CONTRIB_EDIT_TIP1) . ' ' . '<br />';
                 echo '&nbsp;&nbsp;-&nbsp;<b>' . my_html(LG_CONTRIB_EDIT_TIP2) . '</b><br />';
                 echo '&nbsp;&nbsp;-&nbsp;<i>' . my_html(LG_CONTRIB_EDIT_TIP3) . '</i><br /><br />';
 

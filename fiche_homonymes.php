@@ -199,15 +199,15 @@ else {
     echo '<br />';
     echo '<table width="85%" align="center" border="0"  >' . "\n";
 
-    echo '<tr class="rupt_table"><th>&nbsp;</th>';
+    echo '<tr class="rupt_table"><th> </th>';
     echo '<th width="45%" ><a ' . Ins_Ref_Pers($ref1) . '>' . my_html(LG_CH_FUSION_PERS1) . '</a>';
     if ($_SESSION['estGestionnaire']) {
-        echo '&nbsp;<a ' . Ins_Edt_Pers($ref1) . '>' . Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
+        echo ' <a ' . Ins_Edt_Pers($ref1) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
     }
     echo '</th>';
     echo '<th width="45%"><a ' . Ins_Ref_Pers($ref2) . '>' . my_html(LG_CH_FUSION_PERS2) . '</a>';
     if ($_SESSION['estGestionnaire']) {
-        echo '&nbsp;<a ' . Ins_Edt_Pers($ref2) . '>' . Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
+        echo ' <a ' . Ins_Edt_Pers($ref2) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
     }
     echo '</th>';
 
@@ -278,12 +278,11 @@ else {
 
     echo '</table>';
 
-    echo Affiche_Icone('tip', LG_TIP)
-        . '&nbsp;' . LG_CH_FUSION_TIP1
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '">'
+        . ' ' . LG_CH_FUSION_TIP1
         . '<br />' . LG_CH_FUSION_TIP2
         . '<br />' . LG_CH_FUSION_TIP3
         . '<br />' . LG_CH_FUSION_TIP4;
-
     echo '<br />' . "\n";
 
     echo '<input type="' . $hidden . '" name="arr_unions_1" value="' . $arr_unions_1 . '">';
@@ -373,13 +372,13 @@ function case_parents($reference)
     if (Get_Parents($reference, $Pere, $Mere, $Rang)) {
         if ($Pere != 0) {
             if (Get_Nom_Prenoms($Pere, $Nom, $Prenoms)) {
-                $lib_parents .= '<a ' . Ins_Ref_Pers($Pere) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>';
+                $lib_parents .= '<a ' . Ins_Ref_Pers($Pere) . '>' . $Prenoms . ' ' . $Nom . '</a>';
             }
         }
         if ($Mere != 0) {
             if (Get_Nom_Prenoms($Mere, $Nom, $Prenoms)) {
                 if ($lib_parents != '') $lib_parents .= ' et ';
-                $lib_parents .= '<a ' . Ins_Ref_Pers($Mere) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>';
+                $lib_parents .= '<a ' . Ins_Ref_Pers($Mere) . '>' . $Prenoms . ' ' . $Nom . '</a>';
             }
         }
         if ($lib_parents != '') $lib_parents .= "\n";
@@ -440,13 +439,13 @@ function case_conjoints($reference, $sexe)
             $arr_unions .= $Ref_Union;
             //
             if (Get_Nom_Prenoms($Conj, $Nom, $Prenoms)) {
-                $lib_conjoints .= '<a ' . Ins_Ref_Pers($Conj) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>&nbsp;'
+                $lib_conjoints .= '<a ' . Ins_Ref_Pers($Conj) . '>' . $Prenoms . ' ' . $Nom . '</a> '
                     . Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union), 'text', my_html(LG_CH_COUPLE));
             }
             //
             if (($Date_Mar != '') or ($Ville_Mar)) {
-                $lib_conjoints .= '&nbsp;' . my_html(LG_CH_MARIED);
-                $lib_conjoints .= '&nbsp;' . Etend_date($Date_Mar);
+                $lib_conjoints .= ' ' . my_html(LG_CH_MARIED);
+                $lib_conjoints .= ' ' . Etend_date($Date_Mar);
                 $lib_conjoints .= ' &agrave; ' . lib_ville($Ville_Mar);
             }
             //	récupération des enfants
@@ -474,16 +473,16 @@ function Aff_Enfants2($Mari, $Femme)
                 $resEnf = lect_sql($sqlEnf);
                 $enrEnf = $resEnf->fetch(PDO::FETCH_ASSOC);
                 $sexe = $enrEnf['Sexe'];
-                $lib_enfants .= '&nbsp;&nbsp;<a ' . Ins_Ref_Pers($Enfant) . '>' . my_html($enrEnf['Prenoms'] . ' ' . $enrEnf['Nom']) . '</a>&nbsp;';
+                $lib_enfants .= '  <a ' . Ins_Ref_Pers($Enfant) . '>' . my_html($enrEnf['Prenoms'] . ' ' . $enrEnf['Nom']) . '</a> ';
                 $Ne = $enrEnf['Ne_le'];
                 $Date_Nai = Etend_date($Ne);
                 if ($Date_Nai != '') {
-                    $lib_enfants .= '<br />&nbsp;&nbsp;&nbsp;' . Lib_sexe(my_html(LG_CH_BORN), $sexe) . '&nbsp;' . $Date_Nai;
+                    $lib_enfants .= '<br />   ' . Lib_sexe(my_html(LG_CH_BORN), $sexe) . ' ' . $Date_Nai;
                 }
                 $Date_Dec = Etend_date($enrEnf['Decede_Le']);
                 if ($Date_Dec != '') {
-                    if ($Date_Nai != '') $lib_enfants .= ',&nbsp;';
-                    $lib_enfants .= Lib_sexe(my_html(LG_CH_DEAD), $sexe) . '&nbsp;' . $Date_Dec;
+                    if ($Date_Nai != '') $lib_enfants .= ', ';
+                    $lib_enfants .= Lib_sexe(my_html(LG_CH_DEAD), $sexe) . ' ' . $Date_Dec;
                 }
                 $lib_enfants .= '<br />' . "\n";
             }
@@ -497,7 +496,7 @@ function Aff_Enfants2($Mari, $Femme)
 function mefValeur($valeur)
 {
     if ($valeur == '') {
-        return '&nbsp;';
+        return ' ';
     }
     return $valeur;
 }

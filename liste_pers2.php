@@ -236,7 +236,6 @@ if (!$texte) {
 
 // Lien direct sur la dernière personne saisie et possibilité d'insérer une personne
 if ((!$texte) and ($est_contributeur)) {
-    $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
     $MaxRef = 0;
     if (isset($_SESSION['dern_pers'])) {
         $compl_req = $_SESSION['dern_pers'];
@@ -252,7 +251,7 @@ if ((!$texte) and ($est_contributeur)) {
     if ($MaxRef > 0) {
         $aff_nom = UnPrenom($enrmax[2]) . ' ' . $enrmax[1];
         echo my_html($LG_last_pers) . ' : <a ' . Ins_Ref_Pers($MaxRef) . '>' . my_html($aff_nom) . '</a>&nbsp;';
-        echo '&nbsp;<a ' . Ins_Edt_Pers($MaxRef) . '>' . $echo_modif . '<br>' . "\n";
+        echo '&nbsp;<a ' . Ins_Edt_Pers($MaxRef) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
     }
     $resmax->closeCursor();
     // Possibilité d'insérer une personne
@@ -307,17 +306,6 @@ if ($res) {
 
 // Balayage
 if ($nb_lig > 0) {
-
-    // Optimisation : préparation echo des images
-    $echo_diff_int     = Affiche_Icone('internet_oui', $LG_show_on_internet) . '&nbsp;';
-    $echo_diff_int_non = Affiche_Icone('internet_non', $LG_noshow_on_internet) . '&nbsp;';
-    $echo_valide       = Affiche_Icone('fiche_validee', $LG_checked_record) . '&nbsp;';
-    $echo_non_valide   = Affiche_Icone('fiche_non_validee', $LG_nochecked_record) . '&nbsp;';
-    $echo_internet     = Affiche_Icone('fiche_internet', LG_FROM_INTERNET) . '&nbsp;';
-    $echo_modif        = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
-    $echo_verif        = Affiche_Icone('fiche_controle', $LG_LPers_Check_Pers) . '</a>&nbsp;';
-    $echo_haut         = Affiche_Icone_Lien('href="#top"', 'page_haut', $LG_top) . '<br>';
-
     $Anc_Lettre = '';
     while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         switch ($Type_Liste) {
@@ -337,24 +325,24 @@ if ($nb_lig > 0) {
                         if ($liste_pers) $Nouv_Lettre = $prenoms[0];
                         else $Nouv_Lettre = $nom[0];
                         if ($Nouv_Lettre != $Anc_Lettre) {
-                            echo '<br><a name="' . $Nouv_Lettre . '">' . $Nouv_Lettre . '</a>&nbsp;' . $echo_haut;
+                            echo '<br><a name="' . $Nouv_Lettre . '">' . $Nouv_Lettre . '</a> <img src="' . $root . '/assets/img/' . $Icones['href="#top"'] . '" alt="Haut de page" title="Haut de page">';
                             $Anc_Lettre = $Nouv_Lettre;
                         }
                     }
 
                     if ($est_contributeur) {
-                        if ($row['Diff_Internet'] == 'O') echo $echo_diff_int;
-                        else                              echo $echo_diff_int_non;
+                        if ($row['Diff_Internet'] == 'O') echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '">';
+                        else                              echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' .$LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
                     }
                     switch ($row['Statut_Fiche']) {
                         case 'O':
-                            echo $echo_valide;
+                            echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_validee'] . '" alt="' . $LG_checked_record . '" title="' . $LG_checked_record . '">';
                             break;
                         case 'N':
-                            echo $echo_non_valide;
+                            echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_non_validee'] . '" alt="' . $LG_nochecked_record . '" title="' . $LG_nochecked_record . '">';
                             break;
                         case 'I':
-                            echo $echo_internet;
+                            echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_internet'] . '" alt="' . LG_FROM_INTERNET . '" title="' . LG_FROM_INTERNET . '">';
                             break;
                     }
                     echo '&nbsp;';
@@ -410,8 +398,8 @@ if ($nb_lig > 0) {
                     HTML_ou_PDF(')', $sortie);
                 }
                 if (($est_gestionnaire) and (! $texte)) {
-                    echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '>' . $echo_modif;
-                    echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '">' . $echo_verif;
+                    echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
+                    echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . $LG_LPers_Check_Pers . '" title="' . $LG_LPers_Check_Pers . '">';
                 }
                 break;
             case 'M':
@@ -419,13 +407,13 @@ if ($nb_lig > 0) {
                 if (($est_gestionnaire) and (! $texte)) {
                     switch ($row['Statut_Fiche']) {
                         case 'O':
-                            echo $echo_valide;
+                            echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_validee'] . '" alt="' . $LG_checked_record . '" title="' . $LG_checked_record . '">';
                             break;
                         case 'N':
-                            echo $echo_non_valide;
+                            echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_non_validee'] . '" alt="' . $LG_nochecked_record . '" title="' . $LG_nochecked_record . '">';
                             break;
                         case 'I':
-                            echo $echo_internet;
+                            echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_internet'] . '" alt="' . LG_FROM_INTERNET . '" title="' . LG_FROM_INTERNET . '">';
                             break;
                     }
                     echo '&nbsp;&nbsp;&nbsp;';
@@ -454,7 +442,7 @@ if ($nb_lig > 0) {
                 }
                 if ($row[$critere_date] != '') HTML_ou_PDF('&nbsp;(x ' . Etend_date($row[$critere_date]) . ')', $sortie);
                 if (($est_gestionnaire) and (!$texte)) {
-                    echo '&nbsp;<a ' . Ins_Edt_Union($row['ReferenceU'], 0, 'x') . '>' . $echo_modif;
+                    echo '&nbsp;<a href="' . $root . '/edition_union.php?Reference=' . $row['ReferenceU'] . '&amp;Personne=0&amp;us=x"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
                 }
                 break;
             default:

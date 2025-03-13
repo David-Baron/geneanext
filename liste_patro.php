@@ -176,15 +176,12 @@ else {
 // Initialisations
 $Num_Pere = 0;
 $Num_Mere = 0;
-$icone_Puis = Affiche_Icone('couple_donne', LG_PATRO_THEN) . ' ' . "\n";
+$Num_Pers = 0;
+$n_personnes = nom_table('personnes');
 
 // Max 1 000 000 (1 million) de personnes dans les filiations...
 // 6 car le premier a le num 1, ce qui fait max 6 chiffres lorsque l'on soustrait à 1 M
 $Longueur = 6;
-
-$Num_Pers = 0;
-
-$n_personnes = nom_table('personnes');
 
 // Récupération de la référence de la personne '1'
 if ($decujus = get_decujus()) {
@@ -359,7 +356,7 @@ if ($decujus = get_decujus()) {
                 HTML_ou_PDF('<td width="5%"> </td>', $sortie);
             } else {
                 HTML_ou_PDF('<td width="5%">' . "\n", $sortie);
-                if (! $texte) echo $icone_Puis;
+                if (! $texte) echo '<img src="' . $root . '/assets/img/' . $Icones['couple_donne'] . '" alt="' . LG_PATRO_THEN . '" title="' .LG_PATRO_THEN . '"> ' . "\n";
                 HTML_ou_PDF($h_LG_PATRO_THEN . ' ', $sortie);
                 HTML_ou_PDF('</td>', $sortie);
             }

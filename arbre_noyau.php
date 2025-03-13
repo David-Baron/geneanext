@@ -134,9 +134,11 @@ if ($Reference == 0) {
     if ($existe_images) {
         $action = $LG_Tree_Icon_Hover;
         if ($Comportement == 'C') $action = $LG_Tree_Icon_Click;
-        $ch_def_image = Affiche_Icone('tip', $LG_tip) . '&nbsp;' . $action . Affiche_Icone('images', 'Images') . $LG_Tree_Show_Image;
         echo '<table>';
-        echo '<tr><td>' . $ch_def_image . '</td></tr>' . "\n";
+        echo '<tr><td><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> '
+            . $action
+            . '<img src="' . $root . '/assets/img/' . $Icones['images'] . '" alt="Images" title="Images"> '
+            . $LG_Tree_Show_Image . '</td></tr>' . "\n";
         echo '<tr><td>';
         echo '<div id="image" style="display:none; visibility:hidden;">&nbsp;</div>';
         echo '</td></tr>';

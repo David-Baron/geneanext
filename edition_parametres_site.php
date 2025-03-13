@@ -244,7 +244,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '<br />';
         echo '<input type="radio" name="garder" value="G" checked="checked"/>' . my_html($LG_Site_Param_Image_With) . '&nbsp;';
         echo '<input type="radio" name="garder" value="S"/>' . my_html($LG_Site_Param_Image_Without) . '&nbsp;';
-        echo '<br />' . Affiche_Icone('tip', $LG_tip) . '&nbsp;' . my_html($LG_Site_Param_Image_No_Need);
+        echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> ' . my_html($LG_Site_Param_Image_No_Need);
     }
     echo '<input type="' . $hidden . '" name="ANom_Image" value="' . $Image_Index . '"/></td></tr>' . "\n";
 

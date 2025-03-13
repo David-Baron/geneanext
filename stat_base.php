@@ -84,8 +84,6 @@ echo '</table>' . "\n";
 $res->closeCursor();
 
 echo '<hr/>' . "\n";
-$base_ref = Get_Adr_Base_Ref();
-
 echo '<div id="liste">';
 
 echo '<ul class="puces">' . my_html(LG_STAT_ALL_BY_AGE);

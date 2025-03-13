@@ -83,7 +83,7 @@ $crit_id_Util = '';
 if ($id_Util != $defaut) $crit_id_Util = ' and c.idUtil = ' . $id_Util;
 
 // Optimisation : préparation echo des images
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
+$echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '">';
 
 // Constitution de la requête d'extraction des connexions
 $sql = 'select c.idUtil, dateCnx, Adresse_IP, nom ' .
@@ -105,8 +105,8 @@ if (!$CSV) {
             echo '</tr>' . "\n";
         }
         echo '<tr>';
-        echo '<td><a href="'.$root.'/fiche_utilisateur.php?code=' . $row[0] . '">' . $row[3];
-        echo '</a>&nbsp;<a href="'.$root.'/edition_utilisateur.php?code=' . $row[0] . '">' . $echo_modif . '</td>';
+        echo '<td><a href="' . $root . '/fiche_utilisateur.php?code=' . $row[0] . '">' . $row[3];
+        echo '</a>&nbsp;<a href="' . $root . '/edition_utilisateur.php?code=' . $row[0] . '">' . $echo_modif . '</td>';
         echo '<td>' . DateTime_Fr($row[1]) . '</td>';
         echo '<td>' . $row[2] . '</td>';
         echo '</tr>' . "\n";

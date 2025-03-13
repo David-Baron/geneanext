@@ -97,10 +97,7 @@ if ($est_gestionnaire) {
         echo $nb . ' ' . my_html(LG_DOC_SCH_FOUND) . '<br /><br />';
         //$num_fields = $res->field_count;
 
-        $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
         $num_lig = 0;
-        $base_ref = Get_Adr_Base_Ref();
-
         $nom_fic_rech = 'recherche_documents.csv';
 
         while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
@@ -113,10 +110,10 @@ if ($est_gestionnaire) {
                 case 'e':
                     echo '<a href="' . $root . '/fiche_document.php?Reference=' . $refDoc . '">' . my_html($Titre) . '</a>';
                     echo ' (' . $Natures_Docs[$enreg['Nature_Document']] . ")\n";
-                    echo '&nbsp;<a href="' . $root . '/edition_document.php?Reference=' . $refDoc . '">' . $echo_modif;
+                    echo ' <a href="' . $root . '/edition_document.php?Reference=' . $refDoc . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     $le_type = Get_Type_Mime($enreg['Nature_Document']);
                     $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
-                    echo '&nbsp; &nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $Nom_Fichier . '" type="' . $le_type . '"', 'oeil', LG_DOC_SCH_SEE, 'n');
+                    echo '   ' . Affiche_Icone_Lien('href="' . $chemin_docu . $Nom_Fichier . '" type="' . $le_type . '"', 'oeil', LG_DOC_SCH_SEE, 'n');
                     echo '<br />' . "\n";
                     break;
                 case 't':

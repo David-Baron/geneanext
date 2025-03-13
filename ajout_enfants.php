@@ -160,13 +160,13 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<br />';
     if ($Conjoint_1 != 0) {
         if (Get_Nom_Prenoms($Conjoint_1, $Nom, $Prenoms)) {
-            echo my_html(LG_FATHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_1) . '>' . $Prenoms . ' ' . $Nom . '</a>&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_1), 'fiche_edition', 'Modifier') . '<br />';
+            echo my_html(LG_FATHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_1) . '>' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_1), 'fiche_edition', 'Modifier') . '<br />';
             $nom_pere = $Nom;
         }
     }
     if ($Conjoint_2 != 0) {
         if (Get_Nom_Prenoms($Conjoint_2, $Nom, $Prenoms)) {
-            echo my_html(LG_MOTHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_2) . '>' . $Prenoms . ' ' . $Nom . '</a>&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_2), 'fiche_edition', 'Modifier') . '<br />';
+            echo my_html(LG_MOTHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_2) . '>' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_2), 'fiche_edition', 'Modifier') . '<br />';
             $nom_mere = $Nom;
         }
     }
@@ -182,8 +182,8 @@ if ((!$bt_OK) && (!$bt_An)) {
             while ($row = $resE->fetch(PDO::FETCH_NUM)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
-                    echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>&nbsp;';
-                    echo '<a ' . Ins_Edt_Filiation($Enfant) . '>' . Affiche_Icone('fiche_edition', 'Modifier la filiation') . '</a>' . '<br />';
+                    echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . ' ' . $Nom . '</a> ';
+                    echo '<a href="' . $root . '/edition_filiation.php?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modifier la filiation" title="Modifier la filiation">';
                 }
             }
         }
@@ -192,10 +192,10 @@ if ((!$bt_OK) && (!$bt_An)) {
     // Ajout rapide d'enfants avec création
     echo '<br />';
     echo '<hr/>' . my_html(LG_PERS_CHILDREN_ADD);
-    echo '<br />' . my_html(LG_PERS_DEFAULT_NAME) . ' :&nbsp;';
+    echo '<br />' . my_html(LG_PERS_DEFAULT_NAME) . ' : ';
 
-    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . '&nbsp;';
-    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . '&nbsp;';
+    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . ' ';
+    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . ' ';
 
     echo '<table border="0" id="tblSampleE" width="80%" align="center">';
     echo '<tr align="center">';

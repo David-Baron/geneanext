@@ -76,8 +76,8 @@ $Refer = Recup_Variable('Refer', 'N');
 $m_self = my_self();
 
 $compl = Ajoute_Page_Info(600, 150) .
-    '<a href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;Refer=' . $Refer . '">' .
-    Affiche_Icone('text', 'Format imprimable') . '</a>' . "\n";
+    '<a href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;Refer=' . $Refer . '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="Format imprimable" title="Format imprimable"></a>' . "\n";
+
 
 if ((!$SiteGratuit) or ($Premium))
     $compl .= Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;pdf=O&amp;Refer=' . $Refer . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';

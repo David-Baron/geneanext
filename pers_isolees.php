@@ -56,7 +56,7 @@ $n_unions = nom_table('unions');
 $n_rel = nom_table('relation_personnes');
 
 // Optimisation : préparation echo des images
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a><br />' . "\n";
+$echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />' . "\n";
 
 // ===== Lecture de la base
 /*

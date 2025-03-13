@@ -28,10 +28,7 @@ Insere_Haut($titre, $compl, 'Liste_Contributions', '');
 // Ignorer coché par défaut lors du premier affichage
 if ((!isset($retour)) or ($retour == '')) $ignorer = 'O';
 
-$echo_nouv = '&nbsp;' . Affiche_Icone('etoile', my_html(LG_CONTRIB_LIST_NEW));
-$echo_modif = Affiche_Icone('fiche_edition', my_html(LG_CONTRIB_LIST_PROCESS)) . '</a>';
-
-echo '<form action="' . my_self() . '" method="post">' . "\n";
+echo '<form method="post">' . "\n";
 
 echo '<input type="hidden" name="retour" value="1"/>' . "\n";
 
@@ -94,7 +91,7 @@ while ($i < count($ListFiles)) {
 
         echo '<tr>';
         echo '<td>' . $num_contrib;
-        if (!$p_traitee) echo $echo_nouv;
+        if (!$p_traitee) echo ' <img src="' . $root . '/assets/img/' . $Icones['etoile'] . '" alt="' . LG_CONTRIB_LIST_NEW . '" title="' . LG_CONTRIB_LIST_NEW . '">';
         echo '</td>';
         // Récupération des informations dans le fichier
         // création : ligne 2
@@ -128,8 +125,8 @@ while ($i < count($ListFiles)) {
         else            $suffixe = '';
 
         echo '<td align="center">' .
-            '<a href="'.$root.'/edition_contribution.php?Contribution=' . $num_contrib0 . $suffixe . '">' .
-            $echo_modif .
+            '<a href="' . $root . '/edition_contribution.php?Contribution=' . $num_contrib0 . $suffixe . '">' .
+            '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' .LG_CONTRIB_LIST_PROCESS . '" title="' . LG_CONTRIB_LIST_PROCESS . '">' .
             '</td>';
 
         echo '</tr>' . "\n";

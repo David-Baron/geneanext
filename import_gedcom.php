@@ -1701,7 +1701,6 @@ if ($ok == 'OK') {
 
             if ($maj_oui == 'on') {
                 maj_date_site(true);
-                $base_ref = Get_Adr_Base_Ref();
                 $ic_conseil = '<img src="' . $chemin_images_icones . $Icones['tip'] . '" alt="' . LG_TIP . '"/>&nbsp;';
                 echo $ic_conseil . LG_IMP_GED_REMIND_SOSA_1
                     . '<a href="' . $root . '/liste_pers.php?Type_Liste=P">'
@@ -1796,8 +1795,7 @@ if ($_SESSION['estGestionnaire']) {
         echo '<option value="6">sous-division</option>';
         echo '</select>' . "\n";
         echo '<input readonly="readonly" id="lieux" name ="lieux" size="50"/>&nbsp;';
-        $Action_Clic = 'document.getElementById(\'lieux\').value = \'\'';
-        echo Affiche_Icone_Clic('efface', $Action_Clic, 'Efface le format des lieux');
+        echo  '<img src="' . $root . '/assets/img/' . $Icones['efface'] . '" alt="Efface le format des lieux" title="Efface le format des lieux" onclick="document.getElementById(\'lieux\').value = \'\';">';
         echo '</td></tr>' . "\n";
 
         ligne_vide_tab_form(1);

@@ -73,20 +73,17 @@ if ($res->rowCount() > 0) {
 
     if ($mails) echo '<form id="saisie" method="post" action="Mail_Ut.php">' . "\n";
 
-    // Optimisation : préparation echo des images
-    $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
-
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         if ($mails)
-            echo '<input type="checkbox" name="msg_ut_' . $row[0] . '" value="x" onclick="chkSel(this)"/>&nbsp;';
+            echo '<input type="checkbox" name="msg_ut_' . $row[0] . '" value="x" onclick="chkSel(this)"/> ';
         echo '<a href="' . $root . '/fiche_utilisateur.php?code=' . $row[0] . '">' . my_html($row[1] . ' - ' . $row[2]);
-        echo '</a>&nbsp;<a href="' . $root . '/edition_utilisateur.php?code=' . $row[0] . '">' . $echo_modif . "\n";
+        echo '</a> <a href="' . $root . '/edition_utilisateur.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
         echo "<br />\n";
     }
 
     if ($mails) {
 
-        echo '<br>' . Affiche_Icone('tip', 'Information') . ' ' . LG_UTIL_CHK_MAIL . '<br>' . "\n";
+        echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_UTIL_CHK_MAIL . '<br>' . "\n";
         bt_ok_an_sup('Envoi de mails', '', '', '', false);
         echo '</form>';
 

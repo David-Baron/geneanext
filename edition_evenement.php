@@ -298,7 +298,7 @@ if (!$est_contributeur) {
 
     $compl = Ajoute_Page_Info(600, 250);
     if ($refPar != -1)
-        $compl .= Affiche_Icone_Lien(Ins_Ref_ImagesE($refPar), 'images', 'Images') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $refPar . '&amp;Type_Ref=E"', 'images', 'Images') . '&nbsp;';
     if ($refPar != -1) {
         $ajout = '';
         //if ($actualite) $ajout = '&amp;actu=o';

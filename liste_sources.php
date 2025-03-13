@@ -87,8 +87,9 @@ $result = lect_sql($requete);
 
 while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
     $ident = $enreg[0];
-    echo '<a href="' . $root . '/fiche_source.php?ident=' . $ident . '">' . my_html($enreg[1]) . '</a>&nbsp;';
-    echo '&nbsp;<a href="' . $root . '/edition_source.php?ident=' . $ident . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
+    echo '<a href="' . $root . '/fiche_source.php?ident=' . $ident . '">' . my_html($enreg[1]) . '</a> ';
+    echo ' <a href="' . $root . '/edition_source.php?ident=' . $ident . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' .$LG_modify . '" title="' . $LG_modify . '"></a>';
+    // '';
     echo '<br />' . "\n";
 }
 Insere_Bas($compl);

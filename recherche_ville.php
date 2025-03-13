@@ -60,7 +60,7 @@ function Ajb_Zone_Req($NomRub, $Rub, $TypRub, &$LaReq, $Zone)
         if ($NomRub == 'Zone_Mere')
             $C_Rub = lib_departement($Rub);
         $le_crit = $C_Rub;
-        echo '&nbsp;&nbsp;&nbsp;' . $Zone . ' = ' . $le_crit . '<br>';
+        echo '   ' . $Zone . ' = ' . $le_crit . '<br>';
         $memo_criteres = $memo_criteres . $Zone . ' = ' . $C_Rub . $separ;
         if ($LaReq != '') $LaReq = $LaReq . ' and ';
         if ($TypRub == 'A') {
@@ -97,7 +97,7 @@ if ($bt_OK) {
         $fp = ouvre_fic($NomV_fic, 'w+');
     }
     //Init des zones de requête
-    echo 'Crit&egrave;res demand&eacute;s :<br>';
+    echo 'Critères demandés :<br>';
     $req = '';
     $memo_criteres = '';
     // Constitution de la requête d'extraction
@@ -109,9 +109,6 @@ if ($bt_OK) {
 
     // Exéution de la requête
     if ($req != '') {
-
-        if ($est_gestionnaire)
-            $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
 
         // Constitution de la partie champs à récupérer
         // Pour les sorties csv, on va récupérer tous les champs alors que sur les autres sorties, la référence, le nom et le prénom suffisent
@@ -131,7 +128,7 @@ if ($bt_OK) {
         $res = lect_sql($req);
         $nb_lignes = $res->RowCount();
         // $plu = pluriel($nb_lignes);
-        // echo $nb_lignes.' ville'.$plu.' trouv&eacute;e'.$plu.'<br><br>';
+        // echo $nb_lignes.' ville'.$plu.' trouvée'.$plu.'<br><br>';
         echo $nb_lignes . ' ' . my_html(LG_TOWN_FOUND) . '<br><br>';
         $champs = get_fields($req, true);
         $num_fields = count($champs);
@@ -155,7 +152,7 @@ if ($bt_OK) {
                     $Long_V = $row[3];
                     appelle_carte_osm();
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $ref . '">' . $echo_modif . "\n";
+                        echo ' <a href="' . $root . '/edition_ville.php?Ident=' . $ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     echo '<br>' . "\n";
                     break;
@@ -254,12 +251,12 @@ if ((!$bt_OK) && (!$bt_An)) {
         if ($reprise) {
             if ($Statut_Fiche == 'O') echo $checked;
         }
-        echo '/><label for="Statut_Fiche_o">' . LG_CHECKED_RECORD_SHORT . '</label>&nbsp;';
+        echo '/><label for="Statut_Fiche_o">' . LG_CHECKED_RECORD_SHORT . '</label> ';
         echo '<input type="radio" id="Statut_Fiche_n" name="Statut_Fiche" value="N"';
         if ($reprise) {
             if ($Statut_Fiche == 'N') echo $checked;
         }
-        echo '/><label for="Statut_Fiche_n">' . LG_NOCHECKED_RECORD_SHORT . '</label>&nbsp;';
+        echo '/><label for="Statut_Fiche_n">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
         echo '<input type="radio" id="Statut_Fiche_i" name="Statut_Fiche" value="I"';
         if ($reprise) {
             if ($Statut_Fiche == 'I') echo $checked;

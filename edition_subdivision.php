@@ -113,7 +113,7 @@ function est_utilisee($aff)
 // Affiche une subdivision
 function Aff_Subdiv($enreg2)
 {
-    global $root, $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_subdiv = $enreg['Nom_Subdivision'];
     $n_subdiv_html = $enreg2['Nom_Subdivision'];
@@ -126,7 +126,7 @@ function Aff_Subdiv($enreg2)
     echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" align="center">' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";
@@ -178,7 +178,7 @@ function Aff_Subdiv($enreg2)
     echo '</td></tr>' . "\n";
     champ_carte(LG_SUBDIV_ZIP_LONGITUDE, 'Longitude', $enreg2['Longitude']);
     $id_image = 'carte_osm';
-    echo '&nbsp;' . Affiche_Icone_Clic("map_go", "apelle_carte('Latitude','Longitude')", LG_CALL_OPENSTREETMAP) . "\n";
+    echo ' <img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . LG_CALL_OPENSTREETMAP . '" title="' . LG_CALL_OPENSTREETMAP . '" onclick="apelle_carte('.$enreg2['Latitude'].', '.$enreg2['Longitude'].');">';
     echo "</td></tr>\n";
     echo '<tr><td colspan="2">';
     aff_tip_carte();
@@ -221,7 +221,7 @@ function Aff_Subdiv($enreg2)
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ident, 'S', 'N');
         // Possibilité de lier un document pour la subdivision
-        echo '<br />&nbsp;' . my_html(LG_SUBDIV_LINK_SOURCE) . LG_SEMIC
+        echo '<br />&nbsp;' . my_html(LG_SUBDIV_LINK_SOURCE) . ' '
             . Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
@@ -232,7 +232,7 @@ function Aff_Subdiv($enreg2)
         echo '<div id="pane_Docs">' . "\n";
         Aff_Documents_Objet($Ident, TYPE_OBJET, 'N');
         // Possibilité de lier un document pour la personne
-        echo '<br />' . LG_SUBDIV_LINK_DOCUMENT . LG_SEMIC
+        echo '<br />' . LG_SUBDIV_LINK_DOCUMENT . ' '
             . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refDoc=-1"', 'ajout', LG_SUBDIV_ADD_DOCUMENT) . "\n";
         echo '</div>' . "\n";
     }
@@ -328,7 +328,7 @@ if (($ok == '') && ($annuler == '')) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
-        $compl .= Affiche_Icone_Lien(Ins_Ref_Images($Ident, TYPE_OBJET), 'images', 'Images') . '&nbsp;' .
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=' . TYPE_OBJET . '"', 'images', 'Images') . '&nbsp;' .
             Affiche_Icone_Lien('href="'. $root .'/fiche_subdivision.php?Ident=' . $Ident . '"', 'page', $LG_Menu_Title['Subdiv']) . '&nbsp;';
     }
 

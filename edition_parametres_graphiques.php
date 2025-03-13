@@ -396,7 +396,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $posi = strrpos($Image_Barre, '/');
     $ch_barre = $chemin_images_barres . substr($Image_Barre, $posi + 1);
     echo '<td id="barre" style="background-image:url(\'' . $ch_barre . '\'); background-repeat:repeat-x;">';
-    echo $LG_Graphics_3Gen . '&nbsp;&nbsp;' . Affiche_Icone('oeil', $LG_show_noshow);
+    echo $LG_Graphics_3Gen . ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . my_html($LG_show_noshow) . '" title="' . my_html($LG_show_noshow) . '">';
     echo '</td></tr></table>';
     // Affichage des personnes exemples
     echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';

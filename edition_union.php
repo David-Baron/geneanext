@@ -217,10 +217,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         aff_liste_pers_restreinte('Conjoint_1U', true, true, $Conjoint_1, get_crit_sexe($Sexe_2), 'Nom, Prenoms', true, '', $Ne_2, $Dec_2, 'C');
         Img_Zone_Oblig('imgObligC1');
         if (($Conjoint_1 == -1) and (!$Uni_Sexe)) {
-            echo "&nbsp;<input type=\"button\" onclick=\"sel_der('m')\" value=\"Dernier homme saisi\" name=\"DH\"/>";
+            echo " <input type=\"button\" onclick=\"sel_der('m')\" value=\"Dernier homme saisi\" name=\"DH\"/>";
         }
     } else {
-        echo '&nbsp;' . $Nom_1 . ' ' . $Prenoms_1 . "\n";
+        echo ' ' . $Nom_1 . ' ' . $Prenoms_1 . "\n";
         echo '<input type="' . $hidden . '" name="Conjoint_1U" value="' . $Conjoint_1 . '"/>';
     }
     echo '</td></tr>' . "\n";
@@ -233,10 +233,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         aff_liste_pers_restreinte('Conjoint_2U', true, true, $Conjoint_2, get_crit_sexe($Sexe_1), 'Nom, Prenoms', true, '', $Ne_1, $Dec_1, 'C');
         Img_Zone_Oblig('imgObligC2');
         if (($Conjoint_2 == -1) and (!$Uni_Sexe)) {
-            echo "&nbsp;<input type=\"button\" onclick=\"sel_der('f')\" value=\"Derni&egrave;re femme saisie\" name=\"DF\"/>";
+            echo " <input type=\"button\" onclick=\"sel_der('f')\" value=\"Derni&egrave;re femme saisie\" name=\"DF\"/>";
         }
     } else {
-        echo '&nbsp;' . $Nom_2 . ' ' . $Prenoms_2 . "\n";
+        echo ' ' . $Nom_2 . ' ' . $Prenoms_2 . "\n";
         echo '<input type="' . $hidden . '" name="Conjoint_2U" value="' . $Conjoint_2 . '"/>';
     }
     echo '</td></tr>' . "\n";
@@ -252,7 +252,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     col_titre_tab_noClass(LG_UNION_WHEN, $P_Cent);
     echo '<td>';
     zone_date2('AMaries_LeU', 'Maries_LeU', 'CMaries_LeU', $enreg2['Maries_Le']);
-    echo LG_AT . '&nbsp;';
+    echo LG_AT . ' ';
     aff_liste_villes(
         'Ville_MariageU',
         true                            // C'est la première fois que l'on appelle la fonction dans la page
@@ -265,7 +265,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     echo '<img id="ajout1" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         ' onclick="inverse_div(\'id_div_ajout1\');document.getElementById(\'nouvelle_ville1\').focus();"/>' . "\n";
     echo '<div id="id_div_ajout1">';
-    echo $lg_add_town_list_h . '&nbsp;<input type="text" name="nouvelle_ville1"  id="nouvelle_ville1" maxlength="80"/>' . "\n";
+    echo $lg_add_town_list_h . ' <input type="text" name="nouvelle_ville1"  id="nouvelle_ville1" maxlength="80"/>' . "\n";
     echo '<input type="button" name="ferme_OK" value="' . $lib_OK_h . '" onclick="ajoute1();"/>' . "\n";
     echo '<input type="button" name="ferme_An" value="' . $lib_Annuler_h . '" onclick="inverse_div(\'id_div_ajout1\');"/>' . "\n";
     echo '</div>';
@@ -282,16 +282,16 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     col_titre_tab_noClass(LG_UNION_CONTRACT_WHEN, $P_Cent);
     echo '<td>';
     zone_date2('ADate_KU', 'Date_KU', 'CDate_KU', $enreg2['Date_K']);
-    echo '&nbsp;' . LG_UNION_CONTRACT_NOTARY . '&nbsp;<input type="text" size="60" name="Notaire_KU" value="' . $enreg2['Notaire_K'] . '"/></td></tr>' . "\n";
+    echo ' ' . LG_UNION_CONTRACT_NOTARY . ' <input type="text" size="60" name="Notaire_KU" value="' . $enreg2['Notaire_K'] . '"/></td></tr>' . "\n";
     col_titre_tab_noClass(LG_UNION_CONTRACT_NOTARY_WHERE, $P_Cent);
     echo '<td>';
     aff_liste_villes('Ville_NotaireU', false, false, $enreg2['Ville_Notaire']);
     echo '<input type="' . $hidden . '" name="ANotaire_KU" value="' . $enreg2["Notaire_K"] . '"/>';
     echo '<input type="' . $hidden . '" name="AVille_NotaireU" value="' . $enreg2["Ville_Notaire"] . '"/>';
-    echo '&nbsp;<img id="ajout2" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
+    echo ' <img id="ajout2" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         'onclick="inverse_div(\'id_div_ajout2\');document.getElementById(\'nouvelle_ville2\').focus();"/>' . "\n";
     echo '<div id="id_div_ajout2">';
-    echo $lg_add_town_list_h . '&nbsp;<input type="text" name="nouvelle_ville2" maxlength="80"/>' . "\n";
+    echo $lg_add_town_list_h . ' <input type="text" name="nouvelle_ville2" maxlength="80"/>' . "\n";
     echo '<input type="button" name="ferme_OK" value="' . $lib_OK_h . '" onclick="ajoute2();"/>' . "\n";
     echo '<input type="button" name="ferme_An" value="' . $lib_Annuler_h . '" onclick="inverse_div(\'id_div_ajout2\');"/>' . "\n";
     echo '</div>';
@@ -311,7 +311,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     echo '<input type="' . $hidden . '" name="ADiversU" value="' . htmlentities($Commentaire, ENT_QUOTES, $def_enc) . '"/>';
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
-    echo '<td>' . my_html(LG_CH_COMMENT_VISIBILITY) . '&nbsp;<input type="checkbox" name="Diff_Internet_NoteU" value="O"';
+    echo '<td>' . my_html(LG_CH_COMMENT_VISIBILITY) . ' <input type="checkbox" name="Diff_Internet_NoteU" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
     echo "/>\n";
     echo '<input type="' . $hidden . '" name="ADiff_Internet_NoteU" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
@@ -329,7 +329,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         //  Sources lies à l'union
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ref_Union, 'U', 'N');
-        echo '<br />&nbsp;Lier une nouvelle source &agrave; l\'union : ' .
+        echo '<br /> Lier une nouvelle source &agrave; l\'union : ' .
             Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
@@ -350,8 +350,8 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
             while ($row = $resE->fetch(PDO::FETCH_NUM)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
-                    echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>&nbsp;';
-                    echo '<a ' . Ins_Edt_Filiation($Enfant) . '>' . Affiche_Icone('fiche_edition', LG_UNION_UPDATE_PARENTS) . '</a>' . '<br />' . "\n";
+                    echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . ' ' . $Nom . '</a> ';
+                    echo '<a href="' . $root . '/edition_filiation.php?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . LG_UNION_UPDATE_PARENTS . '" title="' . LG_UNION_UPDATE_PARENTS . '"></a><br />';
                 }
             }
         }
@@ -359,10 +359,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         // Ajout rapide d'enfants avec création
         echo '<br />' . "\n";
         echo '<hr/>' . LG_UNION_CHILDREN_QUICK;
-        echo '<br />' . LG_UNION_CHILDREN_DEF_NAME . LG_SEMIC . "\n";
+        echo '<br />' . LG_UNION_CHILDREN_DEF_NAME . ' ' . "\n";
 
-        echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . '&nbsp;';
-        echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . '&nbsp;' . "\n";
+        echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . ' ';
+        echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . ' ' . "\n";
 
         echo '<table border="0" id="tblSampleE" width="100%">' . "\n";
         echo '<tr align="center">' . "\n";
@@ -409,10 +409,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     //
     Aff_Documents_Objet($Ref_Union, 'U', 'N');
     // Possibilité de lier un document à l'union
-    echo '<br />&nbsp;' . my_html(LG_UNION_ADD_DOC) . LG_SEMIC
+    echo '<br /> ' . my_html(LG_UNION_ADD_DOC) . ' '
         . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ref_Union .
             '&amp;typeObjet=U&amp;refDoc=-1"', 'ajout', $LG_add) . "\n";
-    echo '<br />&nbsp;' . my_html(LG_UNION_ADD_DOC_NEW) . LG_SEMIC
+    echo '<br /> ' . my_html(LG_UNION_ADD_DOC_NEW) . ' '
         . Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
             '&amp;typeObjet=U"', 'ajout', $LG_add) . "\n";
     echo '</div>' . "\n";
@@ -672,7 +672,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ref_Union != -1) {
-        $compl = Affiche_Icone_Lien(Ins_Ref_ImagesU($Ref_Union), 'images', 'Images') . '&nbsp;' .
+        $compl = Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ref_Union . '&amp;Type_Ref=U"', 'images', 'Images') . ' ' .
             Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union), 'fiche_fam', 'Fiche couple') . "\n";
     }
     Insere_Haut($titre, $compl, 'Edition_Union', $Conjoint_1 . "/" . $Conjoint_2);

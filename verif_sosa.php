@@ -35,7 +35,7 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
+$echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '">';
 $n_pers = nom_table('personnes');
 
 // Accède à une personne et l'affiche

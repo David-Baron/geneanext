@@ -35,7 +35,8 @@ if ($texte) $Depart = Recup_Variable('Depart', 'N', 1);
 $comp_texte = '&amp;Depart=' . $Depart;
 $compl = Ajoute_Page_Info(600, 150) .
     '<a href="' . $root . '/liste_eclair.php?texte=O' . $comp_texte .
-    '">' . Affiche_Icone('text', $LG_printable_format) . '</a>' . "\n";
+    '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '"></a>' . "\n";
+
 if ((!$SiteGratuit) or ($Premium))
     $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_eclair.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', $LG_pdf_format) . '&nbsp;';
 

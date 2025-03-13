@@ -10,6 +10,7 @@ if (!isset($_SESSION['niveau'])) $_SESSION['niveau'] = 'I';
 if (!isset($est_privilegie)) $est_privilegie = false;
 
 include_once(__DIR__ . '/parametres.php');
+include_once(__DIR__ . '/icones.php');
 
 $deb = '';
 $suffixe_info = '_info.php';
@@ -26,8 +27,6 @@ if (file_exists(__DIR__ . '/../../languages/lang_' . $langue . '_part.php')) {
 }
 
 $is_windows = substr(php_uname(), 0, 7) == "Windows" ? true : false;
-
-include_once(__DIR__ . '/icones.php');
 
 $ListeMoisRev = array(
     "vendémiaire",     //1
@@ -142,15 +141,14 @@ function redimage2($img_src, &$hauteur, &$largeur)
 // Affichage d'un message d'erreur si le fichier n'est pas trouvé
 function Aff_Img_Redim_Lien($image, $largeur, $hauteur, $id = "idimg")
 {
-    global $chemin_images, $chemin_images_icones, $Icones;
+    global $root, $Icones;
     if (file_exists($image)) {
         redimage2($image, $hauteur, $largeur);
-        $texte = 'Cliquez sur l\'image pour l\'agrandir ';
         echo '<a href="' . $image . '" target="_blank"><img id="' . $id . '" src="' . $image . '" ' .
-            'alt="' . $texte . '" title="' . $texte . '" ' .
+            'alt="Cliquez sur l\'image pour l\'agrandir " title="Cliquez sur l\'image pour l\'agrandir " ' .
             'width="' . $largeur . '" height="' . $hauteur . '"/></a>';
     } else {
-        echo '<img id="ImageAbs' . $id . '" src="' . $chemin_images_icones . $Icones['warning'] . '" alt="Image non trouvée">' .
+        echo '<img id="ImageAbs' . $id . '" src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Image non trouvée">' .
             'Image ' . $image . ' non trouvée';
     }
 }
@@ -209,7 +207,7 @@ function Age_Annees_Mois($date_ref, $date_fin)
         $x = Decompose_Mois($mois);
         return $x;
     }
-    
+
     return '';
 }
 
@@ -466,15 +464,17 @@ function Lit_Env()
 // Insère le bas de page
 function Insere_Bas($compl_entete)
 {
-    echo '<table cellpadding="0" width="100%">' . "\n";
+    global $root, $Icones;
+    echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
     if ($compl_entete != '') {
         echo $compl_entete;
     }
-    $x = Affiche_Icones_Standard();
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
     echo '</tr>';
-    echo '</table>' . "\n";
+    echo '</table>';
     // Fichiers de session des bots : pool!
     kill_sess_bot();
 }
@@ -496,23 +496,22 @@ function Ligne_Body($aff_manuel = true)
 
     if (is_info()) {
         $chemin = $offset_info . $chemin_images . $Image_Fond;
-        $chemin_manuel = $offset_info . 'Geneamania.pdf';
     } else {
         $chemin = $chemin_images . $Image_Fond;
-        $chemin_manuel = 'Geneamania.pdf';
     }
-    if (($Image_Fond != 'fonds/-') and (file_exists($chemin))) {
-        echo '<body background="' . $chemin . '">' . "\n"; // TODO: background as nothing to do in body tag
-    } else
-        echo '<body>' . "\n";
+    if (($Image_Fond != 'fonds/-') && (file_exists($chemin))) {
+        echo '<body background="' . $chemin . '">'; // TODO: background as nothing to do in body tag
+    } else {
+        echo '<body>';
+    }
     if ($aff_manuel) {
-        echo Affiche_Icone_Lien('href="' . $chemin_manuel . '" target="_blank"', 'manuel', 'Manuel Généamania') . '<br>';
+        echo Affiche_Icone_Lien('href="/documentation/Geneamania.pdf" target="_blank"', 'manuel', 'Manuel Généamania') . '<br>';
     }
 }
 
 function Insere_Haut($titre, $compl_entete, $page, $param)
 {
-    global $chemin_images, $Image_Fond, $Insert_Compteur, $Environnement, $connexion;
+    global $root, $Icones, $Insert_Compteur, $Environnement, $connexion;
     echo '</head>';
     Ligne_Body(false);
     echo '<table cellpadding="0" width="100%">';
@@ -525,7 +524,8 @@ function Insere_Haut($titre, $compl_entete, $page, $param)
     echo '</td>';
     echo '<td align="right">';
     if ($compl_entete != '') echo $compl_entete;
-    Affiche_Icones_Standard();
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
     echo "  </tr>";
     echo " </table>";
     if ($page != "--") {
@@ -544,12 +544,6 @@ function Insere_Haut($titre, $compl_entete, $page, $param)
     }
 }
 
-function Affiche_Icones_Standard()
-{
-    global $root, $chemin_images_icones, $Icones;
-    echo '<a href="' . $root . '/"><img src="' . $chemin_images_icones . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
-    echo "</td>";
-}
 
 //	Constitution du libellé du niveau des droits utilisateur
 function libelleNiveau($niveau)
@@ -754,7 +748,7 @@ function Etend_date($LaDate, $forcage = false)
 // Fonction étendue d'affichage de date avec conversion des dates révolutionnares
 function Etend_date_2($LaDate, $forcage = false)
 {
-    global $aff_rev, $chemin_images_icones, $Icones;
+    global $aff_rev, $root, $Icones;
     if (is_null($LaDate))
         $LaDate = '';
     $LaDate2 = Etend_date($LaDate);
@@ -765,7 +759,7 @@ function Etend_date_2($LaDate, $forcage = false)
             switch ($aff_rev) {
                 case 'I':
                     $texte_image = Etend_date($LaDate);
-                    $LaDate2 .= '&nbsp;<img src="' . $chemin_images_icones . $Icones['arrange']
+                    $LaDate2 .= '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['arrange']
                         . '" alt="' . $texte_image . '" title="' . $texte_image . '" />';
                     break;
                 case 'P':
@@ -838,12 +832,6 @@ function impair($var)
     return ($var % 2 == 1);
 }
 
-function Get_Adr_Base_Ref()
-{
-    global $Environnement, $RepGenSiteLoc, $RepGenSiteInt;
-    if ($Environnement == 'I') return $RepGenSiteInt;
-    else return $RepGenSiteLoc;
-}
 
 // Donne le chemin de la font en fonction de l'environnement
 function Get_Font()
@@ -870,19 +858,6 @@ function Ins_Edt_Pers($Reference, $new_window = false)
     return 'href="' . $root . '/edition_personne.php?Refer=' . $Reference . '"' . $target;
 }
 
-// Appelle l'édition d'une union
-function Ins_Edt_Union($Reference, $Personne = 0, $us = 'n')
-{
-    global $root;
-    return 'href="' . $root . '/edition_union.php?Reference=' . $Reference . '&amp;Personne=' . $Personne . '&amp;us=' . $us . '"';
-}
-
-// Appelle l'édition d'une filiation
-function Ins_Edt_Filiation($Reference)
-{
-    global $root;
-    return 'href="' . $root . '/edition_filiation.php?Refer=' . $Reference . '"';
-}
 
 // Appel de la page fiche couple de type texte
 function Ins_Ref_Fam($Reference, $sortie = "H")
@@ -900,53 +875,11 @@ function Ins_Ref_Indiv($Reference, $sortie = "H")
     else return 'href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Reference . '&amp;pdf=O"';
 }
 
-function Ins_Ref_Arbre($Reference)
-{
-    global $root;
-    return 'href="' . $root . '/arbre_asc_pers.php?Refer=' . $Reference . '"';
-}
-
-function Ins_Ref_Arbre_Desc($Reference)
-{
-    global $root;
-    return 'href="' . $root . '/arbre_desc_pers.php?Refer=' . $Reference . '"';
-}
-
-function Ins_Ref_Images($Reference, $Type_Ref)
-{
-    global $root;
-    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=' . $Type_Ref . '"';
-}
-
 // Affiche l'icone vers la chronologie d'une personne
 function Lien_Chrono_Pers($Reference)
 {
     global $root;
     return Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne.php?Refer=' . $Reference . '"', 'time_line', LG_FFAM_CHRONOLOGIE) . "\n";
-}
-
-// Référence des images pour un évènement
-function Ins_Ref_ImagesE($Reference)
-{
-    return Ins_Ref_Images($Reference, 'E');
-}
-
-// Référence des images pour une personne
-function Ins_Ref_ImagesP($Reference)
-{
-    return Ins_Ref_Images($Reference, 'P');
-}
-
-// Référence des images pour une ville
-function Ins_Ref_ImagesV($Reference)
-{
-    return Ins_Ref_Images($Reference, "V");
-}
-
-// Référence des images pour une union
-function Ins_Ref_ImagesU($Reference)
-{
-    return Ins_Ref_Images($Reference, "U");
 }
 
 function Presence_Images($Reference, $Type_Ref)
@@ -1504,23 +1437,23 @@ function Secur_Variable_Post($contenu, $long, $type_var)
 
 function Erreur_DeCujus()
 {
-    global $root, $chemin_images_icones, $RepGenSite, $Icones;
-    echo '<img src="' . $chemin_images_icones . $Icones['warning'] . '" alt="Avertissement">&nbsp;';
+    global $root, $root, $RepGenSite, $Icones;
+    echo '<img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Avertissement">&nbsp;';
     echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ;&nbsp;';
     echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
     return 1;
 }
 function Affiche_Warning($Message)
 {
-    global $chemin_images_icones, $Icones;
-    echo '<img src="' . $chemin_images_icones . $Icones['warning'] . '" alt="Avertissement"/>&nbsp;';
+    global $root, $Icones;
+    echo '<img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Avertissement"/>&nbsp;';
     echo $Message . "<br>\n";
 }
 
 function Affiche_Stop($Message)
 {
-    global $chemin_images_icones, $Icones;
-    echo '<br>' . '<img src="' . $chemin_images_icones . $Icones['stop'] . '" alt="Stop"/>&nbsp;';
+    global $root, $Icones;
+    echo '<br>' . '<img src="' . $root . '/assets/img/' . $Icones['stop'] . '" alt="Stop"/>&nbsp;';
     echo my_html($Message) . "<br>\n";
 }
 
@@ -1769,7 +1702,7 @@ function Aff_Liens_Pers($numPers, $modif)
                     else echo '2';
                     // Fin du lien
                     echo '&amp;role=' . $enreg['codeRole'] . '">' .
-                        '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $lib . '" title="' . $lib . '"></a></td>' . "\n";
+                        '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $lib . '" title="' . $lib . '"></a></td>' . "\n";
                 }
                 echo '</tr>' . "\n";
                 $debut = $enreg['Debut'];
@@ -1829,7 +1762,7 @@ function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
                 echo '<td align="center"><a href="' . $root . '/edition_lier_objet.php?refEvt=' . $enreg['refEve'] .
                     '&amp;refObjet=' . $RefObjet .
                     '&amp;TypeObjet=' . $TypeObjet . '">' .
-                    '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="Modification lien"/></a></td>' . "\n";
+                    '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modification lien"/></a></td>' . "\n";
             }
             echo '</tr><tr>' . "\n";
             if ($modif == 'O') echo '<td colspan="2">';
@@ -1862,7 +1795,7 @@ function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
             '<a href="' . $root . '/edition_lier_objet.php?refEvt=-1' .
             '&amp;refObjet=' . $RefObjet .
             '&amp;TypeObjet=' . $TypeObjet . '">' .
-            '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . $LG_Add_Existing_Event . '"/></a>' . "\n";
+            '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . $LG_Add_Existing_Event . '"/></a>' . "\n";
     }
 }
 
@@ -1976,15 +1909,15 @@ function Oeil_Div($nom_img, $alt_img, $div)
 // Paramètre : nom de l'image, alt sur image, nom du div
 function Image_Div($image, $nom_img, $alt_img, $div)
 {
-    global $chemin_images_icones, $Icones;
-    echo '<img id="' . $nom_img . '" src="' . $chemin_images_icones . $Icones[$image] . '" alt="' . my_html($alt_img) . '" ' . Survole_Clic_Div($div) . '/>' . "\n";
+    global $root, $Icones;
+    echo '<img id="' . $nom_img . '" src="' . $root . '/assets/img/' . $Icones[$image] . '" alt="' . my_html($alt_img) . '" ' . Survole_Clic_Div($div) . '/>' . "\n";
     echo '<div id="' . $div . '">' . "\n";
 }
 
 function oeil_div_simple($image, $nom_img, $alt_img, $div)
 {
-    global $chemin_images_icones, $Icones;
-    echo '&nbsp;&nbsp;<img id="' . $image . '" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '" ' . Survole_Clic_Div($div) . '/>' . "\n";
+    global $root, $Icones;
+    echo '&nbsp;&nbsp;<img id="' . $image . '" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '" ' . Survole_Clic_Div($div) . '/>' . "\n";
 }
 
 //--------------------------------------------------------------------------
@@ -2035,49 +1968,11 @@ function Aff_Comment_Fiche($divers, $diff)
     }
 }
 
-// Affiche la balise Img pour une icone
-function Affiche_Icone($nom_image, $texte_image = '')
-{
-    return Affiche_Icone_Clic($nom_image, '', $texte_image);
-}
-
-function Affiche_Icone_Clic($nom_image, $Action_Clic, $texte_image = '')
-{
-    global $chemin_images_icones, $Icones, $offset_info, $id_image;
-    $texte_image = my_html($texte_image);
-    $the_id = ' ';
-    if ((isset($id_image)) and ($id_image != '')) {
-        $the_id = 'id="' . $id_image . '" ';
-    }
-    $id_image = '';
-    $nom_icone = $Icones[$nom_image];
-    if (is_info()) {
-        $chemin = $offset_info . $chemin_images_icones . $nom_icone;
-    } else {
-        $chemin = $chemin_images_icones . $nom_icone;
-    }
-    $oc = '';
-    if ($Action_Clic != '') $oc = 'onclick="' . $Action_Clic . ';"';
-    return '<img ' . $the_id . 'src="' . $chemin . '" alt="' . $texte_image . '" title="' . $texte_image . '" ' . $oc . '>';
-}
-
-function Lien_Icone_Brut($lien, $nom_image, $id_image, $Action_Clic, $texte_image = '')
-{
-    global $chemin_images_icones, $Icones;
-    return '<a ' . $lien . '>'
-        . '<img id="' . $id_image . '" '
-        . 'src="' . $chemin_images_icones . $Icones[$nom_image] . '" '
-        . 'alt="' . $texte_image . '" '
-        . 'title="' . $texte_image . '" '
-        . ''
-        . 'onclick="' . $Action_Clic . '"/>'
-        . '</a>';
-}
 
 // Affiche icone d'appel des textes et pdf ; lien en nofollow...
 function Affiche_Icone_Lien_TXT_PDF($lien, $texte_image, $le_type)
 {
-    global $chemin_images_icones, $Icones;
+    global $root, $Icones;
     $texte_image = my_html($texte_image);
     switch ($le_type) {
         case 'T':
@@ -2087,34 +1982,35 @@ function Affiche_Icone_Lien_TXT_PDF($lien, $texte_image, $le_type)
             $image = 'PDF';
             break;
     }
-    return '<a ' . $lien . ' rel="nofollow"><img src="' . $chemin_images_icones . $Icones[$image] . '" alt="' . $texte_image . '" title="' . $texte_image . '" /></a>';
+    return '<a ' . $lien . ' rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones[$image] . '" alt="' . $texte_image . '" title="' . $texte_image . '" /></a>';
 }
 
 // Affiche la balise Img pour une icone avec le lien
 function Affiche_Icone_Lien($lien, $nom_image, $texte_image, $target = '')
 {
+    global $root, $Icones;
     if ($target == 'n') $lien .= ' target="_blank"';
-    return '<a ' . $lien . '>' . Affiche_Icone($nom_image, $texte_image) . '</a>';
+    return '<a ' . $lien . '><img src="' . $root . '/assets/img/' . $Icones[$nom_image] . '" alt="' . my_html($texte_image) . '" title="' . my_html($texte_image) . '"></a>';
 }
 
 function Img_Zone_Oblig($nom_image)
 {
-    global $chemin_images_icones, $Icones;
+    global $root, $Icones;
     $texte = 'Zone obligatoire';
-    echo '<img id="' . $nom_image . '" src="' . $chemin_images_icones . $Icones['obligatoire'] . '" alt="' . $texte . '" title="' . $texte . '"/>';
+    echo '<img id="' . $nom_image . '" src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="' . $texte . '" title="' . $texte . '"/>';
 }
 
 function Affiche_Calendrier($nom_image, $fonc_click)
 {
-    global $chemin_images_icones, $Icones;
+    global $root, $Icones;
     $texte = 'Calendrier';
-    echo '<img id="' . $nom_image . '" src="' . $chemin_images_icones . $Icones['calendrier'] . '" alt="' . $texte . '" title="' . $texte . '" onclick="' . $fonc_click . '"/>' . "\n";
+    echo '<img id="' . $nom_image . '" src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="' . $texte . '" title="' . $texte . '" onclick="' . $fonc_click . '"/>' . "\n";
 }
 
 // Affiche l'icone d'information si la page d'information existe et le lien vers la page
 function Ajoute_Page_Info($largeur, $hauteur)
 {
-    global $root, $chemin_images_icones, $Icones, $rep_Infos;
+    global $root, $Icones, $rep_Infos;
     // Constitution du nom de la page info
     $nom_script = $_SERVER['SCRIPT_NAME'];
     if ($nom_script[0] == '/') $nom_script = substr($nom_script, 1);
@@ -2123,7 +2019,7 @@ function Ajoute_Page_Info($largeur, $hauteur)
     $texte = 'Aide sur la page';
     $nom_script = substr($nom_script, 0, $l_p);
     return '<a href=\'javascript:PopupCentrer("' . $root . '/appel_info.php?aide=' . $nom_script . '",' . $largeur . ',' . $hauteur . ',"menubar=no,scrollbars=yes,statusbar=no")\'>' .
-        '<img src="' . $chemin_images_icones . $Icones['information'] . '" alt="' . $texte . '" title="' . $texte . '" /></a>&nbsp;';
+        '<img src="' . $root . '/assets/img/' . $Icones['information'] . '" alt="' . $texte . '" title="' . $texte . '" /></a>&nbsp;';
 }
 
 function Retire_sr($nom_script)
@@ -2285,7 +2181,7 @@ function aff_lien_pers($refPar, $modif = 'N')
         " WHERE Evenement = $refPar AND pa.Personne = pe.Reference AND pa.Code_Role = r.Code_Role";
     $result = lect_sql($requete);
     if ($result->rowCount() > 0) {
-        $icone_mod = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="Modification lien"/>';
+        $icone_mod = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modification lien"/>';
         echo '<br>' . "\n";
         if ($modif == 'N') echo '<fieldset><legend>Lien avec des personnes</legend>' . "\n";
         while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -2369,7 +2265,7 @@ function aff_lien_filiations($refPar, $modif = 'N')
                     '&amp;refObjet=' . $enreg['eRef'] .
                     '&amp;TypeObjet=F' .
                     '">' .
-                    '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="Modification lien"/></a>';
+                    '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modification lien"/></a>';
             }
         }
         if ($modif == 'N') echo '</fieldset>' . "\n";
@@ -2381,7 +2277,7 @@ function aff_lien_filiations($refPar, $modif = 'N')
             '&amp;refObjet=-1' .
             '&amp;TypeObjet=F' .
             '">' .
-            '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajouter une filiation"/></a>' . "\n";
+            '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="Ajouter une filiation"/></a>' . "\n";
     }
 }
 
@@ -2418,7 +2314,7 @@ function aff_lien_unions($refPar, $modif = 'N')
                     '&amp;refObjet=' . $enreg['uRef'] .
                     '&amp;TypeObjet=U' .
                     '">' .
-                    '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="Modification lien"/></a>';
+                    '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modification lien"/></a>';
             }
         }
         if ($modif == 'N') echo '</fieldset>' . "\n";
@@ -2429,7 +2325,7 @@ function aff_lien_unions($refPar, $modif = 'N')
             '&amp;refObjet=-1' .
             '&amp;TypeObjet=U' .
             '">' .
-            '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajouter une union"/></a>' . "\n";
+            '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="Ajouter une union"/></a>' . "\n";
     }
 }
 
@@ -2651,7 +2547,7 @@ function aff_menu($type_menu, $droits, $formu = true)
                     echo '<option value="';
                     echo $rep . $elements[1] . '">' . my_html($elements[2]) . '</option>';
                 } else {
-                    echo '&nbsp;&nbsp;&nbsp;<img id="puce' . ++$num_puce . '" src="' . $chemin_images_icones . $Icones['menu_option'] . '" alt="Puce"/>';
+                    echo '&nbsp;&nbsp;&nbsp;<img id="puce' . ++$num_puce . '" src="' . $root . '/assets/img/' . $Icones['menu_option'] . '" alt="Puce"/>';
                     echo '<a href="' . $rep . $rep . $elements[1] . '">' . my_html($elements[2]) . '</a><br>';
                 }
             }
@@ -2834,7 +2730,7 @@ function ligne_vide_tab_form($nb_lig)
 // Affichage conditionné des boutons ok, annuler, supprimer
 function bt_ok_an_sup($lib_ok, $lib_an, $lib_sup, $lib_conf, $dans_table = true, $suppl = false)
 {
-    global $chemin_images_icones, $Icones, $lib_Retour, $lib_Annuler, $lib_Rechercher, $hidden;
+    global $root, $Icones, $lib_Retour, $lib_Annuler, $lib_Rechercher, $hidden;
 
     if ($dans_table) echo '<tr><td colspan="2" align="center">';
     // Lors d'un appel supplémentaire, il ne faut pas re-créer les champs cachés
@@ -2857,19 +2753,19 @@ function bt_ok_an_sup($lib_ok, $lib_an, $lib_sup, $lib_conf, $dans_table = true,
         else $Icone = 'fiche_validee';
         echo '<button type="submit" class="positive" id="bouton_ok" ' .
             'onclick="document.forms.saisie.cache.value=\'ok\';document.forms.saisie.ok.value=\'' . addslashes($lib_ok) . '\';"> ' .
-            '<img src="' . $chemin_images_icones . $Icones[$Icone] . '" alt=""/>' . $lib_ok . '</button>';
+            '<img src="' . $root . '/assets/img/' . $Icones[$Icone] . '" alt=""/>' . $lib_ok . '</button>';
     }
     if ($lib_an != '') {
         if ($lib_an == $lib_Retour) $Icone = 'previous';
         else $Icone = 'cancel';
         echo '<button type="submit" ' .
             'onclick="document.forms.saisie.cache.value=\'an\';document.forms.saisie.annuler.value=\'' . $lib_Annuler . '\';"> ' .
-            '<img src="' . $chemin_images_icones . $Icones[$Icone] . '" alt=""/>' . $lib_an . '</button>';
+            '<img src="' . $root . '/assets/img/' . $Icones[$Icone] . '" alt=""/>' . $lib_an . '</button>';
     }
     if ($lib_sup != '')
         echo '<button type="submit" class="negative" ' .
             'onclick="confirmer(\'' . addslashes($lib_conf) . '\',this);"> ' .
-            '<img src="' . $chemin_images_icones . $Icones['supprimer'] . '" alt=""/>' . $lib_sup . '</button>';
+            '<img src="' . $root . '/assets/img/' . $Icones['supprimer'] . '" alt=""/>' . $lib_sup . '</button>';
     echo '</div>';
 
     echo '</td></tr>';
@@ -3029,9 +2925,9 @@ function sauve_img_gd($image)
 
 function Affiche_Icone_Lien_Bt($lien, $icone, $lib)
 {
-    global $chemin_images_icones, $Icones;
+    global $root, $Icones;
     $a = '<div class="buttons">';
-    $a .= '<a ' . $lien . '"><img src="' . $chemin_images_icones . $Icones[$icone] . '" alt="' . $lib . '"/> ' . $lib . '</a>';
+    $a .= '<a ' . $lien . '"><img src="' . $root . '/assets/img/' . $Icones[$icone] . '" alt="' . $lib . '"/> ' . $lib . '</a>';
     $a .= '</div>' . "\n";
     return $a;
 }
@@ -3318,7 +3214,8 @@ function aff_legend($lib)
 // Affiche le conseil OpenStreetmap
 function aff_tip_carte()
 {
-    echo Affiche_Icone('tip', LG_TIP) . ' ' . my_html(LG_TIP_OPENSTREETMAP) . ' <a href="http://www.OpenStreetMap.com" target="_blank">OpenStreetMap</a></td></tr>' . "\n";
+    global $root, $Icones;
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '"><a href="http://www.OpenStreetMap.com" target="_blank">OpenStreetMap</a></td></tr>' . "\n";
 }
 
 // Demande l'affichage d'une carte OpenStreetMap si les coordonnées sont renseignées

@@ -627,9 +627,9 @@ if ($bt_OK) {
         if ($sel) {
             echo '<input type="checkbox" name="n_table[]" value="' . $tablename . '" checked="checked"/>' . $tablename;
             if (est_table('compteurs', $tablename))
-                echo '&nbsp;' . Affiche_Icone('commentaire', LG_EXPORT_NO_EXPORT);
+                echo ' <img src="' . $root . '/assets/img/' . $Icones['commentaire'] . '" alt="' . LG_EXPORT_NO_EXPORT . '" title="' . LG_EXPORT_NO_EXPORT . '">';
             if (est_table('general', $tablename))
-                echo '&nbsp;' . Affiche_Icone('commentaire', LG_EXPORT_MODIFY);
+                echo ' <img src="' . $root . '/assets/img/' . $Icones['commentaire'] . '" alt="' . LG_EXPORT_MODIFY . '" title="' . LG_EXPORT_MODIFY . '">';
             echo '<br />' . "\n";
         }
     }

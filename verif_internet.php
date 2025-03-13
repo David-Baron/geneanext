@@ -79,15 +79,13 @@ $sql = 'SELECT Reference, Nom, Prenoms, Diff_Internet, Ne_Le, Decede_Le ' .
 $res = lect_sql($sql);
 $nbPers = $res->rowCount();
 
-//if ($nbPers > 0) {
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
-echo '<form action="' . my_self() . '" id="saisie" method="post">';
+echo '<form id="saisie" method="post">';
 
 bt_ok_an_sup($lib_Rectifier, $lib_Annuler, '', '', false);
 
 $plu = pluriel($nbPers);
 echo '<br>' . $nbPers . LG_CHK_INTERNET_PRES_1 . ' ' . $Lim_Diffu . ' ' . LG_CHK_INTERNET_PRES_2 . ' '
-    . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/>&nbsp;' . LG_CHK_INTERNET_YEARS . "\n";
+    . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/> ' . LG_CHK_INTERNET_YEARS . "\n";
 echo '<input type="submit" name="re" value="' . $LG_Check_Again . '"/>' . "\n";
 echo '<br><br><a href="' . $root . '/verif_internet_absente.php">' . $LG_Menu_Title['Internet_Hidding_Cheking'] . '</a>';
 echo '<br><br>';
@@ -96,7 +94,7 @@ echo '<table border="0" class="classic" cellspacing="1" cellpadding="3" align="c
 echo '<tr class="rupt_table">';
 echo '<th>' . LG_CHK_INTERNET_PERSON . '</th>' . "\n";
 echo '<th>' . $LG_show_on_internet;
-echo '&nbsp;<input type="checkbox" id="selTous" name="selTous" value="on" checked="checked" onclick="checkUncheckAll(this);"/>&nbsp;'
+echo ' <input type="checkbox" id="selTous" name="selTous" value="on" checked="checked" onclick="checkUncheckAll(this);"/> '
     . '<label for="selTous">' . $LG_All . '</label>';
 echo '</th>' . "\n";
 echo '<th>' . LG_CHK_INTERNET_BORN . '</th>' . "\n";
@@ -112,7 +110,7 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
     echo '<tr  class="' . $style . '">';
     echo '<td>';
     echo '<a ' . Ins_Ref_Pers($enreg[0]) . '>' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>' . "\n";
-    echo '&nbsp;<a ' . Ins_Edt_Pers($enreg[0]) . '>' . $echo_modif;
+    echo ' <a ' . Ins_Edt_Pers($enreg[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
     echo '</td>' . "\n";
     echo '<td align="center">';
     echo  '<input type="checkbox" name="S_Int[' . $numLig . ']"' . $internet . '/>';
@@ -125,7 +123,7 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
 }
 
 echo '</table>' . "\n";
-echo Affiche_Icone('tip', $LG_tip) . ' ' . my_html(LG_CHK_INTERNET_TIP);
+echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' .$LG_tip . '" title="' . $LG_tip . '"> ' . my_html(LG_CHK_INTERNET_TIP);
 
 echo '<br>';
 aff_origine();

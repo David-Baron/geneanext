@@ -1915,7 +1915,7 @@ $msg = '';
         // Récupération des derniers sources
         echo '<fieldset><legend>Récupération de la dernière version de référence du logiciel</legend>';
         if ($is_windows)
-            echo Affiche_Icone('tip', 'Information') .
+            echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information">' .
                 'Si vous utilisez le lanceur Windows, vous pouvez mettre à jour  Généamania en 1 clic à partir de l\'onglet "Versions" du lanceur.<br>Sinon,&nbsp;';
         echo '<a href="' . $root . '/recup_sources.php">Cliquez ici</a>';
         echo '</fieldset>';
@@ -1934,8 +1934,8 @@ $msg = '';
 
         echo '<br>';
         echo '<fieldset><legend>Initialisation de la base de données</legend>';
-        echo Affiche_Icone('tip', 'Information') . ' Uniquement pour une première installation de Généamania :<br>' . "\n";
-        echo '<form id="form_modI" method="post" action="' . my_self() . '">' . "\n";
+        echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> Uniquement pour une première installation de Généamania :<br>' . "\n";
+        echo '<form id="form_modI" method="post">' . "\n";
         echo '<table width="25%"><tr align="center"><td>' . "\n";
         echo '  <fieldset>' . "\n";
         echo '    <legend>Environnement</legend>' . "\n";
@@ -1985,7 +1985,7 @@ $msg = '';
 
         // Message d'avertissement en  environnement internet
         if ($envir == 'I') {
-            echo '<br>' . Affiche_Icone('tip', 'Information') . '<b> Sur internet, pensez à supprimer la page install.php une fois que vous avez fini de l\'utiliser.</b><br>';
+            echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"><b> Sur internet, pensez à supprimer la page install.php une fois que vous avez fini de l\'utiliser.</b><br>';
         }
     }
 

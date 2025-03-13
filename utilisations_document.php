@@ -63,10 +63,10 @@ if ($nb == 0) {
     // echo $nb.' utilisation'.$plu. ' trouv&eacute;e'.$plu.'<br /><br />';
     echo $nb . ' ' . my_html(LG_DOC_UT_COUNT) . '<br /><br />';
 
-    echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" >';
-    $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
+    echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" >';
+    $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+
     $num_lig = 0;
-    $base_ref = Get_Adr_Base_Ref();
 
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
 

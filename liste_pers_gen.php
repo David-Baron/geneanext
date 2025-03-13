@@ -99,7 +99,7 @@ function Affiche_Generation($Gener)
 // Affiche une personne sur une ligne
 function Affiche_Personne($Personne, $nb, $nb_gen)
 {
-    global $texte, $num_lig, $Vil_Prec, $Ville, $lieux, $_SESSION, $sortie, $pdf, $CSV, $fp, $LG_Data_noavailable_profile, $LG_LPersG_Implex_or_error, $LG_at, $est_privilegie, $omanquant;
+    global $root, $Icones, $texte, $num_lig, $Vil_Prec, $Ville, $lieux, $_SESSION, $sortie, $pdf, $CSV, $fp, $LG_Data_noavailable_profile, $LG_LPersG_Implex_or_error, $LG_at, $est_privilegie, $omanquant;
     if (!$omanquant) {
         // Ordre des champs : Reference, Nom, Prenoms, Numero, Ne_le, Decede_Le, Diff_Internet, Ville_Naissance, Ville_Deces
         //                    0          1    2        3       4      5          6              7                8
@@ -114,8 +114,8 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
             // On ne vérifie que si l'on n'est pas sur le de cujus par défaut
             if ($_SESSION['decujus_defaut'] == 'O') {
                 if ($Personne[3] != $nb) $Implex = ' (' . $nb . ')';
-                if ((!$texte) and ($Implex != ''))
-                    $Implex .= '&nbsp;' . Affiche_Icone('commentaire', $LG_LPersG_Implex_or_error);
+                if ((!$texte) && ($Implex != ''))
+                    $Implex .= ' <img src="' . $root . '/assets/img/' . $Icones['commentaire'] . '" alt="' . $LG_LPersG_Implex_or_error . '" title="' . $LG_LPersG_Implex_or_error . '">';
             }
 
             HTML_ou_PDF('<td width="12%">' . $Personne[3] . $Implex . '</td>' . "\n", $sortie);
@@ -484,7 +484,7 @@ if($sortie_pdf) {
         if (! $texte) {
             echo '</div>';
             if ($nb_gen > $max_gen_AD) {
-                echo '<br />' . Affiche_Icone('tip', my_html($LG_tip)) .
+                echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '">' .
                     my_html($LG_LPersG_limited_max_gen_1 . $max_gen_AD . $LG_LPersG_limited_max_gen_2) .
                     '<a href="' . $root . '/vue_personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' .
                     my_html($LG_LPersG_limited_max_gen_4) . "\n";

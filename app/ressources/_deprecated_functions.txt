@@ -1,0 +1,109 @@
+
+function Affiche_Icones_Standard()
+{
+    global $root, $Icones;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+}
+
+function Get_Adr_Base_Ref()
+{
+    global $Environnement, $RepGenSiteLoc, $RepGenSiteInt;
+    if ($Environnement == 'I') return $RepGenSiteInt;
+    else return $RepGenSiteLoc;
+}
+
+// Appelle l'édition d'une union
+function Ins_Edt_Union($Reference, $Personne = 0, $us = 'n')
+{
+    global $root;
+    return 'href="' . $root . '/edition_union.php?Reference=' . $Reference . '&amp;Personne=' . $Personne . '&amp;us=' . $us . '"';
+}
+
+// Appelle l'édition d'une filiation
+function Ins_Edt_Filiation($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/edition_filiation.php?Refer=' . $Reference . '"';
+}
+
+function Ins_Ref_Arbre($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/arbre_asc_pers.php?Refer=' . $Reference . '"';
+}
+
+function Ins_Ref_Arbre_Desc($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/arbre_desc_pers.php?Refer=' . $Reference . '"';
+}
+
+function Ins_Ref_Images($Reference, $Type_Ref)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=' . $Type_Ref . '"';
+}
+
+// Référence des images pour un évènement
+function Ins_Ref_ImagesE($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=E"';
+}
+
+// Référence des images pour une personne
+function Ins_Ref_ImagesP($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=P"';
+}
+
+// Référence des images pour une ville
+function Ins_Ref_ImagesV($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=V"';
+}
+
+// Référence des images pour une union
+function Ins_Ref_ImagesU($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=U"';
+}
+
+// Affiche la balise Img pour une icone
+function Affiche_Icone($nom_image, $texte_image = '')
+{
+    return Affiche_Icone_Clic($nom_image, '', $texte_image);
+}
+
+function Lien_Icone_Brut($lien, $nom_image, $id_image, $Action_Clic, $texte_image = '')
+{
+    global $root, $Icones;
+    return '<a ' . $lien . '>'
+        . '<img id="' . $id_image . '" '
+        . 'src="' . $root . '/assets/img/' . $Icones[$nom_image] . '" '
+        . 'alt="' . $texte_image . '" '
+        . 'title="' . $texte_image . '" '
+        . ''
+        . 'onclick="' . $Action_Clic . '"/>'
+        . '</a>';
+}
+
+function Affiche_Icone_Clic($nom_image, $Action_Clic, $texte_image = '')
+{
+    global $root, $Icones, $offset_info, $id_image;
+    $texte_image = my_html($texte_image);
+    $the_id = ' ';
+    if ((isset($id_image)) && ($id_image != '')) {
+        $the_id = 'id="' . $id_image . '" ';
+    }
+    $id_image = '';
+    $nom_icone = $Icones[$nom_image];
+    $chemin = $root . '/assets/img/' . $nom_icone;
+    $oc = '';
+    if ($Action_Clic != '') $oc = 'onclick="' . $Action_Clic . ';"';
+    return '<img ' . $the_id . 'src="' . $chemin . '" alt="' . $texte_image . '" title="' . $texte_image . '" ' . $oc . '>';
+}

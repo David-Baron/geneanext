@@ -44,7 +44,7 @@ else {
 
     // Possibilité de venir en modification pour les gestionnaires
     if ($est_gestionnaire)
-        $compl .= '<a href="' . $root . '/edition_requete.php?reference=' . $reference . '">' . Affiche_Icone('fiche_edition', my_html($LG_Menu_Title['Request_Edit'])) . '</a>' . "\n";
+        $compl .= '<a href="' . $root . '/edition_requete.php?reference=' . $reference . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_Menu_Title['Request_Edit'] . '" title="' . $LG_Menu_Title['Request_Edit'] . '"></a>' . "\n";
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Requete', $reference);
 

@@ -29,7 +29,7 @@ $texte = Dem_Texte();
 
 $compl = Ajoute_Page_Info(600, 300);
 if ($_SESSION['estGestionnaire']) {
-    $compl .= '<a href="' . $root . '/verif_homonymes.php?texte=O' . $compl_texte . '">' . Affiche_Icone('text', $LG_printable_format) . '</a>' . "\n";
+    $compl .= '<a href="' . $root . '/verif_homonymes.php?texte=O' . $compl_texte . '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '"></a>' . "\n";
 }
 
 # include(__DIR__ . '/assets/js/Verif_Homonymes.js');
@@ -42,7 +42,7 @@ if (!$texte) {
 }
 
 if (!$texte) {
-    echo '<form id="parliste" action="' . my_self() . '" method="post">' . "\n";
+    echo '<form id="parliste" method="post">' . "\n";
     echo '<table border="0" width="75%" align="center">' . "\n";
     echo '<tr align="center">';
     echo '<td class="rupt_table">';
@@ -74,11 +74,6 @@ $sql = 'select count(*), nom, prenoms, idNomFam' . $critere
     . ' group ' . $gr_or
     . ' having count(*) > 1'
     . ' order ' . $gr_or;
-
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
-$info = $LG_Menu_Title['Compare_Persons'];
-$icone_compare = '<input type="image" src="' . $chemin_images_icones . $Icones['2personnes'] . '" alt="' . $info . '" ' .
-    'title="' . $info . '" onclick="return controle(this.form.id);"/>' . "\n";
 
 $nb = 0;
 $x_ne = '&deg; ';
@@ -115,29 +110,27 @@ if ($res = lect_sql($sql)) {
                 if (!$texte) $classe = 'class="' . $style . '"';
                 echo '<tr>';
                 echo '<td ' . $classe . '>';
-                $decede = $enreg2['Decede_Le'];
-                $ne = $enreg2['Ne_le'];
-                $ref = $enreg2['Reference'];
                 if (!$texte) {
-                    echo $x_Ref . ' : ' . '<a ' . Ins_Ref_Pers($ref) . '>' . $ref . '</a>' . "\n";
+                    echo $x_Ref . ' : ' . '<a ' . Ins_Ref_Pers($enreg2['Reference']) . '>' . $enreg2['Reference'] . '</a>' . "\n";
                 } else {
-                    echo '&nbsp;&nbsp;&nbsp;' . $x_Ref . '&nbsp;' . $ref . "\n";
+                    echo '&nbsp;&nbsp;&nbsp;' . $x_Ref . '&nbsp;' . $enreg2['Reference'] . "\n";
                 }
-                if ($ne != '') echo ',' . $x_ne . Etend_date($ne);
-                if ($decede != '') echo ', + ' . Etend_date($decede);
+                if ($enreg2['Ne_le'] != '') echo ',' . $x_ne . Etend_date($enreg2['Ne_le']);
+                if ($enreg2['Decede_Le'] != '') echo ', + ' . Etend_date($enreg2['Decede_Le']);
                 if (!$texte) {
-                    echo '&nbsp;<a ' . Ins_Edt_Pers($ref) . '>' . $echo_modif;
+                    echo '&nbsp;<a ' . Ins_Edt_Pers($enreg2['Reference']) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 }
                 echo '</td>' . "\n";
                 if (!$texte) {
                     echo '<td width="10%" align="center" ' . $classe . '>';
-                    echo '<input type="radio" name="ref1" value="' . $ref . '" title="' . LG_NAMESAKE_PERS1 . '"/>';
-                    echo '<input type="radio" name="ref2" value="' . $ref . '" title="' . LG_NAMESAKE_PERS2 . '"/>';
+                    echo '<input type="radio" name="ref1" value="' . $enreg2['Reference'] . '" title="' . LG_NAMESAKE_PERS1 . '"/>';
+                    echo '<input type="radio" name="ref2" value="' . $enreg2['Reference'] . '" title="' . LG_NAMESAKE_PERS2 . '"/>';
                     echo '</td>';
                 }
                 if ($num_pers == 1) {
                     if (!$texte) {
-                        echo '<td width="10%" align="center" valign="middle" rowspan="' . $nb_homonymes . '">' . $icone_compare . '</td>';
+                        echo '<td width="10%" align="center" valign="middle" rowspan="' . $nb_homonymes . '"><input type="image" src="' . $chemin_images_icones . $Icones['2personnes'] . '" alt="' . $LG_Menu_Title['Compare_Persons'] . '" ' .
+                            'title="' . $LG_Menu_Title['Compare_Persons'] . '" onclick="return controle(this.form.id);"/></td>';
                     }
                 }
                 echo '</tr>' . "\n";

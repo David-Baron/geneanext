@@ -62,7 +62,8 @@ function ieme($nb)
 
 function Ligne_Fleche($classe)
 {
-    echo '<tr><td ' . $classe . '>' . Affiche_Icone('couple_donne', LG_CH_RELATED_THEN) . "\n";
+    global $root, $Icones;
+    echo '<tr><td ' . $classe . '><img src="' . $root . '/assets/img/' . $Icones['couple_donne'] . '" alt="' . LG_CH_RELATED_THEN . '" title="' . LG_CH_RELATED_THEN . '">';
     return 1;
 }
 
@@ -92,7 +93,7 @@ function Parents_Gen(&$Personne, &$Ind_Cour, $gen)
 // Accède à une personne et l'affiche
 function Affiche_Personne($Reference)
 {
-    global $Sortie, $LG_desc_tree, $LG_assc_tree, $LG_Data_noavailable_profile;
+    global $root, $Sortie, $LG_desc_tree, $LG_assc_tree, $LG_Data_noavailable_profile;
     $Sql = 'select Reference, Nom, Prenoms, Diff_Internet from ' . nom_table('personnes') .
         ' where Reference = ' . $Reference . ' limit 1';
     $Res = lect_sql($Sql);
@@ -100,9 +101,9 @@ function Affiche_Personne($Reference)
         if (($_SESSION['estPrivilegie']) or ($Personne[3]) == 'O') {
             if ($Sortie == 'e') {
                 $Ref_P = $Personne[0];
-                echo '<a ' . Ins_Ref_Pers($Ref_P) . '>' . $Personne[1] . ' ' . $Personne[2] . '</a>&nbsp;';
-                echo Affiche_Icone_Lien(Ins_Ref_Arbre($Ref_P), 'arbre_asc', $LG_assc_tree) . '&nbsp;' .
-                    Affiche_Icone_Lien(Ins_Ref_Arbre_Desc($Ref_P), 'arbre_desc', $LG_desc_tree) . '&nbsp;';
+                echo '<a ' . Ins_Ref_Pers($Ref_P) . '>' . $Personne[1] . ' ' . $Personne[2] . '</a> ';
+                echo Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref_P . '"', 'arbre_asc', $LG_assc_tree) . ' ' .
+                    Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref_P . '"', 'arbre_desc', $LG_desc_tree) . ' ';
             } else {
                 echo $Personne[1] . ' ' . $Personne[2];
             }
@@ -153,12 +154,12 @@ if ($Sortie != 't') {
         $res->closeCursor();
         $res = lect_sql($sql);
         Liste_Pers($res, 'Ref_Pers2', $Ref_Pers2);
-        echo '&nbsp;' . Affiche_Icone('tip', 'Information') . '&nbsp;' . LG_CH_RELATED_TIP_BEG . $max_gen . '&nbsp;' . LG_CH_RELATED_TIP_END;
+        echo ' <img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_CH_RELATED_TIP_BEG . $max_gen . ' ' . LG_CH_RELATED_TIP_END;
         echo '</td></tr>' . "\n";
 
         colonne_titre_tab($LG_Ch_Output_Format);
-        echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label>&nbsp;';
-        echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label>&nbsp;';
+        echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+        echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
         echo '</td></tr>' . "\n";
 
         // La sauvegarde dans un fichier texte n'est accessible qu'en local
@@ -294,7 +295,7 @@ if ($bt_OK) {
                 $x = Ligne_Fleche($classe_vl);
                 $x = Affiche_Personne($P2[0]);
                 $droite++;
-            } else echo '&nbsp;' . my_html(LG_CH_RELATED_SAME);
+            } else echo ' ' . my_html(LG_CH_RELATED_SAME);
             echo '</td></tr>' . "\n";
             echo '</table>';
             echo '</td>';

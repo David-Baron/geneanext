@@ -84,7 +84,7 @@ $res->closeCursor();
 
 if ($presence) {
     echo "</table>";
-    echo Affiche_Icone('tip', LG_TIP) . '&nbsp;' . LG_CH_IMAGE_MAGNIFY . '.<br />';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' .LG_TIP . '"> ' . LG_CH_IMAGE_MAGNIFY . '.<br />';
 }
 
 // Possibilité de lier une image

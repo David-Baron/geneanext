@@ -43,7 +43,7 @@ else {
     Champ_car($enreg2, 'Libelle_Type');
 
     $compl = Ajoute_Page_Info(600, 150);
-    $compl .= '<a href="' . $root . '/edition_type_document.php?code=' . $Code . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
+    $compl .= '<a href="' . $root . '/edition_type_document.php?code=' . $Code . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
 
     Insere_Haut($titre, $compl, 'Fiche_Type_Document', $Code);
 

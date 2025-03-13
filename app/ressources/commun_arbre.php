@@ -18,7 +18,7 @@ $wp_cell = 'width:' . $Larg_Cellule . 'px; height:' . $Haut_Cellule . 'px; ';
 // - $after : trait après la cellule
 function case_pers($LaRef, $before, $after, $trait = 'solid')
 {
-    global $chemin_images_util, $top, $left, $wp_cell, $est_privilegie, $n_personnes, $img_asc, $img_desc, $img_image, $evenement, $existe_images, $Haut_Cellule, $Larg_Cellule, $Larg_Trait_Hor, $Demie_Hauteur, $Ok_Protection, $LG_Data_noavailable_profile;
+    global $root, $chemin_images_util, $top, $left, $wp_cell, $est_privilegie, $n_personnes, $img_asc, $img_desc, $img_image, $evenement, $existe_images, $Haut_Cellule, $Larg_Cellule, $Larg_Trait_Hor, $Demie_Hauteur, $Ok_Protection, $LG_Data_noavailable_profile;
     $Ok_Protection = false;
     // Accès aux données de la personne
     $sql = 'select Nom, Prenoms, Ne_Le, Decede_Le, Diff_Internet, Sexe from ' . $n_personnes . ' where reference = ' . $LaRef . ' limit 1';
@@ -61,8 +61,8 @@ function case_pers($LaRef, $before, $after, $trait = 'solid')
                     else                $Decede = '';
                     $Dates = $Ne . ' ' . $Decede;
                     echo $Dates . '<br />' . "\n";
-                    echo '<a ' . Ins_Ref_Arbre($LaRef) . '>' . $img_asc . '</a>';
-                    echo '<a ' . Ins_Ref_Arbre_Desc($LaRef) . '>' . $img_desc . '</a>';
+                    echo '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $LaRef . '">' . $img_asc . '</a>';
+                    echo '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $LaRef . '">' . $img_desc . '</a>';
                     if ($image != '') {
                         $image = $chemin_images_util . $image;
                         $hauteur = 150;

@@ -90,12 +90,6 @@ if (! $texte) {
     }
 }
 
-$style_fond = 'style="background-image:url(\'' . $chemin_images . 'bar_off.gif\');background-repeat:repeat-x;"';
-$ent_table = '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';
-$ent_table_texte = '<table width="95%" align="center" class="tableau_imp">';
-$echo_diff_int = Affiche_Icone('internet_oui', $LG_show_on_internet) . '&nbsp;';
-$echo_diff_int_non = Affiche_Icone('internet_non', $LG_noshow_on_internet) . '&nbsp;';
-
 // Calcul de la date du jour - 130 ans (on suppose que 130 ans est la durée de vie maximum d'un être humain)
 $A = date('Y') - 130;
 $M = date('m');
@@ -158,11 +152,8 @@ if (!$texte) {
     echo " </form>\n";
 }
 
-//echo '$Nom : '.$Nom.'<br />';
 
 if ($Nom != '-1') {
-
-    $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
 
     $sql = "select Reference, Nom, Prenoms, Statut_Fiche, Diff_Internet, Ne_le, Decede_Le, idNomFam"
         . " from " . nom_table('personnes')
@@ -204,11 +195,11 @@ if ($Nom != '-1') {
                 }
                 if ($debug) echo 'Nouv_Nom : ' . $Nouv_Nom . '<br />';
                 if (! $texte) {
-                    echo $ent_table . '<tr align="center"><td class="rupt_table">';
+                    echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center"><tr align="center"><td class="rupt_table">';
                     echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=' . $row[7] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . "</a>\n";
                 } else {
                     if ($debug) echo 'Entête<br />';
-                    HTML_ou_PDF($ent_table_texte . '<thead><tr><th>' . $Nouv_Nom . '</th></tr></thead>', $sortie);
+                    HTML_ou_PDF('<table width="95%" align="center" class="tableau_imp"><thead><tr><th>' . $Nouv_Nom . '</th></tr></thead>', $sortie);
                 }
                 $attente = 1;
                 $Anc_Nom = $Nouv_Nom;
@@ -225,7 +216,7 @@ if ($Nom != '-1') {
                     if (! $texte) echo '</table>';
                     $attente = 0;
                     $existe_div = 1;
-                    if (! $texte) echo '<div id="div' . $num_pers . '">' . $ent_table;
+                    if (! $texte) echo '<div id="div' . $num_pers . '"><table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center">';
                 }
                 $style = 'liste2';
                 if (pair($num_lig++)) $style = 'liste';
@@ -233,13 +224,13 @@ if ($Nom != '-1') {
                 else HTML_ou_PDF('<tr><td>', $sortie);
                 if (! $texte) {
                     if ($est_contributeur) {
-                        if ($row[4] == 'O') echo $echo_diff_int;
-                        else echo $echo_diff_int_non;
+                        if ($row[4] == 'O') echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '">';
+                        else echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
                     }
                     echo '<a ' . Ins_Ref_Pers($row[0]) . '>' . my_html($row[2]) . '</a>' . "\n";
                 } else HTML_ou_PDF($row[2], $sortie);
                 if (! $texte) {
-                    if ($est_gestionnaire) echo ' <a ' . Ins_Edt_Pers($row[0]) . '>' . $echo_modif;
+                    if ($est_gestionnaire) echo ' <a ' . Ins_Edt_Pers($row[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 }
                 if ($naissance != '') HTML_ou_PDF(' ° ' . Etend_date($naissance), $sortie);
                 HTML_ou_PDF('</td></tr>', $sortie);

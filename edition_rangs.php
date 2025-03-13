@@ -154,11 +154,11 @@ if (($ok == '') && ($annuler == '')) {
         else           $style = 'liste2';
         echo '<tr class="' . $style . '">' . "\n";
 
-        echo '<td>&nbsp;<a ' . Ins_Ref_Pers($Enfants[$nb]) . '>' . $Prenoms[$nb] . '</a></td>' . "\n";
+        echo '<td> <a ' . Ins_Ref_Pers($Enfants[$nb]) . '>' . $Prenoms[$nb] . '</a></td>' . "\n";
         $Date_Nai = Etend_date($Nes[$nb]);
         $R_Cal = 0;
         $Ne = '----------';
-        if ($Date_Nai == '') $Date_Nai = '&nbsp;';
+        if ($Date_Nai == '') $Date_Nai = ' ';
         else {
             // Contrôle du rang de cette date dans les dates de naissance
             // On cherche les dates inférieures, ce qui donne un rang théorique
@@ -180,23 +180,23 @@ if (($ok == '') && ($annuler == '')) {
                 $R_Cal = $nb_inf + 1;
             }
         }
-        echo '<td>&nbsp;' . $Date_Nai . '</td>' . "\n";
+        echo '<td> ' . $Date_Nai . '</td>' . "\n";
         $Date_Dec = Etend_date($Decedes[$nb]);
-        if ($Date_Dec == '') $Date_Dec = '&nbsp;';
-        echo '<td>&nbsp;' . $Date_Dec . '</td>' . "\n";
+        if ($Date_Dec == '') $Date_Dec = ' ';
+        echo '<td> ' . $Date_Dec . '</td>' . "\n";
         echo '<td>';
         // Calcul du nombre de mois / années par rapport à l'enfant précédent
         if (($Ne[9] == 'L') and ($max_ne_inf[9] == 'L')) {
             //echo '('.$max_ne_inf.' - '.$Ne.') >> '.Age_Annees_Mois($max_ne_inf,$Ne).'   ';
-            echo '&nbsp;' . Age_Annees_Mois($max_ne_inf, $Ne);
+            echo ' ' . Age_Annees_Mois($max_ne_inf, $Ne);
             if (Age_Mois($max_ne_inf, $Ne) < 9) {
-                echo '&nbsp;' . Affiche_Icone('warning', $LG_Rank_Short_Duration);
+                echo ' <img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="' . my_html($LG_Rank_Short_Duration) . '" title="' . my_html($LG_Rank_Short_Duration) . '">';
             }
-        } else echo '&nbsp;';
+        } else echo ' ';
         echo '</td>' . "\n";
         echo '<td align="center">' . $R_Cal;
         echo '<input type="hidden" name="Calcul[]" value="' . $R_Cal . '"/>';
-        if ($R_Cal != $Rangs[$nb]) echo '&nbsp;' . Affiche_Icone('warning', $LG_Rank_Error);
+        if ($R_Cal != $Rangs[$nb]) echo ' img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="' . my_html($LG_Rank_Error) . '" title="' . my_html($LG_Rank_Error) . '">';
         echo '</td>' . "\n";
         echo '<td align="center"';
         /*
@@ -216,7 +216,7 @@ if (($ok == '') && ($annuler == '')) {
         echo '<input type="text" class="oblig" name="' . $var_R . '" id="' . $var_R . '" value="' . $Rangs[$nb] . '" size="3" onchange="verification_num(this);"/>' . "\n";
         $texte_image = 'Augmenter le rang';
         echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
-        echo 'onclick="document.forms.saisie.' . $var_R . '.value++;"/>&nbsp;' . "\n";
+        echo 'onclick="document.forms.saisie.' . $var_R . '.value++;"/> ' . "\n";
         Img_Zone_Oblig('imgObligNom' . $suf);
 
         echo '<input type="hidden" name="MemoRa_' . $suf . '" value="' . $Rangs[$nb] . '"/>';

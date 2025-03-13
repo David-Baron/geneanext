@@ -97,13 +97,10 @@ if ($res = lect_sql($sql)) {
         }
         // Sortie écran
         else {
-            // Optimisation : préparation echo des images
-            $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
-            $echo_verif = Affiche_Icone('fiche_controle', LG_PERS_CONTROL) . '</a>&nbsp;';
 
-            $img_vert   = '<img src="' . $chemin_images_icones . $Icones['drapeau_vert'] . '" border="0" alt="Drapeau vert"/>';
-            $img_orange = '<img src="' . $chemin_images_icones . $Icones['drapeau_orange'] . '" border="0" alt="Drapeau orange"/>';
-            $img_rouge  = '<img src="' . $chemin_images_icones . $Icones['drapeau_rouge'] . '" border="0" alt="Drapeau rouge"/>';
+            $img_vert   = '<img src="' . $chemin_images_icones . $Icones['drapeau_vert'] . '" alt="Drapeau vert"/>';
+            $img_orange = '<img src="' . $chemin_images_icones . $Icones['drapeau_orange'] . '" alt="Drapeau orange"/>';
+            $img_rouge  = '<img src="' . $chemin_images_icones . $Icones['drapeau_rouge'] . '" alt="Drapeau rouge"/>';
 
             $bord = '0';
             if (!$texte) {
@@ -150,9 +147,9 @@ if ($res = lect_sql($sql)) {
             if (!$CSV) {
                 echo '<td>';
                 if (!$texte) {
-                    echo '&nbsp;<a ' . Ins_Ref_Pers($Ref) . '>' . my_html($row['Prenoms']) . '</a>' . "\n";
-                    echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '>' . $echo_modif;
-                    echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '">' . $echo_verif;
+                    echo ' <a ' . Ins_Ref_Pers($Ref) . '>' . my_html($row['Prenoms']) . '</a>' . "\n";
+                    echo ' <a ' . Ins_Edt_Pers($Ref) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+                    echo ' <a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . LG_PERS_CONTROL . '" title="' . LG_PERS_CONTROL . '"></a>';
                 } else echo my_html($row['Prenoms']) . "\n";
                 echo '</td>';
             } else {

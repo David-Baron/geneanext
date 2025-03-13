@@ -55,7 +55,7 @@ function traite_rup_table($nom_table)
         if ($row = $res->fetch(PDO::FETCH_NUM)) {
             if ($row[0] != $nb_req_table) {
                 $image = $Icones['stop'];
-                echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '">&nbsp;'
+                echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"> '
                     . my_html(LG_IMP_BACKUP_LINES_ERROR) . '<br>';
                 // var_dump ($row[0]);
                 // var_dump ($nb_req_table);
@@ -166,7 +166,7 @@ if ($bt_OK) {
             }
         }
         // Affichage de la liste des tables présentes
-        //for ($nb = 0; $nb < count($liste_tables); $nb++) echo $liste_tables[$nb].',&nbsp;';
+        //for ($nb = 0; $nb < count($liste_tables); $nb++) echo $liste_tables[$nb].', ';
     }
 
     // Pas de limite de temps en local
@@ -434,7 +434,7 @@ if ($bt_OK) {
                         // Suppression du préfixe éventuel de la table locale
                         if (($SiteGratuit) and ($pref_local != '')) $table = substr($table, $lg_pref_local + 1);
                         if (($table != 'general') or ($aff_pres_ut = "O")) {
-                            echo my_html(LG_IMP_BACKUP_TABLE_IN_PROGRESS) . ' ' . $table . ',&nbsp;<br>';
+                            echo my_html(LG_IMP_BACKUP_TABLE_IN_PROGRESS) . ' ' . $table . ', <br>';
                             $req = 'delete from ' . $pref_tables . $table . ';';
                             $res = maj_sql($req);
                         }
@@ -479,7 +479,7 @@ if ($bt_OK) {
                     // Table non trouvée dans la liste initiale
                     if (array_search($row[0], $liste_tables) === false) {
                         $image = $Icones['stop'];
-                        echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '">&nbsp;'
+                        echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"> '
                             . $row[0] . LG_SEMIC . '<br>';
                         // Vidage de la table
                         $req = 'drop ' . $row[0];
@@ -488,7 +488,7 @@ if ($bt_OK) {
                 }
             }
             // Affichage de la liste des tables présentes
-            //for ($nb = 0; $nb < count($liste_tables); $nb++) echo $liste_tables[$nb].',&nbsp;';
+            //for ($nb = 0; $nb < count($liste_tables); $nb++) echo $liste_tables[$nb].', ';
         }
         // On force l'indicateur Local pour un import depuis un site hébergé
         if (($depuis_heberge) and ($Environnement == 'L')) {
@@ -513,22 +513,23 @@ if ($_SESSION['estGestionnaire']) {
         $dmdp     = '';
         $dserveur = '';
         $dport    = '3306';
+        $larg_titre = '25';
+
         if (file_exists($nom_fic_cnx_dist)) include($nom_fic_cnx_dist);
         // Affichage du formulaire
-        echo '<form id="saisie" method="post" enctype="multipart/form-data" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post" enctype="multipart/form-data">';
         aff_origine();
-
-        $larg_titre = '25';
-        echo '<table width="80%" class="table_form">' . "\n";
+       
+        echo '<table width="80%" class="table_form">';
 
         // La ré-initialisation de la base n'est pas prévue pour les sites gratuits
         if (!$SiteGratuit) {
             ligne_vide_tab_form(1);
             col_titre_tab(LG_IMP_BACKUP_RESET, $larg_titre);
             echo '<td class="value"><input type="checkbox" name="init_base"/>';
-            echo '&nbsp;&nbsp;' . Affiche_Icone('warning', 'Attention') . '&nbsp;' . my_html(LG_IMP_BACKUP_RESET_TIP);
+            echo ' <img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Attention" title="Attention"> ' . my_html(LG_IMP_BACKUP_RESET_TIP);
             echo '</td>';
-            echo '</tr>' . "\n";
+            echo '</tr>';
         }
 
         ligne_vide_tab_form(1);
@@ -581,7 +582,7 @@ if ($_SESSION['estGestionnaire']) {
         }
         if (($col) and ($col < $max_col)) {
             $col = $max_col - $col;
-            echo '<td colspan="' . $col . '">&nbsp;</td>' . "\n";;
+            echo '<td colspan="' . $col . '"> </td>' . "\n";;
             echo '</tr>' . "\n";
         }
         if ($nb) {

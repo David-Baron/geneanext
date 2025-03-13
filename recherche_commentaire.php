@@ -89,9 +89,9 @@ if ($est_gestionnaire) {
         echo $nb . '&nbsp;' . LG_SCH_COMMENT_FOUND_1 . '&nbsp;' . LG_SCH_COMMENT_FOUND_2 . '<br /><br />';
         //$num_fields = $res->field_count;
 
-        $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
+        $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+
         $num_lig = 0;
-        $base_ref = Get_Adr_Base_Ref();
 
         $w_on = my_html(LG_SCH_COMMENT_ON);
         $w_of = my_html(LG_SCH_COMMENT_OF);
@@ -99,7 +99,7 @@ if ($est_gestionnaire) {
 
         while ($row = $res->fetch(PDO::FETCH_NUM)) {
 
-            if ($num_lig == 0) echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" >';
+            if ($num_lig == 0) echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" >';
 
             $Objet_Cible = $row[2];
             $Ref_Objet = $row[1];
@@ -182,7 +182,7 @@ if ($est_gestionnaire) {
         }
         // Nouvelle recherche
         if ($Sortie != 't') {
-            echo '<form id="nouvelle" method="post" action="' . my_self() . '">' . "\n";
+            echo '<form id="nouvelle" method="post">' . "\n";
             aff_origine();
             echo '<br />';
             echo '<div class="buttons">';
@@ -196,7 +196,7 @@ if ($est_gestionnaire) {
     // Première entrée : affichage pour saisie
     if ((!$bt_OK) && (!$bt_An)) {
 
-        echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post">' . "\n";
         aff_origine();
 
         $larg_titre = 30;

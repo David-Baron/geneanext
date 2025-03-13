@@ -77,7 +77,7 @@ echo '</tr></table>';
 // echo '<input type="hidden" name="init" value="x" />'
 echo '</form>';
 
-echo Affiche_Icone('tip', 'Information') . '&nbsp;' . my_html(LG_EVT_MERGE_TIP) . '<br />';
+echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . my_html(LG_EVT_MERGE_TIP) . '<br />';
 
 $Anc_Enreg = '';
 $ident_premier = 0;

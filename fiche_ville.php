@@ -94,7 +94,7 @@ else {
         echo '</table>';
 
         if (($cp == '?') or (($Lat_V == 0) and ($Long_V == 0))) {
-            echo Affiche_Icone('tip', $LG_tip) . LG_ICSV_TOWN_TIP;
+            echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '">' . LG_ICSV_TOWN_TIP;
         }
 
         // Affichage du commentaire

@@ -91,15 +91,15 @@ $sql = 'SELECT Reference, Nom, Prenoms, Diff_Internet, Ne_Le, Decede_Le ' .
 $res = lect_sql($sql);
 $nbPers = $res->rowCount();
 
-$echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
-echo '<form action="' . my_self() . '" id="saisie" method="post">';
+
+echo '<form id="saisie" method="post">';
 
 bt_ok_an_sup($lib_Rectifier, $lib_Annuler, '', '', false);
 
 $pluriel = pluriel($nbPers);
 
 echo '<br>' . $nbPers . LG_CHK_INTERNET_ABS_1 . ' ' . $Lim_Diffu . ' ' . LG_CHK_INTERNET_ABS_2 . ' ' . $Lim_Diffu_Dec . ' ' . LG_CHK_INTERNET_ABS_3;
-echo '&nbsp;' . LG_CHK_INTERNET_ABS_CHG_LIMIT . ' ' . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/>&nbsp;ans' . "\n";
+echo ' ' . LG_CHK_INTERNET_ABS_CHG_LIMIT . ' ' . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/> ans' . "\n";
 echo '<input type="submit" name="re" value="' . $LG_Check_Again . '"/>' . "\n";
 echo '<br><br><a href="' . $root . '/verif_internet.php">' . $LG_Menu_Title['Internet_Cheking'] . '</a>';
 echo '<br><br>';
@@ -109,7 +109,7 @@ if ($nbPers > 0) {
     echo '<tr class="rupt_table">';
     echo '<th>' . LG_CHK_INTERNET_PERSON . '</th>' . "\n";
     echo '<th>' . $LG_show_on_internet;
-    echo '&nbsp;<input type="checkbox" id="selTous" name="selTous" onclick="checkUncheckAll(this);"/>&nbsp;'
+    echo ' <input type="checkbox" id="selTous" name="selTous" onclick="checkUncheckAll(this);"/> '
         . '<label for="selTous">' . $LG_All . '</label>';
     echo '</th>' . "\n";
     echo '<th>' . LG_CHK_INTERNET_BORN . '</th>' . "\n";
@@ -126,7 +126,7 @@ if ($nbPers > 0) {
         echo '<tr  class="' . $style . '">';
         echo '<td>';
         echo '<a ' . Ins_Ref_Pers($enreg[0]) . '>' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>' . "\n";
-        echo '&nbsp;<a ' . Ins_Edt_Pers($enreg[0]) . '>' . $echo_modif;
+        echo ' <a ' . Ins_Edt_Pers($enreg[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
         echo '</td>' . "\n";
         echo '<td align="center">';
         echo '<input type="checkbox" name="S_Int[' . $numLig . ']"' . $internet . '/>';
@@ -139,7 +139,7 @@ if ($nbPers > 0) {
     }
 
     echo '</table>' . "\n";
-    echo Affiche_Icone('tip', $LG_tip) . ' ' . my_html(LG_CHK_INTERNET_ABS_TIP);
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> ' . my_html(LG_CHK_INTERNET_ABS_TIP);
     echo '<br>';
 }
 

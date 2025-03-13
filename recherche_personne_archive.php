@@ -84,9 +84,9 @@ if ($_SESSION['estContributeur']) {
         $ut_suf      = Secur_Variable_Post($ut_suf, 2, 'S');
 
         $l_ville = lib_ville($Ville, 'N');
-        echo $LG_Ch_Search_Town . '&nbsp;:&nbsp;' . $l_ville . '<br />';
-        if ($Annee_Debut != '') echo $LG_Ch_Search_Beg . '&nbsp;:&nbsp;' . $Annee_Debut . '<br />';
-        if ($Annee_Fin != '') echo $LG_Ch_Search_End . '&nbsp;:&nbsp;' . $Annee_Fin . '<br />';
+        echo $LG_Ch_Search_Town . ' : ' . $l_ville . '<br />';
+        if ($Annee_Debut != '') echo $LG_Ch_Search_Beg . ' : ' . $Annee_Debut . '<br />';
+        if ($Annee_Fin != '') echo $LG_Ch_Search_End . ' : ' . $Annee_Fin . '<br />';
         if ($Annee_Debut == '') $Annee_Debut = '0000';
         if ($Annee_Fin == '') $Annee_Fin = '9999';
 
@@ -113,15 +113,15 @@ if ($_SESSION['estContributeur']) {
                 $T_Donnees_D = 'D';
             }
         }
-        echo $LG_Ch_Search_Consider . '&nbsp;:&nbsp;';
+        echo $LG_Ch_Search_Consider . ' : ';
         $aff_donnees = '';
         if ($T_Donnees_N == 'N') $aff_donnees .= $LG_Ch_Search_Birth;
         if ($T_Donnees_M == 'M') {
-            if ($aff_donnees != '') $aff_donnees .= ',&nbsp;';
+            if ($aff_donnees != '') $aff_donnees .= ', ';
             $aff_donnees .= $LG_Ch_Search_Wed;
         }
         if ($T_Donnees_D == 'D') {
-            if ($aff_donnees != '') $aff_donnees .= ',&nbsp;';
+            if ($aff_donnees != '') $aff_donnees .= ', ';
             $aff_donnees .= $LG_Ch_Search_Death;
         }
         echo $aff_donnees . '<br />';
@@ -139,15 +139,15 @@ if ($_SESSION['estContributeur']) {
             $cond_statut .= '"I"';
         }
         $cond_statut = 'Statut_Fiche in(' . $cond_statut . ')';
-        echo $LG_Ch_Search_Consider_Valid . '&nbsp;:&nbsp;';
+        echo $LG_Ch_Search_Consider_Valid . ' : ';
         $aff_donnees = '';
         if ($T_Fiches_O == 'O') $aff_donnees .= $LG_Ch_Search_Valid;
         if ($T_Fiches_N == 'N') {
-            if ($aff_donnees != '') $aff_donnees .= ',&nbsp;';
+            if ($aff_donnees != '') $aff_donnees .= ', ';
             $aff_donnees .= $LG_Ch_Search_Non_Valid;
         }
         if ($T_Fiches_I == 'I') {
-            if ($aff_donnees != '') $aff_donnees .= ',&nbsp;';
+            if ($aff_donnees != '') $aff_donnees .= ', ';
             $aff_donnees .= $LG_Ch_Search_Internet;
         }
         echo $aff_donnees . '<br />';
@@ -203,7 +203,7 @@ if ($_SESSION['estContributeur']) {
         $res = lect_sql($req);
         $nb_enr = $res->RowCount();
         $plu = pluriel($nb_enr);
-        echo $nb_enr . '&nbsp;' . $LG_Ch_Search_Pers_1 . $plu . '&nbsp;' . $LG_Ch_Search_Pers_2 . $plu . '<br /><br />';
+        echo $nb_enr . ' ' . $LG_Ch_Search_Pers_1 . $plu . ' ' . $LG_Ch_Search_Pers_2 . $plu . '<br /><br />';
 
         if ($nb_enr > 0) {
             $champs = get_fields($req, true);
@@ -240,13 +240,12 @@ if ($_SESSION['estContributeur']) {
             }
         }
 
-        $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
         while ($row = $res->fetch(PDO::FETCH_NUM)) {
             if ($Sortie != 'c') echo '<tr><td>';
             switch ($Sortie) {
                 case 'e':
                     echo '<a ' . Ins_Ref_Pers($row[0]) . '>' . my_html($row[2] . ' ' . $row[1]) . '</a>';
-                    echo '&nbsp;<a ' . Ins_Edt_Pers($row[0]) . '>' . $echo_modif;
+                    echo ' <a ' . Ins_Edt_Pers($row[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     break;
                 case 't':
                     echo my_html($row[2] . ' ' . $row[1]);
@@ -282,7 +281,7 @@ if ($_SESSION['estContributeur']) {
                         echo  '+';
                         break;
                 }
-                echo '&nbsp;' . Etend_date($row[3]);
+                echo ' ' . Etend_date($row[3]);
                 echo '</td></tr>' . "\n";
             }
         }
@@ -291,7 +290,7 @@ if ($_SESSION['estContributeur']) {
                 echo '</table>' . "\n";
             } else {
                 fclose($fp);
-                echo '<br />' . $LG_csv_available_in . '&nbsp; <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
+                echo '<br />' . $LG_csv_available_in . '  <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
             }
         }
 
@@ -366,7 +365,7 @@ if ($_SESSION['estContributeur']) {
         echo '<input type="text" size="4" name="Annee_Fin"';
         if ($reprise) echo ' value="' . $Annee_Fin . '"';
         echo '/>';
-        echo Affiche_Icone_Clic('calendrier', 'document.forms.saisie.Annee_Fin.value=document.forms.saisie.Annee_Debut.value;', $LG_Ch_Search_Copy_Date);
+        echo  '<img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="' . $LG_Ch_Search_Copy_Date . '" title="' . $LG_Ch_Search_Copy_Date . '" onclick="document.forms.saisie.Annee_Fin.value=document.forms.saisie.Annee_Debut.value;">';
         echo '</td></tr>' . "\n";
 
         // Type de données : Naissance, mariages, décès
@@ -375,20 +374,20 @@ if ($_SESSION['estContributeur']) {
         if ($reprise) {
             if ($T_Donnees_N == 'N') echo ' checked="checked"';
         } else echo ' checked="checked"';
-        echo '/>&nbsp;<label for="T_Donnees_N">' . $LG_Ch_Search_Birth . '</label>&nbsp;';
+        echo '/> <label for="T_Donnees_N">' . $LG_Ch_Search_Birth . '</label> ';
         // Les hébergés non Premium ne peuvent avoir les mariages
         if ((!$SiteGratuit) or ($Premium)) {
             echo '<input type="checkbox" id="T_Donnees_M" name="T_Donnees_M" value="M"';
             if ($reprise) {
                 if ($T_Donnees_M == 'M') echo ' checked="checked"';
             }
-            echo '/>&nbsp;<label for="T_Donnees_M">' . $LG_Ch_Search_Wed . '</label>&nbsp;';
+            echo '/> <label for="T_Donnees_M">' . $LG_Ch_Search_Wed . '</label> ';
         } else echo '<input type="hidden" name="T_Donnees_M" value="-"/>';
         echo '<input type="checkbox"  id="T_Donnees_D" name="T_Donnees_D" value="D"';
         if ($reprise) {
             if ($T_Donnees_D == 'D') echo ' checked="checked"';
         } else echo ' checked="checked"';
-        echo '/>&nbsp;<label for="T_Donnees_D">' . $LG_Ch_Search_Death . '</label>';
+        echo '/> <label for="T_Donnees_D">' . $LG_Ch_Search_Death . '</label>';
         echo '</td></tr>' . "\n";
 
         // Type de fiche
@@ -397,17 +396,17 @@ if ($_SESSION['estContributeur']) {
         if ($reprise) {
             if ($T_Fiches_O == 'O') echo ' checked="checked"';
         }
-        echo '/>&nbsp;<label for="T_Fiches_O">' . $LG_Ch_Search_Valid . '</label>&nbsp;';
+        echo '/> <label for="T_Fiches_O">' . $LG_Ch_Search_Valid . '</label> ';
         echo '<input type="checkbox" id="T_Fiches_N" name="T_Fiches_N" value="N"';
         if ($reprise) {
             if ($T_Fiches_N == 'N') echo ' checked="checked"';
         } else echo ' checked="checked"';
-        echo '/>&nbsp;<label for="T_Fiches_N">' . $LG_Ch_Search_Non_Valid . '</label>&nbsp;';
+        echo '/> <label for="T_Fiches_N">' . $LG_Ch_Search_Non_Valid . '</label> ';
         echo '<input type="checkbox" id="T_Fiches_I" name="T_Fiches_I" value="I"';
         if ($reprise) {
             if ($T_Fiches_I == 'I') echo ' checked="checked"';
         }
-        echo '/>&nbsp;<label for="T_Fiches_I">' . $LG_Ch_Search_Internet . '</label>';
+        echo '/> <label for="T_Fiches_I">' . $LG_Ch_Search_Internet . '</label>';
         echo '</td></tr>' . "\n";
 
         // Tri des données en sortie
@@ -416,26 +415,26 @@ if ($_SESSION['estContributeur']) {
         if ($reprise) {
             if ($Tri == 'D') echo ' checked="checked"';
         } else echo ' checked="checked"';
-        echo '/>&nbsp;<label for="Tri_D">' . $LG_Ch_Search_Sort_Date . '</label>';
+        echo '/> <label for="Tri_D">' . $LG_Ch_Search_Sort_Date . '</label>';
         echo '<input type="radio" id="Tri_P" name="Tri" value="P"';
         if ($reprise) {
             if ($Tri == 'P') echo ' checked="checked"';
         }
-        echo '/>&nbsp;<label for="Tri_P">' . $LG_Ch_Search_Sort_Pers . '</label>';
+        echo '/> <label for="Tri_P">' . $LG_Ch_Search_Sort_Pers . '</label>';
         echo '</td></tr>' . "\n";
 
         colonne_titre_tab($LG_Ch_Output_Format);
         echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" ';
         if (($Sortie == '') or (($Sortie == 'e')))
             echo 'checked="checked"';
-        echo '/>&nbsp;<label for="Sortie_e">' . $LG_Ch_Output_Screen . '&nbsp;</label>';
+        echo '/> <label for="Sortie_e">' . $LG_Ch_Output_Screen . ' </label>';
         echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"';
         if ($Sortie == 't') echo ' checked="checked"';
-        echo '/>&nbsp;<label for="Sortie_t">' . $LG_Ch_Output_Text . '&nbsp;</label>';
+        echo '/> <label for="Sortie_t">' . $LG_Ch_Output_Text . ' </label>';
         echo '<input type="radio" id="Sortie_c" name="Sortie" value="c"';
         if ($Sortie == 'c') echo ' checked="checked"';
-        echo '/>&nbsp;<label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
-        echo '&nbsp;( <input type="checkbox" id="ut_suf" name="ut_suf" onclick="document.forms.saisie.Sortie[2].checked=true;"/>&nbsp;<label for="ut_suf">' . $LG_Ch_Search_Suffix . '</label>&nbsp;)' . "\n";
+        echo '/> <label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+        echo ' ( <input type="checkbox" id="ut_suf" name="ut_suf" onclick="document.forms.saisie.Sortie[2].checked=true;"/> <label for="ut_suf">' . $LG_Ch_Search_Suffix . '</label> )' . "\n";
         echo '</td></tr>' . "\n";
 
         ligne_vide_tab_form(1);

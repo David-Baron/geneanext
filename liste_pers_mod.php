@@ -54,7 +54,6 @@ if ($nb_lignes > 0) {
     echo '<th>' . my_html(LG_PERS_MOD_WHEN) . '</th>';
     echo '</tr>' . "\n";
     $num_lig = 0;
-    $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 
@@ -62,7 +61,7 @@ if ($nb_lignes > 0) {
         echo '<td>&nbsp;<a ' . Ins_Ref_Pers($enr[0]) . '>' . my_html($enr[2] . ' ' . $enr[1]) . '</a>';
 
         // Lien vers la modification
-        if ($est_gestionnaire) echo '&nbsp;<a ' . Ins_Edt_Pers($enr[0]) . '>' . $echo_modif;
+        if ($est_gestionnaire) echo '&nbsp;<a ' . Ins_Edt_Pers($enr[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
 
         echo '</td>';
         echo '<td align="center">' . DateTime_Fr($enr[3]) . '</td>';

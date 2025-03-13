@@ -44,7 +44,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($enreg2['Code_Modifiable'] == 'O') {
-        $compl .= '<a href="' . $root . '/edition_type_evenement.php?code=' . $Code . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
+        $compl .= '<a href="' . $root . '/edition_type_evenement.php?code=' . $Code . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
     }
 
     Insere_Haut($titre, $compl, 'Fiche_Type_Evenement', $Code);

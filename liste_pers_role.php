@@ -96,7 +96,7 @@ if ($nb_lig > 0) {
     echo '</tr>' . "\n";
 
     // Optimisation : préparation echo des images
-    $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
+    $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
 
     while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         // var_dump($row);
@@ -128,20 +128,18 @@ if ($nb_lig > 0) {
         $lien1 = '';
         $lien2 = '';
         if ($est_contributeur) {
-            $lien1 = '<a ' . Ins_Edt_Pers($row['Ref_1']) . '>' . $echo_modif;
-            $lien2 = '<a ' . Ins_Edt_Pers($row['Ref_2']) . '>' . $echo_modif;
+            $lien1 = '<a ' . Ins_Edt_Pers($row['Ref_1']) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+            $lien2 = '<a ' . Ins_Edt_Pers($row['Ref_2']) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
         }
-        $av_lien1 = '<a ' . Ins_Ref_Pers($row['Ref_1']) . '>' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1;
-        $av_lien2 = '<a ' . Ins_Ref_Pers($row['Ref_2']) . '>' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2;
 
         echo '<tr>';
         // Si symétrie = N et Principale = N, on inverse
-        if (($symetrie == 'N') and ($row['Principale'] == 'N')) {
-            echo '<td width="50%">' . ' ' . $av_lien2 . ' ' . $lien2 . '</td>';
-            echo '<td>' . ' ' . $av_lien1 . ' ' . $lien1 . '</td>';
+        if (($symetrie == 'N') && ($row['Principale'] == 'N')) {
+            echo '<td width="50%"><a ' . Ins_Ref_Pers($row['Ref_2']) . '>' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
+            echo '<td><a ' . Ins_Ref_Pers($row['Ref_1']) . '>' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
         } else {
-            echo '<td width="50%">' . ' ' . $av_lien1 . ' ' . $lien1 . '</td>';
-            echo '<td>' . ' ' . $av_lien2 . ' ' . $lien2 . '</td>';
+            echo '<td width="50%"><a ' . Ins_Ref_Pers($row['Ref_1']) . '>' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
+            echo '<td><a ' . Ins_Ref_Pers($row['Ref_2']) . '>' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
         }
         echo '</tr>';
     }

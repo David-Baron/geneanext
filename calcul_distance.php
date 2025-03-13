@@ -96,7 +96,7 @@ if ($res->rowCount() > 0) {
 
     ligne_vide_tab_form(1);
     echo '<tr><td colspan="2">';
-    echo Affiche_Icone('tip', my_html($LG_tip)) . '&nbsp;' .
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> ' .
         my_html($LG_Ch_Dist_Tip);
     echo '</td></tr>';
 

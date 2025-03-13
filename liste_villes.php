@@ -60,7 +60,6 @@ $n_pays = nom_table('pays');
 
 // Lien direct sur la dernière personne zone et possibilité d'insérer une zone
 if ($est_gestionnaire) {
-    $echo_modif = Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>';
     $MaxRef = 0;
 
     //$sql = 'select max(Identifiant_zone) from ';
@@ -100,19 +99,19 @@ if ($est_gestionnaire) {
         switch ($Type_Liste) {
             case 'S':
                 echo my_html(LG_LAREAS_SUBDIV_LAST) . ' ' . '<a href="' . $root . '/fiche_subdivision.php?Ident=' . $MaxRef . '">' . $aff_nom . '</a>';
-                echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />' . "\n";
                 break;
             case 'V':
                 echo my_html(LG_LAREAS_TOWN_LAST) . ' ' . '<a href="' . $root . '/fiche_ville.php?Ident=' . $MaxRef . '">' . $aff_nom . '</a>';
-                echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />' . "\n";
                 break;
             case 'D':
                 echo my_html(LG_LAREAS_COUNTY_LAST) . ' ' . '<a href="' . $root . '/liste_villes.php?Type_Liste=V#' . $enrmax[1] . '">' . my_html($enrmax[1]) . '</a>';
-                echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />' . "\n";
                 break;
             case 'R':
                 echo my_html(LG_LAREAS_REGION_LAST) . ' ' . '<a href="' . $root . '/liste_villes.php?Type_Liste=D#' . $enrmax[1] . '">' . my_html($enrmax[1]) . '</a>';
-                echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+                echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />' . "\n";
                 break;
                 //case 'P' : $n_table = $n_pays; $n_rub_nom = 'Nom_Pays'; break;
         }
@@ -120,16 +119,16 @@ if ($est_gestionnaire) {
     $resmax->closeCursor();
     switch ($Type_Liste) {
         case 'S':
-            echo my_html(LG_LAREAS_SUBDIV_ADD) . ' ' . '<a href="' . $root . '/edition_subdivision.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_SUBDIV_ADD) . ' ' . '<a href="' . $root . '/edition_subdivision.php?Ident=-1"><img src="' . $root . '/assets/img/' . $Icones['ajouter'] . '" alt="' . $LG_add . '" title="' . $LG_add . '"></a><br /><br />' . "\n";
             break;
         case 'V':
-            echo my_html(LG_LAREAS_TOWN_ADD) . ' ' . '<a href="' . $root . '/edition_ville.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_TOWN_ADD) . ' ' . '<a href="' . $root . '/edition_ville.php?Ident=-1"><img src="' . $root . '/assets/img/' . $Icones['ajouter'] . '" alt="' . $LG_add . '" title="' . $LG_add . '"></a><br /><br />' . "\n";
             break;
         case 'D':
-            echo my_html(LG_LAREAS_COUNTY_ADD) . ' ' . ' <a href="' . $root . '/edition_depart.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_COUNTY_ADD) . ' ' . ' <a href="' . $root . '/edition_depart.php?Ident=-1"><img src="' . $root . '/assets/img/' . $Icones['ajouter'] . '" alt="' . $LG_add . '" title="' . $LG_add . '"></a><br /><br />' . "\n";
             break;
         case 'R':
-            echo my_html(LG_LAREAS_REGION_ADD) . ' ' . '<a href="' . $root . '/edition_region.php?Ident=-1">' . Affiche_Icone('ajouter', $LG_add) . '</a><br /><br />' . "\n";
+            echo my_html(LG_LAREAS_REGION_ADD) . ' ' . '<a href="' . $root . '/edition_region.php?Ident=-1"><img src="' . $root . '/assets/img/' . $Icones['ajouter'] . '" alt="' . $LG_add . '" title="' . $LG_add . '"></a><br /><br />' . "\n";
             break;
     }
 }
@@ -276,7 +275,7 @@ if ($res->rowCount() > 0) {
                     $Long_V = $row[4];
                     appelle_carte_osm();
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
                 case 'V':
@@ -285,21 +284,21 @@ if ($res->rowCount() > 0) {
                     $Long_V = $row[4];
                     appelle_carte_osm();
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
                 case 'D':
                     $n_dep = str_replace($interdits, '', $row[1]);
                     echo $tab . '<a href="' . $root . '/liste_villes.php?Type_Liste=V#' . $n_dep . '">' . my_html($row[1]) . "</a>";
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
                 case 'R':
                     $n_reg = str_replace($interdits, '', $row[1]);
                     echo $tab . '<a href="' . $root . '/liste_villes.php?Type_Liste=D#' . $n_reg . '">' . my_html($row[1]) . "</a>";
                     if ($est_gestionnaire) {
-                        echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $row[0] . '">' . $echo_modif . "\n";
+                        echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
                 case 'P':

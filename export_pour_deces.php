@@ -111,20 +111,19 @@ if ($bt_OK) {
         // Sortie à lécran demandée
         else {
 
-            echo '<br>' . Affiche_Icone('tip', 'Information') . '&nbsp;' . LG_EXPORT_DEATH_INTERNET . '<br><br>';
-            $echo_modif = Affiche_Icone('fiche_edition', $LG_modify) . '</a>';
+            echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_EXPORT_DEATH_INTERNET . '<br><br>';
 
             while ($row = $res->fetch(PDO::FETCH_NUM)) {
                 // $row[1] = str_replace(' ', ",", $row[1]);
                 echo $row[0] . ' '
                     . UnPrenom($row[1]) . ' '
                     . lib_sexe_born($row[5]) . ' ' . etend_date($row[2]) . ' ' . LG_AT . ' ' . $row[4];
-                echo '&nbsp;<a ' . Ins_Edt_Pers($row[6]) . '>' . $echo_modif;
-                echo LG_SEMIC . '<a href="'. $root .'/recherche_matchid_unitaire.php'
+                echo ' <a ' . Ins_Edt_Pers($row[6]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+                echo ' <a href="' . $root . '/recherche_matchid_unitaire.php'
                     . '?ref=' . $row[6] . '"'
                     . ' target="_blank">'
                     . $LG_Menu_Title['MatchId_Sch'] . '</a>';
-                echo '<br>' . "\n";
+                echo '<br>';
             }
         }
     }
@@ -133,23 +132,23 @@ if ($bt_OK) {
     Insere_Bas($compl);
 } else {
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+    echo '<form id="saisie" method="post">';
     $larg_titre = '30';
-    echo '<table width="70%" class="table_form">' . "\n";
+    echo '<table width="70%" class="table_form">';
     ligne_vide_tab_form(1);
 
     colonne_titre_tab(LG_EXPORT_DEATH_DEAD);
     echo '<input type="checkbox" id="export_dead" name="export_dead" value="ID"/>';
-    echo '</td></tr>' . "\n";
+    echo '</td></tr>';
 
     colonne_titre_tab(LG_EXPORT_DEATH_MIN_YEAR);
     echo '<input type="text" name="min_year" value="' . $death_def_min_year . '" size="4"/>';
-    echo '</td></tr>' . "\n";
+    echo '</td></tr>';
 
     colonne_titre_tab($LG_Ch_Output_Format);
-    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label>&nbsp;';
+    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
-    echo '</td></tr>' . "\n";
+    echo '</td></tr>';
     ligne_vide_tab_form(1);
 
     bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');

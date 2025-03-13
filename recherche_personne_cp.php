@@ -73,7 +73,7 @@ function aff_n_dec()
     $Ne = $row[3];
     $Decede = $row[4];
     if (($Ne != '') or ($Decede != '')) {
-        echo '&nbsp;(';
+        echo ' (';
         if ($Ne != '') echo '&deg; ' . Etend_date($Ne);
         if ($Decede != '') {
             if ($Ne != '') echo ', ';
@@ -137,7 +137,7 @@ if ($bt_OK) {
         $nom_fic = $chemin_exports . 'recherche.csv';
         $fp = ouvre_fic($nom_fic, 'w+');
     }
-    $tab = '&nbsp;&nbsp;&nbsp;';
+    $tab = '   ';
     // Init des zones de requête
     echo my_html(LG_PERS_REQ_FIELDS) . ' ' . '<br />';
     $req = '';
@@ -377,13 +377,13 @@ if ($bt_OK) {
 
                 switch ($Sortie) {
                     case 'e':
-                        echo '<a ' . Ins_Ref_Pers($ref, $target) . '>' . $nom . '&nbsp;' . $prenom . '</a>';
+                        echo '<a ' . Ins_Ref_Pers($ref, $target) . '>' . $nom . ' ' . $prenom . '</a>';
                         aff_n_dec();
-                        if ($est_gestionnaire) echo '&nbsp;' . Affiche_Icone_Lien(Ins_Edt_Pers($ref), 'fiche_edition', $LG_modify);
+                        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien(Ins_Edt_Pers($ref), 'fiche_edition', $LG_modify);
                         echo '<br />' . "\n";
                         break;
                     case 't':
-                        echo $nom . '&nbsp;' . $prenom;
+                        echo $nom . ' ' . $prenom;
                         aff_n_dec();
                         echo '<br />' . "\n";
                         break;
@@ -462,7 +462,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         if ($Sch_Type == 'p') echo $checked;
     } else
         echo $checked;
-    echo '/><label for="Sch_Type_p">' . LG_PERS_SCH_TYPE_PARENT . '</label>&nbsp;' . "\n";
+    echo '/><label for="Sch_Type_p">' . LG_PERS_SCH_TYPE_PARENT . '</label> ' . "\n";
     echo '<input type="radio" id = "Sch_Type_c" name="Sch_Type" value="c"';
     if ($reprise) {
         if ($Sch_Type == 'c') echo $checked;
@@ -479,12 +479,12 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($reprise) {
         if ($Son == 'o') echo $checked;
     } else echo $checked;;
-    echo '/><label for="son_o">' . LG_PERS_REQ_SPELL_EXACT . '</label>&nbsp;';;
+    echo '/><label for="son_o">' . LG_PERS_REQ_SPELL_EXACT . '</label> ';;
     echo '<input type="radio" id="son_p" name="Son" value="p"';
     if ($reprise) {
         if ($Son == 'p') echo $checked;
     }
-    echo '/><label for="son_p">' . LG_PERS_REQ_SOUND_EXACT . '</label>&nbsp;';
+    echo '/><label for="son_p">' . LG_PERS_REQ_SOUND_EXACT . '</label> ';
     echo '<input type="radio" id="son_a" name="Son" value="a"';
     if ($reprise) {
         if ($Son == 'a') echo $checked;
@@ -505,7 +505,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         if ($Sexe == 'm') echo $checked;
     } else
         echo $checked;
-    echo '/><label for="Sexe_m">' . LG_SEXE_MAN . '</label>&nbsp;';
+    echo '/><label for="Sexe_m">' . LG_SEXE_MAN . '</label> ';
     echo '<input type="radio" id="Sexe_f" name="Sexe" value="f"';
     if ($reprise) {
         if ($Sexe == 'f') echo $checked;
@@ -522,14 +522,14 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($reprise) {
         if ($TypeAnnee == 'n') echo $checked;
     } else echo ' checked="checked"';
-    echo '/><label for="TypeAnnee_n">' . $LG_birth . '</label>&nbsp;';
+    echo '/><label for="TypeAnnee_n">' . $LG_birth . '</label> ';
     echo '<input type="radio" id="TypeAnnee_d" name="TypeAnnee" value="d"';
     if ($reprise) {
         if ($TypeAnnee == 'd') echo $checked;
     }
-    echo '/><label for="TypeAnnee_d">' . $LG_death . '</label>&nbsp;';
+    echo '/><label for="TypeAnnee_d">' . $LG_death . '</label> ';
     $texte_image = LG_PERS_REQ_OFF_DOWN;
-    echo '&nbsp;(+/- <img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
+    echo ' (+/- <img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
     echo 'onclick="if (document.forms.saisie.Tolerance.value>0) {document.forms.saisie.Tolerance.value--;}"/>' . "\n";
     echo '<input type="text" size="2" name="Tolerance" value="';
     if ($reprise) echo $Tolerance;
@@ -537,7 +537,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '" onchange="verification_num(this);"/>' . "\n";
     $texte_image = LG_PERS_REQ_OFF_UP;
     echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
-    echo 'onclick="document.forms.saisie.Tolerance.value++;"/> ' . my_html(LG_PERS_REQ_OFF_YEARS) . ')&nbsp;&nbsp;' . "\n";
+    echo 'onclick="document.forms.saisie.Tolerance.value++;"/> ' . my_html(LG_PERS_REQ_OFF_YEARS) . ')  ' . "\n";
     echo '<input type="radio" id="TypeAnnee" name="TypeAnnee" value="v"';
     if ($reprise) {
         if ($TypeAnnee == 'v') echo $checked;
@@ -590,12 +590,12 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($reprise) {
         if ($Tri == 'np') echo $checked;
     }
-    echo '/><label for="Tri_np">' . LG_PERS_REQ_SORT_NS . '</label>&nbsp;';
+    echo '/><label for="Tri_np">' . LG_PERS_REQ_SORT_NS . '</label> ';
     echo '<input type="radio" id="Tri_dn" name="Tri" value="dn"';
     if ($reprise) {
         if ($Tri == 'dn') echo $checked;
     }
-    echo '/><label for="Tri_dn">' . LG_PERS_REQ_SORT_BORN . '</label>&nbsp;';
+    echo '/><label for="Tri_dn">' . LG_PERS_REQ_SORT_BORN . '</label> ';
     echo '<input type="radio" id="Tri_dd" name="Tri" value="dd"';
     if ($reprise) {
         if ($Tri == 'dd') echo $checked;
@@ -605,8 +605,8 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     // Sortie du résultat
     colonne_titre_tab($LG_Ch_Output_Format);
-    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label>&nbsp;';
-    echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label>&nbsp;';
+    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+    echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
     // L'export CSV n'est disponible qu'à partir du profil privilégié
     if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>' . "\n";
@@ -624,7 +624,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
-    echo '<br />' . Affiche_Icone('tip', $LG_tip) . ' ' . my_html(LG_PERS_SCH_TIP);
+    echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> ' . my_html(LG_PERS_SCH_TIP);
 
     echo '</form>';
 }

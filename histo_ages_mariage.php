@@ -232,7 +232,7 @@ if (Get_Nom_Prenoms($ref_min_f, $Nom, $Prenoms)) {
 // Un age d'évènement (naissance enfant, union) est antérieur à la date de naissance
 if ($est_contributeur) {
     if ($warning_negatif) {
-        echo '<br><br>' . Affiche_Icone('tip', 'Conseil') . ' ' . $ch_warn_age;
+        echo '<br><br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . $ch_warn_age;
     }
 }
 

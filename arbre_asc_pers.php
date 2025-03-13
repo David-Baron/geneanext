@@ -168,8 +168,8 @@ for ($nb_enr = 0; $nb_enr < $c_ens; ++$nb_enr) {
                             $Enfant = $row[0];
                             $P_N = ret_Nom_prenom($row[1], $row[2]);
                             echo '<a ' . Ins_Ref_Pers($Enfant) . '>' . $P_N . '</a>' . "\n";
-                            echo '<a ' . Ins_Ref_Arbre($Enfant) . '>' . $img_asc . '</a>';
-                            echo '<a ' . Ins_Ref_Arbre_Desc($Enfant) . '>' . $img_desc . '</a>';
+                            echo '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Enfant . '">' . $img_asc . '</a>';
+                            echo '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Enfant . '">' . $img_desc . '</a>';
                         } else {
                             echo my_html($LG_Data_noavailable_profile);
                         }
@@ -210,7 +210,10 @@ echo '</div>';
 if ($existe_images) {
     $action = $LG_Tree_Icon_Hover;
     if ($Comportement == 'C') $action = $LG_Tree_Icon_Click;
-    $ch_def_image = Affiche_Icone('tip', $LG_tip) . '&nbsp;' . $action . Affiche_Icone('images', 'Images') . $LG_Tree_Show_Image;
+    $ch_def_image = '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> '
+        . $action
+        . '<img src="' . $root . '/assets/img/' . $Icones['images'] . '" alt="Images" title="Images"> '
+        . $LG_Tree_Show_Image;
     echo '<table>';
     echo '<tr><td>' . $ch_def_image . '</td></tr>' . "\n";
     echo '<tr><td>';

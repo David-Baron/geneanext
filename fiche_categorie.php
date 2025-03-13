@@ -38,7 +38,7 @@ if ($res = lect_sql($sql)) {
     if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
         $TitreF = my_html($enreg['Titre']);
         $OrdreF = $enreg['Ordre_Tri'];
-        $compl .= '<a href="'. $root .'/edition_categorie.php?categ=' . $Categ . '">' . Affiche_Icone('fiche_edition', my_html($LG_modify)) . '</a>' . "\n";
+        $compl .= '<a href="'. $root .'/edition_categorie.php?categ=' . $Categ . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
 
         Insere_Haut(my_html($titre), $compl, 'Fiche_Categorie', $Categ);
 

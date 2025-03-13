@@ -134,7 +134,7 @@ function Rattrape_null($Contenu, $Nom_Rub)
 
 function Aff_Pers($suffixe, $oblig)
 {
-    global $style_z_oblig, $enregP, $list_opt_villes, $idNomPers, $Nom, $Sexe, $chemin_images_icones, $Icones, $hidden, $largP, $lg_date_a;
+    global $root, $style_z_oblig, $enregP, $list_opt_villes, $idNomPers, $Nom, $Sexe, $chemin_images_icones, $Icones, $hidden, $largP, $lg_date_a;
     if (!$oblig) $style_z_oblig = '';
     if (($suffixe == 'pere') or ($suffixe == 'mere')) {
         if ($suffixe == 'pere') $val = 'm';
@@ -174,7 +174,7 @@ function Aff_Pers($suffixe, $oblig)
     echo '<img id="ajout_nom' . $suffixe . '" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" ' .
         'onclick="inverse_div(\'id_div_ajout_nom' . $suffixe . '\');document.getElementById(\'nouveau_nom' . $suffixe . '\').focus();"/>';
     if (isset($_SESSION['Nom_Saisi'])) {
-        echo '&nbsp;' . Affiche_Icone_Clic('copier', 'reprend_nom(\'' . $suffixe . '\');', my_html(LG_PERS_COPY_NAME));
+        echo ' <img src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_PERS_COPY_NAME . '" title="' . LG_PERS_COPY_NAME . '" onclick="reprend_nom(\'' . $suffixe . '\');">';
     }
     echo '<div id="id_div_ajout_nom' . $suffixe . '">';
     echo my_html(LG_ADD_NAME) . '&nbsp;<input type="text" size="50" name="nouveau_nom' . $suffixe . '" id="nouveau_nom' . $suffixe . '"/>';
