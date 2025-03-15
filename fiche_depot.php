@@ -43,29 +43,26 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_contributeur) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_depot.php?ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Repo_Sources_Edit'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_depot.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Repo_Sources_Edit']) . ' ';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Depot', $Ident);
 
     // Type d'objet des dépôts de sources
-    $Type_Ref = 'O';
-
-    $larg_titre = 25;
     echo '<br />';
     echo '<table width="70%" class="table_form" align="center">' . "\n";
-    colonne_titre_tab(LG_CH_REPOSITORY_NAME);
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_CH_REPOSITORY_NAME) . '</td><td class="value">';
     echo $enreg2['Nom'] . '</td></tr>' . "\n";
     echo '</table>';
 
     //  ===== Affichage du commentaire
-    if (Rech_Commentaire($Ident, $Type_Ref)) {
+    if (Rech_Commentaire($Ident, 'O')) {
         if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
             echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
         }
     }
 
-    echo '<br /><a href="' . $root . '/liste_sources.php?depot=' . $Ident . '">' . my_html(LG_CH_REPOSITORY_LIST) . '</a>	' . "\n";
+    echo '<br /><a href="' . $root . '/liste_sources.php?depot=' . $Ident . '">' . LG_CH_REPOSITORY_LIST . '</a>' . "\n";
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
@@ -74,7 +71,7 @@ else {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

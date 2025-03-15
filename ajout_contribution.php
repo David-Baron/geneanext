@@ -119,7 +119,7 @@ $Refer = Recup_Variable('Refer', 'N');
 $entetePage = 'Ajout de contribution';
 $larg_col = 17;
 
-$at = '&nbsp;&nbsp;' . my_html(LG_AT) . '&nbsp;&nbsp';
+$at = '  ' . my_html(LG_AT) . ' &nbsp';
 
 function ligne_contrib($ligne)
 {
@@ -156,30 +156,33 @@ function Aff_Pers($suffixe, $oblig)
             $accord = '(e)';
             $sexe_lib = '';
     }
-    echo '<table border="0">';
-    col_titre_tab_noClass(LG_PERS_NAME, $larg_col);
-    echo '<td><input type="text" size="50" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;';
-    if ($oblig)  echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
+    echo '<table>';
+    echo '<tr><td width="' . $larg_col . '%">' . LG_PERS_NAME . '</td>';
+    echo '<td><input type="text" size="50" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="" ' . $style_z_oblig2 . '/> ';
+    if ($oblig) {
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
+    }
 
     // Proposition du nom de la personne sauf pour le conjoint
     if ($suffixe != 'conj') {
-        $texte_im = LG_CONTRIBS_COPY_REF_NAME;
-        echo '<img id="copier_' . $suffixe . '" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
+        echo '<img id="copier_' . $suffixe . '" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . LG_CONTRIBS_COPY_REF_NAME . '" title="' . LG_CONTRIBS_COPY_REF_NAME . '"' .
             ' onclick="document.getElementById(\'Nom' . $suffixe . '\').value = \'' . $Nom . '\'"/>';
     }
 
     echo '</td></tr>';
-    col_titre_tab_noClass(LG_PERS_FIRST_NAME, $larg_col);
-    echo '<td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;';
-    if ($oblig)  echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
+    echo '<tr><td width="' . $larg_col . '%">' . LG_PERS_FIRST_NAME . '</td>';
+    echo '<td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig2 . '/> ';
+    if ($oblig) {
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
+    }
     echo '</td></tr>';
-    if (($suffixe != 'pere') and ($suffixe != 'mere')) {
-        col_titre_tab_noClass('Sexe', $larg_col);
-        echo '<td><input type="radio" name="Sexe' . $suffixe . '" value="m"/>' . LG_SEXE_MAN . '&nbsp;';
+    if (($suffixe != 'pere') && ($suffixe != 'mere')) {
+        echo '<tr><td width="' . $larg_col . '%">Sexe</td>';
+        echo '<td><input type="radio" name="Sexe' . $suffixe . '" value="m"/>' . LG_SEXE_MAN . ' ';
         echo '    <input type="radio" name="Sexe' . $suffixe . '" value="f"/>' . LG_SEXE_WOMAN;
         echo '</td></tr>';
     }
-    col_titre_tab_noClass(ucfirst(lib_sexe_born($sexe_lib)), $larg_col);
+    echo '<tr><td width="' . $larg_col . '%">' . ucfirst(lib_sexe_born($sexe_lib)) . '</td>';
     // col_titre_tab_noClass('Né'.$accord,$larg_col);
     // echo '<td><input type="text" readonly="readonly" size="25" name="Ne_le'.$suffixe.'" value=""/>'."\n";
     // Affiche_Calendrier('imgCalendN'.$suffixe,'Calendrier_Naissance(\''.$suffixe.'\')');
@@ -190,7 +193,7 @@ function Aff_Pers($suffixe, $oblig)
     echo $at . '<input type="text" readonly="readonly" name="Ne' . $suffixe . '" value=""/>';
     echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Naissance(\'' . $suffixe . '\')"/>';
     echo '</td></tr>';
-    col_titre_tab_noClass(ucfirst(lib_sexe_dead($sexe_lib)), $larg_col);
+    echo '<tr><td width="' . $larg_col . '%">' . ucfirst(lib_sexe_dead($sexe_lib)) . '</td>';
     // echo '<td><input type="text" readonly="readonly" size="25" name="Decede_le'.$suffixe.'" value=""/>'."\n";
     // Affiche_Calendrier('imgCalendD'.$suffixe,'Calendrier_Deces(\''.$suffixe.'\')');
     // echo '<input type="hidden" name="CDecede_le'.$suffixe.'" value=""/>'."\n";
@@ -214,21 +217,19 @@ function Aff_Donnees($Refer)
     echo '<td style="border-right:0px solid #9cb0bb">';
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="520" height="1" alt="clear"/>';
     echo '</td></tr>';
-
     echo '<tr>';
     echo '<td class="left">';
     echo '<div class="tab-container" id="container1">';
     // Onglets
     echo '<ul class="tabs">';
-    echo '<li><a href="#" onclick="return showPane(\'pnlParents\', this)" id="tab1">' . my_html(ucfirst(LG_PARENTS)) . '</a></li>';
-    echo '<li><a href="#" onclick="return showPane(\'pnlConjoint\', this)">' . my_html(ucfirst(LG_HUSB_WIFE)) . '</a></li>';
-    echo '<li><a href="#" onclick="return showPane(\'pnlEnfants\', this)">' . my_html(LG_CONTRIBS_CHILDREN) . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'pnlParents\', this)" id="tab1">' . ucfirst(LG_PARENTS) . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'pnlConjoint\', this)">' . ucfirst(LG_HUSB_WIFE) . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'pnlEnfants\', this)">' . LG_CONTRIBS_CHILDREN . '</a></li>';
     // Captcha pour autoriser le OK
-    echo '<li><a href="#" onclick="return showPane(\'pnlUnlock\', this)">' . my_html(LG_CONTRIBS_UNLOCK . ' ' . $lib_Okay) . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'pnlUnlock\', this)">' . LG_CONTRIBS_UNLOCK . ' ' . $lib_Okay . '</a></li>';
     echo '</ul>';
 
     echo '<div class="tab-panes">';
-
     // Onglet parents
     echo '<div id="pnlParents">';
     echo '  <fieldset>';
@@ -259,32 +260,29 @@ function Aff_Donnees($Refer)
     echo '</fieldset>';
     echo '</div>';
 
-
     // Onglet déverrouillage bouton OK
     echo '<div id="pnlUnlock">';
     echo '<table width="100%">';
     echo '<tr>';
-    echo '<td>' . my_html(LG_CONTRIBS_UNLOCK_TIP1) . '<br />' . my_html(LG_CONTRIBS_UNLOCK_TIP2) . '</td>';
+    echo '<td>' . LG_CONTRIBS_UNLOCK_TIP1 . '<br />' . LG_CONTRIBS_UNLOCK_TIP2 . '</td>';
     echo '<td>';
     echo '<table>';
     echo '<tr>';
     echo '<td valign="middle"><input name="captcha" type="text" id="captcha" size="6"';
-    echo ' onchange="if (this.value != \'\') document.getElementById(\'bouton_ok\').style.visibility = \'visible\';"/>&nbsp;</td>';
-    //echo '      <td><img src="captcha_image_gen.php" alt="captcha"></td>'."\n";
+    echo ' onchange="if (this.value != \'\') document.getElementById(\'bouton_ok\').style.visibility = \'visible\';"/> </td>';
     echo '<td valign="top" align="center"><img style="border: 1px dashed #0064A4;" src="captcha_image_gen.php" alt="captcha"/>';
-    echo '<br /><i><a href="http://software.patrick-b.fr/fr/scripts/php/spam-captcha.php" target="blank">' . my_html(LG_CONTRIBS_TRIBUTE) . '</a></i></td>';
+    echo '<br /><i><a href="http://software.patrick-b.fr/fr/scripts/php/spam-captcha.php" target="blank">' . LG_CONTRIBS_TRIBUTE . '</a></i></td>';
     echo '</tr>';
     echo '</table>';
     echo '</td>';
     echo '</tr>';
     echo '</table><br /><br />';
     echo '<table width="100%">';
-    col_titre_tab_noClass(LG_CONTRIBS_EMAIL, $larg_col);
-    //echo '   <td><input type="text" size=50 name="mail" value="" '.$style_z_oblig.'>&nbsp;';
-    echo '<td><input type="text" size="50" name="mail" id="mail" value="" class="oblig"/>&nbsp;';
+    echo '<tr><td width="' . $larg_col . '%">' . LG_CONTRIBS_EMAIL . '</td>';
+    echo '<td><input type="text" size="50" name="mail" id="mail" value="" class="oblig"/> ';
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/></td>';
     echo '</tr>';
-    col_titre_tab_noClass(LG_CONTRIBS_MESSAGE, $larg_col);
+    echo '<tr><td width="' . $larg_col . '%">' . LG_CONTRIBS_MESSAGE . '</td>';
     echo '<td><textarea cols="50" rows="4" name="message"></textarea></td>';
     echo '</tr>';
     echo '</table>';
@@ -297,7 +295,6 @@ function Aff_Donnees($Refer)
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
     echo '</div> <!-- tab container -->';
-
     echo '</td></tr></table></div>';
 }
 
@@ -355,13 +352,11 @@ if ($bt_OK) {
             ligne_contrib('# Nom serveur : ' . $_SERVER['SERVER_NAME']);
             ligne_contrib('# User agent : ' . $_SERVER['HTTP_USER_AGENT']);
             ligne_contrib('# IP utilisateur : ' . $_SERVER['REMOTE_ADDR']);
-
             ligne_contrib('# Mail : ' . $mail);
 
             // Modification du message ==> on retire les retours chariots
             $message = str_replace("\n", ' ', $message);
             ligne_contrib('# Message : ' . $message);
-
             ligne_contrib('Reference_Personne : ' . $Refer);
 
             if ($SiteGratuit) {
@@ -532,13 +527,18 @@ if ($bt_OK) {
                 if (mail($destinataire, $sujet, $msg, "Reply-to: $reponse\r\nFrom: $expediteur\r\n" . $header)) {
                     // Retour arrière
                     Retour_Ar();
-                } else aff_erreur(LG_CONTRIBS_SEND_KO);
-            } else aff_erreur(LG_CONTRIBS_EMPTY);
-        } else aff_erreur(LG_CONTRIBS_FILE_KO);
+                } else {
+                    echo '<center><font color="red"><br><br><br><h2>' . LG_CONTRIBS_SEND_KO . '</h2></font></center>';
+                }
+            } else {
+                echo '<center><font color="red"><br><br><br><h2>' . LG_CONTRIBS_EMPTY . '</h2></font></center>';
+            }
+        } else {
+            echo '<center><font color="red"><br><br><br><h2>' . LG_CONTRIBS_FILE_KO . '</h2></font></center>';
+        }
+    } else {
+        echo '<center><font color="red"><br><br><br><h2>' . LG_CONTRIBS_CTRL_KO . '</h2></font></center>';
     }
-
-    // La vérification du captcha a échoué
-    else aff_erreur(LG_CONTRIBS_CTRL_KO);
 }
 
 // Première entrée : affichage pour saisie
@@ -547,13 +547,13 @@ if ((!$bt_OK) && (!$bt_An)) {
     $compl = '';
     if (Get_Nom_Prenoms($Refer, $Nom, $Prenoms)) {
         if (!$est_privilegie and $Diff_Internet_P != 'O') {
-            Insere_Haut($entetePage . '&nbsp;pour&nbsp;?', $compl, 'Ajout_Contribution', $Refer);
-            echo aff_erreur('Données non disponibles pour votre profil') . '<br />';
+            Insere_Haut($entetePage . ' pour ?', $compl, 'Ajout_Contribution', $Refer);
+            echo '<center><font color="red"><br><br><br><h2>Données non disponibles pour votre profil</h2></font></center><br />';
             echo '</body></html>';
             return;
         } else {
             $compl = Ajoute_Page_Info(600, 200);
-            Insere_Haut($entetePage . '&nbsp;pour&nbsp;' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Contribution', $Refer);
+            Insere_Haut($entetePage . ' pour ' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Contribution', $Refer);
             echo '<br>';
             echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . $root . '/ajout_contribution.php?Refer=' . $Refer . '" >';
             echo '<input type="hidden" name="Refer" value="' . $Refer . '"/>';
@@ -575,7 +575,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($compl != '') {
         echo $compl;
     }
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

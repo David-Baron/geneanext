@@ -158,7 +158,7 @@ if ($bt_OK) {
         $sql = 'show tables from `' . $db . '` like \'' . $pref_tables . '%\'';
         $result = lect_sql($sql);
         if (!$result) {
-            aff_erreur(LG_IMP_BACKUP_TABLE_ERROR);
+            echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_BACKUP_TABLE_ERROR . '</h2></font></center>';
             exit;
         } else {
             while ($row = $result->fetch(PDO::FETCH_NUM)) {
@@ -178,7 +178,7 @@ if ($bt_OK) {
         set_time_limit($lim_temps);
     }
 
-    echo my_html(LG_IMP_BACKUP_FILE) . LG_SEMIC;
+    echo my_html(LG_IMP_BACKUP_FILE) . ' ';
     $sel_init = false;
     if ($_FILES['nom_du_fichier']['name'] != '') {
         $n_fic = $_FILES['nom_du_fichier']['name'];
@@ -207,7 +207,7 @@ if ($bt_OK) {
         }
         // Erreur d'extension
         if ($erreur != '') {
-            Affiche_Stop($erreur);
+            echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . my_html($erreur) . '<br>';
         }
         // Sinon on peut télécharger (après contrôle)
         else {
@@ -232,7 +232,7 @@ if ($bt_OK) {
             $mode = 'r';
             $ext = Extension_Fic($SelFic);
         } else {
-            Affiche_Stop(LG_IMP_BACKUP_NO_FILE);
+            echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . LG_IMP_BACKUP_NO_FILE . '<br>';
         }
     }
     if ($path != '') {
@@ -370,7 +370,7 @@ if ($bt_OK) {
                             if (strpos($ligne, 'Traitement de la table') !== false) {
                                 if (strpos($ligne, 'utilisateurs') !== false) {
                                     $trt_table = false;
-                                    echo my_html(LG_IMP_BACKUP_KEEP_USERS2) . '<br><br>';
+                                    echo LG_IMP_BACKUP_KEEP_USERS2 . '<br><br>';
                                 } else
                                     $trt_table = true;
                             }
@@ -403,9 +403,9 @@ if ($bt_OK) {
                         if (strpos($ligne, 'version Genemania ') !== false) $lig_vers = true;
                         if ($lig_vers !== false) {
                             if (substr($ligne, 20) != $Version) {
-                                aff_erreur(LG_IMP_BACKUP_ERR_VERS);
-                                aff_erreur(LG_IMP_BACKUP_LOCAL_VERS . ' : ' . substr($ligne, 20));
-                                aff_erreur(LG_IMP_BACKUP_CUR_VERS . ' : ' . $Version);
+                                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_BACKUP_ERR_VERS . '</h2></font></center>';
+                                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_BACKUP_LOCAL_VERS . ' : ' . substr($ligne, 20) . '</h2></font></center>';
+                                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_BACKUP_CUR_VERS . ' : ' . $Version . '</h2></font></center>';
                                 exit;
                             }
                         }
@@ -434,7 +434,7 @@ if ($bt_OK) {
                         // Suppression du préfixe éventuel de la table locale
                         if (($SiteGratuit) and ($pref_local != '')) $table = substr($table, $lg_pref_local + 1);
                         if (($table != 'general') or ($aff_pres_ut = "O")) {
-                            echo my_html(LG_IMP_BACKUP_TABLE_IN_PROGRESS) . ' ' . $table . ', <br>';
+                            echo LG_IMP_BACKUP_TABLE_IN_PROGRESS . ' ' . $table . ', <br>';
                             $req = 'delete from ' . $pref_tables . $table . ';';
                             $res = maj_sql($req);
                         }
@@ -464,7 +464,7 @@ if ($bt_OK) {
         if (!$SiteGratuit) $mot = LG_IMP_BACKUP_REQ;
         else               $mot = LG_IMP_BACKUP_LINES;
         echo $nb_req_lues . ' ' . my_html($mot . ' ' . LG_IMP_BACKUP_ITEM_READ) . ' ' . $nom_du_fichier . '<br>';
-        echo $nb_req_ok . ' ' . my_html(LG_IMP_BACKUP_ITEM_OK) . ' <br><br>';
+        echo $nb_req_ok . ' ' . LG_IMP_BACKUP_ITEM_OK . ' <br><br>';
 
         // Traitement de cohérence : on vérifie qu'aucune table n'a été créée
         // Pour cela, on compare les tables actuelles avec les tables avant import
@@ -472,7 +472,7 @@ if ($bt_OK) {
             $sql = 'show tables from ' . $db . ' like \'' . $pref_tables . '%\'';
             $result = lect_sql($sql);
             if (!$result) {
-                aff_erreur(LG_IMP_BACKUP_TABLE_ERROR);
+                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_BACKUP_TABLE_ERROR . '</h2></font></center>';
                 exit;
             } else {
                 while ($row = $result->fetch(PDO::FETCH_NUM)) {
@@ -480,7 +480,7 @@ if ($bt_OK) {
                     if (array_search($row[0], $liste_tables) === false) {
                         $image = $Icones['stop'];
                         echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"> '
-                            . $row[0] . LG_SEMIC . '<br>';
+                            . $row[0] . ' ' . '<br>';
                         // Vidage de la table
                         $req = 'drop ' . $row[0];
                         $res = lect_sql($req);
@@ -513,27 +513,25 @@ if ($_SESSION['estGestionnaire']) {
         $dmdp     = '';
         $dserveur = '';
         $dport    = '3306';
-        $larg_titre = '25';
 
         if (file_exists($nom_fic_cnx_dist)) include($nom_fic_cnx_dist);
         // Affichage du formulaire
         echo '<form id="saisie" method="post" enctype="multipart/form-data">';
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-       
         echo '<table width="80%" class="table_form">';
 
         // La ré-initialisation de la base n'est pas prévue pour les sites gratuits
         if (!$SiteGratuit) {
-            echo '<tr><td colspan="2">&nbsp;</td></tr>';
-            col_titre_tab(LG_IMP_BACKUP_RESET, $larg_titre);
+            echo '<tr><td colspan="2"></td></tr>';
+            echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_IMP_BACKUP_RESET) . ' </td>';
             echo '<td class="value"><input type="checkbox" name="init_base"/>';
-            echo ' <img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Attention" title="Attention"> ' . my_html(LG_IMP_BACKUP_RESET_TIP);
+            echo ' <img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Attention" title="Attention"> ' . LG_IMP_BACKUP_RESET_TIP;
             echo '</td>';
             echo '</tr>';
         }
 
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-        col_titre_tab(LG_IMP_BACKUP_FILE, $larg_titre);
+        echo '<tr><td colspan="2"></td></tr>';
+        echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_IMP_BACKUP_FILE) . ' </td>';
         echo '<td class="value"><input type="file" name="nom_du_fichier" size="80"/>';
         $dir = $chemin_exports;
         // Extensions autorisées
@@ -556,7 +554,7 @@ if ($_SESSION['estGestionnaire']) {
                 }
                 if ($sel) {
                     if ($nb == 0) {
-                        echo '<br>' . my_html(LG_IMP_BACKUP_FILE_SELECT);
+                        echo '<br>' . LG_IMP_BACKUP_FILE_SELECT;
                         echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . LG_IMP_BACKUP_FILE_SHOW . '" ' . Survole_Clic_Div('lediv') . '/>';
                         echo '<div id="lediv">';
                         echo '<table width="90%">' . "\n";
@@ -600,21 +598,20 @@ if ($_SESSION['estGestionnaire']) {
         // Les options de destination ne sont pas disponibles pour les sites gratuits
         if (!$SiteGratuit) {
             echo '<tr><td colspan="2">&nbsp;</td></tr>';
-            col_titre_tab(LG_IMP_BACKUP_TARGET, $larg_titre);
+            echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_IMP_BACKUP_TARGET) . ' </td>';
             echo '<td class="value">';
-            echo '<input type="radio" name="loc_base" value="L" checked="checked" onclick="cache_div(\'p_int\');"/>' . my_html(LG_IMP_BACKUP_TARGET_LOCAL);
-            echo '<input type="radio" name="loc_base" value="I" onclick="montre_div(\'p_int\');"/>' . my_html(LG_IMP_BACKUP_TARGET_INTERNET) . "\n";
-
+            echo '<input type="radio" name="loc_base" value="L" checked="checked" onclick="cache_div(\'p_int\');"/>' . LG_IMP_BACKUP_TARGET_LOCAL;
+            echo '<input type="radio" name="loc_base" value="I" onclick="montre_div(\'p_int\');"/>' . LG_IMP_BACKUP_TARGET_INTERNET . "\n";
             echo ' <div id="p_int">' . "\n";
             echo '<fieldset>' . "\n";
             echo '<legend>' . ucfirst(LG_IMP_BACKUP_INTERNET_PARAMS) . '</legend>' . "\n";
             echo '<table>' . "\n";
             echo '<tr><td>Base :</td><td><input type="text" name="base_int" value="' . $ddb . '"/></td></tr>' . "\n";
-            echo '<tr><td>' . my_html(LG_IMP_BACKUP_INTERNET_PARAMS_DB) . LG_SEMIC . '</td><td><input type="text" name="uti_int" value="' . $dutil . '"/></td></tr>' . "\n";
-            echo '<tr><td>' . my_html(LG_IMP_BACKUP_INTERNET_PARAMS_PSW) . LG_SEMIC . '</td><td><input type="password" name="mdp_int" value="' . $dmdp . '"/></td></tr>' . "\n";
-            echo '<tr><td>' . my_html(LG_IMP_BACKUP_INTERNET_PARAMS_SITE) . LG_SEMIC . '</td><td><input type="text" name="site_int" value="' . $dserveur . '"/> ';
-            echo my_html(LG_IMP_BACKUP_INTERNET_PARAMS_PORT) . LG_SEMIC . '<input type="text" name="port_int" value="' . $dport . '"/></td></tr>' . "\n";
-            echo '<tr><td colspan="2"><input type="checkbox" name="memo" value="O"/>' . my_html(LG_IMP_BACKUP_INTERNET_PARAMS_SAVE) . '</td></tr>' . "\n";
+            echo '<tr><td>' . LG_IMP_BACKUP_INTERNET_PARAMS_DB . ' </td><td><input type="text" name="uti_int" value="' . $dutil . '"/></td></tr>' . "\n";
+            echo '<tr><td>' . LG_IMP_BACKUP_INTERNET_PARAMS_PSW . ' </td><td><input type="password" name="mdp_int" value="' . $dmdp . '"/></td></tr>' . "\n";
+            echo '<tr><td>' . LG_IMP_BACKUP_INTERNET_PARAMS_SITE . ' </td><td><input type="text" name="site_int" value="' . $dserveur . '"/> ';
+            echo LG_IMP_BACKUP_INTERNET_PARAMS_PORT . ' <input type="text" name="port_int" value="' . $dport . '"/></td></tr>' . "\n";
+            echo '<tr><td colspan="2"><input type="checkbox" name="memo" value="O"/>' . LG_IMP_BACKUP_INTERNET_PARAMS_SAVE . '</td></tr>' . "\n";
             echo '</table>' . "\n";
             echo '</fieldset>' . "\n";
             echo '</div>' . "\n";
@@ -627,10 +624,10 @@ if ($_SESSION['estGestionnaire']) {
         if ($Environnement == 'I') {
             $aff_pres_ut = true;
             echo '<tr><td colspan="2">&nbsp;</td></tr>';
-            col_titre_tab(LG_IMP_BACKUP_KEEP_USERS, $larg_titre);
+            echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_IMP_BACKUP_KEEP_USERS) . ' </td>';
             echo '<td class="value">';
-            echo '<input type="radio" name="aff_pres_ut" value="O" checked="checked" />' . my_html(ucfirst($LG_Yes));
-            echo '<input type="radio" name="aff_pres_ut" value="N" />' . my_html(ucfirst($LG_No)) . "\n";
+            echo '<input type="radio" name="aff_pres_ut" value="O" checked="checked" />' . ucfirst($LG_Yes);
+            echo '<input type="radio" name="aff_pres_ut" value="N" />' . ucfirst($LG_No) . "\n";
             echo '</td></tr>' . "\n";
         }
 
@@ -644,22 +641,21 @@ if ($_SESSION['estGestionnaire']) {
         // Au cas où on n'a pas affiché le bouton de préservation de la liste des utilisateurs...
         if (!$aff_pres_ut)
             echo '<input type="hidden" name="aff_pres_ut" value="N"/>';
-
         echo '</form>';
 
         // Masquage du div de connexion
         echo '<script type="text/javascript">' . "\n";
-        echo '<!--' . "\n";
         echo '  cache_div(\'p_int\');' . "\n";
-        echo '//-->' . "\n";
         echo '</script>' . "\n";
     }
-} else echo my_html($LG_function_noavailable_profile);
+} else {
+    echo $LG_function_noavailable_profile;
+}
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

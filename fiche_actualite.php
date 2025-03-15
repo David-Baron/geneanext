@@ -63,19 +63,16 @@ if ($image != '') {
 }
 
 echo '<br />';
-$larg_titre = 25;
 echo '<table width="70%" class="table_form" align="center">' . "\n";
-
-echo colonne_titre_tab($LG_Event_Title) . my_html($enreg['Titre']) . '</td></tr>';
+echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_Title) . '</td><td class="value">' . my_html($enreg['Titre']) . '</td></tr>';
 
 if ($nomZone != '	') {
-    colonne_titre_tab($LG_Event_Where);
+    echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_Where) . '</td><td class="value">';
     echo $nomZone . '</td></tr>';
 }
 
-colonne_titre_tab($LG_Event_When);
+echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_When) . '</td><td class="value">';
 echo Etend_2_dates($enreg['Debut'], $enreg['Fin']) . '</td></tr>';
-
 echo '</table>' . "\n";
 
 //  ===== Affichage du commentaire
@@ -91,7 +88,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

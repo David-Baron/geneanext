@@ -42,21 +42,16 @@ if ($res = lect_sql($sql)) {
 
         Insere_Haut(my_html($titre), $compl, 'Fiche_Categorie', $Categ);
 
-        $larg_titre = 25;
         echo '<table width="70%" class="table_form">' . "\n";
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        col_titre_tab($LG_Ch_Categ_Title, $larg_titre);
+        echo '<tr><td class="label" width="25%"> ' . ucfirst($LG_Ch_Categ_Title) . ' </td>';
         echo '<td class="value">' . $TitreF . '</td></tr>' . "\n";
-
-        col_titre_tab($LG_Ch_Categ_Order, $larg_titre);
+        echo '<tr><td class="label" width="25%"> ' . ucfirst($LG_Ch_Categ_Order) . ' </td>';
         echo '<td class="value">' . $OrdreF . '</td></tr>' . "\n";
-
-        col_titre_tab($LG_Ch_Categ_Image, $larg_titre);
+        echo '<tr><td class="label" width="25%"> ' . ucfirst($LG_Ch_Categ_Image) . ' </td>';
         echo '<td class="value">';
         echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
         echo '</td></tr>' . "\n";
-
         echo '</table>' . "\n";
 
         // Appel de la liste des personnes présentes dans cette catégorie
@@ -77,7 +72,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

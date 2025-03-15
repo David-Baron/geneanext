@@ -75,8 +75,8 @@ if ($est_gestionnaire) {
         }
 
         if ($Restriction != '-')
-            echo LG_SCH_COMMENT_RESTRICTION . '&nbsp;:&nbsp;' . lib_pfu($Restriction) . '<br />';
-        echo LG_SCH_COMMENT . '&nbsp;:<br />';
+            echo LG_SCH_COMMENT_RESTRICTION . ' : ' . lib_pfu($Restriction) . '<br />';
+        echo LG_SCH_COMMENT . ' :<br />';
         $Divers = str_replace('<p>', '', $Divers);
         $Divers = str_replace('</p>', '', $Divers);
 
@@ -91,8 +91,8 @@ if ($est_gestionnaire) {
         $res = lect_sql($sql);
         $nb = $res->RowCount();
         //$plu = pluriel($nb);
-        //echo $nb.'&nbsp;'.$LG_SCH_COMMENT_FOUND_1.$plu.'&nbsp;'.$LG_SCH_COMMENT_FOUND_2.$plu.'<br /><br />';
-        echo $nb . '&nbsp;' . LG_SCH_COMMENT_FOUND_1 . '&nbsp;' . LG_SCH_COMMENT_FOUND_2 . '<br /><br />';
+        //echo $nb.' '.$LG_SCH_COMMENT_FOUND_1.$plu.' '.$LG_SCH_COMMENT_FOUND_2.$plu.'<br /><br />';
+        echo $nb . ' ' . LG_SCH_COMMENT_FOUND_1 . ' ' . LG_SCH_COMMENT_FOUND_2 . '<br /><br />';
         //$num_fields = $res->field_count;
 
         $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
@@ -181,7 +181,7 @@ if ($est_gestionnaire) {
         if ($num_lig != 0) {
             if ($Sortie == 'c') {
                 fclose($fp);
-                echo '<br />' . $LG_csv_available_in . '&nbsp; <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
+                echo '<br />' . $LG_csv_available_in . '  <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
             } else {
                 echo '</table>' . "\n";
             }
@@ -207,13 +207,11 @@ if ($est_gestionnaire) {
 
         $larg_titre = 30;
         echo '<table width="80%" class="table_form">' . "\n";
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        col_titre_tab(LG_SCH_COMMENT_CONTAINING, $larg_titre);
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="30%"> ' . ucfirst(LG_SCH_COMMENT_CONTAINING) . ' </td>';
         echo '<td class="value"><textarea cols="50" rows="4" name="Divers"></textarea></td>' . "\n";
         echo '</tr>' . "\n";
-
-        colonne_titre_tab(LG_SCH_COMMENT_RESTRICTION);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst(LG_SCH_COMMENT_RESTRICTION) . '</td><td class="value">';
         echo '<select name="Restriction" size="1">';
         echo '<option value="-">' . LG_SCH_COMMENT_NO_RESTRICTION . '</option>' . "\n";
         $liste_objets = 'PUFEVsDROLSI';
@@ -224,14 +222,13 @@ if ($est_gestionnaire) {
         }
         echo '</select>' . "\n";
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab($LG_Ch_Output_Format);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
         affiche_sortie(true);
         echo '</td></tr>' . "\n";
 
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
 
         echo '</table>' . "\n";
         echo '</form>' . "\n";
@@ -244,7 +241,7 @@ if ($est_gestionnaire) {
         echo '<tr>';
         echo '<td align="right">';
         echo $compl;
-        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
         echo "</td>";
         echo '</tr>';
         echo '</table>';

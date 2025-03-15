@@ -56,7 +56,7 @@ echo '<form id="saisie" method="post">' . "\n";
 echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 echo '<br /><br />';
 echo '<table width="50%" class="table_form">' . "\n";
-col_titre_tab(LG_DEL_SOSA_KEEP, 60);
+echo '<tr><td class="label" width="60%"> ' . ucfirst(LG_DEL_SOSA_KEEP) . ' </td>';
 echo '<td class="value">';
 echo '<input type="checkbox" name="Garder" value="O"/>';
 echo '</td></tr>' . "\n";
@@ -64,14 +64,12 @@ bt_ok_an_sup($lib_Supprimer, $lib_Annuler, '', '');
 echo '</table>';
 echo '<br />';
 echo '</form>';
-
-echo '<br /><a href="' . $root . '/verif_sosa.php">' . my_html($LG_Menu_Title['Check_Sosa']) . '</a>';
-
+echo '<br /><a href="' . $root . '/verif_sosa.php">' . $LG_Menu_Title['Check_Sosa'] . '</a>';
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

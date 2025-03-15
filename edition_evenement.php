@@ -219,7 +219,7 @@ if ($retourPreced) Retour_Ar();
 //  ========== Programme principal ==========
 if (!$est_contributeur) {
     Insere_Haut(my_html($titre), '', 'Edition_Evenement', "");
-    Affiche_Stop($LG_function_noavailable_profile);
+    echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . $LG_function_noavailable_profile . '<br>';
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
@@ -304,30 +304,30 @@ if (!$est_contributeur) {
 
     $compl = Ajoute_Page_Info(600, 250);
     if ($refPar != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $refPar . '&amp;Type_Ref=E"', 'images', 'Images') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $refPar . '&amp;Type_Ref=E"', 'images', 'Images') . ' ';
     if ($refPar != -1) {
         $ajout = '';
         //if ($actualite) $ajout = '&amp;actu=o';
-        //$compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_evenement.php?refPar=' .$refPar . $ajout. '"','page','Fiche évènement') . '&nbsp;';
+        //$compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_evenement.php?refPar=' .$refPar . $ajout. '"','page','Fiche évènement') . ' ';
         if ($actualite)
-            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_actualite.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['New']) . '&nbsp;';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_actualite.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['New']) . ' ';
         else
-            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_evenement.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['Event']) . '&nbsp;';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_evenement.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['Event']) . ' ';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Evenement', '');
 
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'titreF,codeTypeF\')" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
-    echo '<input type="' . $hidden . '" name="refPar" value="' . $refPar . '"/>' . "\n";
+    echo '<input type="hidden" name="refPar" value="' . $refPar . '"/>' . "\n";
 
     // Dans le cas de création d'actualité, on ne présentera pas de select avec le type
     if ($actualite) {
-        echo '<input type="' . $hidden . '" name="codeTypeF" value="' . $TypeEv_actu . '"/>' . "\n";
-        echo '<input type="' . $hidden . '" name="codeTypeAnc" value="' . $TypeEv_actu . '"/>' . "\n";
+        echo '<input type="hidden" name="codeTypeF" value="' . $TypeEv_actu . '"/>' . "\n";
+        echo '<input type="hidden" name="codeTypeAnc" value="' . $TypeEv_actu . '"/>' . "\n";
     }
 
     echo '<div id="content">' . "\n";
-    echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >' . "\n";
+    echo '<table id="cols"  cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="750" height="1" alt="clear"/>' . "\n";
@@ -338,7 +338,7 @@ if (!$est_contributeur) {
     echo '<div class="tab-container" id="container1">' . "\n";
     // Onglets
     echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pane1\', this)" id="tab1">' . my_html($LG_Data_tab) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pane1\', this)" id="tab1">' . $LG_Data_tab . '</a></li>' . "\n";
     if (!$actualite) {
         if ($refPar != -1) {
             // Texte à afficher en modification sur le type de lien
@@ -348,8 +348,8 @@ if (!$est_contributeur) {
     }
     // Pas de document en création
     if ($modif)
-        echo '<li><a href="#" onclick="return showPane(\'panDocs\', this)">' . my_html(LG_CH_DOCS) . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'panFiche\', this)">' . my_html(LG_CH_FILE) . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'panDocs\', this)">' . LG_CH_DOCS . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'panFiche\', this)">' . LG_CH_FILE . '</a></li>' . "\n";
     echo '</ul>' . "\n";
 
     echo '<div class="tab-panes">' . "\n";
@@ -357,19 +357,19 @@ if (!$est_contributeur) {
     echo '<div id="pane1">' . "\n";
     // Pavé données
     echo '<fieldset>' . "\n";
-    echo '<legend>' . my_html($LG_Data_tab) . '</legend>';
-    echo '<table width="100%" border="0">' . "\n";
+    echo '<legend>' . $LG_Data_tab . '</legend>';
+    echo '<table width="100%">' . "\n";
     // Titre
-    col_titre_tab_noClass($LG_Event_Title, $largP);
-    echo '<td><input type="text" size="50" name="titreF" id="titreF" value="' . $titreLu . '" class="oblig"/>&nbsp;' . "\n";
+    echo '<tr><td width="20%">' . $LG_Event_Title . '</td>';
+    echo '<td><input type="text" size="50" name="titreF" id="titreF" value="' . $titreLu . '" class="oblig"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     if (!$actualite) {
         if ($refPar != -1) {
             // Texte à afficher en modification sur le type de lien
-            if ($txt != '') echo "&nbsp;&nbsp;&Agrave; lier &agrave; une $txt";
+            if ($txt != '') echo "  &Agrave; lier &agrave; une $txt";
         }
     }
-    echo '<input type="' . $hidden . '" name="titreAnc" value="' . $titreLu . '"/>' . "\n";
+    echo '<input type="hidden" name="titreAnc" value="' . $titreLu . '"/>' . "\n";
     echo '</td>';
 
     // Affichage de l'image par défaut pour l'évènement
@@ -379,7 +379,7 @@ if (!$est_contributeur) {
     if ($image != '') {
         $image = $chemin_images_util . $image;
         Aff_Img_Redim_Lien($image, 110, 110, "id_" . $refPar);
-    } else echo '&nbsp;';
+    } else echo ' ';
     echo '</td>' . "\n";
 
     echo "</tr>\n";
@@ -393,10 +393,10 @@ if (!$est_contributeur) {
     $resultat = lect_sql($requete);
 
     if (!$actualite) {
-        col_titre_tab_noClass($LG_Event_Type, $largP);
         $objetCibleAff = '';
-        echo '<td><select class="oblig" name="codeTypeF">' . "\n";
         $objetCibleAffC = '';
+        echo '<tr><td width="20%">' . $LG_Event_Type . '</td>';
+        echo '<td><select class="oblig" name="codeTypeF">' . "\n";
         while ($enregT = $resultat->fetch(PDO::FETCH_ASSOC)) {
             //  Affichage du type de cible
             if ($enregT['Objet_Cible'] != $objetCibleAff) {
@@ -409,23 +409,23 @@ if (!$est_contributeur) {
             //  affichage d'un type d'evenement
             echo "<option value='" . $enregT['Code_Type'] . "'";
             if ($enregT['Code_Type'] == $codeTypeLu) {
-                echo ' selected="selected"';
+                echo ' selected';
                 $objetCibleAffC = $objetCibleAff;
             }
             echo '>';
             echo my_html($enregT['Libelle_Type']) . "</option>\n";
         }
-        echo "</optgroup></select>&nbsp;";
+        echo "</optgroup></select> ";
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-        echo '<input type="' . $hidden . '" name="codeTypeAnc" value="' . $codeTypeLu . '"/></td></tr>' . "\n";
+        echo '<input type="hidden" name="codeTypeAnc" value="' . $codeTypeLu . '"/></td></tr>' . "\n";
     }
-    //
+
     //  ===== Zone géographique
-    col_titre_tab_noClass($LG_Event_Where, $largP);
+    echo '<tr><td width="20%">' . $LG_Event_Where . '</td>';
     echo "<td>\n";
-    echo '<input type="' . $hidden . '" name="idZoneF" value="' . $idZoneLu . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="idZoneAnc" value="' . $idZoneLu . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="idNiveauAnc" value="' . $idNiveauLu . '"/>' . "\n";
+    echo '<input type="hidden" name="idZoneF" value="' . $idZoneLu . '"/>' . "\n";
+    echo '<input type="hidden" name="idZoneAnc" value="' . $idZoneLu . '"/>' . "\n";
+    echo '<input type="hidden" name="idNiveauAnc" value="' . $idNiveauLu . '"/>' . "\n";
 
     // Niveau de la zone géographique associée
     echo '<input type="radio" id="idNiveauF0" name="idNiveauF" value="0"';
@@ -437,7 +437,7 @@ if (!$est_contributeur) {
         $niv = $enr_zone['Identifiant_Niveau'];
         echo '<input type="radio" id="idNiveauF' . $niv . '" name="idNiveauF" value="' . $niv . '"';
         if ($enr_zone['Identifiant_Niveau'] == $idNiveauLu) echo ' checked="checked"';
-        echo ' onclick="montre_image_zone()"/><label for="idNiveauF' . $niv . '">' . $enr_zone['Libelle_Niveau'] . '</label>&nbsp;' . "\n";
+        echo ' onclick="montre_image_zone()"/><label for="idNiveauF' . $niv . '">' . $enr_zone['Libelle_Niveau'] . '</label> ' . "\n";
     }
 
     // Recherche du libellé de la zone géographique
@@ -473,18 +473,18 @@ if (!$est_contributeur) {
     // Pavé dates
     echo '<fieldset>' . "\n";
     echo '<legend>' . $LG_Event_When . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     //  ===== Date de début de l'évènement
-    col_titre_tab_noClass($LG_Event_Event_Beg, $largP);
+    echo '<tr><td width="20%">' . $LG_Event_Event_Beg . '</td>';
     echo '<td>';
     zone_date2('dDebAnc', 'dDebAff', 'dDebCache', $dDebLu);
     echo "</td></tr>\n";
     //  ===== Date de fin de l'évènement
-    col_titre_tab_noClass($LG_Event_Event_End, $largP);
+    echo '<tr><td width="20%">' . $LG_Event_Event_End . '</td>';
     echo '<td>';
     zone_date2('dFinAnc', 'dFinAff', 'dFinCache', $dFinLu);
     $lib = $LG_Event_Event_Copy_Date;
-    echo '&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['copie_calend'] .
+    echo '  <img src="' . $chemin_images_icones . $Icones['copie_calend'] .
         '" alt = "' . $lib . '" title = "' . $lib . '" onclick="copieDate();"/>' . "\n";
     echo "</td></tr>\n";
 
@@ -494,21 +494,21 @@ if (!$est_contributeur) {
     // === Commentaire
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     //Divers
     echo '<tr>' . "\n";
     echo '<td>';
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire($refPar, 'E');
     echo '<textarea cols="50" rows="4" name="diversF">' . $Commentaire . '</textarea>' . "\n";
-    echo '<input type="' . $hidden . '" name="diversAnc" value="' . my_html($Commentaire) . '"/>';
+    echo '<input type="hidden" name="diversAnc" value="' . my_html($Commentaire) . '"/>';
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
     echo '<td><label for="diffNoteF">' . LG_CH_COMMENT_VISIBILITY . '</label>'
-        . '&nbsp;<input type="checkbox" id="diffNoteF" name="diffNoteF" value="O"';
+        . ' <input type="checkbox" id="diffNoteF" name="diffNoteF" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
-    echo '<input type="' . $hidden . '" name="diffNoteAnc" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
+    echo '<input type="hidden" name="diffNoteAnc" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
     echo '</td></tr>' . "\n";
     echo '</table>' . "\n";
     echo '</fieldset>' . "\n";
@@ -525,7 +525,7 @@ if (!$est_contributeur) {
         if ($refPar != -1) {
             echo '<br /><br />Ajouter une personne : ' .
                 '<a href="' . $root . '/edition_lier_eve.php?refPers=-1&amp;refEvt=' . $refPar . '">' .
-                '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" border="0" alt="Ajouter un &eacute;v&egrave;nement"/></a>' . "\n";
+                '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajouter un &eacute;v&egrave;nement"/></a>' . "\n";
         }
     }
 
@@ -546,7 +546,7 @@ if (!$est_contributeur) {
     //
     Aff_Documents_Objet($refPar, 'E', 'N');
     // Possibilité de lier un document pour l'évènement
-    echo '<br />&nbsp;Lier un document existant &agrave; l\'&eacute;v&egrave;nement : ' .
+    echo '<br /> Lier un document existant &agrave; l\'&eacute;v&egrave;nement : ' .
         Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $refPar .
             '&amp;typeObjet=E&amp;refDoc=-1"', 'ajout', 'Ajout d\'un document') . "\n";
     echo '</div>' . "\n";
@@ -560,7 +560,7 @@ if (!$est_contributeur) {
         echo '<hr/>';
         $x = Aff_Sources_Objet($refPar, 'E', 'N');
         // Possibilité de lier un document pour l'évènement
-        echo '<br />&nbsp;Lier une source existante &agrave; l\'&eacute;v&egrave;nement : ' .
+        echo '<br /> Lier une source existante &agrave; l\'&eacute;v&egrave;nement : ' .
             Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $refPar . '&amp;typeObjet=E&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
@@ -576,9 +576,7 @@ if (!$est_contributeur) {
 
     echo '</div>' . "\n";   //  <!-- tab container -->
     echo '</td></tr></table></div>' . "\n";
-
     echo '</form>' . "\n";
-
     // include(__DIR__ . '/assets/js/gest_onglets.js');
     echo '<!-- On positionne l\'onglet par défaut -->' . "\n";
     echo '<script type="text/javascript">' . "\n";
@@ -589,7 +587,7 @@ if (!$est_contributeur) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

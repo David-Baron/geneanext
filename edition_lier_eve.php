@@ -276,20 +276,20 @@ if (($bt_Sup) or ($bt_OK)) {
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'' . $z_controle . '\');" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     // Zones actuelles
-    echo '<input type="' . $hidden . '" name="persPrinAnc" value="' . $persPrin . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="idZoneF" value="' . $idZoneLu . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="idZoneAnc" value="' . $idZoneLu . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="idNiveauAnc" value="' . $idNiveauLu . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="Dans_Etiq_GGAnc" value="' . $Dans_Etiq_GG . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="maxi" id="maxi" />';
+    echo '<input type="hidden" name="persPrinAnc" value="' . $persPrin . '"/>' . "\n";
+    echo '<input type="hidden" name="idZoneF" value="' . $idZoneLu . '"/>' . "\n";
+    echo '<input type="hidden" name="idZoneAnc" value="' . $idZoneLu . '"/>' . "\n";
+    echo '<input type="hidden" name="idNiveauAnc" value="' . $idNiveauLu . '"/>' . "\n";
+    echo '<input type="hidden" name="Dans_Etiq_GGAnc" value="' . $Dans_Etiq_GG . '"/>' . "\n";
+    echo '<input type="hidden" name="maxi" id="maxi" />';
 
     // L'évènement n'est pas modifiable si connu
     if ($refEvt != -1) {
-        echo '<input type="' . $hidden . '" name="refEveF" value="' . $refEvt . '"/>' . "\n";
+        echo '<input type="hidden" name="refEveF" value="' . $refEvt . '"/>' . "\n";
     }
     // La personne n'est pas modifiable si connue
     if ($refPers != -1) {
-        echo '<input type="' . $hidden . '" name="refPersF" value="' . $refPers . '"/>' . "\n";
+        echo '<input type="hidden" name="refPersF" value="' . $refPers . '"/>' . "\n";
     }
 
     $larg_titre = '30';
@@ -298,7 +298,7 @@ if (($bt_Sup) or ($bt_OK)) {
 
     // Choix des personnes qui peuvent être rattachées à un évènement
     if ($refPers == -1) {
-        echo colonne_titre_tab($LG_Link_Ev_Link_Pers);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Pers) . '</td><td class="value">';
         // Affichage d'un select avec la liste des personnes
         aff_liste_pers(
             'refPersF',           // Nom du select
@@ -314,7 +314,7 @@ if (($bt_Sup) or ($bt_OK)) {
 
     // Choix des évènements qui peuvent être rattachés à la personne
     if ($refEvt == -1) {
-        echo colonne_titre_tab($LG_Link_Ev_Link_Event_Type);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Event_Type) . '</td><td class="value">';
         // On retient les évènements multiples ou
         // les évènements uniques qui ne sont pas déjà utilisés
         $sql_types = 'SELECT DISTINCT e.Code_Type, t.Libelle_Type' .
@@ -337,8 +337,7 @@ if (($bt_Sup) or ($bt_OK)) {
         echo '</select>' . "\n";
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo "</td></tr>\n";
-
-        echo colonne_titre_tab($LG_Link_Ev_Link_Event);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Event) . '</td><td class="value">';
         echo '<select name="evenements" id="evenements" class="oblig"></select>';
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<div class="buttons">';
@@ -358,46 +357,44 @@ if (($bt_Sup) or ($bt_OK)) {
 	}
 	*/
 
-    //
     //  ===== Role
-    echo colonne_titre_tab($LG_Link_Ev_Link_Role);
     $refRole = '';
     $requete = 'SELECT Code_Role, Libelle_Role FROM ' . nom_table('roles') . ' ORDER BY Libelle_Role';
     $result = lect_sql($requete);
+
+    echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Role) . '</td><td class="value">';
     echo '<select name="refRoleF" id="refRoleF" class="oblig">' . "\n";
     while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
         $c_role = $enreg[0];
         echo '<option value="' . $c_role . '"';
-        if ($c_role ===     $refRolePar) echo ' selected="selected" ';
+        if ($c_role ===     $refRolePar) echo ' selected';
         echo '>' . my_html($enreg[1]) . "</option>\n";
     }
-    echo '</select>&nbsp;';
+    echo '</select> ';
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo "</td></tr>\n";
-    echo col_titre_tab($LG_Link_Ev_Main_Pers, $larg_titre);
+    echo '<tr><td class="label" width="30%"> ' . ucfirst($LG_Link_Ev_Main_Pers) . ' </td>';
     echo '<td class="value">';
     echo '<input type="checkbox" value="O" name="persPrinF"';
-    if ($persPrin == 'O') echo ' checked="checked"';
+    if ($persPrin == 'O') echo ' checked';
     echo '/>';
     echo "</td></tr>\n";
+    echo '<tr><td colspan="2"> </td></tr>';
 
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    //  ===== Zone géographique
-    echo colonne_titre_tab($LG_Link_Ev_Link_Place);
-    // Niveau de la zone géographique associée
-    echo '<input type="radio" id="idNiveauF_0" name="idNiveauF" value="0"';
-    if ($idNiveauLu == 0) echo ' checked="checked"';
-    echo ' onclick="cache_image_lieu(\'img_zone\')"/> <label for="idNiveauF_0">' . $LG_Link_Ev_Link_NoPlace . '</label> ' . "\n";
-    // echo ' onclick="bascule_image(\'img_zone\')"/> <label for="idNiveauF_0">'.$LG_Link_Ev_Link_NoPlace.'</label> '."\n";
+    //  ===== Zone géographique    
     $req = 'select Identifiant_Niveau, Libelle_Niveau from ' . nom_table('niveaux_zones');
     $result = lect_sql($req);
+
+    echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Place) . '</td><td class="value">';
+    echo '<input type="radio" id="idNiveauF_0" name="idNiveauF" value="0"';
+    if ($idNiveauLu == 0) echo ' checked';
+    echo ' onclick="cache_image_lieu(\'img_zone\')"/> <label for="idNiveauF_0">' . $LG_Link_Ev_Link_NoPlace . '</label> ' . "\n";
+
     while ($enr_zone = $result->fetch(PDO::FETCH_NUM)) {
         $la_zone = $enr_zone[0];
         echo '<input type="radio" id="idNiveauF_' . $la_zone . '" name="idNiveauF" value="' . $la_zone . '"';
-        if ($la_zone == $idNiveauLu) echo ' checked="checked"';
-        echo ' onclick="montre_image_lieu(\'img_zone\')"/><label for="idNiveauF_' . $la_zone . '">' . $enr_zone[1] . '</label>&nbsp;' . "\n";
-        // echo ' onclick="bascule_image(\'img_zone\')"/><label for="idNiveauF_'.$la_zone.'">'.$enr_zone[1].'</label>&nbsp;'."\n";
+        if ($la_zone == $idNiveauLu) echo ' checked';
+        echo ' onclick="montre_image_lieu(\'img_zone\')"/><label for="idNiveauF_' . $la_zone . '">' . $enr_zone[1] . '</label> ' . "\n";
     }
 
     // Recherche du libellé de la zone géographique
@@ -425,34 +422,33 @@ if (($bt_Sup) or ($bt_OK)) {
     echo '/>' . "\n";
     echo "</td></tr>\n";
 
-    //
     //  ===== Date de début de participation
-    echo colonne_titre_tab($LG_Link_Ev_Link_Beg_Part);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Beg_Part) . '</td><td class="value">';
     zone_date2('dDebAnc', 'dDebAff', 'dDebCache', $dDebLue);
     echo "</td></tr>\n";
-    //
+
     //  ===== Date de fin de participation
-    echo colonne_titre_tab($LG_Link_Ev_Link_End_Part);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_End_Part) . '</td><td class="value">';
     zone_date2('dFinAnc', 'dFinAff', 'dFinCache', $dFinLue);
-    echo '&nbsp;<img src="' . $chemin_images_icones . $Icones['copie_calend'] . '" alt= "' . $LG_Link_Ev_Link_Paste_Beg . '" title="' . $LG_Link_Ev_Link_Paste_Beg .
+    echo ' <img src="' . $chemin_images_icones . $Icones['copie_calend'] . '" alt= "' . $LG_Link_Ev_Link_Paste_Beg . '" title="' . $LG_Link_Ev_Link_Paste_Beg .
         '"onclick="copieDate();"/>' . "\n";
     echo "</td></tr>\n";
 
     //  ===== Etiquette GénéGraphe, uniquement en local
     if ($Environnement == 'L') {
-        echo colonne_titre_tab($LG_Link_Ev_Link_Save_GeneGraphe);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_Save_GeneGraphe) . '</td><td class="value">';
         echo '<input type="radio" name="Dans_Etiq_GGF" value="o"';
-        if ($Dans_Etiq_GG == 'o') echo ' checked="checked"';
-        echo '/>' . my_html($LG_Yes) . '&nbsp;' . "\n";
+        if ($Dans_Etiq_GG == 'o') echo ' checked';
+        echo '/>' . my_html($LG_Yes) . ' ' . "\n";
         echo '<input type="radio" name="Dans_Etiq_GGF" value="n"';
-        if ($Dans_Etiq_GG == 'n') echo ' checked="checked"';
-        echo '/>' . my_html($LG_No) . '&nbsp;' . "\n";
+        if ($Dans_Etiq_GG == 'n') echo ' checked';
+        echo '/>' . my_html($LG_No) . ' ' . "\n";
         echo "</td></tr>\n";
     } else {
-        echo '<input type="' . $hidden . '" name="Dans_Etiq_GGF" value="n"/>' . "\n";
+        echo '<input type="hidden" name="Dans_Etiq_GGF" value="n"/>' . "\n";
     }
 
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    echo '<tr><td colspan="2"> </td></tr>';
     $lib_sup = '';
     if (($refEvt != -1) and ($refPers != -1)) $lib_sup = $lib_Supprimer;
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, $LG_this_link);
@@ -464,7 +460,7 @@ if (($bt_Sup) or ($bt_OK)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

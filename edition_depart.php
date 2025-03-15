@@ -157,21 +157,19 @@ if (($ok == '') && ($annuler == '')) {
 
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
-        aff_erreur(LG_DEPART_UNKNOWN);
+        echo '<center><font color="red"><br><br><br><h2>' . LG_DEPART_UNKNOWN . '</h2></font></center>';
         echo '<a href="' . $root . '/liste_villes.php?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
     } else {
-        if ($Modif)
+        if ($Modif) {
             Champ_car($enreg2, 'Nom_Depart_Min');
+        }
         // Affichage des données du département
         include(__DIR__ . '/assets/js/Insert_Tiny.js');
         echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Nom_Depart,Code_Depart\')" action="' . my_self() . '?Ident=' . $Ident . '">' . "\n";
         echo '<input type="' . $hidden . '" name="Ident" value="' . $Ident . '"/>';
-
-        $largP = 10;
-
         echo '<br />';
         echo '<div id="content">' . "\n";
-        echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" align="center">' . "\n";
+        echo '<table id="cols" cellpadding="0" cellspacing="0" align="center">' . "\n";
         echo '<tr>' . "\n";
         echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
         echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="600" height="1" alt="clear"/>' . "\n";
@@ -181,8 +179,8 @@ if (($ok == '') && ($annuler == '')) {
         echo '<div class="tab-container" id="container1">' . "\n";
         // Onglets
         echo '<ul class="tabs">' . "\n";
-        echo '<li><a href="#" onclick="return showPane(\'pane1\', this)" id="tab1">' . my_html($LG_Data_tab) . '</a></li>' . "\n";
-        echo '<li><a href="#" onclick="return showPane(\'pane2\', this)">' . my_html($LG_record) . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pane1\', this)" id="tab1">' . $LG_Data_tab . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pane2\', this)">' . $LG_record . '</a></li>' . "\n";
         echo '</ul>' . "\n";
 
         echo '<div class="tab-panes">' . "\n";
@@ -191,20 +189,18 @@ if (($ok == '') && ($annuler == '')) {
         echo '<fieldset>' . "\n";
         echo '<legend>' . my_html($LG_County_Data) . '</legend>' . "\n";
 
-        echo '<table width="100%" border="0">' . "\n";
-        col_titre_tab_noClass($LG_County_Name, $largP);
+        echo '<table width="100%">' . "\n";
+        echo '<tr><td width="10%">' . $LG_County_Name . '</td>';
         echo '<td><input type="text" size="70" class="oblig" name="Nom_Depart" id="Nom_Depart" value="' . $enreg2['Nom_Depart_Min'] . '" />&nbsp;' . "\n";
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<input type="' . $hidden . '" name="ANom_Depart" value="' . $enreg2['Nom_Depart_Min'] . '"/></td>' . "\n";
         echo "</tr>\n";
-
-        col_titre_tab_noClass($LG_County_Id, $largP);
+        echo '<tr><td width="10%">' . $LG_County_Id . '</td>';
         echo '<td><input type="text" size="3" class="oblig" name="Code_Depart" id="Code_Depart" value="' . $enreg2['Departement'] . '" />&nbsp;' . "\n";
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<input type="' . $hidden . '" name="ACode_Depart" value="' . $enreg2['Departement'] . '"/></td>' . "\n";
         echo "</tr>\n";
-
-        col_titre_tab_noClass($LG_County_Region, $largP);
+        echo '<tr><td width="10%">' . $LG_County_Region . '</td>';
         echo "<td><select name='Zone_Mere'>\n";
         $sql = 'select Identifiant_zone, Nom_Region_Min from ' . nom_table('regions') . ' order by Nom_Region_Min';
         $res = lect_sql($sql);
@@ -226,7 +222,7 @@ if (($ok == '') && ($annuler == '')) {
         // Commentaires
         echo '<fieldset>' . "\n";
         echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-        echo '<table width="95%" border="0">' . "\n";
+        echo '<table width="95%">' . "\n";
         //Divers
         echo '<tr>' . "\n";
         echo '<td>';
@@ -238,7 +234,7 @@ if (($ok == '') && ($annuler == '')) {
         // Diffusion Internet commentaire
         echo '<td><label for="Diff_Internet_NoteD">' . LG_CH_COMMENT_VISIBILITY . '</label>'
             . '&nbsp;<input type="checkbox" id="Diff_Internet_NoteD" name="Diff_Internet_NoteD" value="O"';
-        if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
+        if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
         echo "/>\n";
         echo '<input type="' . $hidden . '" name="ADiff_Internet_NoteD" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
         echo '</td>' . "\n";
@@ -253,18 +249,14 @@ if (($ok == '') && ($annuler == '')) {
         // Affiche les données propres à l'enregistrement de la fiche
         $x = Affiche_Fiche($enreg2, true);
         echo '</div>' . "\n";
-
         echo '</div>' . "\n";  //<!-- panes -->
 
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
         echo '</div> <!-- tab container -->' . "\n";
         echo '</td></tr>';
-
         echo '</table></div>' . "\n";
-
         echo '</form>' . "\n";
 
         include(__DIR__ . '/assets/js/gest_onglets.js');
@@ -278,7 +270,7 @@ if (($ok == '') && ($annuler == '')) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

@@ -101,7 +101,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     $lg_add_town_list_h = my_html(LG_ADD_TOWN_LIST);
 
     echo '<div id="content">' . "\n";
-    echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" >' . "\n";
+    echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="850" height="1" alt="clear"/>' . "\n";
@@ -112,16 +112,16 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<div class="tab-container" id="container1">' . "\n";
     // Onglets
     echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnlData\', this)" id="tab1">' . my_html($LG_Data_tab) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnlData\', this)" id="tab1">' . $LG_Data_tab . '</a></li>' . "\n";
     // Certains onglets ne sont disponibles qu'en modification
     if ($Refer != -1) {
-        echo '<li><a href="#" onclick="return showPane(\'pnlParentsUnions\', this)">' . my_html(LG_PERS_PARENTS_UNIONS) . '</a></li>' . "\n";
-        echo '<li><a href="#" onclick="return showPane(\'pnlEvts\', this)">' . my_html(LG_PERS_EVENTS) . '</a></li>' . "\n";
-        echo '<li><a href="#" onclick="return showPane(\'pnlLiens\', this)">' . my_html(LG_PERS_LINKS) . '</a></li>' . "\n";
-        echo '<li><a href="#" onclick="return showPane(\'pnlNoms\', this)">' . my_html(LG_PERS_ALT_NAMES) . '</a></li>' . "\n";
-        echo '<li><a href="#" onclick="return showPane(\'pnlDocs\', this)">' . my_html(LG_PERS_DOCS) . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pnlParentsUnions\', this)">' . LG_PERS_PARENTS_UNIONS . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pnlEvts\', this)">' . LG_PERS_EVENTS . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pnlLiens\', this)">' . LG_PERS_LINKS . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pnlNoms\', this)">' . LG_PERS_ALT_NAMES . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pnlDocs\', this)">' . LG_PERS_DOCS . '</a></li>' . "\n";
     }
-    echo '<li><a href="#" onclick="return showPane(\'pnlFile\', this)">' . my_html($LG_File) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnlFile\', this)">' . $LG_File . '</a></li>' . "\n";
     echo '</ul>' . "\n";
 
     echo '<div class="tab-panes">' . "\n";
@@ -130,17 +130,15 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     // Etat civil de la personne
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_PERS_DATA) . '</legend>' . "\n";
-    echo '<table width="98%" border="0">' . "\n";
+    echo '<table width="98%">' . "\n";
     // Nom
-    $c_zone = $enreg2['Nom'];
-    $id_nom = $enreg2['idNomFam'];
-    if ($id_nom == '') $id_nom = -1;
-    col_titre_tab_noClass(LG_PERS_NAME, $largP);
-    echo '<td><input type="hidden" name="NomP" id="NomP" value="' . $id_nom . '/' . $c_zone . '" class="oblig"/>' . "\n";
-    echo '<input type="hidden" name="AidNomP" value="' . $id_nom . '"/>' . "\n";
-    Select_Noms($id_nom, 'NomSel', 'NomP');
+    if ($enreg2['idNomFam'] == '') $enreg2['idNomFam'] = -1;
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_NAME . '</td>';
+    echo '<td><input type="hidden" name="NomP" id="NomP" value="' . $enreg2['idNomFam'] . '/' . $enreg2['Nom'] . '" class="oblig"/>' . "\n";
+    echo '<input type="hidden" name="AidNomP" value="' . $enreg2['idNomFam'] . '"/>' . "\n";
+    Select_Noms($enreg2['idNomFam'], 'NomSel', 'NomP');
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="hidden" name="ANomP" value="' . $id_nom . '/' . $c_zone . '"/>' . "\n";
+    echo '<input type="hidden" name="ANomP" value="' . $enreg2['idNomFam'] . '/' . $enreg2['Nom'] . '"/>' . "\n";
     // Possibilité d'ajouter un nom
     echo '<img id="ajout_nom" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_PERS_ADD_NAME . '" title="' . LG_PERS_ADD_NAME . '"' .
         'onclick="inverse_div(\'id_div_ajout_nom\');document.getElementById(\'nouveau_nom\').focus();"/>' . "\n";
@@ -167,38 +165,35 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '</td></tr>' . "\n";
 
     // Prénoms
-    $c_zone = $enreg2['Prenoms'];
-    col_titre_tab_noClass(LG_PERS_FIRST_NAME, $largP);
-    echo '<td colspan="2"><input type="text" size="50" name="PrenomsP" id="PrenomsP" value="' . $c_zone . '" class="oblig"/> ' . "\n";
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_FIRST_NAME . '</td>';
+    echo '<td colspan="2"><input type="text" size="50" name="PrenomsP" id="PrenomsP" value="' . $enreg2['Prenoms'] . '" class="oblig"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="hidden" name="APrenomsP" value="' . $c_zone . '"/>' . "\n";
+    echo '<input type="hidden" name="APrenomsP" value="' . $enreg2['Prenoms'] . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     // Surnom
-    $c_zone = $enreg2['Surnom'];
-    col_titre_tab_noClass(LG_PERS_SURNAME, $largP);
-    echo '<td colspan="2"><input type="text" size="50" name="SurnomP" id="SurnomP" value="' . $c_zone . '"/>' . "\n";
-    echo '<input type="hidden" name="ASurnomP" value="' . $c_zone . '"/>' . "\n";
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_SURNAME . '</td>';
+    echo '<td colspan="2"><input type="text" size="50" name="SurnomP" id="SurnomP" value="' . $enreg2['Surnom'] . '"/>' . "\n";
+    echo '<input type="hidden" name="ASurnomP" value="' . $enreg2['Surnom'] . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     //Sexe
     $SexePers = $enreg2['Sexe'];
-    col_titre_tab_noClass(LG_SEXE, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_SEXE . '</td>';
     echo '<td colspan="2"><input type="radio" id="SexeP_m" name="SexeP" id="SexeM" value="m"';
-    if ($enreg2['Sexe'] == 'm') echo ' checked="checked"';
+    if ($enreg2['Sexe'] == 'm') echo ' checked';
     echo ' /><label for="SexeP_m">' . LG_SEXE_MAN . "</label> ";
     echo '<input type="radio" id="SexeP_f" name="SexeP" id="SexeF" value="f"';
-    if ($enreg2['Sexe'] == 'f') echo ' checked="checked"';
+    if ($enreg2['Sexe'] == 'f') echo ' checked';
     echo ' /><label for="SexeP_f">' . LG_SEXE_WOMAN . '</label>';
-    echo '<input type="hidden" name="ASexeP" value="' . $SexePers . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ASexeP" value="' . $enreg2['Sexe'] . '"/></td>' . "\n";
     echo "</tr>\n";
 
     //Naissance
-    col_titre_tab_noClass(LG_PERS_BORN, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_BORN . '</td>';
     echo '<td colspan="2">';
-    $date_naissance = $enreg2['Ne_le'];
-    zone_date2('ANe_leP', 'Ne_leP', 'CNe_leP', $date_naissance);
-    echo ' ' . my_html($LG_at) . ' ';
+    zone_date2('ANe_leP', 'Ne_leP', 'CNe_leP', $enreg2['Ne_le']);
+    echo ' ' . $LG_at . ' ';
     aff_liste_villes(
         'Ville_NaissanceP',
         1,                  // C'est la première fois que l'on appelle la fonction dans la page
@@ -221,16 +216,11 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '</td></tr>';
 
     //Décès
-    col_titre_tab_noClass(LG_PERS_DEAD, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_DEAD . '</td>';
     echo '<td colspan="2">';
     zone_date2('ADecede_LeP', 'Decede_LeP', 'CDecede_LeP', $enreg2['Decede_Le']);
-    echo ' ' . my_html($LG_at) . ' ';
-    aff_liste_villes(
-        'Ville_DecesP',
-        0,                  // Ce n'est pas la première fois que l'on appelle la fonction dans la page
-        1,                  // On n'est pas susceptible de rappeler la fonction
-        $enreg2['Ville_Deces']
-    ); // Clé de sélection de la ligne
+    echo ' ' . $LG_at . ' ';
+    aff_liste_villes('Ville_DecesP', 0, 1, $enreg2['Ville_Deces']); // Clé de sélection de la ligne
     echo '<input type="hidden" name="AVille_DecesP" value="' . $enreg2['Ville_Deces'] . '"/>';
     // Possibilité d'ajouter une ville
     echo '<img id="ajout2" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
@@ -247,14 +237,14 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
 
     // Si pas de date de décès et date de naissance compatible, on va afficher un appel à MatchId
     if ($enreg2['Decede_Le'] == '') {
-        if ((strlen($date_naissance) == 10) && ($date_naissance[9] == 'L')) {
-            $annee = substr($date_naissance, 0, 4);
+        if ((strlen($enreg2['Ne_le']) == 10) && ($enreg2['Ne_le'][9] == 'L')) {
+            $annee = substr($enreg2['Ne_le'], 0, 4);
             if ($annee > $death_def_min_year) {
                 // echo '<a href="'.$url_matchid_sch
                 // .'?firstName='.UnPrenom($enreg2['Prenoms'])
                 // .'&lastName='.$enreg2['Nom']
                 // .'&sex='.strtoupper($enreg2['Sexe'])
-                // .'&birthDate='.substr($date_naissance,6,2).'%2F'.substr($date_naissance,4,2).'%2F'.substr($date_naissance,0,4).'"'
+                // .'&birthDate='.substr($enreg2['Ne_le'],6,2).'%2F'.substr($enreg2['Ne_le'],4,2).'%2F'.substr($enreg2['Ne_le'],0,4).'"'
                 // .' target="_blank">Match Id</a> ';
                 echo '<a href="' . $root . '/recherche_matchid_unitaire.php'
                     . '?ref=' . $Refer . '"'
@@ -270,17 +260,16 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     // Numéro de la personne
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_PERS_NUMBER) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
-    $c_zone = $enreg2['Numero'];
-    col_titre_tab_noClass(LG_PERS_NUMBER, $largP);
-    echo '<td><input type="text" size="20" name="NumeroP" id="NumeroP" value="' . $c_zone . '"/>' . "\n";
+    echo '<table width="95%">' . "\n";
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_NUMBER . '</td>';
+    echo '<td><input type="text" size="20" name="NumeroP" id="NumeroP" value="' . $enreg2['Numero'] . '"/>' . "\n";
     // Calculette pour étendre le numéro Sosa
     echo '<img id="calc1" src="' . $chemin_images_icones . $Icones['calculette'] . '" alt="' . LG_PERS_CALC_SOSA . '" title="' . LG_PERS_CALC_SOSA . '"' .
         ' onclick="etend_num_sosa();document.getElementById(\'NumeroP\').focus();"/>' . "\n";
     // Bouton pour numéro 1 ==> de cujus
     echo '<img id="im_decujus" src="' . $chemin_images_icones . $Icones['decujus'] . '" alt="' . LG_PERS_DECUJUS . '" title="' . LG_PERS_DECUJUS . '"' .
         ' onclick="decujus();document.getElementById(\'NumeroP\').focus();"/>' . "\n";
-    echo '<input type="hidden" name="ANumeroP" value="' . $c_zone . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ANumeroP" value="' . $enreg2['Numero'] . '"/></td>' . "\n";
     echo "</tr>\n";
     echo '</table>' . "\n";
     echo '</fieldset>' . "\n";
@@ -288,7 +277,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     // Commentaire
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     //Divers
     echo '<tr>' . "\n";
     echo '<td>';
@@ -300,7 +289,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     // Diffusion Internet commentaire
     echo '<td><label for="Diff_Internet_NoteP">' . LG_CH_COMMENT_VISIBILITY . '</label>'
         . ' <input type="checkbox" id="Diff_Internet_NoteP" name="Diff_Internet_NoteP" value="O"';
-    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
+    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
     echo "/>\n";
     echo '<input type="hidden" name="ADiff_Internet_NoteP" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
     echo '</td></tr>' . "\n";
@@ -310,16 +299,15 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
 
     // Données de la fiche
     echo '<div id="pnlFile">' . "\n";
-    $c_zone = $enreg2["Diff_Internet"];
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_PERS_VISIBILITY) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     // Diffusion internet
-    col_titre_tab_noClass(LG_PERS_INTERNET, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_INTERNET . '</td>';
     echo '<td><input type="checkbox" name="Diff_InternetP" value="O"';
-    if (($c_zone == 'O') or ($Refer == -1)) echo 'checked="checked"';
+    if (($enreg2["Diff_Internet"] == 'O') or ($Refer == -1)) echo 'checked';
     echo "/>\n";
-    echo '<input type="hidden" name="ADiff_InternetP" value="' . $c_zone . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ADiff_InternetP" value="' . $enreg2["Diff_Internet"] . '"/></td>' . "\n";
     echo '</tr>' . "\n";
     echo '</table>' . "\n";
     echo '</fieldset>' . "\n";
@@ -340,7 +328,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         echo '<input type="radio" id="Categorie_' . $num_cat . '" name="Categorie" value="' . $num_cat . '"';
         if ($categ_Fiche == $num_cat) echo ' checked="checked"';
         echo '/><label for="Categorie_' . $num_cat . '">'
-            . '<img src="' . $chemin_images_icones . $Icones[$nom_cat] . '" border="0" alt="' . $titre_cat . '" title="' . $titre_cat . '"/>' . '</label>  ' . "\n";
+            . '<img src="' . $chemin_images_icones . $Icones[$nom_cat] . '" alt="' . $titre_cat . '" title="' . $titre_cat . '"/>' . '</label>  ' . "\n";
     }
     $nb_tag = 0;
     echo '<input type="radio" id="Categorie_0" name="Categorie" value="0"';
@@ -501,7 +489,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         $res_ns = lect_sql($req_ns);
         // Affichage des noms secondaires disponibles pour la personne
         if ($res_ns->rowCount()) {
-            echo '<table width="85%" border="0">' . "\n";
+            echo '<table width="85%">' . "\n";
             echo '<tr>';
             echo '<td>Nom</td>';
             echo '<td>' . my_html(ucfirst(LG_CH_COMMENT)) . '</td>';
@@ -901,7 +889,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

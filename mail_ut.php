@@ -60,7 +60,7 @@ if (($bt_OK) and ($sujet != '') and ($message != '')) {
     $req = 'select nom, Adresse from ' . nom_table('utilisateurs') . ' where idUtil in(' . $crit . ') and Adresse is not null';
     $res = lect_sql($req);
     if ($res->rowCount() > $max_emails) {
-        aff_erreur('Le nombre de mails � envoyer est sup�rieur au maximum autoris� (' . $max_emails . ')');
+        echo '<center><font color="red"><br><br><br><h2>Le nombre de mails à envoyer est supérieur au maximum autorisé (' . $max_emails . ')</h2></font></center>';
     }
     // Envoi des messages
     else {
@@ -75,18 +75,6 @@ if (($bt_OK) and ($sujet != '') and ($message != '')) {
 // Premi�re entr�e : affichage pour saisie
 else {
 
-    if ($debug) {
-        echo 'PHP_SELF : ' . my_self() . '<br />';
-        echo 'SCRIPT_NAME : ' . $_SERVER['SCRIPT_NAME'] . '<br />';
-        echo 'HTTP_HOST : ' . $_SERVER['HTTP_HOST'] . '<br />';
-        echo 'SCRIPT_FILENAME : ' . $_SERVER['SCRIPT_FILENAME'] . '<br />';
-        echo 'REQUEST_URI : ' . $_SERVER['REQUEST_URI'] . '<br />';
-    }
-
-    echo '<br />' . "\n";
-    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'sujet,message\')" action="' . my_self() . '">' . "\n";
-    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
     // R�cup�ration des identifiants d'utilisateurs re�us depuis la liste
     $nom_var = 'msg_ut_';
     $l_nom_var = strlen($nom_var);
@@ -97,22 +85,19 @@ else {
             $idents .= $ind_var . ',';
         }
     }
+    echo '<br />' . "\n";
+    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'sujet,message\')">' . "\n";
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<input type="hidden" name="idents" value="' . $idents . '"/>' . "\n";
     echo '<input type="hidden" name="maxi" value="' . $max_emails . '"/>' . "\n";
-    // var_dump($idents);
-
-    $larg_titre = '25';
-
     echo '<table width="70%" class="table_form">' . "\n";
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    col_titre_tab(LG_MAIL_SUBJECT, $larg_titre);
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_MAIL_SUBJECT) . ' </td>';
     echo '<td class="value">';
     echo '<input class="oblig" type="text" name="sujet" id="sujet" size="80" maxlength="80"/>&nbsp;' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_MAIL_MSG, $larg_titre);
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_MAIL_MSG) . ' </td>';
     echo '<td class="value">';
     echo '<textarea cols="50" rows="5" name="message" id="message"></textarea>&nbsp;' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
@@ -122,9 +107,9 @@ else {
 
     echo '</table>';
 
-    if ((!$SiteGratuit) and ($FromTo_Mail = 'support@geneamania.net'))
+    if ((!$SiteGratuit) and ($FromTo_Mail = 'support@geneamania.net')) {
         echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_MAIL_FROM . $FromTo_Mail . '<br>' . "\n";
-
+    }
     echo '</form>';
 }
 
@@ -132,7 +117,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

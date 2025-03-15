@@ -92,7 +92,7 @@ if ($bt_OK) {
             $_SESSION['message'] = $erreur;
             $image = 'exclamation.png';
             echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '">';
-            echo '&nbsp;' . $LG_Site_Param_Error . LG_SEMIC . $erreur . '<br />';
+            echo ' ' . $LG_Site_Param_Error . LG_SEMIC . $erreur . '<br />';
         }
         // Sinon on peut télécharger
         else {
@@ -160,26 +160,22 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<form id="saisie" enctype="multipart/form-data" method="post" onsubmit="return verification_form(this,\'NomS,Adresse_MailS\')" action="' . my_self() . '" >' . "\n";
 
     echo '<table width="85%" class="table_form">' . "\n";
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    col_titre_tab($LG_Site_Param_Name, $larg_titre);
-    echo '<td class="value"><input type="text" class="oblig" size="80" name="NomS" value="' . $Nom . '"/>&nbsp;' . "\n";
+    echo '<tr><td colspan="2"> </td></tr>';
+    echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_Name) . ' </td>';
+    echo '<td class="value"><input type="text" class="oblig" size="80" name="NomS" value="' . $Nom . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ANomS" value="' . $Nom . '"/></td></tr>' . "\n";
-
-    col_titre_tab($LG_Site_Param_Mail, $larg_titre);
-    echo '<td class="value"><input type="text" class="oblig" size="80" name="Adresse_MailS" value="' . $Adresse_Mail . '"/>&nbsp;' . "\n";
+    echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_Mail) . ' </td>';
+    echo '<td class="value"><input type="text" class="oblig" size="80" name="Adresse_MailS" value="' . $Adresse_Mail . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="AAdresse_MailS" value="' . $Adresse_Mail . '"/></td></tr>' . "\n";
-
-    col_titre_tab($LG_Site_Param_Year_Only, $larg_titre);
+    echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_Year_Only) . ' </td>';
     echo '<td class="value"><input type="checkbox" name="Affiche_AnneeG" value="O"';
     if ($Affiche_Annee == 'O') echo 'checked="checked"';
     echo "/>\n";
     echo '<input type="' . $hidden . '" name="AAffiche_AnneeG" value="' . $Affiche_Annee . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    col_titre_tab($LG_Site_Param_Year_Threshold, $larg_titre);
+    echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_Year_Threshold) . ' </td>';
     echo '<td class="value">';
     if (($Environnement == 'I') and ($SiteGratuit) and (!$Premium)) {
         echo my_html($LG_Site_Param_No_Premium);
@@ -189,27 +185,27 @@ if ((!$bt_OK) && (!$bt_An)) {
     }
     echo '<input type="' . $hidden . '" name="APivot_MasquageS" value="' . $Pivot_Masquage . '"/></td></tr>' . "\n";
 
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Site_Param_Hover_Clic . '&nbsp;</td><td class="value">';
+    echo '<tr><td class="label" width="35%"> ' . $LG_Site_Param_Hover_Clic . ' </td><td class="value">';
     bouton_radio('ComportementG', 'S', $LG_Site_Param_Hover, ($Comportement == 'S'));
     bouton_radio('ComportementG', 'C', $LG_Site_Param_Click, ($Comportement == 'C'));
     echo '<input type="' . $hidden . '" name="AComportementG" value="' . $Comportement . '"/></td></tr>' . "\n";
 
     // === Commentaire
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
+    echo '<tr><td class="label" width="35%"> ' . LG_CH_COMMENT . ' </td><td class="value">';
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire(0, $Type_Ref);
     echo '<textarea cols="80" rows="4" name="Divers">' . $Commentaire . '</textarea>' . "\n";
     echo '<input type="' . $hidden . '" name="ADivers" value="' . my_html($Commentaire) . '"/></td></tr>' . "\n";
 
     // Diffusion Internet commentaire
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT_VISIBILITY . '&nbsp;</td><td class="value">';
+    echo '<tr><td class="label" width="35%"> ' . LG_CH_COMMENT_VISIBILITY . ' </td><td class="value">';
     echo '<input type="checkbox" name="Diff_Note" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
     echo '<input type="' . $hidden . '" name="ADiff_Note" value="' . $Diffusion_Commentaire_Internet . '"/></td></tr>' . "\n";
 
     // Police de caractères des fichiers pdf générés
-    col_titre_tab($LG_Site_Param_PDF_Font, $larg_titre);
+    echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_PDF_Font) . ' </td>';
     echo '<td class="value">';
     $list_font_pdf = array_merge($list_font_pdf, $list_font_pdf_plus);
     sort($list_font_pdf);
@@ -227,28 +223,28 @@ if ((!$bt_OK) && (!$bt_An)) {
     // Possibilité de saisir la couleur de la police des pdf sauf pour les sites hébergés non Premium
     if ((!$SiteGratuit) or ($Premium)) {
         $ancien = $coul_pdf;
-        col_titre_tab($LG_Site_Param_PDF_Font_Color, $larg_titre);
+        echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_PDF_Font_Color) . ' </td>';
         echo '<td class="value">';
         echo my_html($LG_Site_Param_PDF_Font_Color_Current) . LG_SEMIC . '<input readonly="readonly" type="text" id="Anc_coul" name="Anc_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
-        echo '&nbsp;' . my_html($LG_Site_Param_PDF_Font_Color_New) . LG_SEMIC . '<input class="color" readonly="readonly" type="text" id="Nouv_coul" name="Nouv_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
+        echo ' ' . my_html($LG_Site_Param_PDF_Font_Color_New) . LG_SEMIC . '<input class="color" readonly="readonly" type="text" id="Nouv_coul" name="Nouv_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
         $texte_im = $LG_Site_Param_PDF_Font_Color_Back;
-        echo '&nbsp;<img id="im_dernier_coul" src="' . $chemin_images_icones . $Icones['conversion'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="remet_code_coul(\'' . 'coul' . '\');"/>';
+        echo ' <img id="im_dernier_coul" src="' . $chemin_images_icones . $Icones['conversion'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="remet_code_coul(\'' . 'coul' . '\');"/>';
         echo '</td></tr>' . "\n";
     }
 
-    col_titre_tab($LG_Site_Param_Home_Image, $larg_titre);
+    echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_Home_Image) . ' </td>';
     echo '<td class="value">';
-    echo '<input type="file" name="nom_du_fichier" value="' . $Image_Index . '" size="50"/>&nbsp;';
+    echo '<input type="file" name="nom_du_fichier" value="' . $Image_Index . '" size="50"/> ';
     if ($Image_Index != '') {
         Aff_Img_Redim_Lien($chemin_images_util . $Image_Index, 100, 100);
         echo '<br />';
-        echo '<input type="radio" name="garder" value="G" checked="checked"/>' . my_html($LG_Site_Param_Image_With) . '&nbsp;';
-        echo '<input type="radio" name="garder" value="S"/>' . my_html($LG_Site_Param_Image_Without) . '&nbsp;';
+        echo '<input type="radio" name="garder" value="G" checked="checked"/>' . my_html($LG_Site_Param_Image_With) . ' ';
+        echo '<input type="radio" name="garder" value="S"/>' . my_html($LG_Site_Param_Image_Without) . ' ';
         echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> ' . my_html($LG_Site_Param_Image_No_Need);
     }
     echo '<input type="' . $hidden . '" name="ANom_Image" value="' . $Image_Index . '"/></td></tr>' . "\n";
 
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    echo '<tr><td colspan="2"> </td></tr>';
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
@@ -260,7 +256,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

@@ -97,19 +97,14 @@ if ($bt_OK) {
                 }
                 if ($nb_enr > 0) {
                     fclose($fp);
-                    echo '<br>' . my_html($LG_csv_available_in) . ' <a href="' . $nom_fic . '">' . $nom_fic . '</a> '
+                    echo '<br>' . $LG_csv_available_in . ' <a href="' . $nom_fic . '">' . $nom_fic . '</a> '
                         . LG_EXPORT_DEATH_GOTO1 . ' <a href=" ' . $url_matchid_link . '">' . $url_matchid_link . '</a> ' . LG_EXPORT_DEATH_GOTO2;
                 }
-            }
-            // On n'a pas pu écrire le fichier...
-            else {
+            } else { // On n'a pas pu écrire le fichier...
                 echo '<br>';
-                $Message = my_html(LG_EXPORT_DEATH_ERROR1 . ' ' . $nom_fic . ' ' . LG_EXPORT_DEATH_ERROR2);
-                Affiche_Stop($Message);
+                echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . LG_EXPORT_DEATH_ERROR1 . ' ' . my_html($nom_fic) . ' ' . LG_EXPORT_DEATH_ERROR2 . '<br>';
             }
-        }
-        // Sortie à lécran demandée
-        else {
+        } else { // Sortie à lécran demandée
 
             echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_EXPORT_DEATH_INTERNET . '<br><br>';
 
@@ -118,7 +113,7 @@ if ($bt_OK) {
                 echo $row[0] . ' '
                     . UnPrenom($row[1]) . ' '
                     . lib_sexe_born($row[5]) . ' ' . etend_date($row[2]) . ' ' . LG_AT . ' ' . $row[4];
-                echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[6] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+                echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[6] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 echo ' <a href="' . $root . '/recherche_matchid_unitaire.php'
                     . '?ref=' . $row[6] . '"'
                     . ' target="_blank">'
@@ -127,32 +122,27 @@ if ($bt_OK) {
             }
         }
     }
-
     Bouton_Retour($lib_Retour);
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';
 } else {
 
     echo '<form id="saisie" method="post">';
-    $larg_titre = '30';
     echo '<table width="70%" class="table_form">';
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    colonne_titre_tab(LG_EXPORT_DEATH_DEAD);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_EXPORT_DEATH_DEAD) . '</td><td class="value">';
     echo '<input type="checkbox" id="export_dead" name="export_dead" value="ID"/>';
     echo '</td></tr>';
-
-    colonne_titre_tab(LG_EXPORT_DEATH_MIN_YEAR);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_EXPORT_DEATH_MIN_YEAR) . '</td><td class="value">';
     echo '<input type="text" name="min_year" value="' . $death_def_min_year . '" size="4"/>';
     echo '</td></tr>';
-
-    colonne_titre_tab($LG_Ch_Output_Format);
+    echo '<tr><td class="label" width="30%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
     echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>';

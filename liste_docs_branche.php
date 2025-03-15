@@ -55,17 +55,12 @@ else {
         include(__DIR__ . '/assets/js/edition_geneamania.js');
         include(__DIR__ . '/assets/js/Liste_Pers.js');
 
-        echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
-
+        echo '<form id="saisie" method="post">' . "\n";
         echo '<input type="text" id="num_ref" name ="num_ref" value = "0" />';
-        echo '<input type="' . $hidden . '" id="page" value = "' . $_SERVER['SCRIPT_NAME'] . '" />';
-
-        $larg_titre = '30';
-        echo '<table width="80%" border="0" class="table_form">' . "\n";
-
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab(LG_DOC_BRANCH_ORIGINE);
+        echo '<input type="hidden" id="page" value = "' . $_SERVER['SCRIPT_NAME'] . '" />';
+        echo '<table width="80%" class="table_form">' . "\n";
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_DOC_BRANCH_ORIGINE) . '</td><td class="value">';
         $sql_noms = 'SELECT DISTINCT idNomFam, Nom FROM ' . nom_table('personnes') . ' WHERE Reference <> 0';
         if (!$est_privilegie) {
             $sql_noms .= " AND Diff_Internet = 'O'";
@@ -80,10 +75,9 @@ else {
         echo '</select>' . "\n";
         echo '<select name="personnes" id="personnes" onchange="updateLiensIcones(this.value)"></select>';
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_DOC_BRANCH_DOC_TYPE);
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_DOC_BRANCH_DOC_TYPE) . '</td><td class="value">';
         echo '<select name="type_doc" size="1">';
-        echo '<option>' . my_html(LG_DOC_BRANCH_SEL_TYPE) . '</option>' . "\n";
+        echo '<option>' . LG_DOC_BRANCH_SEL_TYPE . '</option>' . "\n";
         $sql = 'select distinct t.Id_Type_Document, Libelle_Type ' .
             'from ' . nom_table('documents') . ' d, ' . nom_table('types_doc') . ' t ' .
             'where d.Id_Type_Document = t.Id_Type_Document ' .
@@ -99,12 +93,9 @@ else {
         $res->closeCursor();
         echo "</select>\n";
         echo '</td>' . "\n";
-
         echo '</tr>';
-
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         bt_ok_an_sup($lib_Afficher, $lib_Annuler, '', '');
-
         echo '</table>';
         echo '</form>';
     }
@@ -134,10 +125,6 @@ else {
                 // 3..6
                 $min = $max + 1;
                 $max = $courant;
-                if ($debug) {
-                    aff_var('min');
-                    aff_var('max');
-                }
                 for ($nb = $min; $nb <= $max; $nb++) {
                     $x = Get_Parents($pers[$nb], $Num_Pere, $Num_Mere, $Rang);
                     ajoute($Num_Pere);
@@ -161,7 +148,7 @@ else {
             $crit_diff_pers = ' and p.Diff_Internet = "O"';
         }
         echo '<br />';
-        echo '<table border="0" width="100%" cellspacing="2"  align="center">' . "\n";
+        echo '<table width="100%" cellspacing="2"  align="center">' . "\n";
 
         $sql = 'select '
             . '  d.Id_Document, d.Titre, d.Nom_Fichier, d.Date_Creation, d.Date_Modification'
@@ -202,7 +189,7 @@ else {
         }
         // Fin de la ligne
         if ($num_image)
-            for ($nb = $num_image; $nb < $nb_img_ligne; $nb++) echo '<td>&nbsp;</td>';
+            for ($nb = $num_image; $nb < $nb_img_ligne; $nb++) echo '<td> </td>';
         echo '</tr>';
         echo '</table>' . "\n";
         Bouton_Retour($lib_Retour, '');
@@ -223,18 +210,6 @@ function ajoute($personne)
         $courant++;
     }
 }
-
-function aff_var($nom)
-{
-    global $$nom;
-    echo '$' . $nom . ' = ' . $$nom . '<br />';
-}
-
-function dd($date)
-{
-    return date("d/m/Y H:i:s", $date);
-}
-
 ?>
 </body>
 

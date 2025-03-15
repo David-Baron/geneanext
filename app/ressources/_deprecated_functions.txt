@@ -469,3 +469,80 @@ function kill_sess_bot()
 // }
 // return $linkid;
 // }
+
+// Entete de paragraphe
+function paragraphe($texte)
+{
+    global $def_enc;
+    echo '<br>' . "\n";
+    echo '<table width="100%" align="left" cellspacing="1" cellpadding="3">' . "\n";
+    echo '<tr class="rupt_table">';
+    echo '<td><b>' . my_html($texte) . '</b></td>';
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+    echo '<br><br>' . "\n";
+    return 0;
+}
+
+function Erreur_DeCujus()
+{
+    global $root;
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement">&nbsp;';
+    echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ;&nbsp;';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+    return 1;
+}
+
+function Affiche_Warning($Message)
+{
+    global $root;
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . $Message . '<br>';
+}
+
+function Affiche_Stop($Message)
+{
+    global $root;
+    echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . my_html($Message) . '<br>';
+}
+
+// Affiche un message d'erreur
+function aff_erreur($message)
+{
+    echo '<center><font color="red"><br><br><br><h2>' . my_html($message) . '</h2></font></center>';
+}
+
+// Affiche une entrée de sous-menu
+function sous_menu($url, $libelle, $niveau)
+{
+    global $LG_Menu_Title;
+    $sep = '^^^';
+    return '1' . $sep . $url . $sep . $LG_Menu_Title[$libelle] . $sep . $niveau . $sep;
+}
+
+function dd($date)
+{
+    return date("d/m/Y H:i:s", $date);
+}
+
+function aff_var($nom)
+{
+    global $$nom;
+    echo '$' . $nom . ' = ' . $$nom . '<br />';
+}
+
+// Colonne de titre dans un tableau
+function col_titre_tab($lib, $larg)
+{
+    echo '<tr><td class="label" width="' . $larg . '%"> ' . ucfirst($lib) . ' </td>';
+}
+
+function col_titre_tab_noClass($lib, $larg)
+{
+    echo '<tr><td width="' . $larg . '%">' . my_html($lib) . '</td>';
+}
+
+function colonne_titre_tab($lib)
+{
+    global $larg_titre;
+    echo col_titre_tab($lib, $larg_titre) . '<td class="value">';
+}

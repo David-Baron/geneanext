@@ -183,8 +183,9 @@ if (($_SESSION['estPrivilegie']) or ($EnrPers[8] == 'O')) {
         fwrite($fp, "0 TRLR$cr");
         fclose($fp);
         echo '<br />' . my_html(LG_GEDCOM_FILE) . ' <a href="' . $nom_fic_ged . '" target="_blank">' . $nom_fic_ged . '</a><br />' . "\n";
-    } else
-        aff_erreur(LG_GEDCOM_FILE_ERROR);
+    } else {
+        echo '<center><font color="red"><br><br><br><h2>' . LG_GEDCOM_FILE_ERROR . '</h2></font></center>';
+    }
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
@@ -193,7 +194,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

@@ -38,7 +38,7 @@ if (! $Type_Liste) {
 // La liste des personnes par catégorie n'est valable que pour le profil gestionnaire
 if (($Type_Liste == 'C') and (isset($_SESSION['estGestionnaire']))) {
     if (!$_SESSION['estGestionnaire']) {
-        aff_erreur($LG_function_noavailable_profile);
+        echo '<center><font color="red"><br><br><br><h2>' . $LG_function_noavailable_profile . '</h2></font></center>';
     }
 }
 
@@ -470,7 +470,7 @@ if (! $texte) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

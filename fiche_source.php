@@ -36,73 +36,59 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
+// source inconnue, retour...
+if (!$enreg_sel)
+    Retour_Ar();
 else {
-    // source inconnue, retour...
-    if (!$enreg_sel)
-        Retour_Ar();
-    else {
-        $Adresse_Web = $enreg_sel['Adresse_Web'];
-        $Fiabilite_Source = $enreg_sel['Fiabilite_Source'];
-        $compl = Ajoute_Page_Info(600, 150);
-        if ($est_contributeur) {
-            $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_source.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Source_Edit']) . '&nbsp;';
-        }
-
-        Insere_Haut($titre, $compl, 'Fiche_Source', $Ident);
-
-        // Type d'objet des sources
-        $Type_Ref = 'S';
-
-        $larg_titre = 25;
-        $fin_ligne = '</td></tr>' . "\n";
-        echo '<br />';
-        echo '<table width="70%" class="table_form" align="center">' . "\n";
-        echo colonne_titre_tab(LG_SRC_TITLE) . $enreg_sel['Titre'] . $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_AUTHOR) . $enreg_sel['Auteur'] . $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_CLASS) . $enreg_sel['Classement'] . $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_REPO) . '<a href="' . $root . '/fiche_depot.php?ident=' . $enreg_sel['Ident_Depot'] . '">' . $enreg_sel['Nom'] . '</a>' . $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_REFER) . $enreg_sel['Cote'] . $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_WEB);
-        if ($Adresse_Web != '') echo '<a href="' . $Adresse_Web . '">' . $Adresse_Web . '</a>';
-        echo $fin_ligne;
-        echo colonne_titre_tab(LG_SRC_TRUST);
-        switch ($Fiabilite_Source) {
-            case 'H':
-                echo LG_SRC_TRUST_H;
-                break;
-            case 'M':
-                echo LG_SRC_TRUST_M;
-                break;
-            case 'F':
-                echo LG_SRC_TRUST_L;
-                break;
-            default:
-                echo '?';
-        }
-        echo $fin_ligne;
-        echo '</table>';
-
-        //  ===== Affichage du commentaire
-        if (Rech_Commentaire($Ident, $Type_Ref)) {
-            if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
-                echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
-            }
-        }
-
-        // Formulaire pour le bouton retour
-        Bouton_Retour($lib_Retour, '?' . Query_Str());
-
-        echo '<table cellpadding="0" width="100%">';
-        echo '<tr>';
-        echo '<td align="right">';
-        echo $compl;
-        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
-        echo "</td>";
-        echo '</tr>';
-        echo '</table>';
+    $Adresse_Web = $enreg_sel['Adresse_Web'];
+    $Fiabilite_Source = $enreg_sel['Fiabilite_Source'];
+    $compl = Ajoute_Page_Info(600, 150);
+    if ($est_contributeur) {
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_source.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Source_Edit']) . '&nbsp;';
     }
-}
-?>
+
+    Insere_Haut($titre, $compl, 'Fiche_Source', $Ident);
+
+    echo '<br />';
+    echo '<table width="70%" class="table_form" align="center">' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_TITLE) . '</td><td class="value">' . $enreg_sel['Titre'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_AUTHOR) . '</td><td class="value">' . $enreg_sel['Auteur'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_CLASS) . '</td><td class="value">' . $enreg_sel['Classement'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REPO) . '</td><td class="value"><a href="' . $root . '/fiche_depot.php?ident=' . $enreg_sel['Ident_Depot'] . '">' . $enreg_sel['Nom'] . '</a></td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REFER) . '</td><td class="value">' . $enreg_sel['Cote'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_WEB) . '</td><td class="value">' . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_TRUST) . '</td><td class="value">';
+    switch ($Fiabilite_Source) {
+        case 'H':
+            echo LG_SRC_TRUST_H;
+            break;
+        case 'M':
+            echo LG_SRC_TRUST_M;
+            break;
+        case 'F':
+            echo LG_SRC_TRUST_L;
+            break;
+        default:
+            echo '?';
+    }
+    echo '</td></tr>';
+    echo '</table>';
+    if (Rech_Commentaire($Ident, 'S')) {
+        if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+            echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
+        }
+    }
+
+    Bouton_Retour($lib_Retour, '?' . Query_Str());
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+} ?>
 </body>
 
 </html>

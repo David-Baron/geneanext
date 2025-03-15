@@ -163,12 +163,12 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
 
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="motPasse" value=""/>' . "\n";
-    echo '<input type="' . $hidden . '" name="code_pers" value="' . $Code . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="controle" id="controle" value="-"/>' . "\n";
+    echo '<input type="hidden" name="motPasse" value=""/>' . "\n";
+    echo '<input type="hidden" name="code_pers" value="' . $Code . '"/>' . "\n";
+    echo '<input type="hidden" name="controle" id="controle" value="-"/>' . "\n";
     //	Message d'erreur
     if ($mesErreur != '') {
-        aff_erreur($mesErreur);
+        echo '<center><font color="red"><br><br><br><h2>' . my_html($mesErreur) . '</h2></font></center>';
     }
 
     if (!$Creation) {
@@ -192,26 +192,20 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
         $Adresse_Ut = '';
     }
 
-    $larg_titre = '30';
-
-    echo '<input type="' . $hidden . '" name="motPasse3" value=""/>' . "\n";
-
+    echo '<input type="hidden" name="motPasse3" value=""/>' . "\n";
     echo '<table width="80%" class="table_form">' . "\n";
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    colonne_titre_tab(LG_UTIL_NAME);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_NAME) . '</td><td class="value">';
     echo '<input class="oblig" type="text" name="nom" id="nom" value="' . $nom . '" size="40" maxlength="40"/>&nbsp;' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="' . $hidden . '" name="Anom" value="' . $nom . '"/>' . "\n";
+    echo '<input type="hidden" name="Anom" value="' . $nom . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    colonne_titre_tab(LG_UTIL_CODE);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_CODE) . '</td><td class="value">';
     echo '<input class="oblig" type="text" name="codeUtil" id="codeUtil" value="' . $codeUtil . '" size="35"/>' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="' . $hidden . '" name="AcodeUtil" value="' . $codeUtil . '"/>' . "\n";
+    echo '<input type="hidden" name="AcodeUtil" value="' . $codeUtil . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    colonne_titre_tab(LG_UTIL_PSW);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PSW) . '</td><td class="value">';
     echo '<input type="password" ';
     if ($Creation) echo ' class="oblig"';
     echo ' name="motPasse1" value="" size="35"/>' . "\n";
@@ -221,19 +215,17 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '&nbsp;<img src="' . $chemin_images_icones . $Icones['copier'] . '" alt = "' . LG_UTIL_PSW_COPY . '" title = "' . LG_UTIL_PSW_COPY
         . '" onclick="document.forms.saisie.motPasse1.value = document.forms.saisie.PasseGen.value;document.forms.saisie.motPasse2.value = document.forms.saisie.PasseGen.value;"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    colonne_titre_tab(LG_UTIL_PSW_CONFIRM);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PSW_CONFIRM) . '</td><td class="value">';
     echo '<input type="password" ';
     if ($Creation) echo ' class="oblig"';
     echo ' name="motPasse2" value="" size="35"/>' . "\n";
     if ($Creation) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
-
-    colonne_titre_tab(LG_UTIL_PROFILE);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PROFILE) . '</td><td class="value">';
     // Le niveau n'est pas modifiable pour le user de connexion
     if ((!$Creation) and ($Code == $_SESSION['idUtil'])) {
         echo libelleNiveau($niv);
-        echo '<input type="' . $hidden . '" name="niv" value="' . $niv . '"/>' . "\n";
+        echo '<input type="hidden" name="niv" value="' . $niv . '"/>' . "\n";
     } else {
         echo '<select name="niv">' . "\n";
         aff_option_niveau('I');
@@ -242,18 +234,17 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
         aff_option_niveau('G');
         echo '</select>' . "\n";
     }
-    echo '<input type="' . $hidden . '" name="Aniveau" value="' . $niv . '"/>' . "\n";
+    echo '<input type="hidden" name="Aniveau" value="' . $niv . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    colonne_titre_tab(LG_UTIL_EMAIL);
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_EMAIL) . '</td><td class="value">';
     echo '<input type="text" name="Adresse" value="' . $Adresse_Ut . '" size="80"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="AAdresse" value="' . $Adresse_Ut . '"/>' . "\n";
+    echo '<input type="hidden" name="AAdresse" value="' . $Adresse_Ut . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     // Possibilité d'envoyer un mail à la création de l'utilisateur
     if ((!$SiteGratuit) or ($Premium)) {
         if (($Creation) and ($Environnement == 'I')) {
-            colonne_titre_tab(LG_UTIL_SEND_MAIL);
+            echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_SEND_MAIL) . '</td><td class="value">';
             echo '<input type="checkbox" name="Envoi_Mail"/>' . "\n";
             echo '</td></tr>' . "\n";
         }
@@ -268,10 +259,10 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
         $lib_sup = $lib_Supprimer;
     }
 
-    echo '<input type="' . $hidden . '" name="cache" id="cache" value=""/>' . "\n";
-    echo '<input type="' . $hidden . '" name="ok" id="ok" value=""/>' . "\n";
-    echo '<input type="' . $hidden . '" name="annuler" id="annuler" value=""/>' . "\n";
-    echo '<input type="' . $hidden . '" name="supprimer" id="supprimer" value=""/>' . "\n";
+    echo '<input type="hidden" name="cache" id="cache" value=""/>' . "\n";
+    echo '<input type="hidden" name="ok" id="ok" value=""/>' . "\n";
+    echo '<input type="hidden" name="annuler" id="annuler" value=""/>' . "\n";
+    echo '<input type="hidden" name="supprimer" id="supprimer" value=""/>' . "\n";
 
     echo '<div id="boutons">' . "\n";
     echo '<br />';
@@ -306,12 +297,11 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';
-}
-?>
+} ?>
 </body>
 
 </html>

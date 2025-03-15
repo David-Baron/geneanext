@@ -28,10 +28,10 @@ function Lire_Nom_Prenoms_Unions($refUnion)
     $res->closeCursor();
     //
     if (!Get_Nom_Prenoms($RefPere, $NomPere, $PrenomsPere)) {
-        echo aff_erreur($LG_Link_Doc_Fa_Not_Found);
+        echo '<center><font color="red"><br><br><br><h2>' . $LG_Link_Doc_Fa_Not_Found . '</h2></font></center>';
     }
     if (!Get_Nom_Prenoms($RefMere, $NomMere, $PrenomsMere)) {
-        echo aff_erreur($LG_Link_Doc_Mo_Not_Found);
+        echo '<center><font color="red"><br><br><br><h2>' . $LG_Link_Doc_Mo_Not_Found . '</h2></font></center>';
     }
 }
 
@@ -148,7 +148,9 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         case 'P':
             if (Get_Nom_Prenoms($refObjet, $Nom, $Prenoms)) {
                 echo my_html($LG_Link_Doc_Rel_Pers) . LG_SEMIC . $Prenoms . '&nbsp;' . $Nom . "<br /><br />\n";
-            } else aff_erreur($LG_Link_Doc_Pers_Not_Found);
+            } else {
+                echo '<center><font color="red"><br><br><br><h2>' . $LG_Link_Doc_Pers_Not_Found . '</h2></font></center>';
+            }
             break;
         case 'U':
             $NomPere = '';
@@ -162,7 +164,9 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         case 'F':
             if (Get_Nom_Prenoms($refObjet, $Nom, $Prenoms)) {
                 echo my_html($LG_Link_Doc_Rel_Fil) . LG_SEMIC . $Prenoms . '&nbsp;' . $Nom . "<br /><br />\n";
-            } else aff_erreur($LG_Link_Doc_Pers_Not_Found);
+            } else {
+                echo '<center><font color="red"><br><br><br><h2>' . $LG_Link_Doc_Pers_Not_Found . '</h2></font></center>';
+            }
             break;
         case 'E':
             $libEvt = '';
@@ -243,7 +247,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

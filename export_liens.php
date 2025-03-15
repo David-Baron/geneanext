@@ -79,9 +79,8 @@ if ($nb_enr > 0) {
     }
     // On n'a pas pu lire le fichier...
     else {
-        echo '<br />';
-        $Message = my_html(LG_LINKS_EXTRACT_ERROR1 . ' ' . $nom_fic . ' ' . LG_LINKS_EXTRACT_ERROR2);
-        Affiche_Stop($Message);
+        echo '<br>';
+        echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . my_html(LG_LINKS_EXTRACT_ERROR1 . ' ' . $nom_fic . ' ' . LG_LINKS_EXTRACT_ERROR2) . '<br>';
     }
 }
 
@@ -90,7 +89,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

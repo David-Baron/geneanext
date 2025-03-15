@@ -89,7 +89,7 @@ else {
 
         // Message d'erreur si pas de droits d'accès
         if (!$est_privilegie and $enr_pers['Diff_Internet'] != 'O') {
-            echo aff_erreur($LG_Data_noavailable_profile) . '<br />' . '<a href="' . $root . '/">' . my_html($LG_back_to_home) . '</a><br />';
+            echo '<center><font color="red"><br><br><br><h2>' . $LG_Data_noavailable_profile . '</h2></font></center><br><a href="' . $root . '/">' . $LG_back_to_home . '</a><br>';
         } else {
             echo '<h3 align="center">' . $PrenomsP . ' ' . $NomP . '</h3>';
 
@@ -232,7 +232,7 @@ else {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

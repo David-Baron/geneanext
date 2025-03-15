@@ -322,7 +322,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     celBouton('ch', 30);
     celBouton('gn', 31);
     echo '</tr>';
-    col_titre_tab(LG_NAME_SAMPLE, $larg_titre);
+    echo '<tr><td class="label" width="20%">&nbsp;' . ucfirst(LG_NAME_SAMPLE) . '&nbsp;</td>';
     echo '<td colspan="10" align="center" class="value"><div id="aide"></div></td></tr>' . "\n";
     echo '<tr class="value"><td colspan="10" align="center">' . "\n";
     echo '<input type="button" name="proposer" value="' . my_html(LG_NAME_PRONUNCIATION_CALC) . '" onclick="javascript:calculer();"/>' . "\n";
@@ -383,7 +383,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

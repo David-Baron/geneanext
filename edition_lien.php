@@ -96,35 +96,31 @@ function Aff_Lien($enreg2)
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="800" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
-
     echo '<tr>' . "\n";
     echo '<td class="left">' . "\n";
     echo '<div class="tab-container" id="container1">' . "\n";
     // Onglets
     echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pane1\', this)" id="tab1">' . my_html(LG_DATA_TAB) . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pan_Fiche\', this)">' . my_html(LG_RECORD) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pane1\', this)" id="tab1">' . LG_DATA_TAB . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pan_Fiche\', this)">' . LG_RECORD . '</a></li>' . "\n";
     echo '</ul>' . "\n";
 
     echo '<div class="tab-panes">' . "\n";
-
     // Onglets données générales du lien
     echo '<div id="pane1">' . "\n";
     echo '<fieldset>';
-    echo '<legend>' . my_html(LG_DATA_TAB) . '</legend>';
+    echo '<legend>' . LG_DATA_TAB . '</legend>';
     echo '<table width="100%" border="0">' . "\n";
-    $larg = "30";
-
-    col_titre_tab_noClass(LG_LINK_TYPE, $larg);
-    echo '<td colspan="2"><input type="text" size="30" name="Type_Lien" class="oblig" value="' . $enreg2['type_lien'] . '"/>&nbsp;' . "\n";
+    echo '<tr><td width="30%">' . LG_LINK_TYPE . '</td>';
+    echo '<td colspan="2"><input type="text" size="30" name="Type_Lien" class="oblig" value="' . $enreg2['type_lien'] . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="' . $hidden . '" name="AType_Lien" value="' . $enreg2['type_lien'] . '"/>';
+    echo '<input type="hidden" name="AType_Lien" value="' . $enreg2['type_lien'] . '"/>';
 
     // Select avec les types existants
     $req = 'select distinct type_lien from ' . nom_table('liens');
     $result = lect_sql($req);
     if ($result->rowCount() > 0) {
-        echo '<br />' . my_html(LG_LINK_OR_EXISTING_TYPE) . LG_SEMIC;
+        echo '<br />' . LG_LINK_OR_EXISTING_TYPE . ' ';
         echo '<select name="types_existants" onchange="document.forms.saisie.Type_Lien.value = document.forms.saisie.types_existants.value">' . "\n";
         echo '<option value="-">' . my_html(LG_LINK_SELECT_TYPE) . '</option>' . "\n";
         while ($enrT = $result->fetch(PDO::FETCH_NUM)) {
@@ -133,52 +129,45 @@ function Aff_Lien($enreg2)
         echo '</select>' . "\n";
     }
     echo '</td></tr>' . "\n";
-
-    col_titre_tab_noClass(LG_LINK_DESCRIPTION, $larg);
-    $cnt = $enreg2['description'];
-    echo '<td colspan="2"><input type="text" size="80" name="Description" class="oblig" value="' . $cnt . '"/>&nbsp;' . "\n";
+    echo '<tr><td width="30%">' . LG_LINK_DESCRIPTION . '</td>';
+    echo '<td colspan="2"><input type="text" size="80" name="Description" class="oblig" value="' . $enreg2['description'] . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="' . $hidden . '" name="ADescription" value="' . $cnt . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ADescription" value="' . $enreg2['description'] . '"/></td>' . "\n";
     echo "</tr>\n";
-
-    col_titre_tab_noClass(LG_LINK_URL, $larg);
-    $cnt = $enreg2['URL'];
-    echo '<td colspan="2"><input type="text" size="80" name="URL" class="oblig" value="' . $cnt . '"/>&nbsp;' . "\n";
+    echo '<tr><td width="30%">' . LG_LINK_URL . '</td>';
+    echo '<td colspan="2"><input type="text" size="80" name="URL" class="oblig" value="' . $enreg2['URL'] . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="' . $hidden . '" name="AURL" value="' . $cnt . '"/></td>' . "\n";
+    echo '<input type="hidden" name="AURL" value="' . $enreg2['URL'] . '"/></td>' . "\n";
     echo "</tr>\n";
-
     echo '<tr><td valign="middle">Image</td>' . "\n";
-    $nom_img = $enreg2['image'];
     echo '<td valign="middle">';
     echo '<input type="file" name="nom_du_fichier"/><br />';
-    if ($nom_img != '') {
-        echo '<label for="image_oui">' . LG_LINK_KEEP_IMAGE . '</label>.' . LG_SEMIC . '<input type="checkbox" id="image_oui" name="image_oui"';
-        echo ' checked="checked"/>';
+    if ($enreg2['image'] != '') {
+        echo '<label for="image_oui">' . LG_LINK_KEEP_IMAGE . '</label>. <input type="checkbox" id="image_oui" name="image_oui"';
+        echo ' checked/>';
     } else {
-        echo '<input type="' . $hidden . '" name="image_oui">';
+        echo '<input type="hidden" name="image_oui">';
     }
     echo '</td>' . "\n";
     echo '<td align="center">';
-    if ($nom_img != '') {
-        $image = $chemin_images_util . $nom_img;
+    if ($enreg2['image'] != '') {
+        $image = $chemin_images_util . $enreg2['image'];
         Aff_Img_Redim_Lien($image, 100, 100);
-        echo '<br />(' . my_html(LG_LINK_NO_REFRESH) . ')&nbsp;';
-    } else echo '&nbsp;';
-    echo '<input type="' . $hidden . '" name="ANom" value="' . $nom_img . '"/></td>' . "\n";
+        echo '<br />(' . LG_LINK_NO_REFRESH . ') ';
+    }
+    echo '<input type="hidden" name="ANom" value="' . $enreg2['image'] . '"/></td>' . "\n";
     echo "</tr>\n";
 
     if ((!$SiteGratuit) or ($Premium)) {
-        col_titre_tab_noClass(LG_LINK_AVAIL_HOME, $larg);
-        $cont = $enreg2['Sur_Accueil'];
+        echo '<tr><td width="30%">' . LG_LINK_AVAIL_HOME . '</td>';
         echo '<td colspan="2">';
         echo '<input type="radio" id="Sur_Accueil_1" name="Sur_Accueil" value="1"';
-        if ($cont) echo ' checked="checked"';
+        if ($enreg2['Sur_Accueil']) echo ' checked';
         echo '/><label for="Sur_Accueil_1">' . $LG_Yes . '</label>';
         echo '<input type="radio" id="Sur_Accueil_0" name="Sur_Accueil" value="0"';
-        if (!$cont) echo ' checked="checked"';
+        if (!$enreg2['Sur_Accueil']) echo ' checked';
         echo '/><label for="Sur_Accueil_0">' . $LG_No . '</label>';
-        echo '<input type="' . $hidden . '" name="ASur_Accueil" value="' . $cont . '"/></td>' . "\n";
+        echo '<input type="hidden" name="ASur_Accueil" value="' . $enreg2['Sur_Accueil'] . '"/></td>' . "\n";
         echo "</tr>\n";
     }
 
@@ -194,14 +183,14 @@ function Aff_Lien($enreg2)
     $Existe_Commentaire = Rech_Commentaire($Ref, 'L');
     echo '<td>';
     echo '<textarea cols="50" rows="4" name="DiversL">' . $Commentaire . '</textarea>' . "\n";
-    echo '<input type="' . $hidden . '" name="ADiversL" value="' . my_html($Commentaire) . '"/>';
+    echo '<input type="hidden" name="ADiversL" value="' . my_html($Commentaire) . '"/>';
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
     echo '<td><label for="Diff_Internet_NoteL">' . LG_CH_COMMENT_VISIBILITY . '</label>'
-        . '&nbsp;<input type="checkbox" id="Diff_Internet_NoteL" name="Diff_Internet_NoteL" value="O"';
-    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
+        . ' <input type="checkbox" id="Diff_Internet_NoteL" name="Diff_Internet_NoteL" value="O"';
+    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
     echo "/>\n";
-    echo '<input type="' . $hidden . '" name="ADiff_Internet_NoteL" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
+    echo '<input type="hidden" name="ADiff_Internet_NoteL" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
     echo '</td></tr>' . "\n";
     echo '</table>' . "\n";
     echo '</fieldset>' . "\n";
@@ -215,15 +204,14 @@ function Aff_Lien($enreg2)
     echo '<legend>' . ucfirst(LG_LINK_VISIBILITY) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     echo '<tr>' . "\n";
-    $cont = $enreg2['Diff_Internet'];
     echo '<td colspan="2">';
     echo '<input type="radio" id="Diff_Internet_L_1" name="Diff_Internet_L" value="1"';
-    if ($cont) echo ' checked="checked"';
+    if ($enreg2['Diff_Internet']) echo ' checked';
     echo '/><label for="Diff_Internet_L_1">' . $LG_Yes . '</label>';
     echo '<input type="radio" id="Diff_Internet_L_0" name="Diff_Internet_L" value="0"';
-    if (!$cont) echo ' checked="checked"';
+    if (!$enreg2['Diff_Internet']) echo ' checked';
     echo '/><label for="Diff_Internet_L_0">' . $LG_No . '</label>';
-    echo '<input type="' . $hidden . '" name="ADiff_Internet_L" value="' . $cont . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ADiff_Internet_L" value="' . $enreg2['Diff_Internet'] . '"/></td>' . "\n";
     echo "</tr>\n";
     echo "</table>\n";
     echo '</fieldset>' . "\n";
@@ -266,12 +254,8 @@ if ($bt_OK) {
         $erreur = Controle_Charg_Image();
         // Erreur constatée sur le chargement
         if ($erreur != '') {
-            $image = $Icones['warning'];
-            echo '<img src="' . $chemin_images_icones . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"/>';
-            echo '&nbsp;Erreur : ' . $erreur . '<br />';
-        }
-        // Sinon on peut télécharger
-        else {
+            echo '<img src="' . $chemin_images_icones . $Icones['warning'] . '" alt="warning" title="warning"/> Erreur : ' . $erreur . '<br />';
+        } else { // Sinon on peut télécharger
             if (!ctrl_fichier_ko()) {
                 move_uploaded_file(
                     $_FILES['nom_du_fichier']['tmp_name'],
@@ -378,12 +362,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
     // Lien vers la fiche uniquement en modification
     if ($Ref != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . ' ';
 
     Insere_Haut($titre, $compl, 'Edition_Lien', $Ref);
 
     echo '<form id="saisie" method="post" enctype="multipart/form-data" onsubmit="return verification_form(this,\'Type_Lien,Description,URL\')" action="' . my_self() . '?Ref=' . $Ref . '">' . "\n";
-    echo '<input type="' . $hidden . '" name="Ref" value="' . $Ref . '"/>' . "\n";
+    echo '<input type="hidden" name="Ref" value="' . $Ref . '"/>' . "\n";
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     if ($Modif) {
@@ -422,7 +406,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

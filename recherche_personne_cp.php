@@ -351,7 +351,7 @@ if ($bt_OK) {
             if (($Sortie == 'e') and ((!$SiteGratuit) or ($Premium))) {
                 if ($NomP != '') {
                     echo '<a href="' . $adr_rech_gratuits . '?ok=ok&amp;NomP=' . str_replace('%', '*', $NomP) . '" target="_blank">'
-                        . my_html(LG_PERS_REQ_FIND_NAME) . '</a><br /><br />' . "\n";
+                        . LG_PERS_REQ_FIND_NAME . '</a><br /><br />' . "\n";
                 }
             }
             // Récup de la liste des champs
@@ -409,11 +409,11 @@ if ($bt_OK) {
             }
             if ($Sortie == 'c') {
                 fclose($fp);
-                echo '<br />' . my_html($LG_csv_available_in) . ' <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
+                echo '<br />' . $LG_csv_available_in . ' <a href="' . $nom_fic . '">' . $nom_fic . '</a><br />' . "\n";
             }
         } else {
-            echo '<br />' . my_html(LG_PERS_REQ) . ' ' . $req;
-            aff_erreur(LG_PERS_REQ_ERROR);
+            echo '<br />' . LG_PERS_REQ . ' ' . $req;
+            echo '<center><font color="red"><br><br><br><h2>' . LG_PERS_REQ_ERROR . '</h2></font></center>';
         }
     }
 
@@ -421,19 +421,19 @@ if ($bt_OK) {
         // Nouvelle recherche
         echo '<form id="nouvelle" method="post" action="' . my_self()    . '">' . "\n";
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-        echo '<input type="' . $hidden . '" name="reprise" value=""/>';
-        echo '<input type="' . $hidden . '" name="Sch_Type" value="' . $Sch_Type . '"/>';
-        echo '<input type="' . $hidden . '" name="NomP" value="' . $NomP . '"/>';
-        echo '<input type="' . $hidden . '" name="Son" value="' . $Son . '"/>';
-        echo '<input type="' . $hidden . '" name="Prenoms" value="' . $Prenoms . '"/>';
-        echo '<input type="' . $hidden . '" name="Sexe" value="' . $Sexe . '"/>';
-        echo '<input type="' . $hidden . '" name="Annee" value="' . $Annee . '"/>';
-        echo '<input type="' . $hidden . '" name="Tolerance" value="' . $Tolerance . '"/>';
-        echo '<input type="' . $hidden . '" name="TypeAnnee" value="' . $TypeAnnee . '"/>';
-        echo '<input type="' . $hidden . '" name="Ville_Naissance" value="' . $Ville_Naissance . '"/>';
-        echo '<input type="' . $hidden . '" name="Ville_Deces" value="' . $Ville_Deces . '"/>';
-        echo '<input type="' . $hidden . '" name="Tri" value="' . $Tri . '"/>';
-        echo '<input type="' . $hidden . '" name="New_Window" value="' . $New_Window . '"/>';
+        echo '<input type="hidden" name="reprise" value=""/>';
+        echo '<input type="hidden" name="Sch_Type" value="' . $Sch_Type . '"/>';
+        echo '<input type="hidden" name="NomP" value="' . $NomP . '"/>';
+        echo '<input type="hidden" name="Son" value="' . $Son . '"/>';
+        echo '<input type="hidden" name="Prenoms" value="' . $Prenoms . '"/>';
+        echo '<input type="hidden" name="Sexe" value="' . $Sexe . '"/>';
+        echo '<input type="hidden" name="Annee" value="' . $Annee . '"/>';
+        echo '<input type="hidden" name="Tolerance" value="' . $Tolerance . '"/>';
+        echo '<input type="hidden" name="TypeAnnee" value="' . $TypeAnnee . '"/>';
+        echo '<input type="hidden" name="Ville_Naissance" value="' . $Ville_Naissance . '"/>';
+        echo '<input type="hidden" name="Ville_Deces" value="' . $Ville_Deces . '"/>';
+        echo '<input type="hidden" name="Tri" value="' . $Tri . '"/>';
+        echo '<input type="hidden" name="New_Window" value="' . $New_Window . '"/>';
         echo '<br />';
         echo '<div class="buttons">';
         echo '<button type="submit" class="positive"><img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
@@ -449,111 +449,105 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An)) {
 
-    $larg_titre = '20';
-
     $sql = 'select Identifiant_zone, Nom_Ville from ' . $n_villes . ' order by Nom_Ville';
     $res = lect_sql($sql);
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+    echo '<form id="saisie" method="post">' . "\n";
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
     echo '<br />';
     echo '<table width="90%" class="table_form">' . "\n";
 
-    $checked = ' checked="checked"';
-
     // Conjoint ou parent ?
-    colonne_titre_tab(LG_PERS_SCH_TYPE);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_SCH_TYPE) . '</td><td class="value">';
     echo '<input type="radio" id = "Sch_Type_p" name="Sch_Type" value="p"';
     if ($reprise) {
-        if ($Sch_Type == 'p') echo $checked;
-    } else
-        echo $checked;
+        if ($Sch_Type == 'p') echo ' checked';
+    } else {
+        echo ' checked';
+    }
     echo '/><label for="Sch_Type_p">' . LG_PERS_SCH_TYPE_PARENT . '</label> ' . "\n";
     echo '<input type="radio" id = "Sch_Type_c" name="Sch_Type" value="c"';
     if ($reprise) {
-        if ($Sch_Type == 'c') echo $checked;
+        if ($Sch_Type == 'c') echo ' checked';
     }
     echo '/><label for="Sch_Type_c">' . LG_PERS_SCH_TYPE_PARTNER . '</label>';
     echo '</td></tr>' . "\n";
 
     // Nom et type d'orthographe / son
-    colonne_titre_tab($LG_Name);
+    echo '<tr><td class="label" width="20%">' . ucfirst($LG_Name) . '</td><td class="value">';
     echo '<input type="text" size="50" name="NomP"';
     if ($reprise) echo ' value="' . $NomP . '"';
     echo '/>';
     echo '<input type="radio" id="son_o" name="Son" value="o"';
     if ($reprise) {
-        if ($Son == 'o') echo $checked;
-    } else echo $checked;;
+        if ($Son == 'o') echo ' checked';
+    } else echo ' checked';
     echo '/><label for="son_o">' . LG_PERS_REQ_SPELL_EXACT . '</label> ';;
     echo '<input type="radio" id="son_p" name="Son" value="p"';
     if ($reprise) {
-        if ($Son == 'p') echo $checked;
+        if ($Son == 'p') echo ' checked';
     }
     echo '/><label for="son_p">' . LG_PERS_REQ_SOUND_EXACT . '</label> ';
     echo '<input type="radio" id="son_a" name="Son" value="a"';
     if ($reprise) {
-        if ($Son == 'a') echo $checked;
+        if ($Son == 'a') echo ' checked';
     }
     echo '/><label for="son_a">' . LG_PERS_REQ_SOUND_NEAR . '</label>';
     echo '</td></tr>' . "\n";
 
     // Prénoms
-    colonne_titre_tab(LG_PERS_FIRST_NAME);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_FIRST_NAME) . '</td><td class="value">';
     echo '<input type="text" size="50" name="Prenoms"';
     if ($reprise) echo ' value="' . $Prenoms . '"';
     echo '/></td></tr>' . "\n";
 
     // Sexe
-    colonne_titre_tab(LG_SEXE);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_SEXE) . '</td><td class="value">';
     echo '<input type="radio" id="Sexe_m" name="Sexe" value="m"';
     if ($reprise) {
-        if ($Sexe == 'm') echo $checked;
+        if ($Sexe == 'm') echo ' checked';
     } else
-        echo $checked;
+        echo ' checked';
     echo '/><label for="Sexe_m">' . LG_SEXE_MAN . '</label> ';
     echo '<input type="radio" id="Sexe_f" name="Sexe" value="f"';
     if ($reprise) {
-        if ($Sexe == 'f') echo $checked;
+        if ($Sexe == 'f') echo ' checked';
     }
     echo '/><label for="Sexe_f">' . LG_SEXE_WOMAN . '</label>';
     echo '</td></tr>' . "\n";
 
     // Année
-    colonne_titre_tab(LG_PERS_REQ_YEAR);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_YEAR) . '</td><td class="value">';
     echo '<input type="text" size="4" name="Annee"';
     if ($reprise) echo ' value="' . $Annee . '"';
     echo '/>' . "\n";
     echo '<input type="radio" id="TypeAnnee_n" name="TypeAnnee" value="n"';
     if ($reprise) {
-        if ($TypeAnnee == 'n') echo $checked;
+        if ($TypeAnnee == 'n') echo ' checked';
     } else echo ' checked="checked"';
     echo '/><label for="TypeAnnee_n">' . $LG_birth . '</label> ';
     echo '<input type="radio" id="TypeAnnee_d" name="TypeAnnee" value="d"';
     if ($reprise) {
-        if ($TypeAnnee == 'd') echo $checked;
+        if ($TypeAnnee == 'd') echo ' checked';
     }
     echo '/><label for="TypeAnnee_d">' . $LG_death . '</label> ';
-    $texte_image = LG_PERS_REQ_OFF_DOWN;
-    echo ' (+/- <img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
+    echo ' (+/- <img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . LG_PERS_REQ_OFF_DOWN . '" title="' . LG_PERS_REQ_OFF_DOWN . '" ';
     echo 'onclick="if (document.forms.saisie.Tolerance.value>0) {document.forms.saisie.Tolerance.value--;}"/>' . "\n";
     echo '<input type="text" size="2" name="Tolerance" value="';
     if ($reprise) echo $Tolerance;
     else echo '0';
     echo '" onchange="verification_num(this);"/>' . "\n";
-    $texte_image = LG_PERS_REQ_OFF_UP;
-    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
+    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . LG_PERS_REQ_OFF_UP . '" title="' . LG_PERS_REQ_OFF_UP . '" ';
     echo 'onclick="document.forms.saisie.Tolerance.value++;"/> ' . my_html(LG_PERS_REQ_OFF_YEARS) . ')  ' . "\n";
     echo '<input type="radio" id="TypeAnnee" name="TypeAnnee" value="v"';
     if ($reprise) {
-        if ($TypeAnnee == 'v') echo $checked;
+        if ($TypeAnnee == 'v') echo ' checked';
     }
     echo '/><label for="TypeAnnee">' . LG_PERS_REQ_ALIVE . "</label>\n";
     echo '</td></tr>' . "\n";
 
     // Lieu de naissance
-    colonne_titre_tab(LG_PERS_BORN_AT);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_BORN_AT) . '</td><td class="value">';
     echo '<select name="Ville_Naissance">' . "\n";
     echo '<option value="-1"/>';
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
@@ -570,10 +564,11 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td></tr>' . "\n";
 
     // Lieu de décès
-    colonne_titre_tab(LG_PERS_DEAD_AT);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_DEAD_AT) . '</td><td class="value">';
     echo '<select name="Ville_Deces">' . "\n";
     $res->closeCursor();
     $res = lect_sql($sql);
+
     echo '<option value="-1"/>';
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         echo '<option value="' . $row[0] . '"';
@@ -592,26 +587,26 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     // Tri du résultat
-    colonne_titre_tab(LG_PERS_REQ_SORT);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_SORT) . '</td><td class="value">';
     echo '<input type="radio" id="Tri_np" name="Tri" value="np"';
     if ($reprise) {
-        if ($Tri == 'np') echo $checked;
+        if ($Tri == 'np') echo ' checked';
     }
     echo '/><label for="Tri_np">' . LG_PERS_REQ_SORT_NS . '</label> ';
     echo '<input type="radio" id="Tri_dn" name="Tri" value="dn"';
     if ($reprise) {
-        if ($Tri == 'dn') echo $checked;
+        if ($Tri == 'dn') echo ' checked';
     }
     echo '/><label for="Tri_dn">' . LG_PERS_REQ_SORT_BORN . '</label> ';
     echo '<input type="radio" id="Tri_dd" name="Tri" value="dd"';
     if ($reprise) {
-        if ($Tri == 'dd') echo $checked;
+        if ($Tri == 'dd') echo ' checked';
     }
     echo '/><label for="Tri_dd">' . LG_PERS_REQ_SORT_DEATH . '</label>' . "\n";
     echo '</td></tr>' . "\n";
 
     // Sortie du résultat
-    colonne_titre_tab($LG_Ch_Output_Format);
+    echo '<tr><td class="label" width="20%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
     echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
     // L'export CSV n'est disponible qu'à partir du profil privilégié
@@ -619,20 +614,16 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td></tr>' . "\n";
 
     // Ouverture des fiches dans un nouvel onglet ?
-    colonne_titre_tab(LG_PERS_REQ_NEW_TAB);
+    echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_NEW_TAB) . '</td><td class="value">';
     echo '<input type="checkbox" name="New_Window"';
     if ($reprise) {
-        if ($New_Window == 'O') echo $checked;
+        if ($New_Window == 'O') echo ' checked';
     }
     echo ' value="O"/>';
     echo '</td></tr>' . "\n";
-
-    //ligne_vide_tab_form(1);
     bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-
     echo '</table>' . "\n";
-    echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> ' . my_html(LG_PERS_SCH_TIP);
-
+    echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> ' . LG_PERS_SCH_TIP;
     echo '</form>';
 }
 
@@ -641,7 +632,7 @@ if ($Sortie != 't') {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

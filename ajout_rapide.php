@@ -120,7 +120,7 @@ if ($bt_An) Retour_Ar();
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');
 
-$lg_date_a = '&nbsp;' . LG_AT . '&nbsp;';
+$lg_date_a = ' ' . LG_AT . ' ';
 
 // Pour éviter les nulls qui posent problème sur la fiche familiale
 function Rattrape_null($Contenu, $Nom_Rub)
@@ -153,10 +153,7 @@ function Aff_Pers($suffixe, $oblig)
             $accord = '(e)';
     }
 
-    echo '<table border="0" width="100%">';
-    col_titre_tab_noClass(LG_PERS_NAME, $largP);
-
-    // Pour les colattéraux, le nom de la personne est proposé sélectionné
+// Pour les colattéraux, le nom de la personne est proposé sélectionné
     $id_nom = 0;
     $laVal  = '';
     if ($suffixe == 'col') {
@@ -164,40 +161,39 @@ function Aff_Pers($suffixe, $oblig)
         $laVal  = $id_nom . '/' . $Nom;
     }
 
+    echo '<table width="100%">';
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_NAME . '</td>';
     echo '<td><input type="' . $hidden . '" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="' . $laVal . '" ' . $style_z_oblig . '/>';
     echo '<input type="' . $hidden . '" name="ANom' . $suffixe . '" id="ANom' . $suffixe . '" value="' . $laVal . '"/>';
     Select_Noms($id_nom, 'NomSel' . $suffixe, 'Nom' . $suffixe);
     if ($oblig) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
     // Possibilité d'ajouter un nom
-    $texte_im = 'Ajout d\'un nom';
-    echo '<img id="ajout_nom' . $suffixe . '" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" ' .
+    echo '<img id="ajout_nom' . $suffixe . '" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajout d\'un nom" title="Ajout d\'un nom" ' .
         'onclick="inverse_div(\'id_div_ajout_nom' . $suffixe . '\');document.getElementById(\'nouveau_nom' . $suffixe . '\').focus();"/>';
     if (isset($_SESSION['Nom_Saisi'])) {
         echo ' <img src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_PERS_COPY_NAME . '" title="' . LG_PERS_COPY_NAME . '" onclick="reprend_nom(\'' . $suffixe . '\');">';
     }
     echo '<div id="id_div_ajout_nom' . $suffixe . '">';
-    echo my_html(LG_ADD_NAME) . '&nbsp;<input type="text" size="50" name="nouveau_nom' . $suffixe . '" id="nouveau_nom' . $suffixe . '"/>';
-    $texte_im = my_html(LG_NAME_TO_UPCASE);
-    echo '&nbsp;<img id="majuscule' . $suffixe . '" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
+    echo LG_ADD_NAME . ' <input type="text" size="50" name="nouveau_nom' . $suffixe . '" id="nouveau_nom' . $suffixe . '"/>';
+    echo ' <img id="majuscule' . $suffixe . '" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
         // ' onclick="NomMaj(\''.$suffixe.'\');document.getElementById(\'NomP'.$suffixe.'\').focus();"/>'."\n";
         ' onclick="NomMaj(\'' . $suffixe . '\');"/>';
     echo '<input type="button" name="ferme_OK_nom' . $suffixe . '" value="OK" onclick="ajoute_nom(\'' . $suffixe . '\')"/>';
     echo '<input type="button" name="ferme_An_nom' . $suffixe . '" value="Annuler" onclick="inverse_div(\'id_div_ajout_nom' . $suffixe . '\')"/>';
     echo '</div>';
-    if (($suffixe == 'pere') or ($suffixe == 'mere'))
+    if (($suffixe == 'pere') || ($suffixe == 'mere'))
         echo '<input type="button" name="restr_nom' . $suffixe . '" value="' . $Nom . '" ' .
             'onclick="document.forms.saisie.NomSel' . $suffixe . '.value=\'' . $idNomPers . '/' . $Nom . '\';' .
             'document.forms.saisie.Nom' . $suffixe . '.value = document.forms.saisie.NomSel' . $suffixe . '.value;"/>';
     echo '</td>';
     echo '</tr>';
-
-    col_titre_tab_noClass(LG_PERS_FIRST_NAME, 25);
-    echo '     <td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig . '/>&nbsp;';
+    echo '<tr><td width="25%">' . LG_PERS_FIRST_NAME . '</td>';
+    echo '     <td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig . '/> ';
     if ($oblig) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>';
-    if (($suffixe != 'pere') and ($suffixe != 'mere')) {
-        col_titre_tab_noClass(LG_SEXE, $largP);
+    if (($suffixe != 'pere') && ($suffixe != 'mere')) {
+        echo '<tr><td width="' . $largP . '%">' . LG_SEXE . '</td>';
 
         // Pour le conjoint, le sexe opposé à celui de la personne est proposé
         $Sexe_Checked_m = '';
@@ -205,22 +201,23 @@ function Aff_Pers($suffixe, $oblig)
         if ($suffixe == 'conj') {
             switch ($Sexe) {
                 case 'm':
-                    $Sexe_Checked_f = 'checked="checked"';
+                    $Sexe_Checked_f = ' checked';
                     break;
                 case 'f':
-                    $Sexe_Checked_m = 'checked="checked"';
+                    $Sexe_Checked_m = ' checked';
                     break;
             }
         }
 
         $name = 'Sexe' . $suffixe;
         echo '<td><input type="radio" id="' . $name . '_m" name="' . $name . '" value="m" ' . $Sexe_Checked_m . '/>'
-            . '<label for="' . $name . '_m">' . LG_SEXE_MAN . '</label>&nbsp;';
+            . '<label for="' . $name . '_m">' . LG_SEXE_MAN . '</label> ';
         echo '<input type="radio" id="' . $name . '_f" name="' . $name . '" value="f" ' . $Sexe_Checked_f . '/>'
-            . '<label for="' . $name . '_f">' . LG_SEXE_WOMAN . '</label>&nbsp;';
+            . '<label for="' . $name . '_f">' . LG_SEXE_WOMAN . '</label> ';
         echo '</td></tr>';
     }
-    col_titre_tab_noClass(LG_PERS_BORN, $largP);
+
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_BORN . '</td>';
     echo '<td>';
     zone_date2('ANe_le' . $suffixe, 'Ne_le' . $suffixe, 'CNe_le' . $suffixe, '');
     echo $lg_date_a;
@@ -228,8 +225,7 @@ function Aff_Pers($suffixe, $oblig)
     echo $list_opt_villes;
     echo '</select>';
     echo '</td></tr><tr>';
-
-    col_titre_tab_noClass(LG_PERS_BAPM, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_BAPM . '</td>';
     echo '<td>';
     zone_date2('ABaptise_le' . $suffixe, 'Baptise_le' . $suffixe, 'CBaptise_le' . $suffixe, '');
     echo $lg_date_a;
@@ -237,8 +233,7 @@ function Aff_Pers($suffixe, $oblig)
     echo $list_opt_villes;
     echo '</select>';
     echo '</td></tr><tr>';
-
-    col_titre_tab_noClass(LG_PERS_DEAD, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_DEAD . '</td>';
     echo '<td>';
     zone_date2('ADecede_le' . $suffixe, 'Decede_le' . $suffixe, 'CDecede_le' . $suffixe, '');
     echo $lg_date_a;
@@ -301,7 +296,7 @@ function Aff_Donnees($Refer)
     echo '<br />';
 
     echo '<div id="content">';
-    echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >';
+    echo '<table id="cols"  cellpadding="0" cellspacing="0" >';
     echo '<tr>';
     echo '<td style="border-right:0px solid #9cb0bb">';
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="700" height="1" alt="clear"/>';
@@ -327,16 +322,15 @@ function Aff_Donnees($Refer)
 
     // Données du conjoint
     echo '<div id="pnlConjoint">';
-    $suffixe = 'conj';
-    $x = Aff_Pers($suffixe, 1);
+    Aff_Pers('conj', 1);
     echo '<br />';
-    echo '<table border="0" width="100%">';
+    echo '<table width="100%">';
     echo '<tr>';
-    col_titre_tab_noClass(LG_PERS_UNION, $largP);
+    echo '<tr><td width="' . $largP . '%">' . LG_PERS_UNION . '</td>';
     echo '<td>';
-    zone_date2('AUnis_le' . $suffixe, 'Unis_le' . $suffixe, 'CUnis_le' . $suffixe, '');
+    zone_date2('AUnis_leconj', 'Unis_leconj', 'CUnis_leconj', '');
     echo $lg_date_a;
-    echo '<select name="selUnis' . $suffixe . '">';
+    echo '<select name="selUnisconj">';
     echo $list_opt_villes;
     echo '</select>';
     echo '</td></tr>';
@@ -349,39 +343,38 @@ function Aff_Donnees($Refer)
     if (!$existe_filiation) {
         echo '<fieldset>';
         echo '<legend>' . LG_FATHER . '</legend>' . "\n";
-        $x = Aff_Pers('pere', 0);
+        Aff_Pers('pere', 0);
         echo '</fieldset>';
         echo '<fieldset>';
         echo '<legend>' . LG_MOTHER . '</legend>' . "\n";
-        $x = Aff_Pers('mere', 0);
-        $suffixe = 'parents';
+        Aff_Pers('mere', 0);
         echo '</fieldset>';
         echo '<br />';
-        echo '<table border="0"  width="100%">';
+        echo '<table  width="100%">';
         echo '<tr>';
-        col_titre_tab_noClass(LG_PERS_UNION, $largP);
+        echo '<tr><td width="' . $largP . '%">' . LG_PERS_UNION . '</td>';
         echo '<td>';
-        zone_date2('AUnis_le' . $suffixe, 'Unis_le' . $suffixe, 'CUnis_le' . $suffixe, '');
+        zone_date2('AUnis_leparents', 'Unis_leparents', 'CUnis_leparents', '');
         echo $lg_date_a;
-        // echo '<td><input type="text" readonly="readonly" size="25" name="Unis_le'.$suffixe.'" value=""/>';
-        // Affiche_Calendrier('imgCalendU','Calendrier_Union(\''.$suffixe.'\')');
-        // echo '<input type="'.$hidden.'" name="CUnis_le'.$suffixe.'" value=""/>'."\n";
-        // echo ' &nbsp;&agrave;&nbsp;&nbsp;';
-        echo '<select name="selUnis' . $suffixe . '">';
+        // echo '<td><input type="text" readonly="readonly" size="25" name="Unis_leparents" value=""/>';
+        // Affiche_Calendrier('imgCalendU','Calendrier_Union(\'parents\')');
+        // echo '<input type="'.$hidden.'" name="CUnis_leparents" value=""/>'."\n";
+        // echo '  &agrave;  ';
+        echo '<select name="selUnisparents">';
         echo $list_opt_villes;
         echo '</select>';
         echo '</td></tr>';
         echo '</table>';
-        if (($Numero != '') and (is_numeric($Numero))) {
-            echo '<table border="0"  width="100%">';
+        if (($Numero != '') && (is_numeric($Numero))) {
+            echo '<table  width="100%">';
             echo '<tr>';
-            col_titre_tab_noClass(LG_PERS_AUTO_CALC_SOSA, $largP);
+            echo '<tr><td width="' . $largP . '%">' . LG_PERS_AUTO_CALC_SOSA . '</td>';
             echo '<td><input type="checkbox" name="Auto_Sosa" checked="checked"/></td></tr>';
             echo '</table>';
-            echo '<input type="' . $hidden . '" name="NSosa" value="' . $Numero . '"/>';
+            echo '<input type="hidden" name="NSosa" value="' . $Numero . '"/>';
         } else {
-            echo '<input type="' . $hidden . '" name="NSosa" value=""/>';
-            echo '<input type="' . $hidden . '" name="Auto_Sosa" value="n"/>';
+            echo '<input type="hidden" name="NSosa" value=""/>';
+            echo '<input type="hidden" name="Auto_Sosa" value="n"/>';
         }
     } else {
         $x = Aff_Pers('col', 1);
@@ -543,14 +536,14 @@ if ($bt_OK) {
         // Création de la mère et du baptême associé
         if (($Nommere != '') and ($Prenomsmere != '')) {
             $sosa = '';
-            if (($Auto_Sosa == 'on') and ($NSosa != '')) {
+            if (($Auto_Sosa == 'on') && ($NSosa != '')) {
                 $sosa = (intval($NSosa) * 2) + 1;
             }
             creation_personne($Nommere, $Prenomsmere, $Sexemere, $CNe_lemere, $CDecede_lemere, $selNemere, $selDecedemere, $CBaptise_lemere, $selBaptisemere, $sosa);
             $num_mere = $nouv_ident;
         }
         // Création de l'union des parents si les 2 parents sont renseignés (ont été créés)
-        if ($num_pere and $num_mere) {
+        if ($num_pere && $num_mere) {
             $rubs = '';
             $cont = '';
             Ins_Zone_Req_Rub($num_pere, 'N', 'Conjoint_1');
@@ -602,7 +595,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     if (($Nom != '') or ($Prenoms != '')) {
         $compl = Ajoute_Page_Info(600, 200);
-        Insere_Haut(LG_PERS_QUICK_ADD . '&nbsp;' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Rapide', $Refer);
+        Insere_Haut(LG_PERS_QUICK_ADD . ' ' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Rapide', $Refer);
         echo '<form id="saisie" method="post" action="' . $root . '/ajout_rapide.php?Refer=' . $Refer . '">';
         echo '<input type="' . $hidden . '" name="Refer" value="' . $Refer . '"/>';
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
@@ -634,7 +627,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($compl != '') {
         echo $compl;
     }
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

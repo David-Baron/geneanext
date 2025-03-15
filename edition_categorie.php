@@ -60,7 +60,7 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 150) .
-        Affiche_Icone_Lien('href="' . $root . '/fiche_categorie.php?categ=' . $Categ . '"', 'page', 'Fiche lien') . '&nbsp;';
+        Affiche_Icone_Lien('href="' . $root . '/fiche_categorie.php?categ=' . $Categ . '"', 'page', 'Fiche lien') . '';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Categorie', $Categ);
 
@@ -76,31 +76,28 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $larg_titre = 25;
     echo '<table width="70%" class="table_form">' . "\n";
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    col_titre_tab($LG_Ch_Categ_Title, $larg_titre);
+    echo '<tr><td colspan="2"></td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Categ_Title) . '</td>';
     echo '<td class="value">';
     echo '<input type="text" name="Titre" value="' . $TitreF . '" size="80"/>' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ATitre" value="' . $TitreF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    col_titre_tab($LG_Ch_Categ_Order, $larg_titre);
+    echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Categ_Order) . '</td>';
     echo '<td class="value">';
     echo '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $LG_Ch_Categ_Dec_Order . '" title="' . $LG_Ch_Categ_Dec_Order . '" border="0" ';
     echo 'onclick="if (document.forms.saisie.Ordre.value>1) {document.forms.saisie.Ordre.value--;}"/>' . "\n";
     echo '<input type="text" class="oblig" name="Ordre" id="Ordre" value="' . $OrdreF . '" size="3" onchange="verification_num(this);"/>' . "\n";
     echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $LG_Ch_Categ_Inc_Order . '" title="' . $LG_Ch_Categ_Inc_Order . '" border="0" ';
-    echo 'onclick="document.forms.saisie.Ordre.value++;"/>&nbsp;' . "\n";
+    echo 'onclick="document.forms.saisie.Ordre.value++;"/>' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
-
-    col_titre_tab($LG_Ch_Categ_Image, $larg_titre);
+    echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Categ_Image) . '</td>';
     echo '<td class="value">';
     echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
     echo '</td></tr>' . "\n";
 
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    echo '<tr><td colspan="2"></td></tr>';
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
@@ -111,7 +108,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

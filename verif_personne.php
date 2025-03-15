@@ -112,11 +112,11 @@ function ctrl_date($LaDate, $mes)
 //  Parametres : les deux dates a comparer , le texte du message d'erreur et deux indices pour indiquer le nom des rubriques (voir $tabRubriques)
 function ctrlDates($date1, $date2, $mes, $lib1, $lib2)
 {
-    global $nbErreurs, $tabRubriques, $erreur;
+    global $root, $nbErreurs, $tabRubriques, $erreur;
     if ($date1 && $date2) {
         if ($date1 < $date2) {
             $nbErreurs += 1;
-            Affiche_Warning($mes);
+            echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . $mes . '<br>';
             echo '(' . $tabRubriques[$lib1] . ' = ' . Etend_date($date1) . ' / ';
             echo $tabRubriques[$lib2] . ' = ' . Etend_date($date2) . ")<br /><br />\n";
             $erreur = true;
@@ -369,7 +369,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

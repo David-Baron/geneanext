@@ -101,7 +101,7 @@ if ($ok == 'OK') {
         set_time_limit($lim_temps);
     }
 
-    echo '<br />' . my_html($LG_Requested_File) . ' : ' . $_FILES['nom_du_fichier']['name'] . '<br />';
+    echo '<br />' . $LG_Requested_File . ' : ' . $_FILES['nom_du_fichier']['name'] . '<br />';
 
     $status = '';
     switch ($val_statut) {
@@ -115,13 +115,13 @@ if ($ok == 'OK') {
             $status = LG_FROM_INTERNET;
             break;
     }
-    echo my_html($LG_Default_Status . ' : ' . $status) . '<br />';
+    echo $LG_Default_Status . ' : ' . my_html($status) . '<br />';
 
     //Restitution du département
     $requete  = 'select Nom_Depart_Min from ' . $n_departements . " where Identifiant_zone = '" . $departement . "' limit 1";
     $result = lect_sql($requete);
     $enreg = $result->fetch(PDO::FETCH_NUM);
-    echo my_html(LG_COUNTY . ' : ' . $enreg[0]) . '<br />';
+    echo LG_COUNTY . ' : ' . my_html($enreg[0]) . '<br />';
 
     $erreur = false;
 
@@ -136,7 +136,7 @@ if ($ok == 'OK') {
         if (!$erreur) {
             // Seuls sont autorisés les fichiers csv
             if (Extension_Fic($nom_du_fichier) != 'csv') {
-                aff_erreur(LG_IMP_CSV_ERR_TYPE);
+                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_CSV_ERR_TYPE . '</h2></font></center>';
                 $erreur = true;
             }
         }
@@ -167,16 +167,15 @@ if ($ok == 'OK') {
                     $departement .            // Zone_Mere
                     ')';
                 insert_champs();
-
                 fclose($fp);
 
                 if ($modif) {
                     maj_date_site(true);
                     // $plu = pluriel($nb_enr_crees);
-                    echo $nb_enr_crees . ' ' . my_html(LG_IMP_CSV_TOWNS_CREATED) . '<br />';
+                    echo $nb_enr_crees . ' ' . LG_IMP_CSV_TOWNS_CREATED . '<br />';
                 }
             } else {
-                echo my_html(LG_IMP_CSV_ERR_OPEN_FILE) . '<br />';
+                echo LG_IMP_CSV_ERR_OPEN_FILE . '<br />';
             }
         }
     }
@@ -187,25 +186,20 @@ if ($est_gestionnaire) {
     if (($ok == '') && ($annuler == '')) {
 
         echo '<br />';
-
-        $larg_titre = '35';
-        echo '<form id="saisie" method="post" enctype="multipart/form-data" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post" enctype="multipart/form-data">' . "\n";
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
         echo '<table width="90%" class="table_form">' . "\n";
-        colonne_titre_tab($LG_csv_file_upload);
-
+        echo '<tr><td class="label" width="35%">' . ucfirst($LG_csv_file_upload) . '</td><td class="value">';
         echo '<input type="file" name="nom_du_fichier" size="80"/></td>';
         echo '</tr>' . "\n";
-
         echo '<tr><td class="label" width="35%">' . $LG_Default_Status . '</td><td class="value">';
         bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
         bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
         bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
         echo '</td></tr>';
 
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-        colonne_titre_tab(LG_COUNTY);
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_COUNTY) . '</td><td class="value">';
         // Département de la ville
         $req = 'select Identifiant_zone, Nom_Depart_Min from ' . $n_departements . ' order by Nom_Depart_Min';
         $result = lect_sql($req);
@@ -218,19 +212,17 @@ if ($est_gestionnaire) {
             echo '</select>' . "\n";
         }
         echo '</td></tr>' . "\n";
-
         echo '<tr><td class="label" width="35%">' . $LG_csv_header . '</td><td class="value">';
-        echo '<input type="radio" name="entete" id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label>&nbsp;';
-        echo '<input type="radio" name="entete" id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label>&nbsp;';
+        echo '<input type="radio" name="entete" id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label> ';
+        echo '<input type="radio" name="entete" id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label> ';
         echo '<input type="radio" name="entete" id="entete_P" value="P" onclick="cache_div(\'corresp\');"/><label for="entete_P">' . LG_IMP_CSV_HEADER_YES_CONSIDER . '</label>';
         echo '</td></tr>';
-
-        colonne_titre_tab(LG_ICSV_TOWN_COL_MATCHING);
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_ICSV_TOWN_COL_MATCHING) . '</td><td class="value">';
         echo '<div id="corresp">';
         echo '<table>';
         echo '<tr align="center">';
-        echo '<td>' . my_html(LG_ICSV_TOWN_COL_CALC) . '</td>';
-        echo '<td>' . my_html(LG_ICSV_TOWN_COL_GEN_FIElD) . '</td></tr>';
+        echo '<td>' . LG_ICSV_TOWN_COL_CALC . '</td>';
+        echo '<td>' . LG_ICSV_TOWN_COL_GEN_FIElD . '</td></tr>';
         echo '<tr>';
         aff_corr_csv(0);
         echo '<td><input type="text" name="' . $radical_variable_champ . '0" id="' . $radical_variable_champ . '0" readonly="readonly" value="' . $champ_lib[0] . '"/></td>';
@@ -240,7 +232,7 @@ if ($est_gestionnaire) {
             echo '<tr>';
             aff_corr_csv($nb);
             echo '<td><select name="' . $radical_variable_champ . $nb . '" id="' . $radical_variable_champ . $nb . '">' . "\n";
-            echo '<option value="-1">' . my_html(LG_ICSV_TOWN_COL_SEL_FIELD) . '</option>' . "\n";
+            echo '<option value="-1">' . LG_ICSV_TOWN_COL_SEL_FIELD . '</option>' . "\n";
             for ($nb2 = 1; $nb2 < $c_zbase; $nb2++) echo '<option value="' . $champ_lib[$nb2] . '">' . $champ_lib[$nb2] . '</option>';
             echo '</select></td>' . "\n";
             echo '</tr>';
@@ -248,21 +240,21 @@ if ($est_gestionnaire) {
         echo '</table>';
         echo '</div>';
         echo '</td></tr>' . "\n";
-
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
+        echo '<tr><td colspan="2"> </td></tr>';
         echo '</table>';
         echo '</form>';
     }
-} else echo my_html($LG_function_noavailable_profile);
+} else {
+    echo $LG_function_noavailable_profile;
+}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

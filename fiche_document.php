@@ -34,92 +34,76 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-else {
+// 2 solutions en cas d'absence :
+// - l'utilisateur a saisi un code absent dans l'URL ; le code ne doit pas être saisi dans l'URL, donc tant pis pour lui...
+// - on revient de la mpage de modification et on a demandé la suppression ; donc on renvoye sur la page précédente, à priori la liste
+if ((!$enreg_sel) or ($Reference == 0)) Retour_Ar();
 
-    // 2 solutions en cas d'absence :
-    // - l'utilisateur a saisi un code absent dans l'URL ; le code ne doit pas être saisi dans l'URL, donc tant pis pour lui...
-    // - on revient de la mpage de modification et on a demandé la suppression ; donc on renvoye sur la page précédente, à priori la liste
-    if ((!$enreg_sel) or ($Reference == 0)) Retour_Ar();
+$enreg = $enreg_sel;
 
-    $enreg = $enreg_sel;
-    $enreg2 = $enreg;
-
-    $compl = Ajoute_Page_Info(600, 150);
-    if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
-    }
-
-    //
-    //  ========== Programme principal ==========
-    //
-    if ($enreg_sel) {
-        $nomFic = $enreg['Nom_Fichier'];
-
-        Insere_Haut(my_html($titre), $compl, 'Fiche_Document', '');
-
-        if (($enreg['Diff_Internet'] == 'O') or ($est_gestionnaire)) {
-
-            echo '<br />';
-            $larg_titre = 25;
-            echo '<table width="70%" class="table_form">' . "\n";
-
-            colonne_titre_tab($LG_Docs_Title);
-            echo my_html($enreg['Titre']) . '</td></tr>' . "\n";
-
-            colonne_titre_tab($LG_Docs_Nature);
-            $natureDoc  = $enreg['Nature_Document'];
-            echo $Natures_Docs[$natureDoc] . '</td></tr>' . "\n";
-
-            colonne_titre_tab($LG_Docs_File);
-            echo $nomFic . '</td></tr>' . "\n";
-
-            colonne_titre_tab($LG_Docs_Doc_Type);
-            echo '<a href="' . $root . '/fiche_type_document.php?code=' . $enreg['Id_Type_Document'] . '">'
-                . my_html($enreg['Libelle_Type'])
-                . '</a></td></tr>' . "\n";
-
-            colonne_titre_tab($LG_show_on_internet);
-            $diff = $enreg['Diff_Internet'];
-            if ($diff == 'O') echo my_html($LG_Yes);
-            else              echo my_html($LG_No);
-            echo '</td></tr>' . "\n";
-
-            echo '</table>';
-
-            $le_type = Get_Type_Mime($natureDoc);
-            $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
-
-            if ($natureDoc == 'IMG') {
-                echo '<br />';
-                Aff_Img_Redim_Lien($chemin_docu . $nomFic, 150, 150);
-            } else
-                echo '<br />' . my_html($LG_Docs_Doc_Show) . ' :&nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $enreg['Nom_Fichier'] . '" type="' . $le_type . '"', 'oeil', $LG_Docs_Doc_Show, 'n');
-
-            // Lien vers les utilisations du document s'il en existe
-            if ($est_gestionnaire) {
-                $req = 'SELECT 1 FROM ' . nom_table('concerne_doc') . ' WHERE id_document = ' . $Reference . ' limit 1';
-                $result = lect_sql($req);
-                if ($result->rowCount() > 0) {
-                    echo '<br /><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a>';
-                }
-            }
-        } else aff_erreur($LG_Data_noavailable_profile);
-
-        echo '<br />' . "\n";
-
-        // Formulaire pour le bouton retour
-        Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-        echo '<table cellpadding="0" width="100%">';
-        echo '<tr>';
-        echo '<td align="right">';
-        echo $compl;
-        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
-        echo "</td>";
-        echo '</tr>';
-        echo '</table>';
-    }
+$compl = Ajoute_Page_Info(600, 150);
+if ($est_gestionnaire) {
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
 }
-?>
+
+if ($enreg_sel) {
+    $nomFic = $enreg['Nom_Fichier'];
+
+    Insere_Haut(my_html($titre), $compl, 'Fiche_Document', '');
+
+    if (($enreg['Diff_Internet'] == 'O') or ($est_gestionnaire)) {
+
+        echo '<br />';
+        echo '<table width="70%" class="table_form">' . "\n";
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Docs_Title) . '</td><td class="value">';
+        echo my_html($enreg['Titre']) . '</td></tr>' . "\n";
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Docs_Nature) . '</td><td class="value">';
+        echo $Natures_Docs[$enreg['Nature_Document']] . '</td></tr>' . "\n";
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Docs_File) . '</td><td class="value">';
+        echo $nomFic . '</td></tr>' . "\n";
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Docs_Doc_Type) . '</td><td class="value">';
+        echo '<a href="' . $root . '/fiche_type_document.php?code=' . $enreg['Id_Type_Document'] . '">'
+            . my_html($enreg['Libelle_Type'])
+            . '</a></td></tr>' . "\n";
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_show_on_internet) . '</td><td class="value">';
+        $diff = $enreg['Diff_Internet'];
+        if ($diff == 'O') echo $LG_Yes;
+        else              echo $LG_No;
+        echo '</td></tr>' . "\n";
+        echo '</table>';
+
+        $le_type = Get_Type_Mime($enreg['Nature_Document']);
+        $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
+
+        if ($enreg['Nature_Document'] == 'IMG') {
+            echo '<br />';
+            Aff_Img_Redim_Lien($chemin_docu . $nomFic, 150, 150);
+        } else
+            echo '<br />' . my_html($LG_Docs_Doc_Show) . ' :&nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $enreg['Nom_Fichier'] . '" type="' . $le_type . '"', 'oeil', $LG_Docs_Doc_Show, 'n');
+
+        // Lien vers les utilisations du document s'il en existe
+        if ($est_gestionnaire) {
+            $req = 'SELECT 1 FROM ' . nom_table('concerne_doc') . ' WHERE id_document = ' . $Reference . ' limit 1';
+            $result = lect_sql($req);
+            if ($result->rowCount() > 0) {
+                echo '<br /><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . $LG_Menu_Title['Document_Utils'] . '</a>';
+            }
+        }
+    } else {
+        echo '<center><font color="red"><br><br><br><h2>' . $LG_Data_noavailable_profile . '</h2></font></center>';
+    }
+
+    echo '<br />' . "\n";
+    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+} ?>
 </body>
 
 </html>

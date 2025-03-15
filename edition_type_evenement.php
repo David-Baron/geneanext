@@ -129,7 +129,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     Insere_Haut(my_html($titre), $compl, 'Edition_Type_Evenement', $Code);
 
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'CodeF\')" action="' . my_self() . '?code=' . $Code . '">' . "\n";
-    echo '<input type="' . $hidden . '" name="Horigine" value="' . $Horigine . '"/>' . "\n";
+    echo '<input type="hidden" name="Horigine" value="' . $Horigine . '"/>' . "\n";
 
     if (!$Creation) {
         $sql = 'select * from ' . $n_types_evenement . ' where Code_Type = \'' . $Code . '\' limit 1';
@@ -161,22 +161,17 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     // Type d'évènement inconnu, supprimé entre temps, retour...
     if ((!$Creation) and (!$enreg)) {
-        aff_erreur(LG_EVENT_TYPE_DELETED);
+        echo '<center><font color="red"><br><br><br><h2>' . LG_EVENT_TYPE_DELETED . '</h2></font></center>';
         echo '<a href="' . $root . '/liste_referentiel.php?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
     } else {
 
         // Zone technique de la table non modifiable et non affichée
         $ACode_ModifiableF = $Code_ModifiableF;
-        echo '<input type="' . $hidden . '" name="Code_ModifiableF" value="' . $Code_ModifiableF . '"/>' . "\n";
-        echo '<input type="' . $hidden . '" name="ACode_ModifiableF" value="' . $Code_ModifiableF . '"/>' . "\n";
-
-        $checked = ' checked="checked"';
-        $larg_titre = '25';
-
+        echo '<input type="hidden" name="Code_ModifiableF" value="' . $Code_ModifiableF . '"/>' . "\n";
+        echo '<input type="hidden" name="ACode_ModifiableF" value="' . $Code_ModifiableF . '"/>' . "\n";
         echo '<table width="80%" class="table_form">' . "\n";
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab(LG_EVENT_TYPE_CODE);
+        echo '<tr><td class="label" width="25%">' . ucfirst(LG_EVENT_TYPE_CODE) . '</td><td class="value">';
         // On ne peut modifier le code qu'en création ou s'il n'est pas utilisé
         if (($Creation) or (! $utilise)) {
             echo '<input class="oblig" type="text" name="CodeF" id="CodeF" value="' . $CodeF . '" size="4" maxlength="4" onchange="verification_code(this);"/>' . "\n";
@@ -190,31 +185,27 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             while ($row = $res->fetch(PDO::FETCH_NUM)) {
                 $codes .= $row[0] . ' ';
             }
-            echo '<input type="' . $hidden . '" name="codes" value="' . $codes . '"/>' . "\n";
+            echo '<input type="hidden" name="codes" value="' . $codes . '"/>' . "\n";
         } else
             echo $CodeF . "\n";
-        echo '<input type="' . $hidden . '" name="ACodeF" value="' . $CodeF . '"/>' . "\n";
+        echo '<input type="hidden" name="ACodeF" value="' . $CodeF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_EVENT_TYPE_LABEL);
+        echo '<tr><td class="label" width="25%">' . ucfirst(LG_EVENT_TYPE_LABEL) . '</td><td class="value">';
         echo '<input type="text" name="LibelleF" value="' . $LibelleF . '" size="50"/>' . "\n";
-        echo '<input type="' . $hidden . '" name="ALibelleF" value="' . $LibelleF . '"/>' . "\n";
+        echo '<input type="hidden" name="ALibelleF" value="' . $LibelleF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_TARGET_OBJECT);
+        echo '<tr><td class="label" width="25%">' . ucfirst(LG_TARGET_OBJECT) . '</td><td class="value">';
         bouton_radio('Objet_CibleF', 'P', LG_TARGET_OBJECT_PERS, ($Objet_CibleF == 'P'));
         bouton_radio('Objet_CibleF', 'U', LG_TARGET_OBJECT_UNION, ($Objet_CibleF == 'U'));
         bouton_radio('Objet_CibleF', 'F', LG_TARGET_OBJECT_FILIATION, ($Objet_CibleF == 'F'));
         bouton_radio('Objet_CibleF', '', LG_TARGET_OBJECT_OTHER, (($Objet_CibleF != 'U') && ($Objet_CibleF != 'F') && ($Objet_CibleF != 'P')));
-        echo '<input type="' . $hidden . '" name="AObjet_CibleF" value="' . $Objet_CibleF . '"/>' . "\n";
+        echo '<input type="hidden" name="AObjet_CibleF" value="' . $Objet_CibleF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_EVENT_TYPE_UNIQ);
+        echo '<tr><td class="label" width="25%">' . ucfirst(LG_EVENT_TYPE_UNIQ) . '</td><td class="value">';
         bouton_radio('UniciteF', 'U', $LG_Yes, ($UniciteF == 'U'));
         bouton_radio('UniciteF', 'M', $LG_No, ($UniciteF == 'M'));
-        echo '<input type="' . $hidden . '" name="AUniciteF" value="' . $UniciteF . '"/>' . "\n";
+        echo '<input type="hidden" name="AUniciteF" value="' . $UniciteF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
-
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
         // Bouton Supprimer en modification si pas d'utilisation du rôle
         $lib_sup = '';
@@ -222,7 +213,6 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, LG_EVENT_TYPE_THIS);
 
         echo '</table>' . "\n";
-
         echo "</form>";
     }
 
@@ -230,7 +220,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

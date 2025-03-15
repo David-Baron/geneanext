@@ -51,10 +51,9 @@ if ($Ident == -1) $Creation = true;
 else $Creation = false;
 
 // Titre pour META
+$titre = $LG_Menu_Title['Source_Add'];
 if (!$Creation)
     $titre = $LG_Menu_Title['Source_Edit'];
-else
-    $titre = $LG_Menu_Title['Source_Add'];
 
 $x = Lit_Env();
 require(__DIR__ . '/app/ressources/gestion_pages.php');
@@ -62,20 +61,15 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-// Type d'objet des sources
-$Type_Ref = 'S';
-
-$n_sources = nom_table('sources');
-
 // Suppression demandée
 if ($bt_Sup) {
     // Suppression des commentaires
     if ($Divers != '') {
-        $req = req_sup_commentaire($Ident, $Type_Ref);
+        $req = req_sup_commentaire($Ident, 'S');
         $res = maj_sql($req);
     }
     // Suppression de la source
-    $req = 'delete from ' . $n_sources . ' where Ident = ' . $Ident . ' limit 1';
+    $req = 'delete from ' . nom_table('sources') . ' where Ident = ' . $Ident . ' limit 1';
     $res = maj_sql($req);
     maj_date_site();
     Retour_Ar();
@@ -83,22 +77,22 @@ if ($bt_Sup) {
 
 if ($bt_OK) {
 
-    $Titre                = Secur_Variable_Post($Titre, 100, 'S');
-    $ATitre                = Secur_Variable_Post($ATitre, 100, 'S');
-    $Auteur                = Secur_Variable_Post($Auteur, 100, 'S');
-    $AAuteur            = Secur_Variable_Post($AAuteur, 100, 'S');
-    $Classement            = Secur_Variable_Post($Classement, 100, 'S');
-    $AClassement        = Secur_Variable_Post($AClassement, 100, 'S');
-    $Depot                = Secur_Variable_Post($Depot, 1, 'N');
-    $ADepot                = Secur_Variable_Post($ADepot, 1, 'N');
-    $Cote                = Secur_Variable_Post($Cote, 100, 'S');
-    $ACote                = Secur_Variable_Post($ACote, 100, 'S');
-    $Adresse_Web        = Secur_Variable_Post($Adresse_Web, 100, 'S');
-    $AAdresse_Web        = Secur_Variable_Post($AAdresse_Web, 100, 'S');
-    $Divers                = Secur_Variable_Post($Divers, 65535, 'S');
-    $ADivers            = Secur_Variable_Post($ADivers, 65535, 'S');
-    $Fiabilite_Source    = Secur_Variable_Post($Fiabilite_Source, 1, 'S');
-    $AFiabilite_Source    = Secur_Variable_Post($AFiabilite_Source, 1, 'S');
+    $Titre = Secur_Variable_Post($Titre, 100, 'S');
+    $ATitre = Secur_Variable_Post($ATitre, 100, 'S');
+    $Auteur = Secur_Variable_Post($Auteur, 100, 'S');
+    $AAuteur = Secur_Variable_Post($AAuteur, 100, 'S');
+    $Classement = Secur_Variable_Post($Classement, 100, 'S');
+    $AClassement = Secur_Variable_Post($AClassement, 100, 'S');
+    $Depot = Secur_Variable_Post($Depot, 1, 'N');
+    $ADepot = Secur_Variable_Post($ADepot, 1, 'N');
+    $Cote = Secur_Variable_Post($Cote, 100, 'S');
+    $ACote = Secur_Variable_Post($ACote, 100, 'S');
+    $Adresse_Web = Secur_Variable_Post($Adresse_Web, 100, 'S');
+    $AAdresse_Web = Secur_Variable_Post($AAdresse_Web, 100, 'S');
+    $Divers = Secur_Variable_Post($Divers, 65535, 'S');
+    $ADivers = Secur_Variable_Post($ADivers, 65535, 'S');
+    $Fiabilite_Source = Secur_Variable_Post($Fiabilite_Source, 1, 'S');
+    $AFiabilite_Source = Secur_Variable_Post($AFiabilite_Source, 1, 'S');
 
     $req_comment = '';
     $maj_site = false;
@@ -114,13 +108,13 @@ if ($bt_OK) {
         Ins_Zone_Req($Adresse_Web, 'A', $req);
         Ins_Zone_Req($Fiabilite_Source, 'A', $req);
         if ($req != '') {
-            $req = 'insert into ' . $n_sources . ' values(null,' . $req . ",null)";
+            $req = 'insert into ' . nom_table('sources') . ' values(null,' . $req . ",null)";
             $result = maj_sql($req);
             if ($result) $maj_site = true;
         }
         // Création d'un enregistrement dans la table commentaires
         if ($Divers != '') {
-            insere_commentaire($connexion->lastInsertId(), $Type_Ref, $Divers, 'N');
+            insere_commentaire($connexion->lastInsertId(), 'S', $Divers, 'N');
         }
     } else {
         // Modification
@@ -132,12 +126,12 @@ if ($bt_OK) {
         Aj_Zone_Req('Adresse_Web', $Adresse_Web, $AAdresse_Web, 'A', $req);
         Aj_Zone_Req('Fiabilite_Source', $Fiabilite_Source, $AFiabilite_Source, 'A', $req);
         if ($req != '') {
-            $req = 'update ' . $n_sources . ' set ' . $req . ' where Ident = ' . $Ident;
+            $req = 'update ' . nom_table('sources') . ' set ' . $req . ' where Ident = ' . $Ident;
             $result = maj_sql($req);
             if ($result) $maj_site = true;
         }
         // Traitement des commentaires
-        maj_commentaire($Ident, $Type_Ref, $Divers, $ADivers, 'N', 'N');
+        maj_commentaire($Ident, 'S', $Divers, $ADivers, 'N', 'N');
     }
 
     // Exécution de la requête sur les commentaires
@@ -164,8 +158,16 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     Insere_Haut($titre, $compl, 'Edition_Source', $Ident);
 
+    $Titre = '';
+    $Auteur = '';
+    $Classement = '';
+    $Depot = '';
+    $Cote = '';
+    $Adresse_Web = '';
+    $Fiabilite_Source = '';
+
     if (!$Creation) {
-        $sql = 'select * from ' . $n_sources . ' where Ident = ' . $Ident . ' limit 1';
+        $sql = 'select * from ' . nom_table('sources') . ' where Ident = ' . $Ident . ' limit 1';
         $res    = lect_sql($sql);
         $enreg  = $res->fetch(PDO::FETCH_ASSOC);
         $Titre = $enreg['Titre'];
@@ -175,39 +177,22 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         $Depot = $enreg['Ident_Depot'];
         $Adresse_Web = $enreg['Adresse_Web'];
         $Fiabilite_Source = $enreg['Fiabilite_Source'];
-    } else {
-        $Titre = '';
-        $Auteur = '';
-        $Classement = '';
-        $Depot = '';
-        $Cote = '';
-        $Adresse_Web = '';
-        $Fiabilite_Source = '';
     }
 
-    $larg_titre = 25;
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Titre\')" action="' . my_self() . '?ident=' . $Ident . '">' . "\n";
     echo '<table width="80%" class="table_form">' . "\n";
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    // Titre
-    colonne_titre_tab(LG_SRC_TITLE);
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_TITLE) . '</td><td class="value">';
     echo '<input type="text" class="oblig" size="100" name="Titre" value="' . $Titre . '"/>&nbsp;' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="' . $hidden . '" name="ATitre" value="' . $Titre . '"/></td></tr>' . "\n";
-
-    // Auteur
-    colonne_titre_tab(LG_SRC_AUTHOR);
+    echo '<input type="hidden" name="ATitre" value="' . $Titre . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_AUTHOR) . '</td><td class="value">';
     echo '<input type="text" size="100" name="Auteur" value="' . $Auteur . '"/>&nbsp;' . "\n";
-    echo '<input type="' . $hidden . '" name="AAuteur" value="' . $Auteur . '"/></td></tr>' . "\n";
-
-    // Classement
-    colonne_titre_tab(LG_SRC_CLASS);
+    echo '<input type="hidden" name="AAuteur" value="' . $Auteur . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_CLASS) . '</td><td class="value">';
     echo '<input type="text" size="100" name="Classement" value="' . $Classement . '"/>&nbsp;' . "\n";
-    echo '<input type="' . $hidden . '" name="AClassement" value="' . $Classement . '"/></td></tr>' . "\n";
-
-    // Dépôt
-    colonne_titre_tab(LG_SRC_REPO);
+    echo '<input type="hidden" name="AClassement" value="' . $Classement . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REPO) . '</td><td class="value">';
 
     $sql = 'select Ident, Nom from ' . nom_table('depots') . ' order by Nom';
     echo '<select name="Depot">' . "\n";
@@ -215,49 +200,30 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         while ($row = $res->fetch(PDO::FETCH_NUM)) {
             echo '<option value="' . $row[0] . '"';
             if ($Depot == $row[0]) {
-                echo ' selected="selected"';
+                echo ' selected';
             }
             echo '>' . my_html($row[1]) . '</option>' . "\n";
         }
     }
     $res->closeCursor();
     echo '</select>' . "\n";
-    echo '<input type="' . $hidden . '" name="ADepot" value="' . $Depot . '"/></td></tr>' . "\n";
-
-    // Cote
-    colonne_titre_tab(LG_SRC_REFER);
+    echo '<input type="hidden" name="ADepot" value="' . $Depot . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REFER) . '</td><td class="value">';
     echo '<input type="text" size="100" name="Cote" value="' . $Cote . '"/>&nbsp;' . "\n";
-    echo '<input type="' . $hidden . '" name="ACote" value="' . $Cote . '"/></td></tr>' . "\n";
-
-    // Adresse_Web
-    colonne_titre_tab(LG_SRC_WEB);
+    echo '<input type="hidden" name="ACote" value="' . $Cote . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_WEB) . '</td><td class="value">';
     echo '<input type="text" size="100" name="Adresse_Web" value="' . $Adresse_Web . '"/>&nbsp;' . "\n";
-    echo '<input type="' . $hidden . '" name="AAdresse_Web" value="' . $Cote . '"/></td></tr>' . "\n";
-
-    // Fiabilité de la source
-    colonne_titre_tab(LG_SRC_TRUST);
+    echo '<input type="hidden" name="AAdresse_Web" value="' . $Cote . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_TRUST) . '</td><td class="value">';
     rb_fiab("H", LG_SRC_TRUST_H);
     rb_fiab("M", LG_SRC_TRUST_M);
     rb_fiab("F", LG_SRC_TRUST_L);
-    echo '<input type="' . $hidden . '" name="AFiabilite_Source" value="' . $Fiabilite_Source . '"/></td></tr>' . "\n";
-
-    // === Commentaire
-    colonne_titre_tab(LG_CH_COMMENT);
+    echo '<input type="hidden" name="AFiabilite_Source" value="' . $Fiabilite_Source . '"/></td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_CH_COMMENT) . '</td><td class="value">';
     // Accès au commentaire
-    $Existe_Commentaire = Rech_Commentaire($Ident, $Type_Ref);
+    $Existe_Commentaire = Rech_Commentaire($Ident, 'S');
     echo '<textarea cols="80" rows="4" name="Divers">' . $Commentaire . '</textarea>' . "\n";
-    echo '<input type="' . $hidden . '" name="ADivers" value="' . htmlentities($Commentaire, ENT_QUOTES, $def_enc) . '"/></td></tr>' . "\n";
-
-    // Inutile vu que la fiche est réservée ; de plus les sources ne seront jamais affichées par les invités
-    // Diffusion Internet commentaire
-    /*
-	colonne_titre_tab('Visibilité Internet du commentaire');
-	echo '<td class="value">&nbsp;<input type="checkbox" name="Diff_Note" value="O"';
-	if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
-	echo "/>\n";
-  	echo '<input type="'.$hidden.'" name="ADiff_Note" value="'.$Diffusion_Commentaire_Internet.'"/></td></tr>'."\n";
-	*/
-
+    echo '<input type="hidden" name="ADivers" value="' . htmlentities($Commentaire, ENT_QUOTES, $def_enc) . '"/></td></tr>' . "\n";
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     // Bouton Supprimer en modification si pas d'utilisation du dépôt
@@ -273,15 +239,13 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, LG_SRC_THIS);
 
     echo '</table>' . "\n";
-
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
     echo '</form>';
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';
@@ -291,7 +255,7 @@ function rb_fiab($niv, $lib)
 {
     global $Fiabilite_Source;
     echo '<input type="radio" name="Fiabilite_Source" id="Fiabilite_Source_' . $niv . '" value="' . $niv . '"';
-    if ($niv == $Fiabilite_Source) echo ' checked="checked"';
+    if ($niv == $Fiabilite_Source) echo ' checked';
     echo '/><label for="Fiabilite_Source_' . $niv . '">' . $lib . "</label>&nbsp;\n";
 }
 

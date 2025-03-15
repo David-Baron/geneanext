@@ -161,13 +161,8 @@ if ($bt_OK) {
     $Initialisation = ($type_export == 'Initialisation') ? true : false;
     $expSiteGratuit = ($type_export == 'SiteGratuit') ? true : false;
     $SQLite         = ($type_export == 'SQLite') ? true : false;
-
-    $h_structure_ok = my_html(LG_EXPORT_STRUCTURE_OK);
-    $h_data_ok = my_html(LG_EXPORT_DATA_OK);
-    $h_raws = my_html(LG_EXPORT_RAWS);
-
+    $comment = '#';
     if ($SQLite) $comment = '--';
-    else $comment = '#';
 
     // Version de l'initialisation
     $nouv_vers = $Version;
@@ -188,10 +183,9 @@ if ($bt_OK) {
     // Création et ouverture du fichier
     // Pour les sites gratuits sur le net, l'extension doit être txt ==> protection de l'intégrité de la base
     // Pour les autres types d'export, on sort en sql direct
-    if ($expSiteGratuit)
-        $ext = 'txt';
-    else
-        $ext = 'sql';
+    $ext = 'sql';
+    if ($expSiteGratuit) $ext = 'txt';
+
     // L'utilisateur a-t-il demandé à utiliser un suffixe ?
     if ($ut_suf != 'O') $suffixe = '';
     // Constitution du nom du fichier
@@ -203,7 +197,7 @@ if ($bt_OK) {
     // Tentative de création du fichier
     // $fp = fopen($nom_fic_svg, 'wb');
     $fp = ouvre_fic($nom_fic_svg, 'wb');
-    if (! $fp) die("impossible de cr&eacute;er $nom_fic_svg.");
+    if (! $fp) die("impossible de créer $nom_fic_svg.");
     // $_fputs = ($gz) ? @gzputs : @fputs;
 
     // Ecriture entête du fichier
@@ -220,7 +214,7 @@ if ($bt_OK) {
         $nom_fic_vers = 'version.txt';
         // Tentative de création du fichier
         $fps = fopen($nom_fic_vers, 'wb');
-        if (! $fps) die("Impossible de cr&eacute;er $nom_fic_vers.");
+        if (! $fps) die("Impossible de créer $nom_fic_vers.");
         fwrite($fps, $Version);
         fclose($fps);
     }
@@ -244,7 +238,7 @@ if ($bt_OK) {
 
             // Ecriture de la structure de la table, sauf pour les extractions à destination des sites gratuits
             if (!$expSiteGratuit) {
-                echo "<br />$tablename : <font color='blue'> $h_structure_ok, </font>";
+                echo '<br>' . $tablename . ' : <font color="blue">' . LG_EXPORT_STRUCTURE_OK . ', </font>';
                 // On drop toutes les tables sur l'export Internet sauf la table compteur
                 if ((($Internet) and (!est_table('compteurs', $tablename))) or (!$Internet))
                     fputs($fp, "DROP TABLE IF EXISTS `$tablename`;");
@@ -253,7 +247,7 @@ if ($bt_OK) {
                 $resCreate = lect_sql($query);
                 $row = $resCreate->fetch(PDO::FETCH_NUM);
                 $schema = $row[1] . ";";
-                if ($debug) echo 'Sch&eacute;ma : ' . $schema . '<br />';
+                if ($debug) echo 'Schéma : ' . $schema . '<br />';
                 // On ne conserve pas les valeurs d'auto-increment
                 $ch_auto = ' AUTO_INCREMENT=';
                 $p1 = strpos($schema, $ch_auto);
@@ -446,27 +440,27 @@ if ($bt_OK) {
 
                 // Conditions particulières d'extraction
                 // Lien vers Généamania en standard
-                if (est_table('liens', $tablename)) $Cond = ' where Ref_lien = 0';
+                if (est_table('liens', $tablename)) $Cond = ' WHERE Ref_lien=0';
                 // On n'extrait que la personne de référence 0
-                if (est_table('personnes', $tablename)) $Cond = ' where Reference = 0';
+                if (est_table('personnes', $tablename)) $Cond = ' WHERE Reference=0';
                 // On n'extrait que la ville d'identifiant 0
-                if (est_table('villes', $tablename)) $Cond = ' where Identifiant_zone = 0';
+                if (est_table('villes', $tablename)) $Cond = ' WHERE Identifiant_zone=0';
                 // On n'extrait que le rôle vide
-                if (est_table('roles', $tablename)) $Cond = ' where Code_Role = \'\'';
+                if (est_table('roles', $tablename)) $Cond = ' WHERE Code_Role=\'\'';
                 // On n'extrait que les évènements non modifiables
-                if (est_table('types_evenement', $tablename)) $Cond = ' where Code_Modifiable = \'N\'';
+                if (est_table('types_evenement', $tablename)) $Cond = ' WHERE Code_Modifiable=\'N\'';
                 // On n'extrait que le dépôt d'identifiant 0
-                if (est_table('depots', $tablename)) $Cond = ' where Ident = 0';
+                if (est_table('depots', $tablename)) $Cond = ' WHERE Ident=0';
             }
 
             if (!$Donnees_Oui) {
-                echo "<font color='red'>" . my_html(LG_EXPORT_RES_NO_EXTRACT) . "</font>";
+                echo "<font color='red'>" . LG_EXPORT_RES_NO_EXTRACT . "</font>";
             } else {
                 // ecrire le contenu de la table
                 $query = "SELECT * FROM $tablename" . $Cond;
                 $resData = lect_sql($query);
                 $nb_lig = $resData->rowCount();
-                echo '<font color="green"> ' . $h_data_ok . ', ' . $nb_lig . ' ' . $h_raws . ' </font>' . "\n";
+                echo '<font color="green"> ' . LG_EXPORT_DATA_OK . ', ' . $nb_lig . ' ' . LG_EXPORT_RAWS . ' </font>' . "\n";
                 if ($nb_lig > 0) {
                     $sInsert = 'INSERT INTO ' . $tablename . ' values ';
                     while ($rowdata = $resData->fetch(PDO::FETCH_NUM)) {
@@ -540,16 +534,14 @@ if ($bt_OK) {
     if ($gz) gzclose($fp);
     else fclose($fp);
 
-    echo '<br /><br />' . my_html(LG_EXPORT_FILE) . ' <a href="' . $nom_fic_svg . '" target="_blank">' . $nom_fic_svg . '</a><br />' . "\n";
+    echo '<br /><br />' . LG_EXPORT_FILE . ' <a href="' . $nom_fic_svg . '" target="_blank">' . $nom_fic_svg . '</a><br />' . "\n";
     Bouton_Retour($lib_Retour);
 } else {
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
-    $larg_titre = "25";
+    echo '<form id="saisie" method="post">' . "\n";
     echo '<table width="70%" class="table_form">' . "\n";
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    colonne_titre_tab(LG_EXPORT_TYPE);
+    echo '<tr><td colspan="2"> </td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_EXPORT_TYPE) . '</td><td class="value">';
     if (! $SiteGratuit) {
         echo '<input type="radio" id="type_export_I" name="type_export" value="Internet" checked="checked"/>'
             . '<label for="type_export_I">' . LG_EXPORT_TARGET_INTERNET . '</label>';
@@ -575,7 +567,7 @@ if ($bt_OK) {
         $annee = date('Y', $temps); //format numerique : 4 chiffres
         $mois = date('m', $temps);
         $suffixe = '_' . $annee . $mois . $jour;
-        colonne_titre_tab(LG_EXPORT_FILE_SUFFIXE);
+        echo '<tr><td class="label" width="25%">' . ucfirst(LG_EXPORT_FILE_SUFFIXE) . '</td><td class="value">';
         echo '<input type="text" size="20" name="suffixe" value="' . $suffixe . '"/>' . "\n";
         echo '<input type="radio" id="ut_suf_O" name="ut_suf" value="O" checked="checked"/>'
             . '<label for="ut_suf_O">' . LG_EXPORT_FILE_SUFFIXE_WITH . '</label>' . "\n";
@@ -583,30 +575,30 @@ if ($bt_OK) {
             . '<label for="ut_suf_N">' . LG_EXPORT_FILE_SUFFIXE_WITHOUT . '</label>' . "\n";
         echo '</td>';
         echo '</tr>' . "\n";
-    } else echo '<tr><td><input type="hidden" name="suffixe" value="">&nbsp;</td></tr>' . "\n";
+    } else {
+        echo '<tr><td><input type="hidden" name="suffixe" value=""> </td></tr>' . "\n";
+    }
 
-    colonne_titre_tab(LG_EXPORT_OMIT_RECENT);
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_EXPORT_OMIT_RECENT) . '</td><td class="value">';
     echo '<input type="checkbox" id="s_dates_recentes" name="s_dates_recentes"/>';
-    echo '&nbsp;<label for="s_dates_recentes">' . LG_EXPORT_DATE_THRES . '</label>&nbsp;:&nbsp;<input type="text" size="3" maxlength="3" name="pivot" value="' . $Lim_Diffu . '"/>&nbsp;' . my_html(LG_EXPORT_YEARS) . "\n";
+    echo ' <label for="s_dates_recentes">' . LG_EXPORT_DATE_THRES . '</label> : <input type="text" size="3" maxlength="3" name="pivot" value="' . $Lim_Diffu . '"/> ' . LG_EXPORT_YEARS . "\n";
     echo '</td>';
     echo '</tr>' . "\n";
-
-    colonne_titre_tab('Tables');
+    echo '<tr><td class="label" width="25%">Tables</td><td class="value">';
     $sql = 'show tables from `' . $db . '` like \'' . $pref_tables . '%\'';
     $result = lect_sql($sql);
     if (!$result) {
-        aff_erreur(LG_EXPORT_LIST_ERROR);
+        echo '<center><font color="red"><br><br><br><h2>' . LG_EXPORT_LIST_ERROR . '</h2></font></center>';
         exit;
     }
 
     $l_action = LG_EXPORT_HOVER;
     if ($Comportement == 'C') $l_action = LG_EXPORT_CLICK;
-    echo my_html(LG_EXPORT_TIP1 . $l_action . LG_EXPORT_TIP2) . "\n";
-
+    echo LG_EXPORT_TIP1 . $l_action . LG_EXPORT_TIP2;
     echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . LG_EXPORT_SHOW . '" ' . Survole_Clic_Div('lediv') . '/>';
     echo '<div id="lediv">';
 
-    echo '<input type="checkbox" name="selTous" value="on" onclick="checkUncheckAll(this);" checked="checked"/>&nbsp;' . my_html(LG_EXPORT_ALL_NONE) . '<br /><hr/>';
+    echo '<input type="checkbox" name="selTous" value="on" onclick="checkUncheckAll(this);" checked="checked"/> ' . LG_EXPORT_ALL_NONE . '<br /><hr/>';
 
     while ($row = $result->fetch(PDO::FETCH_NUM)) {
         $tablename = $row[0];
@@ -637,23 +629,19 @@ if ($bt_OK) {
 
     echo '</div>' . "\n";
     echo '<script type="text/javascript">' . "\n";
-    echo '<!--' . "\n";
     echo 'cache_div(\'lediv\');' . "\n";
-    echo '//-->' . "\n";
     echo '</script>' . "\n";
     echo '</td></tr>' . "\n";
-
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
+    echo '<tr><td colspan="2"> </td></tr>';
     bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');
-
     echo '</table></form>';
 }
+
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

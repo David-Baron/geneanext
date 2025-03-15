@@ -212,32 +212,24 @@ if ($bt_OK) {
 // Première entrée : affichage pour saisie
 if ((!$bt_OK) && (!$bt_An)) {
 
-    echo '<br>';
-
-    $larg_titre = '20';
-    $checked = ' checked="checked"';
-
     $sql = 'select Identifiant_zone, Nom_Depart_Min from ' . nom_table('departements') . ' order by Nom_Depart_Min';
     $res = lect_sql($sql);
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+    echo '<br>';
+    echo '<form id="saisie" method="post">' . "\n";
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
     echo '<table width="90%" class="table_form">' . "\n";
-
-    col_titre_tab(LG_TOWN_SCH_NAME, $larg_titre);
+    echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_SCH_NAME) . ' </td>';
     echo '<td class="value"><input type="text" size="80" name="NomV"';
     if ($reprise) echo ' value="' . $NomV . '"';
     echo '/>';
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_TOWN_SCH_ZIP, $larg_titre);
+    echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_SCH_ZIP) . ' </td>';
     echo '<td class="value"><input type="text" name="Code_Postal"';
     if ($reprise) echo ' value="' . $Code_Postal . '"';
     echo '/>';
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_COUNTY, $larg_titre);
+    echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_COUNTY) . ' </td>';
     echo '<td class="value"><select name="Departement">' . "\n";
     echo '<option value="-1"/>';
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
@@ -256,38 +248,36 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td></tr>' . "\n";
 
     if ($est_gestionnaire) {
-        col_titre_tab(LG_TOWN_SCH_STATUS, $larg_titre);
+        echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_SCH_STATUS) . ' </td>';
         echo '<td class="value">' . "\n";
         echo '<input type="radio" id="Statut_Fiche_o" name="Statut_Fiche" value="O"';
         if ($reprise) {
-            if ($Statut_Fiche == 'O') echo $checked;
+            if ($Statut_Fiche == 'O') echo ' checked';
         }
         echo '/><label for="Statut_Fiche_o">' . LG_CHECKED_RECORD_SHORT . '</label> ';
         echo '<input type="radio" id="Statut_Fiche_n" name="Statut_Fiche" value="N"';
         if ($reprise) {
-            if ($Statut_Fiche == 'N') echo $checked;
+            if ($Statut_Fiche == 'N') echo ' checked';
         }
         echo '/><label for="Statut_Fiche_n">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
         echo '<input type="radio" id="Statut_Fiche_i" name="Statut_Fiche" value="I"';
         if ($reprise) {
-            if ($Statut_Fiche == 'I') echo $checked;
+            if ($Statut_Fiche == 'I') echo ' checked';
         }
         echo '/><label for="Statut_Fiche_i">' . LG_FROM_INTERNET . '</label>';
         echo '</td></tr>' . "\n";
     }
 
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    col_titre_tab($LG_Ch_Output_Format, $larg_titre);
+    echo '<tr><td class="label" width="20%"> ' . ucfirst($LG_Ch_Output_Format) . ' </td>';
     echo '<td class="value">';
     affiche_sortie(true);
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_TOWN_NEW_TAB, $larg_titre);
+    echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_NEW_TAB) . ' </td>';
     echo '<td class="value">';
     echo '<input type="checkbox" name="New_Window"';
     if ($reprise) {
-        if ($New_Window == 'O') echo $checked;
+        if ($New_Window == 'O') echo ' checked';
     }
     echo ' value="O"/>';
     echo '</td></tr>' . "\n";
@@ -304,7 +294,7 @@ if ($Sortie != 't') {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

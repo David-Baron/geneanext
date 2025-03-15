@@ -13,12 +13,11 @@ $x = Lit_Env();
 
 Insere_Haut($titre, '', 'Erreur_Profil', '');
 
-aff_erreur($LG_function_noavailable_profile);
-
+echo '<center><font color="red"><br><br><br><h2>' . $LG_function_noavailable_profile . '</h2></font></center>';
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

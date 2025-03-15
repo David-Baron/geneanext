@@ -495,7 +495,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
 } else {
     if (($vers_fic != $Version) and ($id_cnx)) {
         echo '<br>';
-        Affiche_Stop($LG_index_version_mismatched . ' (' . $vers_fic . ' vs. ' . $Version . '), ' . $LG_index_please_migrate);
+        echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . $LG_index_version_mismatched . ' (' . $vers_fic . ' vs. ' . $Version . '), ' . $LG_index_please_migrate . '<br>';
         echo '<br><a href="' . $root . '/install.php">' . my_html($LG_index_migrate_here) . '</a>'; // pour migrer votre base.';
     }
 }

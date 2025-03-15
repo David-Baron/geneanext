@@ -140,65 +140,54 @@ if (!$bt_OK) {
 
 if ($Sortie != 't') {
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+    echo '<form id="saisie" method="post">' . "\n";
 
     // Constitution de la liste des personnes
     $sql = 'select Reference, Nom, Prenoms, Ne_le, Decede_Le from ' . nom_table('personnes') . ' where Reference <> 0';
     if (!$_SESSION['estPrivilegie']) $sql .= ' and Diff_Internet = \'O\'';
     $sql .= ' order by Nom, Prenoms';
     $res = lect_sql($sql);
+    
     if ($res->rowCount() > 0) {
-
-        $larg_titre = '30';
-
         echo '<table width="90%" class="table_form">' . "\n";
-
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab(LG_CH_RELATED_BETWEEN);
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_CH_RELATED_BETWEEN) . '</td><td class="value">';
         Liste_Pers($res, 'Ref_Pers1', $Ref_Pers1);
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_CH_RELATED_AND);
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_CH_RELATED_AND) . '</td><td class="value">';
         $res->closeCursor();
         $res = lect_sql($sql);
         Liste_Pers($res, 'Ref_Pers2', $Ref_Pers2);
         echo ' <img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_CH_RELATED_TIP_BEG . $max_gen . ' ' . LG_CH_RELATED_TIP_END;
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab($LG_Ch_Output_Format);
+        echo '<tr><td class="label" width="30%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
         echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
         echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
         echo '</td></tr>' . "\n";
 
         // La sauvegarde dans un fichier texte n'est accessible qu'en local
         if ($Environnement == 'L') {
-            colonne_titre_tab(LG_CH_RELATED_SAVE);
+            echo '<tr><td class="label" width="30%">' . ucfirst(LG_CH_RELATED_SAVE) . '</td><td class="value">';
             echo '<input type="checkbox"';
             if ($bt_Sauver) echo ' checked="checked"';
             echo ' name="sauver" value="save"/></td></tr>' . "\n";
         }
-
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-
         echo '</table>' . "\n";
     }
     $res->closeCursor();
-
     echo '</form>';
 }
 
 if ($bt_OK) {
-
     $erreur = 0;
-
     if ($Ref_Pers1 == $Ref_Pers2) {
-        Affiche_Warning(LG_CH_RELATED_PERS_DIFF);
+        echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . LG_CH_RELATED_PERS_DIFF . '<br>';
         $erreur = 1;
     }
     if (($Ref_Pers1 == 0) or ($Ref_Pers2 == 0)) {
-        Affiche_Warning(LG_CH_RELATED_2PERS);
+        echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . LG_CH_RELATED_2PERS . '<br>';
         $erreur = 1;
     }
 
@@ -282,7 +271,7 @@ if ($bt_OK) {
                 $x = Ligne_Fleche($classe_vl);
                 $x = Affiche_Personne($P1[0]);
                 $gauche++;
-            } else echo '<tr><td class="value">' . my_html(LG_CH_RELATED_SAME);
+            } else echo '<tr><td class="value">' . LG_CH_RELATED_SAME;
             echo '</td></tr>' . "\n";
             echo '</table>';
             echo '</td>';
@@ -304,7 +293,7 @@ if ($bt_OK) {
                 $x = Ligne_Fleche($classe_vl);
                 $x = Affiche_Personne($P2[0]);
                 $droite++;
-            } else echo ' ' . my_html(LG_CH_RELATED_SAME);
+            } else echo ' ' . LG_CH_RELATED_SAME;
             echo '</td></tr>' . "\n";
             echo '</table>';
             echo '</td>';
@@ -323,16 +312,16 @@ if ($bt_OK) {
                 }
             }
         } else {
-            echo my_html(LG_CH_RELATED_NO_COMMON . ' ' . $max_gen . ' ' . LG_CH_RELATED_GENERATIONS);
+            echo LG_CH_RELATED_NO_COMMON . ' ' . my_html($max_gen) . ' ' . LG_CH_RELATED_GENERATIONS;
         }
         if ($Sortie == 'e') {
             $h_deg = ' ' . LG_CH_RELATED_DEGREE;
             if ($droite or $gauche) {
-                echo '<br />' . LG_CH_RELATED_CANON_LAW . LG_SEMIC . $gauche . ieme($gauche);
+                echo '<br />' . LG_CH_RELATED_CANON_LAW . ' ' . $gauche . ieme($gauche);
                 if ($droite != $gauche) echo ' ' . LG_CH_RELATED_ON . ' ' . $droite . ieme($droite);
                 echo $h_deg;
                 $somme = $gauche + $droite;
-                echo '<br />' . LG_CH_RELATED_CIVIL_LAW . LG_SEMIC . $somme . ieme($somme);
+                echo '<br />' . LG_CH_RELATED_CIVIL_LAW . ' ' . $somme . ieme($somme);
                 echo $h_deg . '<br />';
             }
         }
@@ -344,13 +333,11 @@ if ($Sortie != 't') {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';
-}
-
-?>
+} ?>
 </body>
 
 </html>

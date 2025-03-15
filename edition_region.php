@@ -71,7 +71,7 @@ function Aff_Region($enreg2)
     global $root, $Icones,$db, $chemin_images, $Ident, $Images, $Commentaire, $Diffusion_Commentaire_Internet, $LG_Data_tab, $LG_File, $LG_Edit_Region_Name, $LG_Edit_Region_Code, $LG_Edit_Region_Country, $lib_Okay, $lib_Annuler;
 
     echo '<div id="content">' . "\n";
-    echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >' . "\n";
+    echo '<table id="cols"  cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="590" height="1" alt="clear"/>' . "\n";
@@ -92,27 +92,19 @@ function Aff_Region($enreg2)
     echo '<div id="pane1">' . "\n";
     echo '<fieldset>' . "\n";
     echo '<legend>' . my_html($LG_Data_tab) . '</legend>' . "\n";
-
-    echo '<table width="100%" border="0">' . "\n";
-
-    $largP = 12;
-
-    col_titre_tab_noClass($LG_Edit_Region_Name, $largP);
-    $Nom_Region_Min = $enreg2['Nom_Region_Min'];
-    echo '<td><input type="text" size="70" class="oblig" name="Nom_Region" id="Nom_Region" value="' . $Nom_Region_Min . '"/>&nbsp;' . "\n";
+    echo '<table width="100%">' . "\n";
+    echo '<tr><td width="12%">' . $LG_Edit_Region_Name . '</td>';
+    echo '<td><input type="text" size="70" class="oblig" name="Nom_Region" id="Nom_Region" value="' . $enreg2['Nom_Region_Min'] . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="hidden" name="ANom_Region" value="' . $Nom_Region_Min . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ANom_Region" value="' . $enreg2['Nom_Region_Min'] . '"/></td>' . "\n";
     echo "</tr>\n";
-
-    col_titre_tab_noClass($LG_Edit_Region_Code, $largP);
-    $Region = $enreg2['Region'];
-    echo '<td><input type="text" size="3" class="oblig" name="Code_Region" id="Code_Region" value="' . $Region . '"/>&nbsp;' . "\n";
+    echo '<tr><td width="12%">' . $LG_Edit_Region_Code . '</td>';
+    echo '<td><input type="text" size="3" class="oblig" name="Code_Region" id="Code_Region" value="' . $enreg2['Region'] . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '<input type="hidden" name="ACode_Region" value="' . $Region . '"/></td>' . "\n";
+    echo '<input type="hidden" name="ACode_Region" value="' . $enreg2['Region'] . '"/></td>' . "\n";
     echo "</tr>\n";
-
     //Pays
-    col_titre_tab_noClass($LG_Edit_Region_Country, $largP);
+    echo '<tr><td width="12%">' . $LG_Edit_Region_Country . '</td>';
     echo "<td><select name='Zone_Mere'>\n";
     $sql = 'select Identifiant_zone, Nom_Pays from ' . nom_table('pays') . ' order by Nom_Pays';
     $res = lect_sql($sql);
@@ -133,7 +125,7 @@ function Aff_Region($enreg2)
     // Commentaires
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     echo '<tr>' . "\n";
     echo '<td>';
     // Accès au commentaire
@@ -143,15 +135,14 @@ function Aff_Region($enreg2)
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
     echo '<td><label for="Diff_Internet_NoteR">' . LG_CH_COMMENT_VISIBILITY . '</label>'
-        . '&nbsp;<input type="checkbox" id="Diff_Internet_NoteR" name="Diff_Internet_NoteR" value="O"';
-    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
+        . ' <input type="checkbox" id="Diff_Internet_NoteR" name="Diff_Internet_NoteR" value="O"';
+    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
     echo "/>\n";
     echo '<input type="hidden" name="ADiff_Internet_NoteR" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
     echo '</td>' . "\n";
     echo '</tr>' . "\n";
     echo '</table>' . "\n";
     echo '</fieldset>' . "\n";
-
     echo '</div>' . "\n";
 
     // Données de la fiche
@@ -159,7 +150,6 @@ function Aff_Region($enreg2)
     // Affiche les données propres à l'enregistrement de la fiche
     $x = Affiche_Fiche($enreg2, true);
     echo '</div>' . "\n";
-
     echo '</div>' . "\n";        // <!-- panes -->
 
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
@@ -268,7 +258,6 @@ if (($ok == '') && ($annuler == '')) {
 
     echo '</div> <!-- tab container -->' . "\n";
     echo '</td></tr></table></div>' . "\n";
-
     echo '</form>' . "\n";
 
     include(__DIR__ . '/assets/js/gest_onglets.js');
@@ -281,7 +270,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

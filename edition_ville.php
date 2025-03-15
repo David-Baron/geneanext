@@ -155,14 +155,14 @@ function Aff_Ville($enreg2)
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_DATA_TAB) . '</legend>' . "\n";
     echo '<table width="100%" border="0">' . "\n";
-    col_titre_tab_noClass(LG_ICSV_TOWN_NAME, $largP);
-    echo '<td><input class="oblig" type="text" size="50" name="Nom_VilleV" id="Nom_VilleV" value="' . $n_ville_html . '"/>&nbsp;' . "\n";
+    echo '<tr><td width="20%">' . LG_ICSV_TOWN_NAME . '</td>';
+    echo '<td><input class="oblig" type="text" size="50" name="Nom_VilleV" id="Nom_VilleV" value="' . $n_ville_html . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ANom_VilleV" value="' . $n_ville_html . '"/></td></tr>' . "\n";
-    col_titre_tab_noClass(LG_ICSV_TOWN_ZIP_CODE, $largP);
+    echo '<tr><td width="20%">' . LG_ICSV_TOWN_ZIP_CODE . '</td>';
     echo '<td><input type="text" size="10" name="Code_PostalV" value="' . $enreg2["Code_Postal"] . '"/>' . "\n";
     echo '<input type="hidden" name="ACode_PostalV" value="' . $enreg2["Code_Postal"] . '"/></td></tr>' . "\n";
-    col_titre_tab_noClass(LG_COUNTY, $largP);
+    echo '<tr><td width="20%">' . LG_COUNTY . '</td>';
     echo "<td><select name='Zone_MereV'>\n";
     $sql = 'select Identifiant_zone, Nom_Depart_Min from ' . nom_table('departements') . ' order by Nom_Depart_Min';
     $res = lect_sql($sql);
@@ -170,7 +170,7 @@ function Aff_Ville($enreg2)
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         echo '<option value="' . $row[0] . '"';
         if ($enr_zone == $row[0]) echo ' selected="selected" ';
-        if ($row[0] == 0) echo '>&nbsp;';
+        if ($row[0] == 0) echo '> ';
         else echo '>' . my_html($row[1]);
         echo '</option>' . "\n";
     }
@@ -211,7 +211,7 @@ function Aff_Ville($enreg2)
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
     echo '<td><label for="Diff_Internet_NoteV">' . LG_CH_COMMENT_VISIBILITY . '</label>'
-        . '&nbsp;<input type="checkbox" id="Diff_Internet_NoteV" name="Diff_Internet_NoteV" value="O"';
+        . ' <input type="checkbox" id="Diff_Internet_NoteV" name="Diff_Internet_NoteV" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
     echo '<input type="hidden" name="ADiff_Internet_NoteV" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
@@ -232,7 +232,7 @@ function Aff_Ville($enreg2)
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ident, 'V', 'N');
         // Possibilité de lier un document pour la ville
-        echo '<br>&nbsp;' . my_html(LG_ICSV_TOWN_LINK_SOURCE) . LG_SEMIC
+        echo '<br> ' . my_html(LG_ICSV_TOWN_LINK_SOURCE) . LG_SEMIC
             . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
@@ -248,12 +248,12 @@ function Aff_Ville($enreg2)
 
         echo '<br>';
         echo $deb_lien_visu . 'N' . $fin_lien . '>' . LG_LPERS_OBJ_N . ' ' . $n_ville_html . '</a>';
-        if ($est_gestionnaire) echo '&nbsp;' . Affiche_Icone_Lien($deb_lien_crea . 'N' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_BORN_CREATE . $n_ville_aff);
+        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien($deb_lien_crea . 'N' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_BORN_CREATE . $n_ville_aff);
         echo '<br>';
         echo $deb_lien_visu . 'M' . $fin_lien . '>' . LG_LPERS_OBJ_M . ' ' . $n_ville_html . '</a><br>';
         echo $deb_lien_visu . 'K' . $fin_lien . '>' . LG_LPERS_OBJ_K . ' ' . $n_ville_html . '</a><br>';
         echo $deb_lien_visu . 'D' . $fin_lien . '>' . LG_LPERS_OBJ_D . ' ' . $n_ville_html . '</a>';
-        if ($est_gestionnaire) echo '&nbsp;' . Affiche_Icone_Lien($deb_lien_crea . 'D' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_DEAD_CREATE . $n_ville_aff);
+        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien($deb_lien_crea . 'D' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_DEAD_CREATE . $n_ville_aff);
 
         echo '</div>' . "\n";
 
@@ -361,8 +361,8 @@ if (($ok == '') && ($annuler == '')) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=V"', 'images', 'Images') . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . $root . '/fiche_ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=V"', 'images', 'Images') . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/fiche_ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . ' ';
     }
 
     if ($bt_Sup) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -393,7 +393,7 @@ if (($ok == '') && ($annuler == '')) {
 
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
-        aff_erreur(LG_ICSV_TOWN_UNKNOWN);
+        echo '<center><font color="red"><br><br><br><h2>' . LG_ICSV_TOWN_UNKNOWN . '</h2></font></center>';
         echo '<a href="' . $root . '/liste_villes.php?Type_Liste=V">' . LG_SUBDIV_LIST . '</a>';
     } else {
         include(__DIR__ . '/assets/js/Insert_Tiny.js');
@@ -429,7 +429,7 @@ if (($ok == '') && ($annuler == '')) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';
@@ -438,7 +438,7 @@ if (($ok == '') && ($annuler == '')) {
 function champ_carte($libelle, $nom_champ, $valeur)
 {
     global $largP;
-    col_titre_tab_noClass($libelle, $largP);
+    echo '<tr><td width="' . $largP . '%">' . my_html($libelle) . '</td>';
     echo '<td><input type="text" size="10" name="' . $nom_champ . '" id="' . $nom_champ . '" value="' . $valeur . '" onchange="affiche_icone_carte(\'carte_osm\')"; />' . "\n";
     echo '<input type="hidden" name="A' . $nom_champ . '" value="' . $valeur . '"/>' . "\n";
 }

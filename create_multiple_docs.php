@@ -85,8 +85,7 @@ if ($bt_OK) {
             }
 
             if (!$type_valide) {
-                $erreur = 'Fichier ' . $nom_fic . ' : type de fichier non supporté';
-                Affiche_Stop($erreur);
+                echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>Fichier ' . $nom_fic . ' : type de fichier non supporté<br>';
             }
 
             // Nettoyage du nom de fichier
@@ -117,8 +116,7 @@ if ($bt_OK) {
 
                 // Erreur constatée sur le chargement
                 if ($erreur != '') {
-                    echo '&nbsp;&nbsp;';
-                    Affiche_Warning($erreur);
+                    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . $erreur . '<br>';
                 }
                 // Sinon on peut télécharger
                 else {
@@ -162,8 +160,7 @@ if ($bt_OK) {
 
                 // Erreur constatée sur le chargement
                 if ($erreur != '') {
-                    echo '&nbsp;&nbsp;';
-                    Affiche_Warning($erreur);
+                    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . $erreur . '<br>';
                 }
                 // Sinon on peut télécharger
                 else {
@@ -222,7 +219,7 @@ while ($enr_type = $result_td->fetch(PDO::FETCH_NUM)) {
 if ($types_docs == '') {
     // On va masquer le bouton OK car pas de création possible
     echo '<br><br>';
-    Affiche_Warning($LG_Docs_Error_No_Type);
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . $LG_Docs_Error_No_Type . '<br>';
     echo '<br><br>';
     $err_td = true;
 } else {
@@ -257,7 +254,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

@@ -31,7 +31,7 @@ $res = lect_sql($sql);
 $row = $res->fetch(PDO::FETCH_NUM);
 $nbPers = $row[0];
 if ($nbPers > 0 and !$_SESSION['estPrivilegie']) {
-    echo aff_erreur(LG_PERS_TREE_ERROR_NO_SHOW) . '<br />' .
+    echo '<center><font color="red"><br><br><br><h2>' . LG_PERS_TREE_ERROR_NO_SHOW . '</h2></font></center><br />' .
         '<a href="' . $root . '/">' . my_html($LG_back_to_home) . '</a><br />';
     return 0;
 }
@@ -128,7 +128,7 @@ if (file_exists($nomFichierHtml)) {
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

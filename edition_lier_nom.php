@@ -163,8 +163,11 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         }
         //  En modification, le nom est fixe
         else {
-            if (Get_Nom($refNom, $NomFam)) echo $NomFam;
-            else aff_erreur($LG_Link_Name_Unknown);
+            if (Get_Nom($refNom, $NomFam)) {
+                echo $NomFam;
+            } else {
+                echo '<center><font color="red"><br><br><br><h2>' . $LG_Link_Name_Unknown . '</h2></font></center>';
+            }
             echo '<div id="id_div_ajout_nom"></div>' . "\n";
         }
         echo "</td></tr>\n";
@@ -179,7 +182,9 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         $lib_sup = '';
         if (($refPers != -1) and ($refNom != -1)) $lib_sup = $lib_Supprimer;
         bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, $LG_Link_Name_Delete);
-    } else aff_erreur($LG_Link_Name_Not_Found);
+    } else {
+        echo '<center><font color="red"><br><br><br><h2>' . $LG_Link_Name_Not_Found . '</h2></font></center>';
+    }
 
     echo "</table>";
     echo "</form>\n";
@@ -188,7 +193,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

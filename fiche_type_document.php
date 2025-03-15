@@ -48,10 +48,8 @@ else {
     Insere_Haut($titre, $compl, 'Fiche_Type_Document', $Code);
 
     echo '<br />';
-    $larg_titre = 25;
     echo '<table width="70%" class="table_form">' . "\n";
-
-    colonne_titre_tab(LG_DOC_TYPE_LABEL);
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_DOC_TYPE_LABEL) . '</td><td class="value">';
     echo $enreg2['Libelle_Type'] . '</td></tr>' . "\n";
 
     echo '</table><br />' . "\n";
@@ -80,7 +78,7 @@ else {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

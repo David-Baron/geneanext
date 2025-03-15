@@ -10,7 +10,7 @@ require(__DIR__ . '/app/ressources/fonctions.php');
 function suppression($lib, $n_table, $genre, $where, $affichage = true)
 {
     global $enr_mod;
-    if ($affichage) echo '&nbsp;&nbsp;- ';
+    if ($affichage) echo '  - ';
     $req = 'delete from ' . $n_table;
     if ($where != '') $req .= ' where ' . $where;
     $res = maj_sql($req);
@@ -257,7 +257,7 @@ function traite_date($str)
         if ($rech === false) {
             echo 'Mois KO : ' . $Mois . ' jour : ' . $Jour . '<br>';
             $Mois = 0;
-            echo 'Mois non trouv&eacute; sur la date ' . $str . ', merci de prendre contact avec l\'auteur en lui donnant la date en erreur.<br>';
+            echo 'Mois non trouvé sur la date ' . $str . ', merci de prendre contact avec l\'auteur en lui donnant la date en erreur.<br>';
         } else
             $Mois = ($rech / 4) + 1;
         // Si l'année est alpha, on va chercher l'équivalent en numérique
@@ -413,6 +413,7 @@ function rech_zone($tableau_lib, $tableau_ref, $posi, $table, $nom_zone, $niveau
 function traite_lieu($str)
 {
     global
+        $root,
         $debug, $maj_oui,
         $nb_enr,
         $ref_villes, $ref_departements, $ref_regions, $ref_pays,
@@ -445,7 +446,7 @@ function traite_lieu($str)
 
             // Incohérence du nombre de zones par rapport à l'attendu
             if ($c_lieux != $nb_format_lieux) {
-                Affiche_Warning('La ligne (' . $nb_enr . ') ' . $str . ' ne comporte pas le nombre de zones pr&eacute;vues pour les zones g&eacute;ographiques');
+                echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>La ligne (' . $nb_enr . ') ' . $str . ' ne comporte pas le nombre de zones prévues pour les zones géographiques<br>';
             }
 
             $ident_base_ville = 0;
@@ -485,7 +486,7 @@ function traite_lieu($str)
                         if (strtoupper(trim($lieu_arr[$p_pays])) == 'FRANCE') {
                             if ($code_postal != 'null') {
                                 if ((!is_numeric($code_postal)) or ($lg_cp <> 5)) {
-                                    Affiche_Warning('Attention, code postal incohérent (' . $code_postal . ') sur la ligne (' . $nb_enr . ') ' . $str);
+                                    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>Attention, code postal incohérent (' . $code_postal . ') sur la ligne (' . $nb_enr . ') ' . $str . '<br>';
                                     $code_postal = 'null';
                                     $err_cp = true;
                                 }
@@ -545,7 +546,7 @@ function traite_lieu($str)
                     $memo_ville = $id_ville;
                     if ($code_postal != 'null') {
                         if ($lg_cp > 10) {
-                            Affiche_Warning('Attention, code postal tronqué (' . $code_postal . ') sur la ligne (' . $nb_enr . ') ' . $str);
+                            echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>Attention, code postal tronqué (' . $code_postal . ') sur la ligne (' . $nb_enr . ') ' . $str . '<br>';
                             $code_postal = substr($code_postal, 0, 10);
                         }
                     }
@@ -597,7 +598,7 @@ if ($ok == 'OK') {
     $erreur = 'x';
     $msg = '';
     $Codage_ANSEL = 0;
-    $msg .= ' Fichier demand&eacute; : ' . $_FILES['nom_du_fichier']['name'];
+    $msg .= ' Fichier demandé : ' . $_FILES['nom_du_fichier']['name'];
     echo $msg . '<br />';
     if ($fic_utf8 == 'on')
         echo $LG_Ch_UTF8 . '<br />';
@@ -615,8 +616,7 @@ if ($ok == 'OK') {
         if (!$erreur) {
             // Seuls sont autorisés les fichiers ged
             if (Extension_Fic($nom_du_fichier) != 'ged') {
-                $erreur = LG_IMP_GED_ERR_TYPE;
-                aff_erreur($erreur);
+                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_GED_ERR_TYPE . '</h2></font></center>';
             }
         }
 
@@ -666,12 +666,12 @@ if ($ok == 'OK') {
                 // Demande de reprise des dates ou non
                 $Rep_date = ($reprise_date == 'on') ? true : false;
 
-                if ($Maj) echo 'Demande de mise &agrave; jour des donn&eacute;es<br />';
-                else      echo 'Demande de lecture des donn&eacute;es<br />';
+                if ($Maj) echo 'Demande de mise &agrave; jour des données<br />';
+                else      echo 'Demande de lecture des données<br />';
 
                 if (($Maj) and ($Init)) {
 
-                    echo 'Demande de suppression des donn&eacute;es de la base :<br />';
+                    echo 'Demande de suppression des données de la base :<br />';
                     suppression('filiation', $n_filiations, 'f', '');
                     suppression('union', $n_unions, 'f', '');
                     suppression('image', $n_images, 'f', 'Type_Ref  in ("P","V","U")');
@@ -679,11 +679,11 @@ if ($ok == 'OK') {
                     suppression('personne', $n_personnes, 'f', 'reference > 0');
                     suppression('nom', $n_noms, 'm', '');
                     suppression('lien nom', $n_liens_noms, 'm', '', false);
-                    suppression('&eacute;v&egrave;nement', $n_evenements, 'm', 'Code_Type <> "AC3U"');
+                    suppression('év&egrave;nement', $n_evenements, 'm', 'Code_Type <> "AC3U"');
                     suppression('ville', $n_villes, 'f', 'identifiant_zone > 0');
                     suppression('commentaire', $n_commentaires, 'm', '(Type_Objet <> "G" and Type_Objet <> "E")' .
                         ' or (Type_Objet = "E" and Reference_Objet not in (select Reference from ' . $n_evenements . ' where Code_Type = "AC3U"))');
-                    suppression('d&eacute;p&ocirc;t', $n_depots, 'm', 'Ident > 0');
+                    suppression('dép&ocirc;t', $n_depots, 'm', 'Ident > 0');
                     suppression('source', $n_sources, 'f', '');
                     suppression('lien source', $n_conc_source, 'm', '', false);
                     suppression('lien doc', nom_table('concerne_doc'), 'm', 'Type_Objet  in ("P","V","U")', false);
@@ -739,21 +739,21 @@ if ($ok == 'OK') {
               echo $types_evenements[$nb_ev].'/'.$titres_evenements[$nb_ev].'<br>';
             }*/
                     // Rappel des options demandées
-                    echo 'Visibilit&eacute; Internet ';
+                    echo 'Visibilité Internet ';
                     if ($diff_internet != 'on') echo 'non ';
-                    echo 'autoris&eacute;e par d&eacute;faut<br />';
-                    echo 'Visibilit&eacute; Internet des notes ';
+                    echo 'autorisée par défaut<br />';
+                    echo 'Visibilité Internet des notes ';
                     if ($diff_internet_note != 'on') echo 'non ';
-                    echo 'Visibilit&eacute; Internet des images ';
+                    echo 'Visibilité Internet des images ';
                     if ($diff_internet_img != 'on') echo 'non ';
-                    echo 'autoris&eacute;e par d&eacute;faut<br />';
-                    echo 'Statut par d&eacute;faut des fiches : ';
+                    echo 'autorisée par défaut<br />';
+                    echo 'Statut par défaut des fiches : ';
                     switch ($Statut_Fiche) {
                         case 'O':
-                            echo 'valid&eacute;';
+                            echo 'validé';
                             break;
                         case 'N':
-                            echo 'non valid&eacute;';
+                            echo 'non validé';
                             break;
                         case 'I':
                             echo 'source internet';
@@ -868,17 +868,17 @@ if ($ok == 'OK') {
                             }
                             // Demande de lecture uniquement
                             if (! $Maj) {
-                                echo '<font color="blue">Donn&eacute;es personne : ' .
-                                    ' r&eacute;f&eacute;rence : ' . $ref_ind .
+                                echo '<font color="blue">Données personne : ' .
+                                    ' référence : ' . $ref_ind .
                                     ' nom : ' . $nom .
-                                    ', pr&eacute;noms : ' . $prenoms .
+                                    ', prénoms : ' . $prenoms .
                                     ', sexe : ' . $sexe .
                                     ', date de naissance : ' . Etend_date($date_naissance) .
-                                    ', date de d&eacute;c&egrave;s : ' . Etend_date($date_deces) .
+                                    ', date de déc&egrave;s : ' . Etend_date($date_deces) .
                                     //' date de bapt&ecirc;me'.$date_bapteme.
                                     ', lieu de naissance : ' . $lieu_naissance .
-                                    ', lieu de d&eacute;c&egrave;s : ' . $lieu_deces .
-                                    //' m&eacute;tier : '.$metier.
+                                    ', lieu de déc&egrave;s : ' . $lieu_deces .
+                                    //' métier : '.$metier.
                                     ', commentaire : ' . $comment .
                                     '</font><br />';
                             }
@@ -973,7 +973,7 @@ if ($ok == 'OK') {
                         if ($s_FAM) {
                             // Demande de lecture uniquement
                             if (! $Maj) {
-                                echo '<font color="green">Donn&eacute;es mariage : ' .
+                                echo '<font color="green">Données mariage : ' .
                                     ' mari : ' . $mari .
                                     ', femme : ' . $femme .
                                     ', date de mariage : ' . Etend_date($date_mariage) .
@@ -1181,7 +1181,7 @@ if ($ok == 'OK') {
                             }
                             if ($sous_section == 'DATE') {
                                 $ss_DATE = 1;
-                                $msg = 'Cr&eacute;ation du fichier : ';
+                                $msg = 'Création du fichier : ';
                                 $c_arr_date = count($arr);
                                 if ($c_arr_date == 5) {
                                     $msg .= trim($arr[2]) . ' ';
@@ -1438,7 +1438,7 @@ if ($ok == 'OK') {
                                     if ($arbo[$n1] == 'DEAT') {
                                         $pec_note = true;
                                         if ($comment != '') $comment .= '<br />';
-                                        $comment .= 'Note sur le d&eacute;c&egrave;s :<br />' . rtrim(substr($str, 7));
+                                        $comment .= 'Note sur le déc&egrave;s :<br />' . rtrim(substr($str, 7));
                                     }
                                 }
                             }
@@ -1678,17 +1678,17 @@ if ($ok == 'OK') {
             $sec = date('s', $temps);
             $fin = $jour . '/' . $mois . '/' . $annee . ' &agrave; ' . $heure . 'h' . $minutes . ':' . $sec;
 
-            if ($maj_oui == 'on') $action = 'cr&eacute;&eacute;es';
+            if ($maj_oui == 'on') $action = 'créées';
             else                  $action = 'lues';
-            if ($maj_oui == 'on') $action_m = 'cr&eacute;&eacute;s';
+            if ($maj_oui == 'on') $action_m = 'créés';
             else                  $action_m = 'lus';
             $nb_pers = count($individus_ref) - 1; // 1ère pos à x pour trouver le poste 0
-            $tab = '&nbsp;&nbsp;';
+            $tab = '  ';
             if ($Codage_ANSEL)
-                echo 'D&eacute;codage des caract&egrave;res ANSEL vers ANSI<br />';
+                echo 'Décodage des caract&egrave;res ANSEL vers ANSI<br />';
             echo LG_IMP_GED_RESUME . ' :<br />';
-            echo $tab . 'D&eacute;but :&nbsp;' . $debut . '<br />';
-            echo $tab . 'Fin :&nbsp;' . $fin . '<br />';
+            echo $tab . 'Début : ' . $debut . '<br />';
+            echo $tab . 'Fin : ' . $fin . '<br />';
             echo $tab . $nb_pers . ' personnes ' . $action . '<br />';
             if (isset($nb_cre_noms)) {
                 if ($nb_cre_noms > 0) echo $tab . $idNom . ' noms ' . $action_m . '<br />';
@@ -1701,10 +1701,10 @@ if ($ok == 'OK') {
 
             if ($maj_oui == 'on') {
                 maj_date_site(true);
-                $ic_conseil = '<img src="' . $chemin_images_icones . $Icones['tip'] . '" alt="' . LG_TIP . '"/>&nbsp;';
+                $ic_conseil = '<img src="' . $chemin_images_icones . $Icones['tip'] . '" alt="' . LG_TIP . '"/> ';
                 echo $ic_conseil . LG_IMP_GED_REMIND_SOSA_1
                     . '<a href="' . $root . '/liste_pers.php?Type_Liste=P">'
-                    . LG_IMP_GED_REMIND_SOSA_2 . '</a>.&nbsp;' . LG_IMP_GED_REMIND_SOSA_3
+                    . LG_IMP_GED_REMIND_SOSA_2 . '</a>. ' . LG_IMP_GED_REMIND_SOSA_3
                     . '<a href="' . $root . '/verif_sosa.php">'
                     . $LG_Menu_Title['Check_Sosa'] . '</a>,<br>';
                 echo $ic_conseil . LG_IMP_GED_REMIND_EVT
@@ -1720,65 +1720,51 @@ if ($ok == 'OK') {
 }
 
 if ($_SESSION['estGestionnaire']) {
-    // Première entrée : affichage pour saisie
     if (($ok == '') && ($annuler == '')) {
-
         echo '<br />';
-
-        $larg_titre = '35';
         echo '<form id="saisie" method="post" enctype="multipart/form-data">';
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
         echo '<table width="90%" class="table_form">';
-        colonne_titre_tab(LG_IMP_GED_FILE);
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_FILE) . '</td><td class="value">';
         echo '<input type="file" name="nom_du_fichier" size="80"></td></tr>';
         if ($def_enc != 'UTF-8') {
-            colonne_titre_tab($LG_Ch_UTF8, $larg_titre);
+            echo '<tr><td class="label" width="35%">' . ucfirst($LG_Ch_UTF8) . '</td><td class="value">';
             echo '<input type="checkbox" name="fic_utf8"></td></tr>';
         }
 
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab(LG_IMP_GED_INSERT);
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_INSERT) . '</td><td class="value">';
         echo '<input type="checkbox" name="maj_oui"></td></tr>';
-
-        colonne_titre_tab(LG_IMP_GED_RESET);
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_RESET) . '</td><td class="value">';
         echo '<input type="checkbox" name="init_base"></td></tr>';
 
         // Sur site gratuit non  Premium, on diffuse par défaut sans possibilité de modifier l'indicteur ==> respect de la charte
-        if (($SiteGratuit) and (!$Premium))
-            $readonly = true;
-        else
-            $readonly = false;
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        $readonly = false;
+        if (($SiteGratuit) and (!$Premium)) $readonly = true;
 
-        colonne_titre_tab(LG_IMP_GED_DEFAULT_VISIBILITY);
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_DEFAULT_VISIBILITY) . '</td><td class="value">';
         if ($readonly) {
             echo 'Option indisponible sur les sites gratuits non  Premium';
             echo '<input type="hidden" name="diff_internet" value="on"/>';
         } else {
-            echo '<input type="checkbox" name="diff_internet" checked="checked"/>';
+            echo '<input type="checkbox" name="diff_internet" checked>';
         }
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_IMP_GED_DEFAULT_VISIBILITY_COMMENTS);
-        echo '<input type="checkbox" name="diff_internet_note" checked="checked"/></td></tr>' . "\n";
-
-        colonne_titre_tab(LG_IMP_GED_IMAGE_DEFAULT_VISIBILITY);
-        echo '<input type="checkbox" name="diff_internet_img" checked="checked"/></td></tr>' . "\n";
-
-        colonne_titre_tab(LG_IMP_GED_DEFAULT_STATUS);
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_DEFAULT_VISIBILITY_COMMENTS) . '</td><td class="value">';
+        echo '<input type="checkbox" name="diff_internet_note" checked></td></tr>' . "\n";
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_IMAGE_DEFAULT_VISIBILITY) . '</td><td class="value">';
+        echo '<input type="checkbox" name="diff_internet_img" checked></td></tr>' . "\n";
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_DEFAULT_STATUS) . '</td><td class="value">';
         bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
         bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
         bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_IMP_GED_IMPORT_DATES);
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_IMPORT_DATES) . '</td><td class="value">';
         echo '<input type="checkbox" name="reprise_date"/></td></tr>' . "\n";
 
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab(LG_IMP_GED_PLACES);
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_PLACES) . '</td><td class="value">';
         echo '<select id="sel_lieux" size="1" onchange="lieux.value += sel_lieux.options[sel_lieux.selectedIndex].text + \',\';" >';
         echo '<option value="0">--</option>';
         /*<OPTION value="1">town</option>
@@ -1789,29 +1775,29 @@ if ($_SESSION['estGestionnaire']) {
 		<OPTION value="6">subdivision</option>*/
         echo '<option value="1">ville</option>';
         echo '<option value="2">code postal</option>';
-        echo '<option value="3">d&eacute;partement</option>';
-        echo '<option value="4">r&eacute;gion</option>';
+        echo '<option value="3">département</option>';
+        echo '<option value="4">région</option>';
         echo '<option value="5">pays</option>';
         echo '<option value="6">sous-division</option>';
         echo '</select>' . "\n";
-        echo '<input readonly="readonly" id="lieux" name ="lieux" size="50"/>&nbsp;';
+        echo '<input readonly="readonly" id="lieux" name ="lieux" size="50"/> ';
         echo  '<img src="' . $root . '/assets/img/' . $Icones['efface'] . '" alt="Efface le format des lieux" title="Efface le format des lieux" onclick="document.getElementById(\'lieux\').value = \'\';">';
         echo '</td></tr>' . "\n";
-
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
+        echo '<tr><td colspan="2"> </td></tr>';
         echo '</table>';
         echo '</form>';
     }
-} else aff_erreur($LG_function_noavailable_profile);
+} else {
+    echo '<center><font color="red"><br><br><br><h2>' . $LG_function_noavailable_profile . '</h2></font></center>';
+}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

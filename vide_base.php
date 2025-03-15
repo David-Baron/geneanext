@@ -123,14 +123,14 @@ if ($_SESSION['estGestionnaire']) {
         echo '<br />';
 
         $larg_titre = '50';
-        echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post">';
 
-        echo '<table width="70%" class="table_form">' . "\n";
+        echo '<table width="70%" class="table_form">';
 
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_RESET_CONFIRM . '&nbsp;</td><td class="value">';
-        echo '<input type="checkbox" name="init_base"/></td></tr>' . "\n";
+        echo '<input type="checkbox" name="init_base"/></td></tr>';
 
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
@@ -139,13 +139,15 @@ if ($_SESSION['estGestionnaire']) {
         echo '</table>';
         echo '</form>';
     }
-} else aff_erreur($LG_function_noavailable_profile);
+} else {
+    echo '<center><font color="red"><br><br><br><h2>' . $LG_function_noavailable_profile . '</h2></font></center>';
+}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

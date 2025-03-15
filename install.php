@@ -1857,8 +1857,11 @@ $msg = '';
     if (!$cnx) {
         // Les paramètres de connexion sont-ils OK ?
         $cnx = db_connect($nserveur, $ndb, $nutil, $nmdp);
-        if ($cnx) echo 'La connexion est OK.<br>';
-        else aff_erreur('Echec de la connexion ou de l\'accès à la base de données avec les paramètres enregistrés');
+        if ($cnx) {
+            echo 'La connexion est OK.<br>';
+        } else {
+            echo '<center><font color="red"><br><br><br><h2>Echec de la connexion ou de l\'accès à la base de données avec les paramètres enregistrés</h2></font></center>';
+        }
         echo '<br>';
     }
 

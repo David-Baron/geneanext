@@ -46,32 +46,24 @@ if ($enreg_sel) {
 
     Insere_Haut($titre, $compl, 'Fiche_Lien', '');
 
-    $URL = $enreg_sel['URL'];
-
     echo '<br />' . "\n";
-    $larg_titre = 25;
     echo '<table width="70%" class="table_form">' . "\n";
-
-    echo colonne_titre_tab(LG_LINK_TYPE) . $enreg_sel['type_lien'] . '</td></tr>' . "\n";
-
-    echo colonne_titre_tab(LG_LINK_DESCRIPTION) . $enreg_sel['description'] . '</td></tr>' . "\n";
-
-    echo colonne_titre_tab(LG_LINK_URL) . '<a href="' . $URL . '" target="_blank">' . $URL . '</a>' . '</td></tr>' . "\n";
-
-    echo colonne_titre_tab(LG_LINK_AVAIL_HOME);
-    if ($enreg_sel['Sur_Accueil']) echo my_html($LG_Yes);
-    else echo my_html($LG_No);
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_LINK_TYPE) . '</td><td class="value">' . $enreg_sel['type_lien'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_LINK_DESCRIPTION) . '</td><td class="value">' . $enreg_sel['description'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst($LG_LINK_URL) . '</td><td class="value"><a href="' . $enreg_sel['URL'] . '" target="_blank">' . $enreg_sel['URL'] . '</a></td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_LINK_AVAIL_HOME) . '</td><td class="value">';
+    if ($enreg_sel['Sur_Accueil']) echo $LG_Yes;
+    else echo $LG_No;
     echo '</td></tr>' . "\n";
-
-    colonne_titre_tab(LG_LINK_VISIBILITY);
-    if ($enreg_sel['Diff_Internet']) echo my_html($LG_Yes);
-    else echo my_html($LG_No);
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_LINK_VISIBILITY) . '</td><td class="value">';
+    if ($enreg_sel['Diff_Internet']) echo $LG_Yes;
+    else echo $LG_No;
     echo '</td></tr>' . "\n";
 
     // Affichage de l'image si présente
     $image = $enreg_sel['image'];
     if ($image != '') {
-        echo colonne_titre_tab($LG_Image);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Image) . '</td><td class="value">';
         $image = $chemin_images_util . $image;
         Aff_Img_Redim_Lien($image, 150, 150, "id_" . $Ref);
         echo '<br /><br />' . "\n";
@@ -89,15 +81,12 @@ if ($enreg_sel) {
     }
 
     echo '<br />' . "\n";
-
-    // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

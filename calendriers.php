@@ -177,7 +177,15 @@ $LaDate = date('Ym');
 $xAnnee = substr($LaDate, 0, 4);
 $xMoisA = substr($LaDate, 4, 2);
 
-$x = paragraphe(LG_CALEND_CALC_ON_DATE);
+?>
+<br>
+<table width="100%" align="left" cellspacing="1" cellpadding="3">
+    <tr class="rupt_table">
+        <td><b><?= LG_CALEND_CALC_ON_DATE; ?></b></td>
+    </tr>
+</table>
+<br><br>
+<?php
 echo '<form action="" id="cDate" method="post" action="' . my_self() . '">';
 echo '<table bgcolor="#E5E4E2">';
 echo '<tr>';
@@ -207,7 +215,15 @@ echo '</table>';
 echo '</form>';
 echo '<br />';
 
-$x = paragraphe(LG_CALEND_DAY);
+?>
+<br>
+<table width="100%" align="left" cellspacing="1" cellpadding="3">
+    <tr class="rupt_table">
+        <td><b><?= LG_CALEND_DAY; ?></b></td>
+    </tr>
+</table>
+<br><br>
+<?php
 echo '<form id="calc_jour" method="post" action="' . my_self() . '">';
 echo '  <p>Date : <input type="text" size="2" maxlength="2" name="CJour" value="' . $CJour . '"/>';
 echo '  <select name="CMois">';
@@ -233,7 +249,15 @@ echo '</form>';
 
 echo '<br />';
 echo '<a name="calrep"></a>';
-$x = paragraphe(LG_CALEND_REV_CONVERT);
+?>
+<br>
+<table width="100%" align="left" cellspacing="1" cellpadding="3">
+    <tr class="rupt_table">
+        <td><b><?= LG_CALEND_REV_CONVERT; ?></b></td>
+    </tr>
+</table>
+<br><br>
+<?php
 echo '<form id="conv_rep" method="post" action="' . my_self() . '">';
 echo '  <p>Date R&eacute;publicaine : <input type="text" size="2" maxlength="2" name="JourRep" value="' . $JourRep . '"/>';
 echo '  <select name="MoisRep">';
@@ -303,7 +327,15 @@ echo '</form>';
 echo '<br />';
 echo '<a name="paques"></a>';
 
-$x = paragraphe(LG_CALEND_EASTER_CALC);
+?>
+<br>
+<table width="100%" align="left" cellspacing="1" cellpadding="3">
+    <tr class="rupt_table">
+        <td><b><?= LG_CALEND_EASTER_CALC; ?></b></td>
+    </tr>
+</table>
+<br><br>
+<?php
 echo '<form id="calcpaq" method="post" action="' . my_self() . '"';
 echo '<p>' . $h_year . LG_SEMIC . '<input type="text" size="4" maxlength="4" name="san" value="' . $san . '"/></p>';
 $annee = $san;
@@ -323,7 +355,7 @@ echo '</form>';
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

@@ -48,21 +48,19 @@ else {
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Requete', $reference);
 
-    $larg_titre = 25;
     echo '<br />';
     echo '<table width="80%" class="table_form">' . "\n";
-    echo colonne_titre_tab(LG_QUERY_TITLE) . my_html($enreg['Titre']) . '</td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_QUERY_TITLE) . '</td><td class="value">' . my_html($enreg['Titre']) . '</td></tr>';
 
     $liste_crit = explode($separ, $enreg['Criteres']);
     $nb_crit = count($liste_crit);
     if ($nb_crit > 0) {
         for ($nb = 0; $nb < $nb_crit - 1; $nb++) {
             $exp_crit = explode('=', $liste_crit[$nb]);
-            echo colonne_titre_tab(trim($exp_crit[0])) . my_html(trim($exp_crit[1])) . '</td></tr>' . "\n";
+            echo '<tr><td class="label" width="25%">' . ucfirst(trim($exp_crit[0])) . '</td><td class="value">' . my_html(trim($exp_crit[1])) . '</td></tr>';
         }
     }
-
-    echo colonne_titre_tab(LG_QUERY_CODE) . $enreg['Code_SQL'] . '</td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_QUERY_CODE) . '</td><td class="value">' . $enreg['Code_SQL'] . '</td></tr>';
     echo '</table>' . "\n";
 
     // Formulaire pour le bouton retour
@@ -73,7 +71,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

@@ -33,92 +33,62 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-else {
+// 2 solutions en cas d'absence :
+// - l'utilisateur a saisi un code absent dans l'URL ; le code ne doit pas être saisi dans l'URL, donc tant pis pour lui...
+// - on revient de la mpage de modification et on a demandé la suppression ; donc on renvoye sur la page précédente, à priori la liste
+if ((!$enreg_sel) or ($Ident == 0)) Retour_Ar();
 
-    // 2 solutions en cas d'absence :
-    // - l'utilisateur a saisi un code absent dans l'URL ; le code ne doit pas être saisi dans l'URL, donc tant pis pour lui...
-    // - on revient de la mpage de modification et on a demandé la suppression ; donc on renvoye sur la page précédente, à priori la liste
-    if ((!$enreg_sel) or ($Ident == 0)) Retour_Ar();
+$compl = Ajoute_Page_Info(600, 150);
+if ($est_gestionnaire) {
+    $compl = Affiche_Icone_Lien('href="' . $root . '/edition_subdivision.php?Ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Subdiv_Edit'])) . '&nbsp;';
+}
+Insere_Haut($titre, $compl, 'Fiche_Subdivision', '');
 
-    else {
+$ville = '?';
+if ($enreg['Nom_Ville'] !== '') {
+    $ville = '<a href="' . $root . '/fiche_ville.php?Ident=' . $enreg['id_Ville'] . '">' . my_html($enreg['Nom_Ville']) . '</a>';
+}
 
-        $enreg = $enreg_sel;
-        $enreg2 = $enreg;
+// Affichage de l'image par défaut pour la subdivision
+$image = Rech_Image_Defaut($Ident, 'S');
+if ($image != '') {
+    Aff_Img_Redim_Lien($chemin_images_util . $image, 150, 150, 'image_subdiv');
+    echo '<br />' . my_html($titre_img) . '<br /><br />' . "\n";
+}
 
-        $compl = Ajoute_Page_Info(600, 150);
-        if ($est_gestionnaire) {
-            $compl = Affiche_Icone_Lien('href="' . $root . '/edition_subdivision.php?Ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Subdiv_Edit'])) . '&nbsp;';
-        }
-        Insere_Haut($titre, $compl, 'Fiche_Subdivision', '');
+echo '<br />';
+echo '<table width="70%" class="table_form" align="center">' . "\n";
+echo '<tr><td class="label" width="30%">' . ucfirst(LG_SUBDIV_NAME) . '</td><td class="value">' . my_html($enreg['Nom_Subdivision']);
+if (($enreg['Latitude'] != 0) or ($enreg['Longitude'] != 0)) {
+    echo '<a href="http://www.openstreetmap.org/?lat=' . $enreg['Latitude'] . '&amp;lon=' . $enreg['Longitude'] . '&amp;mlat=' . $enreg['Latitude'] . '&amp;mlon=' . $enreg['Longitude'] . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+}
+echo '</td></tr>' . "\n";
+echo '<tr><td class="label" width="30%">' . ucfirst(LG_SUBDIV_TOWN) . '</td><td class="value">' . $ville . '</td></tr>';
 
-        $Type_Ref = 'S';
-
-        $n_subdivision = $enreg['Nom_Subdivision'];
-        $n_subdivision_html = my_html($n_subdivision);
-        $n_subdivision_aff = stripslashes($n_subdivision);
-
-        $ville = $enreg['Nom_Ville'];
-        if ($ville == '') $ville = '?';
-        //else $ville = my_html($ville);
-        else $ville = '<a href="' . $root . '/fiche_ville.php?Ident=' . $enreg['id_Ville'] . '">' . my_html($ville) . '</a>';
-
-        //http://localhost/Liste_Villes.php?Type_Liste=V#BasRhin
-        // $n_dep = str_replace($interdits,'',$row[1]);
-        // echo '&nbsp;&nbsp;&nbsp;<a href="' . $root . '/liste_villes.php?Type_Liste=V#'.$n_dep .'">'.my_html($row[1])."</a>";
-
-        $Lat_V = $enreg['Latitude'];
-        $Long_V = $enreg['Longitude'];
-
-        // Affichage de l'image par défaut pour la subdivision
-        $image = Rech_Image_Defaut($Ident, $Type_Ref);
-        if ($image != '') {
-            Aff_Img_Redim_Lien($chemin_images_util . $image, 150, 150, 'image_subdiv');
-            echo '<br />' . my_html($titre_img) . '<br /><br />' . "\n";
-        }
-
-        echo '<br />';
-        $larg_titre = 30;
-        echo '<table width="70%" class="table_form" align="center">' . "\n";
-        echo colonne_titre_tab(LG_SUBDIV_NAME) . $n_subdivision_html;
-        if (($Lat_V != 0) or ($Long_V != 0)) {
-            echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
-        }
-        echo '</td></tr>' . "\n";
-
-        echo colonne_titre_tab(LG_SUBDIV_TOWN) . $ville . '</td></tr>' . "\n";
-
-        // Traitement de la position géographique
-        if (($Lat_V != 0) or ($Long_V != 0)) {
-            echo colonne_titre_tab(LG_SUBDIV_ZIP_LATITUDE) . $Lat_V . '</td></tr>' . "\n";
-            echo colonne_titre_tab(LG_SUBDIV_ZIP_LONGITUDE) . $Long_V . '</td></tr>' . "\n";
-        }
-        echo '</table>';
-
-        // Affichage du commentaire
-        if (Rech_Commentaire($Ident, $Type_Ref)) {
-            echo '<br />';
-            if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
-                echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
-            }
-        }
-
-        //  Documents lies à la ville
-        echo '<br />' . "\n";
-        $x = Aff_Documents_Objet($Ident, $Type_Ref, 'O');
-
-        // Formulaire pour le bouton retour
-        Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-
-        echo '<table cellpadding="0" width="100%">';
-        echo '<tr>';
-        echo '<td align="right">';
-        echo $compl;
-        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
-        echo "</td>";
-        echo '</tr>';
-        echo '</table>';
+// Traitement de la position géographique
+if (($enreg['Latitude'] != 0) or ($enreg['Longitude'] != 0)) {
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_SUBDIV_ZIP_LATITUDE) . '</td><td class="value">' . $enreg['Latitude'] . '</td></tr>';
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_SUBDIV_ZIP_LONGITUDE) . '</td><td class="value">' . $enreg['Longitude'] . '</td></tr>';
+}
+echo '</table>';
+if (Rech_Commentaire($Ident, 'S')) {
+    echo '<br />';
+    if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+        echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
     }
 }
+
+echo '<br />' . "\n";
+Aff_Documents_Objet($Ident, 'S', 'O');
+Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

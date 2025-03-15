@@ -136,7 +136,7 @@ function Aff_Filiation($enreg)
     echo '<br />';
 
     echo '<div id="content">' . "\n";
-    echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" >' . "\n";
+    echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">';
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="850" height="1" alt="clear"/>' . "\n";
@@ -147,13 +147,13 @@ function Aff_Filiation($enreg)
     echo '<div class="tab-container" id="container1">' . "\n";
     // Onglets
     echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnlDonGen\', this)" id="tab1">' . my_html($LG_Data_tab) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnlDonGen\', this)" id="tab1">' . $LG_Data_tab . '</a></li>' . "\n";
     // Certains onglets ne sont disponibles qu'en modification
     if ($modification) {
-        echo '<li><a href="#" onclick="return showPane(\'pnlEvts\', this)">' . my_html($LG_Ch_Filiation_Events) . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pnlEvts\', this)">' . $LG_Ch_Filiation_Events . '</a></li>' . "\n";
     }
-    echo '<li><a href="#" onclick="return showPane(\'pnlDocs\', this)">' . my_html($LG_Ch_Filiation_Docs) . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnlFiche\', this)">' . my_html($LG_File) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnlDocs\', this)">' . $LG_Ch_Filiation_Docs . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnlFiche\', this)">' . $LG_File . '</a></li>' . "\n";
     echo '</ul>' . "\n";
 
     echo '<div class="tab-panes">' . "\n";
@@ -161,13 +161,10 @@ function Aff_Filiation($enreg)
     echo '<div id="pnlDonGen">' . "\n";
     // Pavé parents
     echo '<fieldset>' . "\n";
-    echo '<legend>' . my_html($LG_Ch_Filiation_Parent_Choice) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
-
-    $larg = 10;
+    echo '<legend>' . $LG_Ch_Filiation_Parent_Choice . '</legend>' . "\n";
+    echo '<table width="95%">' . "\n";
     // Père
-
-    col_titre_tab_noClass(LG_FATHER, $larg);
+    echo '<tr><td width="10%">' . LG_FATHER . '</td>';
     echo "<td>\n";
     //aff_liste_pers_restreinte($nom_select,$premier,$dernier,$cle_sel,$crit,$order,$oblig, $oc, $pivot_inf, $pivot_sup, $type_ctrl)
     aff_liste_pers_restreinte('PereP', true, true, $LePere, 'Sexe = "m" or Sexe is Null', 'Nom, Prenoms', false, '', $ne_pers, $dec_pers, 'F');
@@ -177,7 +174,7 @@ function Aff_Filiation($enreg)
     echo '</td></tr>' . "\n";
 
     // Mère
-    col_titre_tab_noClass(LG_MOTHER, $larg);
+    echo '<tr><td width="10%">' . LG_MOTHER . '</td>';
     echo "<td>\n";
     //aff_liste_pers_restreinte($nom_select,$premier,$dernier,$cle_sel,$crit,$order,$oblig, $oc, $pivot_inf, $pivot_sup, $type_ctrl)
     aff_liste_pers_restreinte('MereP', true, true, $LaMere, 'Sexe = "f" or Sexe is Null', 'Nom, Prenoms', false, '', $ne_pers, $dec_pers, 'F');
@@ -190,17 +187,13 @@ function Aff_Filiation($enreg)
     echo '<td colspan="2">' . "\n";
     echo '<input type="button" onclick="sel_der()" value="' . $LG_Ch_Filiation_Last_Union . '" name="DH"/>';
     // Enfant du dernier couple saisi en création
-    $LeMax = 0;
     $n_unions = nom_table('unions');
     $sql = 'SELECT Conjoint_1, Conjoint_2 from ' . $n_unions . ' where Reference = (SELECT max(Reference) from ' . $n_unions . ')';
     $resmax = lect_sql($sql);
     $enrmax = $resmax->fetch(PDO::FETCH_NUM);
     if ($enrmax) {
-        $LeMax = $enrmax[0];
         echo '<input type="hidden" name="MaxConjoint_1" value="' . $enrmax[0] . '"/>' . "\n";
         echo '<input type="hidden" name="MaxConjoint_2" value="' . $enrmax[1] . '"/>' . "\n";
-    } else {
-        echo "&nbsp;";
     }
     $resmax->closeCursor();
 
@@ -221,8 +214,8 @@ function Aff_Filiation($enreg)
     }
     echo '<fieldset>' . "\n";
     echo '<legend>' . my_html($LG_Ch_Filiation_Related_Choice) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
-    col_titre_tab_noClass($lib, $larg);
+    echo '<table width="95%">' . "\n";
+    echo '<tr><td width="10%">' . $lib . '</td>';
     echo '<td>' . "\n";
     $sql = "select Pere, Mere, Nom, Prenoms, Ne_le, Decede_Le " .
         " from " . nom_table('filiations') . " f, " . nom_table('personnes') . " p " .
@@ -246,14 +239,14 @@ function Aff_Filiation($enreg)
 
     //Rang
     echo '<fieldset>' . "\n";
-    echo '<legend>' . my_html($LG_Ch_Filiation_Rank) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
-    col_titre_tab_noClass($LG_Ch_Filiation_Rank, $larg);
+    echo '<legend>' . $LG_Ch_Filiation_Rank . '</legend>' . "\n";
+    echo '<table width="95%">' . "\n";
+    echo '<tr><td width="10%">' . $LG_Ch_Filiation_Rank . '</td>';
     echo '<td>';
-    echo '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $LG_Ch_Filiation_Rank_Dec . '" title="' . $LG_Ch_Filiation_Rank_Dec . '" border="0" ';
+    echo '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $LG_Ch_Filiation_Rank_Dec . '" title="' . $LG_Ch_Filiation_Rank_Dec . '" ';
     echo 'onclick="if (document.forms.saisie.RangP.value>0) {document.forms.saisie.RangP.value--;}"/>' . "\n";
     echo '<input type="text" size="2" name="RangP" value="' . $LeRang . '" onchange="verification_num(this);"/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $LG_Ch_Filiation_Rank_Inc . '" title="' . $LG_Ch_Filiation_Rank_Inc . '" border="0" ';
+    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $LG_Ch_Filiation_Rank_Inc . '" title="' . $LG_Ch_Filiation_Rank_Inc . '" ';
     echo 'onclick="document.forms.saisie.RangP.value++;"/>' . "\n";
     echo '<input type="hidden" name="ARangP" value="' . $LeRang . '"/>';
     echo "</td>\n";
@@ -264,7 +257,7 @@ function Aff_Filiation($enreg)
     // Commentaires
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     //Divers
     echo '<tr>' . "\n";
     // Accès au commentaire
@@ -332,7 +325,6 @@ function Aff_Filiation($enreg)
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, 'cette filiation', false);
 
     echo '</div>' . "\n";    //<!-- tab container -->
-
     echo '</td></tr></table></div>' . "\n";
 }
 
@@ -497,7 +489,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

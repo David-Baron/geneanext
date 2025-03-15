@@ -123,7 +123,7 @@ for ($nb = 0; $nb < $nb_tables; $nb++) {
 }
 echo '</td></tr>';
 
-echo '<tr><td colspan="2">&nbsp;</td></tr>';
+echo '<tr><td colspan="2"></td></tr>';
 bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');
 
 echo '</table></form>';
@@ -131,10 +131,8 @@ echo '</table></form>';
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
-if ($compl != '') {
-    echo $compl;
-}
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

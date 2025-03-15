@@ -486,7 +486,7 @@ function Aff_Pers2($suffixe, $donnees_ini, $donnees_prop)
             $x = enrichit('prenoms', 'prenoms');
             $ch_prop = $deb . my_html($donnees_prop['prenoms']) . $fin;
             $x = enrichit('nom', 'nom');
-            $ch_prop .= '&nbsp;' . $deb . my_html($donnees_prop['nom']) . $fin;
+            $ch_prop .= ' ' . $deb . my_html($donnees_prop['nom']) . $fin;
             $x = enrichit('ne_le', 'ne_le');
             $ch_prop .= '<br />&deg; ' . $deb . Etend_date($donnees_prop['ne_le']) . $fin;
             $x = enrichit('ne_zone', 'ne_zone');
@@ -1253,7 +1253,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     // Contrôle de l'existence du fichier qui normalement devrait être présent
     // vu que le nom en a été passé par la liste qui accède au répertoire
     if (!file_exists($nom_fic)) {
-        aff_erreur(LG_CONTRIB_EDIT_FILE_N_EXISTS . ' ' . $nom_fic);
+        echo '<center><font color="red"><br><br><br><h2>' . LG_CONTRIB_EDIT_FILE_N_EXISTS . ' ' . $nom_fic . '</h2></font></center>';
     }
     // Le fichier existe, on peut le traiter ==> récupération des données présentes dans le fichier
     else {
@@ -1353,7 +1353,7 @@ if ((!$bt_OK) && (!$bt_An)) {
             }
             if ($trouve) {
                 $compl = Ajoute_Page_Info(600, 300);
-                Insere_Haut($titre . '&nbsp;' . LG_CONTRIB_EDIT_FOR . '&nbsp;' . $Prenoms . ' ' . $Nom, $compl, 'Edition_Contribution', $Contribution);
+                Insere_Haut($titre . ' ' . LG_CONTRIB_EDIT_FOR . ' ' . $Prenoms . ' ' . $Nom, $compl, 'Edition_Contribution', $Contribution);
                 echo '<br />' . "\n";
                 echo '<form id="saisie" method="post" action="' . my_self() . '?Contribution=' . $Contribution . '">' . "\n";
                 echo '<input type="hidden" name="Ref_Pers" value="' . $Ref_Pers . '"/>' . "\n";
@@ -1374,11 +1374,11 @@ if ((!$bt_OK) && (!$bt_An)) {
                 echo '<div class="tab-container" id="container1">' . "\n";
                 // Onglets
                 echo '<ul class="tabs">' . "\n";
-                echo '<li><a href="#" onclick="return showPane(\'pnlParents\', this)" id="tab1">' . my_html(LG_CONTRIB_EDIT_PARENTS) . '</a></li>' . "\n";
-                echo '<li><a href="#" onclick="return showPane(\'pnlConjoint\', this)">' . my_html(LG_CONTRIB_EDIT_HUB_WIFE) . '</a></li>' . "\n";
-                echo '<li><a href="#" onclick="return showPane(\'pnlEnfants\', this)">' . my_html(LG_CONTRIB_EDIT_CHILD) . '</a></li>' . "\n";
+                echo '<li><a href="#" onclick="return showPane(\'pnlParents\', this)" id="tab1">' . LG_CONTRIB_EDIT_PARENTS . '</a></li>' . "\n";
+                echo '<li><a href="#" onclick="return showPane(\'pnlConjoint\', this)">' . LG_CONTRIB_EDIT_HUB_WIFE . '</a></li>' . "\n";
+                echo '<li><a href="#" onclick="return showPane(\'pnlEnfants\', this)">' . LG_CONTRIB_EDIT_CHILD . '</a></li>' . "\n";
                 // Captcha pour autoriser le OK
-                echo '<li><a href="#" onclick="return showPane(\'pnlDatas\', this)">' . my_html(LG_CONTRIB_EDIT_DATAS) . '</a></li>' . "\n";
+                echo '<li><a href="#" onclick="return showPane(\'pnlDatas\', this)">' . LG_CONTRIB_EDIT_DATAS . '</a></li>' . "\n";
                 echo '</ul>' . "\n";
 
                 echo '<div class="tab-panes">' . "\n";
@@ -1433,9 +1433,9 @@ if ((!$bt_OK) && (!$bt_An)) {
                 $x = Aff_Pers2('mere', $donnees_ini, $donnees_prop);
                 echo '</fieldset>' . "\n";
 
-                echo '<br />' . $icone_tip . ' ' . my_html(LG_CONTRIB_EDIT_TIP1) . ' ' . '<br />';
-                echo '&nbsp;&nbsp;-&nbsp;<b>' . my_html(LG_CONTRIB_EDIT_TIP2) . '</b><br />';
-                echo '&nbsp;&nbsp;-&nbsp;<i>' . my_html(LG_CONTRIB_EDIT_TIP3) . '</i><br /><br />';
+                echo '<br />' . $icone_tip . ' ' . LG_CONTRIB_EDIT_TIP1 . ' ' . '<br />';
+                echo '  - <b>' . LG_CONTRIB_EDIT_TIP2 . '</b><br />';
+                echo '  - <i>' . LG_CONTRIB_EDIT_TIP3 . '</i><br /><br />';
 
                 echo '</div>' . "\n";
 
@@ -1502,19 +1502,19 @@ if ((!$bt_OK) && (!$bt_An)) {
                 echo '<div id="pnlDatas">' . "\n";
 
                 echo '<table width="100%">' . "\n";
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_VERSION, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_VERSION . '</td>';
                 echo '<td>' . $vers_gen . '</td></tr>';
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_SERVER_IP, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_SERVER_IP . '</td>';
                 echo '<td>' . $ip_serveur . '</td></tr>';
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_SERVER, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_SERVER . '</td>';
                 echo '<td>' . $serveur . '</td></tr>';
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_BROWSER, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_BROWSER . '</td>';
                 echo '<td>' . $navig . '</td></tr>';
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_IP, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_IP . '</td>';
                 echo '<td>' . $ip_util . '</td></tr>';
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_MAIL, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_MAIL . '</td>';
                 echo '<td>' . $mail . '</td></tr>';
-                col_titre_tab_noClass(LG_CONTRIB_EDIT_MESSAGE, $largP);
+                echo '<tr><td width="25%">' . LG_CONTRIB_EDIT_MESSAGE . '</td>';
                 echo '<td>' . $message . '</td></tr>';
                 echo ' </table>';
                 echo '</div>' . "\n";
@@ -1523,7 +1523,6 @@ if ((!$bt_OK) && (!$bt_An)) {
                 bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_Supprimer, LG_CONTRIB_EDIT_THIS, false);
 
                 echo '</div>' . "\n";  //  <!-- tab container -->
-
                 echo '</td></tr></table></div>' . "\n";
 
                 echo '</form>';
@@ -1536,14 +1535,14 @@ if ((!$bt_OK) && (!$bt_An)) {
         }
         // Echec sur l'ouverture du fichier
         else {
-            aff_erreur(LG_CONTRIB_EDIT_FILE_ERROR . $nom_fic);
+            echo '<center><font color="red"><br><br><br><h2>' . LG_CONTRIB_EDIT_FILE_ERROR . my_html($nom_fic) . '</h2></font></center>';
         }
     }
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

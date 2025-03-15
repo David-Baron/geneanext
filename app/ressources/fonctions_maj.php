@@ -588,7 +588,7 @@ function ctrl_fichier_ko($nb_fic = -1)
                 break;
         }
         $erreur = true;
-        aff_erreur($message);
+        echo '<center><font color="red"><br><br><br><h2>' . my_html($message) . '</h2></font></center>';
     }
 
     // Dans le cas d'un site gratuit non Premium, on contrôle que le fichier ne fait pas plus de la moitié du max autorisé
@@ -597,7 +597,7 @@ function ctrl_fichier_ko($nb_fic = -1)
             $taille_maxi_o /= 2;
             if ($size_fic > $taille_maxi_o) {
                 $erreur = true;
-                aff_erreur('Le fichier excède le poids autorisé (' . $taille_maxi_o . ' o ; vous pouvez augmenter cette limite en prenant l\'option Premium)');
+                echo '<center><font color="red"><br><br><br><h2>Le fichier excède le poids autorisé (' . $taille_maxi_o . ' o ; vous pouvez augmenter cette limite en prenant l\'option Premium)</h2></font></center>';
             }
         }
     }
@@ -606,14 +606,14 @@ function ctrl_fichier_ko($nb_fic = -1)
     if (!$erreur) {
         if (preg_match('#[\x00-\x1F\x7F-\x9F/\\\\]#', $nom_fic)) {
             $erreur = true;
-            aff_erreur('Nom de fichier invalide');
+            echo '<center><font color="red"><br><br><br><h2>Nom de fichier invalide</h2></font></center>';
         }
     }
 
     // Si pas d'erreur, on vérifie que le fichier a été uploadé, sinon présomption d'attaque
     if (!$erreur) {
         if (!is_uploaded_file($tmp_fic)) {
-            aff_erreur('Fichier chargé irrégulièrement.§§§!!');
+            echo '<center><font color="red"><br><br><br><h2>Fichier chargé irrégulièrement.§§§!!</h2></font></center>';
             $erreur = true;
         }
     }

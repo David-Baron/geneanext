@@ -153,15 +153,13 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         // Info de la personne dont on vient
         , $Personne, $Nom, $Prenoms, $Ne_Pers, $Dec_Pers, $P_Sexe;
 
-    $P_Cent = 12;
-    $lg_add_town_list_h = my_html(LG_ADD_TOWN_LIST);
     $lib_OK_h      = my_html($lib_OK);
     $lib_Annuler_h = my_html($lib_Annuler);
 
     $depuis_pers = ($Personne != 0) ? true : false;
 
     echo '<div id="content">' . "\n";
-    echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" >' . "\n";
+    echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">';
     echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="1000" height="1" alt="clear"/>' . "\n";
@@ -189,7 +187,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     // Pavé conjoints
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_UNION_HUS_WIFE) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
 
     //Récupération des infos du conjoint
     if ($Conjoint_1 != -1) {
@@ -210,34 +208,34 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     //if ($Uni_Sexe) echo 'Uni_Sexe<br />'; else echo 'Pas Uni_Sexe<br />';
 
     // Conjoint 1
-    col_titre_tab_noClass(LG_UNION_HUS_1ST, $P_Cent);
+    echo '<tr><td width="12%">' . LG_UNION_HUS_1ST . '</td>';
     echo '<td>';
     // On affiche une liste si on ne vient pas de la fiche personne ou si le conjoint 1 est inconnu
     if ((!$depuis_pers) or ($Conjoint_1 == -1) or (($depuis_pers) and ($Conjoint_1 != $Personne))) {
         aff_liste_pers_restreinte('Conjoint_1U', true, true, $Conjoint_1, get_crit_sexe($Sexe_2), 'Nom, Prenoms', true, '', $Ne_2, $Dec_2, 'C');
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-        if (($Conjoint_1 == -1) and (!$Uni_Sexe)) {
+        if (($Conjoint_1 == -1) && (!$Uni_Sexe)) {
             echo " <input type=\"button\" onclick=\"sel_der('m')\" value=\"Dernier homme saisi\" name=\"DH\"/>";
         }
     } else {
         echo ' ' . $Nom_1 . ' ' . $Prenoms_1 . "\n";
-        echo '<input type="' . $hidden . '" name="Conjoint_1U" value="' . $Conjoint_1 . '"/>';
+        echo '<input type="hidden" name="Conjoint_1U" value="' . $Conjoint_1 . '"/>';
     }
     echo '</td></tr>' . "\n";
 
     // Conjoint 2
-    col_titre_tab_noClass(LG_UNION_HUS_2ND, $P_Cent);
+    echo '<tr><td width="12%">' . LG_UNION_HUS_2ND . '</td>';
     echo '<td>';
     // On affiche une liste si on ne vient pas de la fiche personne ou si le conjoint 2 est inconnu
-    if ((!$depuis_pers) or ($Conjoint_2 == -1) or (($depuis_pers) and ($Conjoint_2 != $Personne))) {
+    if ((!$depuis_pers) || ($Conjoint_2 == -1) || (($depuis_pers) && ($Conjoint_2 != $Personne))) {
         aff_liste_pers_restreinte('Conjoint_2U', true, true, $Conjoint_2, get_crit_sexe($Sexe_1), 'Nom, Prenoms', true, '', $Ne_1, $Dec_1, 'C');
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-        if (($Conjoint_2 == -1) and (!$Uni_Sexe)) {
+        if (($Conjoint_2 == -1) && (!$Uni_Sexe)) {
             echo " <input type=\"button\" onclick=\"sel_der('f')\" value=\"Derni&egrave;re femme saisie\" name=\"DF\"/>";
         }
     } else {
         echo ' ' . $Nom_2 . ' ' . $Prenoms_2 . "\n";
-        echo '<input type="' . $hidden . '" name="Conjoint_2U" value="' . $Conjoint_2 . '"/>';
+        echo '<input type="hidden" name="Conjoint_2U" value="' . $Conjoint_2 . '"/>';
     }
     echo '</td></tr>' . "\n";
 
@@ -247,25 +245,18 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     // Pavé date et lieu de l'union
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_UNION_WHERE_WHEN) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     // Date mariage
-    col_titre_tab_noClass(LG_UNION_WHEN, $P_Cent);
+    echo '<tr><td width="12%">' . LG_UNION_WHEN . '</td>';
     echo '<td>';
     zone_date2('AMaries_LeU', 'Maries_LeU', 'CMaries_LeU', $enreg2['Maries_Le']);
     echo LG_AT . ' ';
-    aff_liste_villes(
-        'Ville_MariageU',
-        true                            // C'est la première fois que l'on appelle la fonction dans la page
-        ,
-        false                            // On est susceptible de rappeler la fonction
-        ,
-        $enreg2['Ville_Mariage']
-    );    // Clé de sélection de la ligne
-    echo '<input type="' . $hidden . '" name="AVille_MariageU" value="' . $enreg2["Ville_Mariage"] . '"/>' . "\n";
+    aff_liste_villes('Ville_MariageU', true, false, $enreg2['Ville_Mariage']);    // Clé de sélection de la ligne
+    echo '<input type="hidden" name="AVille_MariageU" value="' . $enreg2["Ville_Mariage"] . '"/>' . "\n";
     echo '<img id="ajout1" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         ' onclick="inverse_div(\'id_div_ajout1\');document.getElementById(\'nouvelle_ville1\').focus();"/>' . "\n";
     echo '<div id="id_div_ajout1">';
-    echo $lg_add_town_list_h . ' <input type="text" name="nouvelle_ville1"  id="nouvelle_ville1" maxlength="80"/>' . "\n";
+    echo LG_ADD_TOWN_LIST . ' <input type="text" name="nouvelle_ville1"  id="nouvelle_ville1" maxlength="80"/>' . "\n";
     echo '<input type="button" name="ferme_OK" value="' . $lib_OK_h . '" onclick="ajoute1();"/>' . "\n";
     echo '<input type="button" name="ferme_An" value="' . $lib_Annuler_h . '" onclick="inverse_div(\'id_div_ajout1\');"/>' . "\n";
     echo '</div>';
@@ -276,22 +267,22 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     // Pavé contrat
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_UNION_CONTRACT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
 
     //Contrat
-    col_titre_tab_noClass(LG_UNION_CONTRACT_WHEN, $P_Cent);
+    echo '<tr><td width="12%">' . LG_UNION_CONTRACT_WHEN . '</td>';
     echo '<td>';
     zone_date2('ADate_KU', 'Date_KU', 'CDate_KU', $enreg2['Date_K']);
     echo ' ' . LG_UNION_CONTRACT_NOTARY . ' <input type="text" size="60" name="Notaire_KU" value="' . $enreg2['Notaire_K'] . '"/></td></tr>' . "\n";
-    col_titre_tab_noClass(LG_UNION_CONTRACT_NOTARY_WHERE, $P_Cent);
+    echo '<tr><td width="12%">' . LG_UNION_CONTRACT_NOTARY_WHERE . '</td>';
     echo '<td>';
     aff_liste_villes('Ville_NotaireU', false, false, $enreg2['Ville_Notaire']);
-    echo '<input type="' . $hidden . '" name="ANotaire_KU" value="' . $enreg2["Notaire_K"] . '"/>';
-    echo '<input type="' . $hidden . '" name="AVille_NotaireU" value="' . $enreg2["Ville_Notaire"] . '"/>';
+    echo '<input type="hidden" name="ANotaire_KU" value="' . $enreg2["Notaire_K"] . '"/>';
+    echo '<input type="hidden" name="AVille_NotaireU" value="' . $enreg2["Ville_Notaire"] . '"/>';
     echo ' <img id="ajout2" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         'onclick="inverse_div(\'id_div_ajout2\');document.getElementById(\'nouvelle_ville2\').focus();"/>' . "\n";
     echo '<div id="id_div_ajout2">';
-    echo $lg_add_town_list_h . ' <input type="text" name="nouvelle_ville2" maxlength="80"/>' . "\n";
+    echo LG_ADD_TOWN_LIST . ' <input type="text" name="nouvelle_ville2" maxlength="80"/>' . "\n";
     echo '<input type="button" name="ferme_OK" value="' . $lib_OK_h . '" onclick="ajoute2();"/>' . "\n";
     echo '<input type="button" name="ferme_An" value="' . $lib_Annuler_h . '" onclick="inverse_div(\'id_div_ajout2\');"/>' . "\n";
     echo '</div>';
@@ -302,19 +293,19 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     // Commentaires
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     echo '<tr>' . "\n";
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire($Ref_Union, 'U');
     echo '<td>';
     echo '<textarea cols="50" rows="4" name="DiversU">' . $Commentaire . '</textarea>' . "\n";
-    echo '<input type="' . $hidden . '" name="ADiversU" value="' . htmlentities($Commentaire, ENT_QUOTES, $def_enc) . '"/>';
+    echo '<input type="hidden" name="ADiversU" value="' . htmlentities($Commentaire, ENT_QUOTES, $def_enc) . '"/>';
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
-    echo '<td>' . my_html(LG_CH_COMMENT_VISIBILITY) . ' <input type="checkbox" name="Diff_Internet_NoteU" value="O"';
+    echo '<td>' . LG_CH_COMMENT_VISIBILITY . ' <input type="checkbox" name="Diff_Internet_NoteU" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
     echo "/>\n";
-    echo '<input type="' . $hidden . '" name="ADiff_Internet_NoteU" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
+    echo '<input type="hidden" name="ADiff_Internet_NoteU" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
     echo '</td></tr>' . "\n";
     echo '</table>' . "\n";
     echo '</fieldset>' . "\n";
@@ -364,7 +355,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . ' ';
         echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . ' ' . "\n";
 
-        echo '<table border="0" id="tblSampleE" width="100%">' . "\n";
+        echo '<table id="tblSampleE" width="100%">' . "\n";
         echo '<tr align="center">' . "\n";
         echo '<td class="rupt_table">' . LG_FIRST_NAME . '</td>';
         echo '<td class="rupt_table">' . $LG_birth . '</td>';
@@ -385,8 +376,8 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
             zone_date2('ADecede_leE_' . $nb, 'Decede_leE_' . $nb, 'CDecede_leE_' . $nb, '');
             aff_liste_villes('SelVille_Dec_' . $nb, false, false, 0);
             echo '</td>' . "\n";
-            echo '<td ' . $style . '><input type="radio" name="SexeE_' . $nb . '" value="m"/>' . my_html(LG_SEXE_MAN_I);
-            echo '<input type="radio" name="SexeE_' . $nb . '" value="f"/>' . my_html(LG_SEXE_WOMAN_I) . '</td>';
+            echo '<td ' . $style . '><input type="radio" name="SexeE_' . $nb . '" value="m"/>' . LG_SEXE_MAN_I;
+            echo '<input type="radio" name="SexeE_' . $nb . '" value="f"/>' . LG_SEXE_WOMAN_I . '</td>';
             echo '</tr>' . "\n";
         }
 
@@ -409,10 +400,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     //
     Aff_Documents_Objet($Ref_Union, 'U', 'N');
     // Possibilité de lier un document à l'union
-    echo '<br /> ' . my_html(LG_UNION_ADD_DOC) . ' '
+    echo '<br /> ' . LG_UNION_ADD_DOC . ' '
         . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $Ref_Union .
             '&amp;typeObjet=U&amp;refDoc=-1"', 'ajout', $LG_add) . "\n";
-    echo '<br /> ' . my_html(LG_UNION_ADD_DOC_NEW) . ' '
+    echo '<br /> ' . LG_UNION_ADD_DOC_NEW . ' '
         . Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
             '&amp;typeObjet=U"', 'ajout', $LG_add) . "\n";
     echo '</div>' . "\n";
@@ -428,7 +419,6 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, LG_UNION_THIS, false);
 
     echo '</div>' . "\n";    //<!-- tab container -->
-
     echo '</td></tr></table></div>' . "\n";
 }
 
@@ -680,19 +670,19 @@ if ((!$bt_OK) && (!$bt_An)) {
     //echo '<form id="saisie" method="post" onsubmit="return verification_form_union(this,\'Conjoint_1U,Conjoint_2U\')" action="'.my_self().'?'.Query_Str().'">'."\n";
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Conjoint_1U,Conjoint_2U\')" action="' . my_self() . '?' . Query_Str() . '" >' . "\n";
 
-    echo '<input type="' . $hidden . '" name="MConjoint_1" value="' . $Conjoint_1 . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="MConjoint_2" value="' . $Conjoint_2 . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="Horigine" value="' . $Horigine . '"/>' . "\n";
+    echo '<input type="hidden" name="MConjoint_1" value="' . $Conjoint_1 . '"/>' . "\n";
+    echo '<input type="hidden" name="MConjoint_2" value="' . $Conjoint_2 . '"/>' . "\n";
+    echo '<input type="hidden" name="Horigine" value="' . $Horigine . '"/>' . "\n";
 
     // Dernière personnes saisies
     if ($Conjoint_1  == -1) {
-        echo '<input type="' . $hidden . '" name="MaxConjoint_1" value="';
+        echo '<input type="hidden" name="MaxConjoint_1" value="';
         if (!$Uni_Sexe) echo dernier('m');
         else echo dernier('f');
         echo '"/>' . "\n";
     }
     if ($Conjoint_2  == -1) {
-        echo '<input type="' . $hidden . '" name="MaxConjoint_2" value="';
+        echo '<input type="hidden" name="MaxConjoint_2" value="';
         if (!$Uni_Sexe) echo dernier('f');
         else echo dernier('m');
         echo '"/>' . "\n";
@@ -714,7 +704,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

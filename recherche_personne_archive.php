@@ -304,21 +304,21 @@ if ($_SESSION['estContributeur']) {
             // Nouvelle recherche
             echo '<form id="nouvelle" method="post" action="' . my_self() . '">' . "\n";
             echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-            echo '<input type="' . $hidden . '" name="reprise" value=""/>';
-            echo '<input type="' . $hidden . '" name="Ville" value="' . $Ville . '"/>';
+            echo '<input type="hidden" name="reprise" value=""/>';
+            echo '<input type="hidden" name="Ville" value="' . $Ville . '"/>';
             if ($Annee_Debut == '0000') $Annee_Debut = '';
             if ($Annee_Fin == '9999') $Annee_Fin = '';
-            echo '<input type="' . $hidden . '" name="Annee_Debut" value="' . $Annee_Debut . '"/>';
-            echo '<input type="' . $hidden . '" name="Annee_Fin" value="' . $Annee_Fin . '"/>';
-            echo '<input type="' . $hidden . '" name="T_Donnees_N" value="' . $T_Donnees_N . '"/>';
-            echo '<input type="' . $hidden . '" name="T_Donnees_M" value="' . $T_Donnees_M . '"/>';
-            echo '<input type="' . $hidden . '" name="T_Donnees_D" value="' . $T_Donnees_D . '"/>';
-            echo '<input type="' . $hidden . '" name="T_Fiches_O" value="' . $T_Fiches_O . '"/>';
-            echo '<input type="' . $hidden . '" name="T_Fiches_N" value="' . $T_Fiches_N . '"/>';
-            echo '<input type="' . $hidden . '" name="T_Fiches_I" value="' . $T_Fiches_I . '"/>';
-            echo '<input type="' . $hidden . '" name="Tri" value="' . $Tri . '"/>';
-            echo '<input type="' . $hidden . '" name="Sortie" value="' . $Sortie . '"/>';
-            echo '<input type="' . $hidden . '" name="ut_suf" value="' . $ut_suf . '"/>';
+            echo '<input type="hidden" name="Annee_Debut" value="' . $Annee_Debut . '"/>';
+            echo '<input type="hidden" name="Annee_Fin" value="' . $Annee_Fin . '"/>';
+            echo '<input type="hidden" name="T_Donnees_N" value="' . $T_Donnees_N . '"/>';
+            echo '<input type="hidden" name="T_Donnees_M" value="' . $T_Donnees_M . '"/>';
+            echo '<input type="hidden" name="T_Donnees_D" value="' . $T_Donnees_D . '"/>';
+            echo '<input type="hidden" name="T_Fiches_O" value="' . $T_Fiches_O . '"/>';
+            echo '<input type="hidden" name="T_Fiches_N" value="' . $T_Fiches_N . '"/>';
+            echo '<input type="hidden" name="T_Fiches_I" value="' . $T_Fiches_I . '"/>';
+            echo '<input type="hidden" name="Tri" value="' . $Tri . '"/>';
+            echo '<input type="hidden" name="Sortie" value="' . $Sortie . '"/>';
+            echo '<input type="hidden" name="ut_suf" value="' . $ut_suf . '"/>';
             echo '<br />';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive"><img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
@@ -334,26 +334,23 @@ if ($_SESSION['estContributeur']) {
     // Première entrée : affichage pour saisie
     if ((!$bt_OK) && (!$bt_An)) {
 
-        echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
-
-        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
-        $larg_titre = 25;
-        echo '<table width="80%" class="table_form">' . "\n";
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab($LG_Ch_Search_Town);
-        echo '<select name="Ville">' . "\n";
         $existe_ville = false;
         $sql = 'select Identifiant_zone, Nom_Ville from ' . nom_table('villes') .
             ' where Identifiant_Zone <> 0' .
             ' order by Nom_Ville';
         $res = lect_sql($sql);
+
+        echo '<form id="saisie" method="post">' . "\n";
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
+        echo '<table width="80%" class="table_form">' . "\n";
+        echo '<tr><td colspan="2"> </td></tr>';
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Search_Town) . '</td><td class="value">';
+        echo '<select name="Ville">' . "\n";
         while ($row = $res->fetch(PDO::FETCH_NUM)) {
             $ligne = $row[0];
             echo '<option value="' . $ligne . '"';
             if ($reprise) {
-                if ($ligne == $Ville) echo ' selected="selected"';
+                if ($ligne == $Ville) echo ' selected';
             }
             echo '>' . my_html($row[1]);
             echo '</option>' . "\n";
@@ -362,12 +359,12 @@ if ($_SESSION['estContributeur']) {
         echo '</select>' . "\n";
         echo '</td></tr>' . "\n";
 
-        colonne_titre_tab($LG_Ch_Search_Beg);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Search_Beg) . '</td><td class="value">';
         echo '<input type="text" size="4" name="Annee_Debut"';
         if ($reprise) echo ' value="' . $Annee_Debut . '"';
         echo '/></td></tr>' . "\n";
 
-        colonne_titre_tab($LG_Ch_Search_End);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Search_End) . '</td><td class="value">';
         echo '<input type="text" size="4" name="Annee_Fin"';
         if ($reprise) echo ' value="' . $Annee_Fin . '"';
         echo '/>';
@@ -375,80 +372,78 @@ if ($_SESSION['estContributeur']) {
         echo '</td></tr>' . "\n";
 
         // Type de données : Naissance, mariages, décès
-        colonne_titre_tab($LG_Ch_Search_Consider);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Search_Consider) . '</td><td class="value">';
         echo '<input type="checkbox" id="T_Donnees_N" name="T_Donnees_N" value="N"';
         if ($reprise) {
-            if ($T_Donnees_N == 'N') echo ' checked="checked"';
-        } else echo ' checked="checked"';
+            if ($T_Donnees_N == 'N') echo ' checked';
+        } else echo ' checked';
         echo '/> <label for="T_Donnees_N">' . $LG_Ch_Search_Birth . '</label> ';
         // Les hébergés non Premium ne peuvent avoir les mariages
         if ((!$SiteGratuit) or ($Premium)) {
             echo '<input type="checkbox" id="T_Donnees_M" name="T_Donnees_M" value="M"';
             if ($reprise) {
-                if ($T_Donnees_M == 'M') echo ' checked="checked"';
+                if ($T_Donnees_M == 'M') echo ' checked';
             }
             echo '/> <label for="T_Donnees_M">' . $LG_Ch_Search_Wed . '</label> ';
         } else echo '<input type="hidden" name="T_Donnees_M" value="-"/>';
         echo '<input type="checkbox"  id="T_Donnees_D" name="T_Donnees_D" value="D"';
         if ($reprise) {
-            if ($T_Donnees_D == 'D') echo ' checked="checked"';
-        } else echo ' checked="checked"';
+            if ($T_Donnees_D == 'D') echo ' checked';
+        } else echo ' checked';
         echo '/> <label for="T_Donnees_D">' . $LG_Ch_Search_Death . '</label>';
         echo '</td></tr>' . "\n";
 
         // Type de fiche
-        colonne_titre_tab($LG_Ch_Search_Consider_Valid);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Search_Consider_Valid) . '</td><td class="value">';
         echo '<input type="checkbox" id="T_Fiches_O" name="T_Fiches_O" value="O"';
         if ($reprise) {
-            if ($T_Fiches_O == 'O') echo ' checked="checked"';
+            if ($T_Fiches_O == 'O') echo ' checked';
         }
         echo '/> <label for="T_Fiches_O">' . $LG_Ch_Search_Valid . '</label> ';
         echo '<input type="checkbox" id="T_Fiches_N" name="T_Fiches_N" value="N"';
         if ($reprise) {
-            if ($T_Fiches_N == 'N') echo ' checked="checked"';
-        } else echo ' checked="checked"';
+            if ($T_Fiches_N == 'N') echo ' checked';
+        } else echo ' checked';
         echo '/> <label for="T_Fiches_N">' . $LG_Ch_Search_Non_Valid . '</label> ';
         echo '<input type="checkbox" id="T_Fiches_I" name="T_Fiches_I" value="I"';
         if ($reprise) {
-            if ($T_Fiches_I == 'I') echo ' checked="checked"';
+            if ($T_Fiches_I == 'I') echo ' checked';
         }
         echo '/> <label for="T_Fiches_I">' . $LG_Ch_Search_Internet . '</label>';
         echo '</td></tr>' . "\n";
 
         // Tri des données en sortie
-        colonne_titre_tab($LG_Ch_Search_Sort);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Search_Sort) . '</td><td class="value">';
         echo '<input type="radio" id="Tri_D" name="Tri" value="D"';
         if ($reprise) {
-            if ($Tri == 'D') echo ' checked="checked"';
-        } else echo ' checked="checked"';
+            if ($Tri == 'D') echo ' checked';
+        } else echo ' checked';
         echo '/> <label for="Tri_D">' . $LG_Ch_Search_Sort_Date . '</label>';
         echo '<input type="radio" id="Tri_P" name="Tri" value="P"';
         if ($reprise) {
-            if ($Tri == 'P') echo ' checked="checked"';
+            if ($Tri == 'P') echo ' checked';
         }
         echo '/> <label for="Tri_P">' . $LG_Ch_Search_Sort_Pers . '</label>';
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab($LG_Ch_Output_Format);
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
         echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" ';
         if (($Sortie == '') or (($Sortie == 'e')))
-            echo 'checked="checked"';
+            echo 'checked';
         echo '/> <label for="Sortie_e">' . $LG_Ch_Output_Screen . ' </label>';
         echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"';
-        if ($Sortie == 't') echo ' checked="checked"';
+        if ($Sortie == 't') echo ' checked';
         echo '/> <label for="Sortie_t">' . $LG_Ch_Output_Text . ' </label>';
         echo '<input type="radio" id="Sortie_c" name="Sortie" value="c"';
-        if ($Sortie == 'c') echo ' checked="checked"';
+        if ($Sortie == 'c') echo ' checked';
         echo '/> <label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
         echo ' ( <input type="checkbox" id="ut_suf" name="ut_suf" onclick="document.forms.saisie.Sortie[2].checked=true;"/> <label for="ut_suf">' . $LG_Ch_Search_Suffix . '</label> )' . "\n";
         echo '</td></tr>' . "\n";
 
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         // Pas de bouton OK s'il n'y a pas de ville
         if (!$existe_ville) $lib_Rechercher = '';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
+        echo '<tr><td colspan="2"> </td></tr>';
         echo '</table>' . "\n";
         echo '</form>' . "\n";
     }
@@ -458,13 +453,14 @@ if ($_SESSION['estContributeur']) {
         echo '<tr>';
         echo '<td align="right">';
         echo $compl;
-        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
         echo "</td>";
         echo '</tr>';
         echo '</table>';
     }
-} else
+} else {
     echo $LG_function_noavailable_profile . "\n";
+}
 ?>
 </body>
 

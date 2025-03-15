@@ -116,7 +116,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_role.php?code=' . $Code . '"', 'page', 'Fiche rôle') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_role.php?code=' . $Code . '"', 'page', 'Fiche rôle') . ' ';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Role', $Code);
 
@@ -146,15 +146,13 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         $Libelle = '';
     }
 
-    $larg_titre = '25';
     echo '<table width="80%" class="table_form">' . "\n";
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-    col_titre_tab(LG_ROLE_CODE, $larg_titre);
+    echo '<tr><td colspan="2"> </td></tr>';
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_CODE) . ' </td>';
     echo '<td class="value">';
     // On ne peut modifier le code qu'en création ou s'il n'est pas utilisé
     if (($Creation) or (! $utilise)) {
-        echo '<input class="oblig" type="text" name="CodeF" value="' . $CodeF . '" size="4" maxlength="4" onchange="verification_code(this);"/>&nbsp;' . "\n";
+        echo '<input class="oblig" type="text" name="CodeF" value="' . $CodeF . '" size="4" maxlength="4" onchange="verification_code(this);"/> ' . "\n";
         // Liste des codes existants
         $codes = ' ';
         $sql = 'select Code_Role from ' . $n_roles;
@@ -167,45 +165,40 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo $CodeF . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_ROLE_SYM, $larg_titre);
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_SYM) . ' </td>';
     echo '<td class="value">';
     echo '<input type="radio" id="SymetrieF_O" name="SymetrieF" value="O"';
     if (($SymetrieF == 'O') or ($Creation)) echo ' checked="checked"';
-    echo '/><label for="SymetrieF_O">' . $LG_Yes . '</label>&nbsp;' . "\n";
+    echo '/><label for="SymetrieF_O">' . $LG_Yes . '</label> ' . "\n";
     echo '<input type="radio" id="SymetrieF_N" name="SymetrieF" value="N"';
     if ($SymetrieF == 'N') echo ' checked="checked"';
     echo '/><label for="SymetrieF_N">' . $LG_No . '</label>';
     echo '<input type="' . $hidden . '" name="ASymetrieF" value="' . $SymetrieF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_ROLE_LABEL, $larg_titre);
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_LABEL) . ' </td>';
     echo '<td class="value">';
     echo '<input type="text" name="LibelleF" value="' . $LibelleF . '" size="50" onchange="dupplique();"/>' . "\n";
     echo '<input type="' . $hidden . '" name="ALibelleF" value="' . $LibelleF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
-
-    col_titre_tab(LG_ROLE_OPPOS_LABEL, $larg_titre);
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_OPPOS_LABEL) . ' </td>';
     echo '<td class="value">';
     echo '<input type="text" name="LibelleInvF" value="' . $LibelleInvF . '" size="50"/>' . "\n";
     echo '<input type="' . $hidden . '" name="ALibelleInvF" value="' . $LibelleInvF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    echo '<tr><td colspan="2"> </td></tr>';
     // Bouton Supprimer en modification si pas d'utilisation du rôle
     $lib_sup = '';
     if ((!$Creation) and (! $utilise)) $lib_sup = $lib_Supprimer;
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, LG_ROLE_THIS);
 
     echo '</table>' . "\n";
-
     echo '</form>';
-
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

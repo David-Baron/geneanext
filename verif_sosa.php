@@ -199,13 +199,17 @@ if ($Personne = $Res->fetch(PDO::FETCH_ASSOC)) {
     echo '</form>';
 
     echo '<br /><a href="' . $root . '/init_sosa.php">' . my_html($LG_Menu_Title['Delete_Sosa']) . '</a>';
-} else $x = Erreur_DeCujus();
+} else {
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"> ';
+    echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ; ';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

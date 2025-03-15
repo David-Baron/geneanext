@@ -152,12 +152,12 @@ if ($est_gestionnaire) {
 
         // Nouvelle recherche
         if ($Sortie != 't') {
-            echo '<form id="nouvelle" method="post" action="' . my_self() . '">' . "\n";
+            echo '<form id="nouvelle" method="post">' . "\n";
             echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
             echo '<br />';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive">' .
-                '<img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . my_html(LG_DOC_SCH_NEW) . '</button>';
+                '<img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . LG_DOC_SCH_NEW . '</button>';
             echo '</div>';
             echo '</form>' . "\n";
         }
@@ -166,17 +166,13 @@ if ($est_gestionnaire) {
     // Première entrée : affichage pour saisie
     if ((!$bt_OK) && (!$bt_An)) {
 
-        echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post">' . "\n";
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
-        $larg_titre = 30;
         echo '<table width="80%" class="table_form">' . "\n";
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
-        colonne_titre_tab(LG_DOC_SCH_LB_TITLE);
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_DOC_SCH_LB_TITLE) . '</td><td class="value">';
         echo '<input type="text" name="Recherche" size="80"/></td></tr>' . "\n";
-
-        colonne_titre_tab(LG_DOC_SCH_LB_NATURE);
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_DOC_SCH_LB_NATURE) . '</td><td class="value">';
         echo '<select name="Nature" size="1">';
         echo '<option value="-">-- Toutes --</option>' . "\n";
         foreach ($Natures_Docs as $key => $value) {
@@ -184,8 +180,7 @@ if ($est_gestionnaire) {
         }
         echo '</select>' . "\n";
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab(LG_DOC_SCH_LB_TYPE);
+        echo '<tr><td class="label" width="30%">' . ucfirst(LG_DOC_SCH_LB_TYPE) . '</td><td class="value">';
         $sql = 'select Id_Type_Document, Libelle_Type from ' . nom_table('types_doc') . ' order by Libelle_Type';
         echo '<select name="Type_Doc" size="1">';
         echo '<option value="-">-- ' . my_html($LG_All) . ' --</option>' . "\n";
@@ -198,8 +193,7 @@ if ($est_gestionnaire) {
         echo '</select>' . "\n";
         echo '</td></tr>' . "\n";
         echo '</td></tr>' . "\n";
-
-        colonne_titre_tab($LG_Ch_Output_Format);
+        echo '<tr><td class="label" width="30%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
         affiche_sortie(true);
         echo '</td></tr>' . "\n";
 
@@ -216,7 +210,7 @@ if ($est_gestionnaire) {
         echo '<tr>';
         echo '<td align="right">';
         echo $compl;
-        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
         echo "</td>";
         echo '</tr>';
         echo '</table>';

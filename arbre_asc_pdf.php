@@ -177,5 +177,5 @@ else {
     $index_follow = 'IN';                    // NOFOLLOW demandé pour les moteurs en cas d'erreur
     require(__DIR__ . '/app/ressources/gestion_pages.php');
     Insere_Haut('Arbre ascendant', '', 'Arbre_Asc_PDF', $Refer);
-    echo Affiche_Stop($LG_Data_noavailable_profile);
+    echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . $LG_Data_noavailable_profile . "<br>";
 }

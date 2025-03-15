@@ -123,22 +123,21 @@ function Aff_Subdiv($enreg2)
 
     echo '<br />';
     echo '<div id="content">' . "\n";
-    echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" align="center">' . "\n";
+    echo '<table id="cols" cellpadding="0" cellspacing="0" align="center">' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
     echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
-
     echo '<tr>' . "\n";
     echo '<td class="left">' . "\n";
     echo '<div class="tab-container" id="container1">' . "\n";
     // Onglets
     echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'pnl_Gen\', this)" id="tab1">' . my_html(LG_CH_DATA_TAB) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnl_Gen\', this)" id="tab1">' . LG_CH_DATA_TAB . '</a></li>' . "\n";
     if ($Ident != -1) {
-        echo '<li><a href="#" onclick="return showPane(\'pane_Docs\', this)">' . my_html(LG_CH_DOCS) . '</a></li>' . "\n";
+        echo '<li><a href="#" onclick="return showPane(\'pane_Docs\', this)">' . LG_CH_DOCS . '</a></li>' . "\n";
     }
-    echo '<li><a href="#" onclick="return showPane(\'pnl_Fiche\', this)">' . my_html(LG_CH_FILE) . '</a></li>' . "\n";
+    echo '<li><a href="#" onclick="return showPane(\'pnl_Fiche\', this)">' . LG_CH_FILE . '</a></li>' . "\n";
     echo '</ul>' . "\n";
 
     echo '<div class="tab-panes">' . "\n";
@@ -146,20 +145,20 @@ function Aff_Subdiv($enreg2)
     echo '<div id="pnl_Gen">' . "\n";
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_DATA_TAB) . '</legend>' . "\n";
-    echo '<table width="100%" border="0">' . "\n";
-    col_titre_tab_noClass(LG_SUBDIV_NAME, $largP);
-    echo '<td><input class="oblig" type="text" size="50" name="Nom_SubDiv" id="Nom_SubDiv" value="' . $n_subdiv_html . '"/>&nbsp;' . "\n";
+    echo '<table width="100%">' . "\n";
+    echo '<tr><td width="20%">' . LG_SUBDIV_NAME . '</td>';
+    echo '<td><input class="oblig" type="text" size="50" name="Nom_SubDiv" id="Nom_SubDiv" value="' . $n_subdiv_html . '"/> ' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ANom_SubDiv" value="' . $n_subdiv_html . '"/></td></tr>' . "\n";
-    col_titre_tab_noClass(LG_SUBDIV_TOWN, $largP);
+    echo '<tr><td width="20%">' . LG_SUBDIV_TOWN . '</td>';
     echo "<td><select name='Zone_Mere'>\n";
     $sql = 'select Identifiant_zone, Nom_Ville from ' . nom_table('villes') . ' order by Nom_Ville';
     $res = lect_sql($sql);
     $enr_zone = $enreg2['Zone_Mere'];
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         echo '<option value="' . $row[0] . '"';
-        if ($enr_zone == $row[0]) echo ' selected="selected" ';
-        if ($row[0] == 0) echo '>&nbsp;';
+        if ($enr_zone == $row[0]) echo ' selected';
+        if ($row[0] == 0) echo '> ';
         else echo '>' . my_html($row[1]);
         echo '</option>' . "\n";
     }
@@ -173,7 +172,7 @@ function Aff_Subdiv($enreg2)
     // Coordonnées géographiques
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_SUBDIV_GEO_COORDS) . '</legend>' . "\n";
-    echo '<table width="100%" border="0">' . "\n";
+    echo '<table width="100%">' . "\n";
     champ_carte(LG_SUBDIV_ZIP_LATITUDE, 'Latitude', $enreg2['Latitude']);
     echo '</td></tr>' . "\n";
     champ_carte(LG_SUBDIV_ZIP_LONGITUDE, 'Longitude', $enreg2['Longitude']);
@@ -189,7 +188,7 @@ function Aff_Subdiv($enreg2)
     // Commentaires
     echo '<fieldset>' . "\n";
     echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
-    echo '<table width="95%" border="0">' . "\n";
+    echo '<table width="95%">' . "\n";
     //Divers
     echo '<tr>' . "\n";
     echo '<td>';
@@ -200,7 +199,7 @@ function Aff_Subdiv($enreg2)
     echo '</td></tr><tr>';
     // Diffusion Internet commentaire
     echo '<td><label for="Diff_Internet_Note">' . LG_CH_COMMENT_VISIBILITY . '</label>'
-        . '&nbsp;<input type="checkbox" id="Diff_Internet_Note" name="Diff_Internet_Note" value="O"';
+        . ' <input type="checkbox" id="Diff_Internet_Note" name="Diff_Internet_Note" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
     echo '<input type="hidden" name="ADiff_Internet_Note" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
@@ -221,7 +220,7 @@ function Aff_Subdiv($enreg2)
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ident, 'S', 'N');
         // Possibilité de lier un document pour la subdivision
-        echo '<br />&nbsp;' . my_html(LG_SUBDIV_LINK_SOURCE) . ' '
+        echo '<br /> ' . my_html(LG_SUBDIV_LINK_SOURCE) . ' '
             . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=' . TYPE_OBJET . '&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
@@ -328,8 +327,8 @@ if (($ok == '') && ($annuler == '')) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=' . TYPE_OBJET . '"', 'images', 'Images') . '&nbsp;' .
-            Affiche_Icone_Lien('href="' . $root . '/fiche_subdivision.php?Ident=' . $Ident . '"', 'page', $LG_Menu_Title['Subdiv']) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=' . TYPE_OBJET . '"', 'images', 'Images') . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/fiche_subdivision.php?Ident=' . $Ident . '"', 'page', $LG_Menu_Title['Subdiv']) . ' ';
     }
 
     if ($bt_Sup) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -359,8 +358,8 @@ if (($ok == '') && ($annuler == '')) {
 
     // Subdivision inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
-        echo '<br/ >Subdivision supprim&eacutee<br/ >';
-        echo '<a href="' . $root . '/liste_villes.php?Type_Liste=S">' . my_html(LG_SUBDIV_LIST) . '</a>';
+        echo '<br/ >Subdivision supprimée<br/ >';
+        echo '<a href="' . $root . '/liste_villes.php?Type_Liste=S">' . LG_SUBDIV_LIST . '</a>';
     } else {
         include('Insert_Tiny.js');
         // include('jscripts/Edition_Ville.js');
@@ -383,7 +382,7 @@ if (($ok == '') && ($annuler == '')) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';
@@ -393,7 +392,7 @@ include(__DIR__ . '/assets/js/gest_onglets.js');
 function champ_carte($libelle, $nom_champ, $valeur)
 {
     global $largP;
-    col_titre_tab_noClass($libelle, $largP);
+    echo '<tr><td width="' . $largP . '%">' . my_html($libelle) . '</td>';
     echo '<td><input type="text" size="10" name="' . $nom_champ . '" id="' . $nom_champ . '" value="' . $valeur . '" onchange="affiche_icone_carte(\'carte_osm\')"; />' . "\n";
     echo '<input type="hidden" name="A' . $nom_champ . '" value="' . $valeur . '"/>' . "\n";
 }
@@ -403,7 +402,6 @@ function champ_carte($libelle, $nom_champ, $valeur)
 <script type="text/javascript">
     // On positionne l'onglet par défaut
     setupPanes("container1", "tab1", 40);
-
     affiche_icone_carte('carte_osm');
 
     function affiche_icone_carte(obj) {

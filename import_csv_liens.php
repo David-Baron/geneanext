@@ -89,7 +89,7 @@ if ($ok == 'OK') {
         set_time_limit($lim_temps);
     }
 
-    echo '<br />' . my_html($LG_Requested_File) . ' : ' . $_FILES['nom_du_fichier']['name'] . '<br />';
+    echo '<br />' . $LG_Requested_File . ' : ' . $_FILES['nom_du_fichier']['name'] . '<br />';
 
     $status = '';
     switch ($val_statut) {
@@ -103,10 +103,10 @@ if ($ok == 'OK') {
             $status = LG_FROM_INTERNET;
             break;
     }
-    echo my_html($LG_Default_Status . ' : ' . $status) . '<br />';
+    echo $LG_Default_Status . ' : ' . my_html($status) . '<br />';
 
     if ($vidage_type != '-')
-        echo my_html(LG_IMP_CSV_LINKS_DEL_BEFORE) . ' ' . $vidage_type . '<br />';
+        echo LG_IMP_CSV_LINKS_DEL_BEFORE . ' ' . $vidage_type . '<br />';
 
     $erreur = false;
 
@@ -121,7 +121,7 @@ if ($ok == 'OK') {
         if (!$erreur) {
             // Seuls sont autorisés les fichiers csv
             if (Extension_Fic($nom_du_fichier) != 'csv') {
-                aff_erreur(LG_IMP_CSV_ERR_TYPE);
+                echo '<center><font color="red"><br><br><br><h2>' . LG_IMP_CSV_ERR_TYPE . '</h2></font></center>';
                 $erreur = true;
             }
         }
@@ -152,17 +152,16 @@ if ($ok == 'OK') {
                     '0' .                    // Sur_Accueil
                     ')';
                 insert_champs();
-
                 fclose($fp);
 
                 if ($modif) {
                     maj_date_site();
                     $plu = pluriel($nb_enr_crees);
-                    echo $nb_enr_crees . ' ' . my_html(LG_IMP_CSV_LINKS_CREATED) . '<br />';
-                    echo '<br /><a href="' . $root . '/liste_liens.php">' . my_html($LG_Menu_Title['Links']) . '</a><br />';
+                    echo $nb_enr_crees . ' ' . LG_IMP_CSV_LINKS_CREATED . '<br />';
+                    echo '<br /><a href="' . $root . '/liste_liens.php">' . $LG_Menu_Title['Links'] . '</a><br />';
                 }
             } else {
-                echo my_html(LG_IMP_CSV_ERR_OPEN_FILE) . '<br />';
+                echo LG_IMP_CSV_ERR_OPEN_FILE . '<br />';
             }
         }
     }
@@ -173,23 +172,18 @@ if ($est_gestionnaire) {
     if (($ok == '') && ($annuler == '')) {
 
         echo '<br />';
-
-        $larg_titre = '35';
-        echo '<form id="saisie" method="post" enctype="multipart/form-data" action="' . my_self() . '">' . "\n";
+        echo '<form id="saisie" method="post" enctype="multipart/form-data">' . "\n";
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
-
         echo '<table width="90%" class="table_form">' . "\n";
-        colonne_titre_tab($LG_csv_file_upload);
+        echo '<tr><td class="label" width="35%">' . ucfirst($LG_csv_file_upload) . '</td><td class="value">';
         echo '<input type="file" name="nom_du_fichier" size="80"/></td>';
         echo '</tr>' . "\n";
-
         echo '<tr><td class="label" width="35%">' . $LG_Default_Status . '</td><td class="value">';
         bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
         bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
         bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
         echo '</td></tr>';
-
-        colonne_titre_tab(LG_IMP_CSV_LINKS_RESET_LINKS);
+        echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_CSV_LINKS_RESET_LINKS) . '</td><td class="value">';
         // Select avec les types existants
         $req = 'select distinct type_lien from ' . $n_liens;
         $result = lect_sql($req);
@@ -204,8 +198,8 @@ if ($est_gestionnaire) {
         echo '</td></tr>' . "\n";
 
         echo '<tr><td class="label" width="35%">' . $LG_csv_header . '</td><td class="value">';
-        echo '<input type="radio" name="entete" id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label>&nbsp;';
-        echo '<input type="radio" name="entete" id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label>&nbsp;';
+        echo '<input type="radio" name="entete" id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label> ';
+        echo '<input type="radio" name="entete" id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label> ';
         echo '<input type="radio" name="entete" id="entete_P" value="P" onclick="cache_div(\'corresp\');"/><label for="entete_P">' . LG_IMP_CSV_HEADER_YES_CONSIDER . '</label>';
         echo '</td></tr>';
 
@@ -229,11 +223,9 @@ if ($est_gestionnaire) {
         echo '</table>';
         echo '</div>';
         echo '</td></tr>';
-
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
+        echo '<tr><td colspan="2"> </td></tr>';
         echo '</table>';
         echo '</form>';
     }
@@ -243,7 +235,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

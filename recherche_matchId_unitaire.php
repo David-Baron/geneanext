@@ -32,21 +32,17 @@ $sql = 'SELECT Nom, Prenoms, Sexe, Ne_le, Nom_Ville'
     . ' LIMIT 1';
 $res = lect_sql($sql);
 if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
-    $lastName = $enreg['Nom'];
-    $firstName = $enreg['Prenoms'];
-    $sex = $enreg['Sexe'];
-    $d_nais = $enreg['Ne_le'];
+
     $d_nai_id = '';
-    if (strlen($d_nais) == 10)
-        $d_nai_id = substr($d_nais, 6, 2) . '%2F' . substr($d_nais, 4, 2) . '%2F' . substr($d_nais, 0, 4);
+    if (strlen($enreg['Ne_le']) == 10)
+        $d_nai_id = substr($enreg['Ne_le'], 6, 2) . '%2F' . substr($enreg['Ne_le'], 4, 2) . '%2F' . substr($enreg['Ne_le'], 0, 4);
 
     echo '<br>';
-    $larg_titre = 30;
     echo '<table width="70%" class="table_form" align="center">' . "\n";
-    echo colonne_titre_tab($LG_Name) . $lastName . '</td></tr>' . "\n";
-    echo colonne_titre_tab(LG_FIRST_NAME) . $firstName . '</td></tr>' . "\n";
-    echo colonne_titre_tab(LG_SEXE);
-    switch ($sex) {
+    echo '<tr><td class="label" width="30%">' . ucfirst($LG_Name) . '</td><td class="value">' . $enreg['Nom'] . '</td></tr>';
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_FIRST_NAME) . '</td><td class="value">' . $enreg['Prenoms'] . '</td></tr>';
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_SEXE) . '</td><td class="value">';
+    switch ($enreg['Sexe']) {
         case 'm':
             echo LG_SEXE_MAN;
             break;
@@ -57,18 +53,15 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
             echo '?';
     }
     echo '</td></tr>' . "\n";
-    echo colonne_titre_tab(lib_sexe_born($sex)) . Etend_date($d_nais) . '</td></tr>' . "\n";
-    echo colonne_titre_tab(LG_AT) . $enreg['Nom_Ville'] . '</td></tr>' . "\n";
+    echo '<tr><td class="label" width="30%">' . ucfirst(lib_sexe_born($enreg['Sexe'])) . '</td><td class="value">' . Etend_date($enreg['Ne_le']) . '</td></tr>';
+    echo '<tr><td class="label" width="30%">' . ucfirst(LG_AT) . '</td><td class="value">' . $enreg['Nom_Ville'] . '</td></tr>';
     echo '</table>';
-
-    $firstName = UnPrenom($firstName);
-    $sex = strtoupper($sex);
 
     // Construction pour l'appel de l'API
     $url = $url_matchid_sch
-        . '?firstName=' . $firstName
-        . '&lastName=' . $lastName
-        . '&sex=' . $sex
+        . '?firstName=' . UnPrenom($enreg['Prenoms'])
+        . '&lastName=' . $enreg['Nom']
+        . '&sex=' . strtoupper($enreg['Sexe'])
         . '&birthDate=' . $d_nai_id;
     if ($debug) var_dump($url);
 
@@ -83,7 +76,6 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
 
     $json = curl_exec($ch);
     $erreur = curl_error($ch);
-
     $affiche = false;
 
     if ($erreur != '') {
@@ -92,28 +84,15 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
         if (strpos($erreur, 'COULD NOT RESOLVE HOST') !== false)
             echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> ' . LG_SCH_MATCH_NO_INTERNET;
     } else {
-
         $affiche = true;
-
         echo '<h2>' . LG_SCH_MATCH_ANSWER . '</h2><br>';
-
-        // echo $json;
-        // var_dump($json);
-        // echo strlen($json).'<br>';
-
         $sortie = json_decode($json, true);
         curl_close($ch);
-
-        // var_dump($sortie['response']['persons']);
-        // echo count($sortie['response']['persons']).'<br>';
 
         $nb_pers = count($sortie['response']['persons']);
         for ($nb = 0; $nb < $nb_pers; $nb++) {
             $num_pers = $nb + 1;
             echo LG_SCH_MATCH_PERS . ' ' . $num_pers . '<br>';
-            // echo $sortie['response']['persons'][$nb]['source'].'<br>';
-            // echo $sortie['response']['persons'][$nb]['birth']['date'].' à ';
-
             echo $LG_Name . ' ' . $sortie['response']['persons'][$nb]['name']['last'] . '<br>';;
             echo LG_FIRST_NAME . ' ';
             $nb_prenoms = count($sortie['response']['persons'][$nb]['name']['first']);
@@ -144,7 +123,7 @@ echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';
 echo $compl;
-echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
 echo "</td>";
 echo '</tr>';
 echo '</table>';

@@ -48,19 +48,19 @@ if ($enreg_sel) {
 
     Insere_Haut($titre, $compl, 'Fiche_Role', $Code);
 
-    $larg_titre = 25;
     $c_role = $enreg2['Code_Role'];
+    
     echo '<br />';
     echo '<table width="70%" class="table_form" align="center">' . "\n";
-    echo col_titre_tab(LG_ROLE_CODE, $larg_titre) . '<td class="value">' . $c_role . '</td></tr>' . "\n";
-    echo col_titre_tab(LG_ROLE_SYM, $larg_titre) . '<td class="value">';
-    if ($enreg2['Symetrie'] == 'O')
-        echo $LG_Yes;
-    else
-        echo $LG_No;
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_CODE) . ' </td><td class="value">' . $c_role . '</td></tr>';
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_SYM) . ' </td><td class="value">';
+    if ($enreg2['Symetrie'] == 'O'){
+        echo $LG_Yes;}
+    else{
+        echo $LG_No;}
     echo '</td></tr>' . "\n";
-    echo col_titre_tab(LG_ROLE_LABEL, $larg_titre) . '<td class="value">' . $enreg2['Libelle_Role'] . '</td></tr>' . "\n";
-    echo col_titre_tab(LG_ROLE_OPPOS_LABEL, $larg_titre) . '<td class="value">' . $enreg2['Libelle_Inv_Role'] . '</td></tr>' . "\n";
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_LABEL) . ' </td><td class="value">' . $enreg2['Libelle_Role'] . '</td></tr>';
+    echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_ROLE_OPPOS_LABEL) . ' </td><td class="value">' . $enreg2['Libelle_Inv_Role'] . '</td></tr>';
     echo '</table>';
 
     // Appel de la liste des personnes pour ce rôle
@@ -73,7 +73,7 @@ if ($enreg_sel) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

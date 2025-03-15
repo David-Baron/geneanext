@@ -459,7 +459,11 @@ if ($decujus = get_decujus()) {
     if (!$texte) echo '</div>' . "\n";
 
     if (!$texte) include(__DIR__ . '/assets/js/Liste_Patro.js');
-} else $x = Erreur_DeCujus();
+} else {
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"> ';
+    echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ; ';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+}
 
 if ($sortie_pdf) {
     //echo 'sortie pdf : '.$sortie_pdf;
@@ -472,7 +476,7 @@ if (! $texte) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

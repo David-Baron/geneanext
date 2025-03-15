@@ -19,7 +19,7 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 $Reference = Recup_Variable('Reference', 'N');
 
 if ($Reference == 0) {
-    aff_erreur('KO');
+    echo '<center><font color="red"><br><br><br><h2>KO</h2></font></center>';
 } else {
     // Récupération de l'union
     $sql = 'select Conjoint_1, Conjoint_2 from ' . nom_table('unions') . ' where Reference = ' . $Reference . ' limit 1';
@@ -129,7 +129,7 @@ if ($Reference == 0) {
     echo '<tr>';
     echo '<td align="right">';
     echo $compl;
-    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/house.png" alt="Accueil" title="Accueil" /></a>';
     echo "</td>";
     echo '</tr>';
     echo '</table>';

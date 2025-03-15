@@ -359,7 +359,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     if ($debug) $vide = true;
     if (!$vide) {
-        Affiche_Stop(LG_DECUJUS_ERR_NO_EMPTY);
+        echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . LG_DECUJUS_ERR_NO_EMPTY . '<br>';
     } else {
         echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'NomP,PrenomsP\')">';
 
