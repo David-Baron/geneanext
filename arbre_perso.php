@@ -125,7 +125,13 @@ if (file_exists($nomFichierHtml)) {
     echo my_html(LG_PERS_TREE_NOT_FOUND) . LG_SEMIC . $nomFichierHtml . "<br />";
 }
 
-Insere_Bas('');
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

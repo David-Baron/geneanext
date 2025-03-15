@@ -128,18 +128,18 @@ if ($nb_lig > 0) {
         $lien1 = '';
         $lien2 = '';
         if ($est_contributeur) {
-            $lien1 = '<a ' . Ins_Edt_Pers($row['Ref_1']) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
-            $lien2 = '<a ' . Ins_Edt_Pers($row['Ref_2']) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+            $lien1 = '<a href="' . $root . '/edition_personne.php?Refer=' . $row['Ref_1'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+            $lien2 = '<a href="' . $root . '/edition_personne.php?Refer=' . $row['Ref_2'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
         }
 
         echo '<tr>';
         // Si symétrie = N et Principale = N, on inverse
         if (($symetrie == 'N') && ($row['Principale'] == 'N')) {
-            echo '<td width="50%"><a ' . Ins_Ref_Pers($row['Ref_2']) . '>' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
-            echo '<td><a ' . Ins_Ref_Pers($row['Ref_1']) . '>' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
+            echo '<td width="50%"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_2'] . '">' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
+            echo '<td><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_1'] . '">' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
         } else {
-            echo '<td width="50%"><a ' . Ins_Ref_Pers($row['Ref_1']) . '>' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
-            echo '<td><a ' . Ins_Ref_Pers($row['Ref_2']) . '>' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
+            echo '<td width="50%"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_1'] . '">' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
+            echo '<td><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_2'] . '">' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
         }
         echo '</tr>';
     }
@@ -151,7 +151,14 @@ if ($res)
 
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour, '?' . Query_Str());
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

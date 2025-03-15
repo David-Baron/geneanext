@@ -36,7 +36,7 @@ if ($res->rowCount() > 0) {
     echo $row[0];
     if ($debug) {
         $fp = ouvre_fic('log_nom.txt', 'wb');
-        ecrire($fp, $row[0]);
+        fputs($fp, $row[0]);
         fclose($fp);
     }
     return;

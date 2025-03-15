@@ -160,7 +160,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_source.php?ident=' . $Ident . '"', 'page', $LG_Menu_Title['Source']) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_source.php?ident=' . $Ident . '"', 'page', $LG_Menu_Title['Source']) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Source', $Ident);
 
@@ -188,12 +188,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $larg_titre = 25;
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Titre\')" action="' . my_self() . '?ident=' . $Ident . '">' . "\n";
     echo '<table width="80%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     // Titre
     colonne_titre_tab(LG_SRC_TITLE);
     echo '<input type="text" class="oblig" size="100" name="Titre" value="' . $Titre . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ATitre" value="' . $Titre . '"/></td></tr>' . "\n";
 
     // Auteur
@@ -258,7 +258,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
   	echo '<input type="'.$hidden.'" name="ADiff_Note" value="'.$Diffusion_Commentaire_Internet.'"/></td></tr>'."\n";
 	*/
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     // Bouton Supprimer en modification si pas d'utilisation du dépôt
     $lib_sup = '';
@@ -274,10 +274,17 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     echo '</table>' . "\n";
 
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '</form>';
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 function rb_fiab($niv, $lib)

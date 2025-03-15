@@ -64,8 +64,17 @@ $compl .= Ajoute_Page_Info(600, 150) .
     Affiche_Icone_Lien('href="' . $root . '/arbre_agnatique_cognatique.php?Refer=' . $Refer . '&amp;Type=' . $Type_Arbre . '&amp;texte=O"', 'text', $LG_printable_format) .
     '&nbsp;';
 
-if (! $texte) Insere_Haut($titre, $compl, 'Arbre_Agnatique_Cognatique', $Refer);
-else          Insere_Haut_texte($titre);
+if (! $texte) {
+    Insere_Haut($titre, $compl, 'Arbre_Agnatique_Cognatique', $Refer);
+} else {
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
 
 // On restreint le nombre de générations car la mémoire est limitée...
 if ($Environnement == 'L') $max_gen_AD = $max_gen_AD_loc;
@@ -146,7 +155,7 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
                     }
                     $cont_cell = '<table width="100%"><tr align="center"><td>';
                     if (!$texte) {
-                        $cont_cell .= '<a ' . Ins_Ref_Pers($Refer);
+                        $cont_cell .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Refer . '"';
                         // Présence d'une image ? Si oui, celle-ci sera affichée au survol de la case
                         $image = Rech_Image_Defaut($Refer, 'P');
                         if ($image != '') {
@@ -232,7 +241,16 @@ if (!$texte) {
     for ($nb == 0; $nb < $c_personnes; $nb++)
         echo '<br /><br /><br /><br />';
     echo '<table cellpadding="0" width="100%" border="0"><tr><td align="right">';
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl != '') {
+        echo $compl;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
     echo '</td></tr></table>';
 }
 
@@ -243,9 +261,9 @@ if ($glob_existe_image) {
     $action = $LG_Tree_Icon_Hover;
     if ($Comportement == 'C') $action = $LG_Tree_Icon_Click;
     echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> '
-     . $action
-     . '<img src="' . $root . '/assets/img/' . $Icones['images'] . '" alt="Images" title="Images"> '
-     . $LG_Tree_Show_Image;
+        . $action
+        . '<img src="' . $root . '/assets/img/' . $Icones['images'] . '" alt="Images" title="Images"> '
+        . $LG_Tree_Show_Image;
     echo '</div>';
     echo '</table>';
     echo '<script type="text/javascript">';

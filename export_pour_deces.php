@@ -82,7 +82,7 @@ if ($bt_OK) {
             $nom_fic .= '.csv';
             $fp = ouvre_fic($nom_fic, 'w+');
             if ($fp) {
-                ecrire($fp, $LG_Name . ';' . $LG_birth . ';' . LG_EXPORT_DEATH_BIRTH_PLACE . ';' . LG_FIRST_NAME . ';');
+                fputs($fp, $LG_Name . ';' . $LG_birth . ';' . LG_EXPORT_DEATH_BIRTH_PLACE . ';' . LG_FIRST_NAME . ';');
                 while ($row = $res->fetch(PDO::FETCH_NUM)) {
                     $row[1] = str_replace(' ', ",", $row[1]);
                     $ligne = '';
@@ -93,7 +93,7 @@ if ($bt_OK) {
                     $ligne .= trt_date($row[2]) . ';';
                     $ligne .= $row[4] . ';';
                     $ligne .= $row[1] . ';';
-                    ecrire($fp, $ligne);
+                    fputs($fp, $ligne);
                 }
                 if ($nb_enr > 0) {
                     fclose($fp);
@@ -118,7 +118,7 @@ if ($bt_OK) {
                 echo $row[0] . ' '
                     . UnPrenom($row[1]) . ' '
                     . lib_sexe_born($row[5]) . ' ' . etend_date($row[2]) . ' ' . LG_AT . ' ' . $row[4];
-                echo ' <a ' . Ins_Edt_Pers($row[6]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+                echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[6] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
                 echo ' <a href="' . $root . '/recherche_matchid_unitaire.php'
                     . '?ref=' . $row[6] . '"'
                     . ' target="_blank">'
@@ -129,13 +129,20 @@ if ($bt_OK) {
     }
 
     Bouton_Retour($lib_Retour);
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
 
     echo '<form id="saisie" method="post">';
     $larg_titre = '30';
     echo '<table width="70%" class="table_form">';
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     colonne_titre_tab(LG_EXPORT_DEATH_DEAD);
     echo '<input type="checkbox" id="export_dead" name="export_dead" value="ID"/>';
@@ -149,13 +156,20 @@ if ($bt_OK) {
     echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>';
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');
 
     echo '</table></form>';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 

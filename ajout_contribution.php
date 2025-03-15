@@ -134,7 +134,7 @@ function ligne_contrib($ligne)
 
 function Aff_Pers($suffixe, $oblig)
 {
-    global $enregP, $Icones, $chemin_images, $chemin_images_icones, $Nom, $larg_col, $at;
+    global $root, $enregP, $Icones, $chemin_images, $chemin_images_icones, $Nom, $larg_col, $at;
     if (!$oblig) $style_z_oblig2 = '';
     else $style_z_oblig2 = ' class = "oblig" ';
     if (($suffixe == 'pere') or ($suffixe == 'mere')) {
@@ -159,7 +159,7 @@ function Aff_Pers($suffixe, $oblig)
     echo '<table border="0">';
     col_titre_tab_noClass(LG_PERS_NAME, $larg_col);
     echo '<td><input type="text" size="50" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;';
-    if ($oblig) Img_Zone_Oblig('imgObligNom');
+    if ($oblig)  echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
     // Proposition du nom de la personne sauf pour le conjoint
     if ($suffixe != 'conj') {
@@ -171,7 +171,7 @@ function Aff_Pers($suffixe, $oblig)
     echo '</td></tr>';
     col_titre_tab_noClass(LG_PERS_FIRST_NAME, $larg_col);
     echo '<td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig2 . '/>&nbsp;';
-    if ($oblig) Img_Zone_Oblig('imgObligPrenoms');
+    if ($oblig)  echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>';
     if (($suffixe != 'pere') and ($suffixe != 'mere')) {
         col_titre_tab_noClass('Sexe', $larg_col);
@@ -206,7 +206,7 @@ function Aff_Pers($suffixe, $oblig)
 // Affiche les données du formulaire
 function Aff_Donnees($Refer)
 {
-    global $chemin_images, $Comportement, $Icones, $Images, $style_z_oblig, $larg_col, $lib_Okay, $lib_Annuler;
+    global $root, $chemin_images, $Comportement, $Icones, $Images, $style_z_oblig, $larg_col, $lib_Okay, $lib_Annuler;
 
     echo '<div id="content">';
     echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >';
@@ -232,11 +232,11 @@ function Aff_Donnees($Refer)
     // Onglet parents
     echo '<div id="pnlParents">';
     echo '  <fieldset>';
-    aff_legend(LG_FATHER);
+    echo '<legend>' . LG_FATHER . '</legend>' . "\n";
     $x = Aff_Pers('pere', 0);
     echo '  </fieldset>';
     echo '  <fieldset>';
-    aff_legend(LG_MOTHER);
+    echo '<legend>' . LG_MOTHER . '</legend>' . "\n";
     $x = Aff_Pers('mere', 0);
     echo '  </fieldset>';
     echo '</div>';
@@ -250,11 +250,11 @@ function Aff_Donnees($Refer)
     // Onglet enfants
     echo '<div id="pnlEnfants">';
     echo '<fieldset>';
-    aff_legend(LG_CONTRIBS_CHILD_1);
+    echo '<legend>' . LG_CONTRIBS_CHILD_1 . '</legend>' . "\n";
     $x = Aff_Pers('enfant1', 0);
     echo '</fieldset>';
     echo '<fieldset>';
-    aff_legend(LG_CONTRIBS_CHILD_2);
+    echo '<legend>' . LG_CONTRIBS_CHILD_2 . '</legend>' . "\n";
     $x = Aff_Pers('enfant2', 0);
     echo '</fieldset>';
     echo '</div>';
@@ -282,7 +282,7 @@ function Aff_Donnees($Refer)
     col_titre_tab_noClass(LG_CONTRIBS_EMAIL, $larg_col);
     //echo '   <td><input type="text" size=50 name="mail" value="" '.$style_z_oblig.'>&nbsp;';
     echo '<td><input type="text" size="50" name="mail" id="mail" value="" class="oblig"/>&nbsp;';
-    echo Img_Zone_Oblig('imgObligMail') . '</td>';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/></td>';
     echo '</tr>';
     col_titre_tab_noClass(LG_CONTRIBS_MESSAGE, $larg_col);
     echo '<td><textarea cols="50" rows="4" name="message"></textarea></td>';
@@ -557,7 +557,7 @@ if ((!$bt_OK) && (!$bt_An)) {
             echo '<br>';
             echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . $root . '/ajout_contribution.php?Refer=' . $Refer . '" >';
             echo '<input type="hidden" name="Refer" value="' . $Refer . '"/>';
-            aff_origine();
+            echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
             Aff_Donnees($Refer); // Affichage des données
             echo '</form>';
             include(__DIR__ . '/assets/js/gest_onglets.js'); ?>
@@ -569,7 +569,16 @@ if ((!$bt_OK) && (!$bt_An)) {
             </script>
 <?php }
     }
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl != '') {
+        echo $compl;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

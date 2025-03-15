@@ -18,8 +18,8 @@ function add_pers($enreg)
 function affiche_pers($nb)
 {
     global $root, $Icones, $LG_modify, $refs, $noms, $prenoms;
-    echo '&nbsp;<a ' . Ins_Ref_Pers($refs[$nb]) . '>' . my_html($noms[$nb] . ' ' . $prenoms[$nb]) . '</a>' . "\n";
-    echo '&nbsp;<a ' . Ins_Edt_Pers($refs[$nb]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />';
+    echo ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $refs[$nb] . '">' . my_html($noms[$nb] . ' ' . $prenoms[$nb]) . '</a>' . "\n";
+    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $refs[$nb] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />';
 }
 
 $acces = 'L';
@@ -228,7 +228,14 @@ else {
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

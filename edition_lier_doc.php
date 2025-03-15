@@ -192,7 +192,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<input type="' . $hidden . '" name="refObjet" id="refObjet" value="' . $refObjet . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="maxi" id="maxi" />';
     echo '<input type=' . $hidden . ' name="ArefDoc" value="' . $ArefDoc . '"/>' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<br />' . "\n";
 
     // Rappel du nom de l'objet
@@ -233,7 +233,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     //  En création, on peut choisir le document
     if ($refDoc == -1) {
         $existe_docs = false;
-        echo colonne_titre_tab($LG_Docs_Doc_Type);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_Doc_Type . '&nbsp;</td><td class="value">';
         // On ne retient que les documents non liés
         $sql_types = 'SELECT DISTINCT d.Id_Type_Document, t.Libelle_Type' .
             ' FROM ' . $n_documents . ' d, ' . $n_types_doc . ' t' .
@@ -249,7 +249,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         }
         if ($existe_docs) {
             echo '</select>&nbsp;';
-            echo Img_Zone_Oblig('imgObligTDoc');
+            echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         } else {
             echo my_html($LG_Link_Doc_No);
         }
@@ -257,9 +257,9 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
         if ($existe_docs) {
             // Nom du document
-            echo colonne_titre_tab($LG_Docs_Doc);
+            echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_Doc . '&nbsp;</td><td class="value">';
             echo '<select name="refDoc" id="refDoc" class="oblig"></select>&nbsp;';
-            echo Img_Zone_Oblig('imgObligDocs');
+            echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive" ' .
                 'onclick="document.forms.saisie.refDoc.value = document.forms.saisie.maxi.value;return false;"> ' .
@@ -278,15 +278,16 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             $Titre_Doc = $row[0];
             $Nom_Fic_Doc = $row[1];
         }
-        echo colonne_titre_tab($LG_Docs_Doc);
+
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_Doc . '&nbsp;</td><td class="value">';
         echo '<input type=' . $hidden . ' name="refDoc" value="' . $refDoc . '"/>' . "\n";
         echo $Titre_Doc . '</td></tr>' . "\n";
         $resN->closeCursor();
-        echo colonne_titre_tab($LG_Docs_File);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_File . '&nbsp;</td><td class="value">';
         echo $Nom_Fic_Doc . '</td></tr>' . "\n";
     }
 
-    echo colonne_titre_tab($LG_Docs_Default_Doc);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_Default_Doc . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="Defaut" value="O"';
     if ($Defaut == 'O')
         echo ' checked="checked"';
@@ -312,7 +313,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     bt_ok_an_sup($lib_ok, $lib_Annuler, $lib_sup, $LG_Link_Doc_This, false);
 
     echo "</form>\n";
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 

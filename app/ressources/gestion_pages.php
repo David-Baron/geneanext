@@ -12,35 +12,6 @@ function Ecrit_Entete_Page($titre, $contenu, $mots, $index_follow = 'IF')
     Ecrit_Meta($titre, $contenu, $mots, $index_follow);
 }
 
-// Détruit toute la session, y compris le fichier de session pour les robots
-function kill_sess_bot()
-{
-    global $is_bot;
-    // Vérifie si l'agent utilisateur est un robot
-    if ($is_bot) {
-        // Détruit toutes les variables de session
-        $_SESSION = array();
-
-        // Obtenir l'identifiant de la session
-        $session_id = session_id();
-
-        // Construire le chemin vers le fichier de session
-        $session_file = session_save_path() . '/sess_' . $session_id;
-        // var_dump($session_file);
-
-        // Vérifier si le fichier de session existe et le supprimer
-        if (file_exists($session_file)) {
-            unlink($session_file);
-            // echo "Le fichier de session a été supprimé.";
-        } else {
-            echo "Le fichier de session n'existe pas.";
-        }
-
-        // Finalement, on détruit la session
-        session_destroy();
-    }
-    // else echo 'pas un robot';
-}
 
 // L'accès est-il le fait d'un robot ?
 $is_bot =  (
@@ -163,12 +134,12 @@ if (isset($Environnement)) {
 
     if ($debug) {
         $dh = date("d/m/Y H:i:s");
-        $f_log = open_log();
-        ecrire($f_log, '');
-        ecrire($f_log, $dh . ' ===== avant');
-        ecrire($f_log, ' Pages mémorisées');
+        $f_log = ouvre_fic('log.txt', 'a+');
+        fputs($f_log, '');
+        fputs($f_log, $dh . ' ===== avant');
+        fputs($f_log, ' Pages mémorisées');
         for ($nb = 0; $nb < count($_SESSION['pages']); $nb++) {
-            ecrire($f_log, '   ' . $_SESSION['pages'][$nb]);
+            fputs($f_log, '   ' . $_SESSION['pages'][$nb]);
         }
     }
 
@@ -184,14 +155,14 @@ if (isset($Environnement)) {
     }
 
     if ($debug) {
-        ecrire($f_log, $dh . ' ===== après');
-        ecrire($f_log, ' Pages mémorisées');
+        fputs($f_log, $dh . ' ===== après');
+        fputs($f_log, ' Pages mémorisées');
         for ($nb = 0; $nb < count($_SESSION['pages']); $nb++) {
-            ecrire($f_log, '   ' . $_SESSION['pages'][$nb]);
+            fputs($f_log, '   ' . $_SESSION['pages'][$nb]);
         }
-        ecrire($f_log, ' Self ' . my_self());
-        ecrire($f_log, ' Page courante ' . $courante);
-        ecrire($f_log, ' Page précédente ' . $precedente);
+        fputs($f_log, ' Self ' . my_self());
+        fputs($f_log, ' Page courante ' . $courante);
+        fputs($f_log, ' Page précédente ' . $precedente);
         fclose($f_log);
     }
 

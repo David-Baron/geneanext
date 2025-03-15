@@ -65,7 +65,7 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 150) .
-        Affiche_Icone_Lien('href="'. $root .'/fiche_requete.php?reference=' . $reference . '"', 'page', my_html($LG_Menu_Title['Request'])) . '&nbsp;';
+        Affiche_Icone_Lien('href="' . $root . '/fiche_requete.php?reference=' . $reference . '"', 'page', my_html($LG_Menu_Title['Request'])) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Requete', $reference);
 
@@ -83,12 +83,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
         $larg_titre = 25;
         echo '<table width="80%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-        echo colonne_titre_tab(LG_QUERY_TITLE);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_QUERY_TITLE . '&nbsp;</td><td class="value">';
         echo '<input class="oblig" type="text" name="Titre" id="Titre" value="' . $Titre . '" size="80"/>&nbsp;' . "\n";
         echo '<input type="' . $hidden . '" name="ATitre" value="' . $Titre . '"/>' . "\n";
-        Img_Zone_Oblig('imgObligTitre');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '</td></tr>' . "\n";
 
         $liste_crit = explode($separ, $enreg['Criteres']);
@@ -97,14 +97,15 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             for ($nb = 0; $nb < $nb_crit - 1; $nb++) {
                 $exp_crit = explode('=', $liste_crit[$nb]);
                 echo colonne_titre_tab(trim($exp_crit[0])) . my_html(trim($exp_crit[1])) . '</td></tr>' . "\n";
+                // echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . my_html(ucfirst($lib)) . '&nbsp;</td><td class="value">';
             }
         }
 
-        echo colonne_titre_tab(LG_QUERY_CODE);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_QUERY_CODE . '&nbsp;</td><td class="value">';
         echo '<textarea cols="50" rows="4" name="Code_SQL" readonly="readonly">' . $Code_SQL . '</textarea>' . "\n";
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_Supprimer, LG_QUERY_THIS);
 
         echo '</table>' . "\n";
@@ -112,7 +113,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
         echo '<br />' . "\n";
     }
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

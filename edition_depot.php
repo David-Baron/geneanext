@@ -128,7 +128,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_depot.php?ident=' . $Ident . '"', 'page', my_html($LG_Menu_Title['Repo_Sources'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_depot.php?ident=' . $Ident . '"', 'page', my_html($LG_Menu_Title['Repo_Sources'])) . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Depot', $Ident);
 
@@ -147,28 +147,28 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $larg_titre = 30;
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'NomD\')" action="' . my_self() . '?ident=' . $Ident . '">' . "\n";
     echo '<table width="85%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-    colonne_titre_tab(LG_CH_REPOSITORY_NAME);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_REPOSITORY_NAME . '&nbsp;</td><td class="value">';
     echo '<input type="text" class="oblig" size="100" name="NomD" value="' . $NomD . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ANomD" value="' . $NomD . '"/></td></tr>' . "\n";
 
     // === Commentaire
-    colonne_titre_tab(LG_CH_COMMENT);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire($Ident, $Type_Ref);
     echo '<textarea cols="80" rows="4" name="Divers">' . $Commentaire . '</textarea>' . "\n";
     echo '<input type="' . $hidden . '" name="ADivers" value="' . htmlentities($Commentaire, ENT_QUOTES, $def_enc) . '"/></td></tr>' . "\n";
 
     // Diffusion Internet commentaire
-    colonne_titre_tab(LG_CH_COMMENT_VISIBILITY);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT_VISIBILITY . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="Diff_Note" value="O"';
-    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
+    if ($Diffusion_Commentaire_Internet == 'O') echo ' checked';
     echo "/>\n";
     echo '<input type="' . $hidden . '" name="ADiff_Note" value="' . $Diffusion_Commentaire_Internet . '"/></td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     // Bouton Supprimer en modification si pas d'utilisation du dépôt
     $lib_sup = '';
@@ -184,10 +184,17 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     echo '</table>' . "\n";
 
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '</form>';
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

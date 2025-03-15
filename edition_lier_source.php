@@ -141,7 +141,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'refSrc\')" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
     echo '<input type="hidden" name="typeObjet" value="' . $typeObjet . '"/>' . "\n";
     echo '<input type="hidden" name="refObjet" value="' . $refObjet . '"/>' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<br />' . "\n";
     // Rappel du nom de l'objet
     switch ($typeObjet) {
@@ -201,7 +201,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             $resMax = lect_sql($sql);
             $rowMax = $resMax->fetch(PDO::FETCH_NUM);
             $resMax->closeCursor();
-            echo '&nbsp;&nbsp;&nbsp;' . Img_Zone_Oblig('imgObligDoc');
+            echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
             echo "<input type='hidden' value='$rowMax[0]' name='refMax'/>\n";
             echo '<input type="button" onclick="document.forms.saisie.refSrc.value = document.forms.saisie.refMax.value;" value="'
                 . my_html($LG_Link_Source_Last) . '" name="dernSrc"/>';
@@ -239,7 +239,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     bt_ok_an_sup($lib_ok, $lib_Annuler, $lib_sup, $LG_Link_Doc_This, false);
 
     echo "</form>\n";
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

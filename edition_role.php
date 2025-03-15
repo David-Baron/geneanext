@@ -116,7 +116,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_role.php?code=' . $Code . '"', 'page', 'Fiche rôle') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_role.php?code=' . $Code . '"', 'page', 'Fiche rôle') . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Role', $Code);
 
@@ -148,7 +148,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $larg_titre = '25';
     echo '<table width="80%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     col_titre_tab(LG_ROLE_CODE, $larg_titre);
     echo '<td class="value">';
@@ -165,7 +165,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo '<input type="' . $hidden . '" name="codes" value="' . $codes . '"/>' . "\n";
     } else
         echo $CodeF . "\n";
-    Img_Zone_Oblig('imgObligCode');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
 
     col_titre_tab(LG_ROLE_SYM, $larg_titre);
@@ -191,7 +191,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<input type="' . $hidden . '" name="ALibelleInvF" value="' . $LibelleInvF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     // Bouton Supprimer en modification si pas d'utilisation du rôle
     $lib_sup = '';
     if ((!$Creation) and (! $utilise)) $lib_sup = $lib_Supprimer;
@@ -201,7 +201,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     echo '</form>';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

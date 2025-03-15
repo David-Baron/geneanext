@@ -14,11 +14,11 @@ $debug = false;
 // les 2 derniers paramètres permettent de ne pas aller chercher les documents déjà liés
 
 if ($debug) {
-    $f_log = open_log();
-    ecrire($f_log, '---' . my_self());
-    if (isset($_GET['type_doc'])) ecrire($f_log, 'type_doc : ' . $_GET['type_doc']);
-    if (isset($_GET['typeObjet'])) ecrire($f_log, 'typeObjet : ' . $_GET['typeObjet']);
-    if (isset($_GET['refObjet'])) ecrire($f_log, 'refObjet : ' . $_GET['refObjet']);
+    $f_log = ouvre_fic('log.txt', 'a+');
+    fputs($f_log, '---' . my_self());
+    if (isset($_GET['type_doc'])) fputs($f_log, 'type_doc : ' . $_GET['type_doc']);
+    if (isset($_GET['typeObjet'])) fputs($f_log, 'typeObjet : ' . $_GET['typeObjet']);
+    if (isset($_GET['refObjet'])) fputs($f_log, 'refObjet : ' . $_GET['refObjet']);
 }
 
 if (isset($_GET['type_doc'])) $type_doc = ($_GET['type_doc']);
@@ -28,7 +28,7 @@ else exit;
 if (isset($_GET['refObjet'])) $refObjet = ($_GET['refObjet']);
 else exit;
 
-if ($debug) ecrire($f_log, 'suite...');
+if ($debug) fputs($f_log, 'suite...');
 
 $x = Lit_Env();
 
@@ -45,17 +45,17 @@ $sql = 'SELECT Id_Document, Nature_Document, Titre  ' .
     ' WHERE Type_Objet="' . $typeObjet . '" AND Reference_Objet=' . $refObjet . ')' .
     ' ORDER by Titre';
 
-if ($debug) ecrire($f_log, 'sql : ' . $sql);
+if ($debug) fputs($f_log, 'sql : ' . $sql);
 
 $id_maxi = 0;
 $res = lect_sql($sql);
 while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     //$dates = html_entity_decode(aff_annees_pers($enreg['Ne_le'],$enreg['Decede_Le']), ENT_QUOTES, $def_enc );
     if ($debug) {
-        ecrire($f_log, 'enreg : ' . $enreg['Id_Document']);
-        ecrire($f_log, 'enreg : ' . $enreg['Nature_Document']);
-        ecrire($f_log, 'enreg : ' . $enreg['Titre']);
-        //ecrire($f_log,'enreg : '.$dates);
+        fputs($f_log, 'enreg : ' . $enreg['Id_Document']);
+        fputs($f_log, 'enreg : ' . $enreg['Nature_Document']);
+        fputs($f_log, 'enreg : ' . $enreg['Titre']);
+        //fputs($f_log,'enreg : '.$dates);
     }
     // $refDoc = $dom->createElement('refDoc', utf8_encode($enreg['Titre'].' ('.$Natures_Docs[$enreg['Nature_Document']].')'));
     $refDoc = $dom->createElement('refDoc', $enreg['Titre'] . ' (' . $Natures_Docs[$enreg['Nature_Document']] . ')');

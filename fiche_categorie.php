@@ -38,13 +38,13 @@ if ($res = lect_sql($sql)) {
     if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
         $TitreF = my_html($enreg['Titre']);
         $OrdreF = $enreg['Ordre_Tri'];
-        $compl .= '<a href="'. $root .'/edition_categorie.php?categ=' . $Categ . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
+        $compl .= '<a href="' . $root . '/edition_categorie.php?categ=' . $Categ . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
 
         Insere_Haut(my_html($titre), $compl, 'Fiche_Categorie', $Categ);
 
         $larg_titre = 25;
         echo '<table width="70%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         col_titre_tab($LG_Ch_Categ_Title, $larg_titre);
         echo '<td class="value">' . $TitreF . '</td></tr>' . "\n";
@@ -61,7 +61,7 @@ if ($res = lect_sql($sql)) {
 
         // Appel de la liste des personnes présentes dans cette catégorie
         $_SESSION['NomP'] = $enreg['Titre']; // Pour le pdf histoire d'avoir les bons caractères...
-        echo '<br /><a href="'. $root .'/liste_pers2.php?Type_Liste=C&amp;idNom=' . $enreg['Identifiant'] . '&amp;Nom=' . $TitreF . '">Personnes de cette cat&eacute;gorie</a>' . "\n";
+        echo '<br /><a href="' . $root . '/liste_pers2.php?Type_Liste=C&amp;idNom=' . $enreg['Identifiant'] . '&amp;Nom=' . $TitreF . '">Personnes de cette cat&eacute;gorie</a>' . "\n";
 
         // Formulaire pour le bouton retour
         Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
@@ -73,7 +73,14 @@ if ($res = lect_sql($sql)) {
     }
 }
 echo '<br />' . "\n";
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

@@ -124,7 +124,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_type_evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Type_Evenement', $Code);
 
@@ -162,7 +162,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     // Type d'évènement inconnu, supprimé entre temps, retour...
     if ((!$Creation) and (!$enreg)) {
         aff_erreur(LG_EVENT_TYPE_DELETED);
-        echo '<a href="'. $root .'/liste_referentiel.php?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
+        echo '<a href="' . $root . '/liste_referentiel.php?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
     } else {
 
         // Zone technique de la table non modifiable et non affichée
@@ -174,14 +174,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         $larg_titre = '25';
 
         echo '<table width="80%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_EVENT_TYPE_CODE);
         // On ne peut modifier le code qu'en création ou s'il n'est pas utilisé
         if (($Creation) or (! $utilise)) {
             echo '<input class="oblig" type="text" name="CodeF" id="CodeF" value="' . $CodeF . '" size="4" maxlength="4" onchange="verification_code(this);"/>' . "\n";
             echo '&nbsp;';
-            Img_Zone_Oblig('imgObligCode');
+            echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
             // Liste des types existants
             $codes = ' ';
@@ -215,7 +215,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo '<input type="' . $hidden . '" name="AUniciteF" value="' . $UniciteF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         // Bouton Supprimer en modification si pas d'utilisation du rôle
         $lib_sup = '';
         if ((!$Creation) and (!$utilise)) $lib_sup = $lib_Supprimer;
@@ -226,7 +226,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo "</form>";
     }
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 
     echo '<script type="text/javascript">' . "\n";
     echo 'function verification_code(zone) {' . "\n";

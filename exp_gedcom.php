@@ -241,7 +241,14 @@ if ($fp = ouvre_fic($nom_fic_exp, 'w')) {
 } else
     echo my_html(LG_GEDCOM_FILE_ERROR);
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

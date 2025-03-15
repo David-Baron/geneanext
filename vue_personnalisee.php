@@ -93,8 +93,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<br />';
     echo '<table align="center" border="0"><tr><td>' . "\n";
     echo '<fieldset>';
-    aff_legend(LG_CUST_VIEW_SELECT);
-
+    echo '<legend>' . ucfirst(LG_CUST_VIEW_SELECT) . '</legend>' . "\n";
     if ($ref_decujus) {
         echo '<input type="hidden" name="decujus_defaut" value="' . $ref_decujus . '"/>' . "\n";
 
@@ -124,7 +123,14 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '</table>' . "\n";
         echo '</form>';
     }
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

@@ -267,7 +267,7 @@ if ($SiteGratuit) {
     if (file_exists(__DIR__ . '/../../param_gratuit.php')) include(__DIR__ . '/../../param_gratuit.php');
 }
 
-if ($debug) $f_log = open_log();
+if ($debug) $f_log = ouvre_fic('log.txt', 'a+');
 
 $hidden = (!$debug ? 'hidden' : 'text');
 

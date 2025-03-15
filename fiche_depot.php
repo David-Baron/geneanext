@@ -43,7 +43,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_contributeur) {
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_depot.php?ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Repo_Sources_Edit'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_depot.php?ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Repo_Sources_Edit'])) . '&nbsp;';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Depot', $Ident);
@@ -60,15 +60,24 @@ else {
 
     //  ===== Affichage du commentaire
     if (Rech_Commentaire($Ident, $Type_Ref)) {
-        Aff_Comment_Fiche($Commentaire, $Diffusion_Commentaire_Internet);
+        if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+            echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
+        }
     }
 
-    echo '<br /><a href="'. $root .'/liste_sources.php?depot=' . $Ident . '">' . my_html(LG_CH_REPOSITORY_LIST) . '</a>	' . "\n";
+    echo '<br /><a href="' . $root . '/liste_sources.php?depot=' . $Ident . '">' . my_html(LG_CH_REPOSITORY_LIST) . '</a>	' . "\n";
 
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

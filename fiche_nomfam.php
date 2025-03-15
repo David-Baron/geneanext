@@ -66,7 +66,9 @@ else {
 
             //  ===== Affichage du commentaire
             if (Rech_Commentaire($idNomFam, 'O')) {
-                Aff_Comment_Fiche($Commentaire, $Diffusion_Commentaire_Internet);
+                if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                    echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
+                }
             }
 
             $sql = 'select 1 from ' . nom_table('noms_personnes') . ' where idNom = ' . $idNomFam . ' limit 1';
@@ -94,7 +96,14 @@ else {
             // Formulaire pour le bouton retour
             Bouton_Retour($lib_Retour, '?' . Query_Str());
         }
-        Insere_Bas($compl);
+        echo '<table cellpadding="0" width="100%">';
+        echo '<tr>';
+        echo '<td align="right">';
+        echo $compl;
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo "</td>";
+        echo '</tr>';
+        echo '</table>';
     }
 }
 ?>

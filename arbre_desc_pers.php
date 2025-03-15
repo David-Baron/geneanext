@@ -134,8 +134,17 @@ if (!$is_bot) {
     $compl .= Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
 }
 
-if (! $texte) Insere_Haut('Arbre descendant', $compl, 'Arbre_Desc_Pers', $Refer);
-else          Insere_Haut_texte('&nbsp;');
+if (! $texte) {
+    Insere_Haut('Arbre descendant', $compl, 'Arbre_Desc_Pers', $Refer);
+} else {
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b> </b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
 
 if (! $texte) {
     echo '<form action="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '" method="post">';
@@ -232,7 +241,7 @@ if (!$x) {
             //echo "pos $pos posb $posb pParO $pParO pParF $pParF Ref $Ref <br />";
             if (! $texte) {
                 echo $num . '&nbsp;' .
-                    '<a ' . Ins_Ref_Pers($Ref) . '>' . substr($Ligne, $posb + 1, $pParO - $posb - 2) . '</a>&nbsp;' .
+                    '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . substr($Ligne, $posb + 1, $pParO - $posb - 2) . '</a>&nbsp;' .
                     substr($Ligne, $pParO, $pParF - $pParO + 1) .
                     "\n";
                 echo '&nbsp;&nbsp;<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref . '"' . $fin_arbres_asc;
@@ -262,7 +271,16 @@ if (!$x) {
     }
 }
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 ?>
 </body>

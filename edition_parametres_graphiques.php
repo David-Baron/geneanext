@@ -263,7 +263,13 @@ if ($bt_OK) {
         if ($erreur != '') {
             Insere_Haut($titre, '', 'Edition_Parametres_Graphiques', '');
             Affiche_Stop(html_entity_decode($erreur));
-            Insere_Bas('');
+            echo '<table cellpadding="0" width="100%">';
+            echo '<tr>';
+            echo '<td align="right">';
+            echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+            echo "</td>";
+            echo '</tr>';
+            echo '</table>';
         }
         // Sinon on peut télécharger
         else {
@@ -497,7 +503,14 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     echo '</div>' . "\n";        //echo '<!-- fin tab-container -->';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 
     include(__DIR__ . '/assets/js/gest_onglets.js');
     include(__DIR__ . '/assets/js/Edition_Parametres_Graphiques.js');

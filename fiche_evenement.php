@@ -41,7 +41,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_evenement.php?refPar=' . $refPar . $ajout . '"', 'fiche_edition', $LG_modify) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_evenement.php?refPar=' . $refPar . $ajout . '"', 'fiche_edition', $LG_modify) . '&nbsp;';
     }
     Insere_Haut($titre, $compl, 'Fiche_Evenement', '');
 
@@ -76,7 +76,7 @@ else {
             $larg_titre = 25;
             echo '<table width="80%" class="table_form" align="center">' . "\n";
             echo colonne_titre_tab($LG_Event_Title) . $titreLu . '</td></tr>' . "\n";
-            echo colonne_titre_tab($LG_Event_Type) . '<a href="'. $root .'/fiche_type_evenement.php?code=' . $enreg['Code_Type'] . '">' . $LibelleTypeLu . '</a></td></tr>' . "\n";
+            echo colonne_titre_tab($LG_Event_Type) . '<a href="' . $root . '/fiche_type_evenement.php?code=' . $enreg['Code_Type'] . '">' . $LibelleTypeLu . '</a></td></tr>' . "\n";
             if ($nomZone != '')
                 echo colonne_titre_tab($LG_Event_Where) . $nomZone . '</td></tr>' . "\n";
             if (($dDebLu != '') or ($dFinLu != ''))
@@ -85,7 +85,9 @@ else {
 
             //  ===== Affichage du commentaire
             if (Rech_Commentaire($refPar, $Type_Ref)) {
-                Aff_Comment_Fiche($Commentaire, $Diffusion_Commentaire_Internet);
+                if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                    echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
+                }
             }
 
             // Conditionner l'affichage par la cible de l'évènement
@@ -104,14 +106,21 @@ else {
 
             // Affichage de la liste des noms pour l'évenement
             if ($objetCibleLu == 'P')
-                echo '<br /><a href="'. $root .'/liste_nom_evenement.php?refPar=' . $refPar . '">Liste des noms pour l\'&eacute;v&egrave;nement</a>';
+                echo '<br /><a href="' . $root . '/liste_nom_evenement.php?refPar=' . $refPar . '">Liste des noms pour l\'&eacute;v&egrave;nement</a>';
 
             echo '<br />' . "\n";
 
             // Formulaire pour le bouton retour
             Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
-            Insere_Bas($compl);
+            echo '<table cellpadding="0" width="100%">';
+            echo '<tr>';
+            echo '<td align="right">';
+            echo $compl;
+            echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+            echo "</td>";
+            echo '</tr>';
+            echo '</table>';
         }
     }
 }

@@ -207,13 +207,13 @@ if ($bt_OK) {
     // $_fputs = ($gz) ? @gzputs : @fputs;
 
     // Ecriture entête du fichier
-    ecrire($fp, $comment . " Export " . $type_export . " de la base $db");
+    fputs($fp, $comment . " Export " . $type_export . " de la base $db");
     if (($SiteGratuit) and (!$Initialisation)) {
-        ecrire($fp, $comment . " site heberge");
+        fputs($fp, $comment . " site heberge");
     }
-    ecrire($fp, $comment . " le $date");
-    ecrire($fp, $comment . " version Genemania $Version");
-    ecrire($fp, $comment . " prefixe $pref_tables");
+    fputs($fp, $comment . " le $date");
+    fputs($fp, $comment . " version Genemania $Version");
+    fputs($fp, $comment . " prefixe $pref_tables");
 
     // Sauvegarde de la version dans un fichier en cas d'initialisation
     if ($Initialisation) {
@@ -239,15 +239,15 @@ if ($bt_OK) {
             if (isset($uniques)) unset($uniques);
 
             // Entête de traitement de la table dans le fichier
-            ecrire($fp, $comment);
-            ecrire($fp, $comment . " Traitement de la table $tablename;");
+            fputs($fp, $comment);
+            fputs($fp, $comment . " Traitement de la table $tablename;");
 
             // Ecriture de la structure de la table, sauf pour les extractions à destination des sites gratuits
             if (!$expSiteGratuit) {
                 echo "<br />$tablename : <font color='blue'> $h_structure_ok, </font>";
                 // On drop toutes les tables sur l'export Internet sauf la table compteur
                 if ((($Internet) and (!est_table('compteurs', $tablename))) or (!$Internet))
-                    ecrire($fp, "DROP TABLE IF EXISTS `$tablename`;");
+                    fputs($fp, "DROP TABLE IF EXISTS `$tablename`;");
                 //requete de creation de la table
                 $query = "SHOW CREATE TABLE $tablename";
                 $resCreate = lect_sql($query);
@@ -330,7 +330,7 @@ if ($bt_OK) {
                 // et il faut conditionner le create pour la table sur l'export Internet
                 if (($Internet) and (est_table('compteurs', $tablename)))
                     $schema = str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS', $schema);
-                ecrire($fp, "$schema\n");
+                fputs($fp, "$schema\n");
 
                 // Ecriture des indexes pour SQLite
                 if (($SQLite) and (isset($indexes))) {
@@ -339,13 +339,13 @@ if ($bt_OK) {
                         for ($nb = 0; $nb < $c_ind; $nb++) {
                             $un = '';
                             if ($uniques[$nb] == 'O') $un = 'UNIQUE ';
-                            ecrire($fp, 'CREATE ' . $un . 'INDEX ' . $tablename . '_' . $nb . ' ON ' . $tablename . '(' . $indexes[$nb] . ');');
+                            fputs($fp, 'CREATE ' . $un . 'INDEX ' . $tablename . '_' . $nb . ' ON ' . $tablename . '(' . $indexes[$nb] . ');');
                         }
                     }
                 }
             } else {
                 if (!est_table('compteurs', $tablename)) {
-                    ecrire($fp, "[$tablename]\n");
+                    fputs($fp, "[$tablename]\n");
                 }
                 echo '<br />' . $tablename . ' : ';
             }
@@ -399,49 +399,49 @@ if ($bt_OK) {
                         ",'arbre_asc_hor_carre.png', 'O', 'N', 'C', 'V', 'bar_off_vert_fonce.gif', current_timestamp" .
                         ",'#DCDCDC', '#F5F5F5', '#49453B', '#EFEFEF', '#FEFEFE',9999, null, 'Arial','#000000', true" .
                         ");";
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                 }
                 // Requêtes forcées pour la table utilisateurs
                 if (est_table('utilisateurs', $tablename)) {
                     $Donnees_Oui = false;
                     $deb = 'INSERT INTO ' . nom_table('utilisateurs') . ' values(null,';
                     $lesDonnees = $deb . " '" . LG_EXPORT_GUEST . "', '" . LG_EXPORT_GUEST . "', '', 'I', null);";
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . "'Gestionnaire', 'gestionnaire', '63e86b1e912220bdf2cafb57f5ad38673c104fa002f6d1139c3a00c459c048ed', 'G',null);";
-                    ecrire($fp, "$lesDonnees");
-                    ecrire($fp, $comment . " gestionnaire de la base : gestionnaire/gestionnaire ");
+                    fputs($fp, "$lesDonnees");
+                    fputs($fp, $comment . " gestionnaire de la base : gestionnaire/gestionnaire ");
                 }
                 // Requêtes forcées pour la table évènements
                 if (est_table('evenements', $tablename)) {
                     $Donnees_Oui = false;
                     $deb = 'INSERT INTO ' . nom_table('evenements') . ' values(null,0,0,"AC3U",';
                     //$lesDonnees = $deb.'"première diffusion du logiciel sous le nom de monSSG","20060228GL","20060228GL",current_timestamp,current_timestamp,"V");';
-                    //ecrire($fp,"$lesDonnees");
+                    //fputs($fp,"$lesDonnees");
                     //$lesDonnees = $deb.'"monSSG devient Généamania","20070518GL","20070518GL",current_timestamp,current_timestamp,"V");';
-                    //ecrire($fp,"$lesDonnees");
+                    //fputs($fp,"$lesDonnees");
                     $lesDonnees = $deb . '"' . LG_EXPORT_EVT1 . '","20150107GL","20150107GL",current_timestamp,current_timestamp,"V");';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '"sortie de la version 2022.02","20221115GL","20221115GL",current_timestamp,current_timestamp,"V");';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                 }
                 // Requêtes forcées pour la table categories
                 if (est_table('categories', $tablename)) {
                     $Donnees_Oui = false;
                     $deb = 'INSERT INTO ' . nom_table('categories') . ' values';
                     $lesDonnees = $deb . '(1, "bleu", "' . LG_EXPORT_CATEG_BLUE . '", 1);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '(2, "vert", "' . LG_EXPORT_CATEG_GREEN . '", 2);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '(3, "orange", "' . LG_EXPORT_CATEG_ORANGE . '", 3);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '(4, "rose", "' . LG_EXPORT_CATEG_PINK . '", 4);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '(5, "violet", "' . LG_EXPORT_CATEG_PURPLE . '", 5);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '(6, "rouge", "' . LG_EXPORT_CATEG_RED . '", 6);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                     $lesDonnees = $deb . '(7, "jaune", "' . LG_EXPORT_CATEG_YELLOW . '", 7);';
-                    ecrire($fp, "$lesDonnees");
+                    fputs($fp, "$lesDonnees");
                 }
 
                 // Conditions particulières d'extraction
@@ -527,14 +527,14 @@ if ($bt_OK) {
                             $lesDonnees = str_replace("\\'", "''", $lesDonnees);
                             $lesDonnees = str_replace('\\"', '"', $lesDonnees);
                         }
-                        ecrire($fp, "$lesDonnees");
+                        fputs($fp, "$lesDonnees");
                     }
                 }
                 $resData->closeCursor();
             }
         }
     }
-    ecrire($fp, $comment . " ------- fin ------------");
+    fputs($fp, $comment . " ------- fin ------------");
 
     // fermer le fichier
     if ($gz) gzclose($fp);
@@ -547,7 +547,7 @@ if ($bt_OK) {
     echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
     $larg_titre = "25";
     echo '<table width="70%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     colonne_titre_tab(LG_EXPORT_TYPE);
     if (! $SiteGratuit) {
@@ -603,8 +603,8 @@ if ($bt_OK) {
     if ($Comportement == 'C') $l_action = LG_EXPORT_CLICK;
     echo my_html(LG_EXPORT_TIP1 . $l_action . LG_EXPORT_TIP2) . "\n";
 
-    $nom_div = 'lediv';
-    $x = Oeil_Div('ajout', LG_EXPORT_SHOW, $nom_div);
+    echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . LG_EXPORT_SHOW . '" ' . Survole_Clic_Div('lediv') . '/>';
+    echo '<div id="lediv">';
 
     echo '<input type="checkbox" name="selTous" value="on" onclick="checkUncheckAll(this);" checked="checked"/>&nbsp;' . my_html(LG_EXPORT_ALL_NONE) . '<br /><hr/>';
 
@@ -635,16 +635,28 @@ if ($bt_OK) {
     }
     $result->closeCursor();
 
-    fin_div_cache($nom_div);
+    echo '</div>' . "\n";
+    echo '<script type="text/javascript">' . "\n";
+    echo '<!--' . "\n";
+    echo 'cache_div(\'lediv\');' . "\n";
+    echo '//-->' . "\n";
+    echo '</script>' . "\n";
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');
 
     echo '</table></form>';
 }
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

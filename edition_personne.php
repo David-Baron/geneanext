@@ -129,7 +129,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<div id="pnlData">' . "\n";
     // Etat civil de la personne
     echo '<fieldset>' . "\n";
-    aff_legend(LG_PERS_DATA);
+    echo '<legend>' . ucfirst(LG_PERS_DATA) . '</legend>' . "\n";
     echo '<table width="98%" border="0">' . "\n";
     // Nom
     $c_zone = $enreg2['Nom'];
@@ -139,7 +139,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<td><input type="hidden" name="NomP" id="NomP" value="' . $id_nom . '/' . $c_zone . '" class="oblig"/>' . "\n";
     echo '<input type="hidden" name="AidNomP" value="' . $id_nom . '"/>' . "\n";
     Select_Noms($id_nom, 'NomSel', 'NomP');
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ANomP" value="' . $id_nom . '/' . $c_zone . '"/>' . "\n";
     // Possibilité d'ajouter un nom
     echo '<img id="ajout_nom" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_PERS_ADD_NAME . '" title="' . LG_PERS_ADD_NAME . '"' .
@@ -170,7 +170,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     $c_zone = $enreg2['Prenoms'];
     col_titre_tab_noClass(LG_PERS_FIRST_NAME, $largP);
     echo '<td colspan="2"><input type="text" size="50" name="PrenomsP" id="PrenomsP" value="' . $c_zone . '" class="oblig"/> ' . "\n";
-    Img_Zone_Oblig('imgObligPrenom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="APrenomsP" value="' . $c_zone . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
@@ -269,7 +269,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
 
     // Numéro de la personne
     echo '<fieldset>' . "\n";
-    aff_legend(LG_PERS_NUMBER);
+    echo '<legend>' . ucfirst(LG_PERS_NUMBER) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     $c_zone = $enreg2['Numero'];
     col_titre_tab_noClass(LG_PERS_NUMBER, $largP);
@@ -287,7 +287,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
 
     // Commentaire
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     //Divers
     echo '<tr>' . "\n";
@@ -312,7 +312,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<div id="pnlFile">' . "\n";
     $c_zone = $enreg2["Diff_Internet"];
     echo '<fieldset>' . "\n";
-    aff_legend(LG_PERS_VISIBILITY);
+    echo '<legend>' . ucfirst(LG_PERS_VISIBILITY) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     // Diffusion internet
     col_titre_tab_noClass(LG_PERS_INTERNET, $largP);
@@ -328,7 +328,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
 
     // Affichage des tags
     echo '<fieldset>' . "\n";
-    aff_legend(LG_PERS_CATEGORY);
+    echo '<legend>' . ucfirst(LG_PERS_CATEGORY) . '</legend>' . "\n";
     $categ_Fiche = $enreg2['Categorie'];
     $sql_cat = 'select Identifiant, Image, Titre from ' . nom_table('categories') . ' order by Ordre_Tri';
     $res_cat = lect_sql($sql_cat);
@@ -364,7 +364,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         echo '<div id="pnlParentsUnions">' . "\n";
         echo '<br />' . "\n";
         echo '<fieldset>' . "\n";
-        aff_legend(LG_PERS_PARENTS);
+        echo '<legend>' . ucfirst(LG_PERS_PARENTS) . '</legend>' . "\n";
         // Affichage de la filiation
         if (Get_Parents($Personne, $Pere, $Mere, $Rang)) {
             if (($Pere != 0) or ($Mere != 0)) {
@@ -412,7 +412,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
 
         // Affichage des unions
         echo '<fieldset>' . "\n";
-        aff_legend(LG_PERS_UNIONS);
+        echo '<legend>' . ucfirst(LG_PERS_UNIONS) . '</legend>' . "\n";
         if (($SexePers == 'm') or ($SexePers == 'f')) {
             $sqlU = 'select Conjoint_1, Conjoint_2, Reference from ' . nom_table('unions') .
                 ' where Conjoint_1=' . $Refer . ' or Conjoint_2=' . $Refer . ' order by Maries_Le';
@@ -858,7 +858,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '"', 'arbre_desc', $LG_desc_tree) . ' ' .
             Affiche_Icone_Lien('href="' . $root . '/ajout_rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . ' ' .
             Affiche_Icone_Lien('href="' . $root . '/verif_personne.php?Refer=' . $Refer . '"', 'fiche_controle', $LG_LPers_Check_Pers) . ' ' .
-            Affiche_Icone_Lien(Ins_Ref_Pers($Refer), 'fiche_fam', 'Fiche familiale') . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/fiche_fam_pers.php?Refer=' . $Refer . '"', 'fiche_fam', 'Fiche familiale') . "\n";
     }
 
     Insere_Haut($titre, $compl, 'Edition_Personne', $Refer);
@@ -897,7 +897,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     echo '</form>';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

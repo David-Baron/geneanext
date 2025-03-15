@@ -188,7 +188,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
 
     // Pavé conjoints
     echo '<fieldset>' . "\n";
-    aff_legend(LG_UNION_HUS_WIFE);
+    echo '<legend>' . ucfirst(LG_UNION_HUS_WIFE) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
 
     //Récupération des infos du conjoint
@@ -215,7 +215,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     // On affiche une liste si on ne vient pas de la fiche personne ou si le conjoint 1 est inconnu
     if ((!$depuis_pers) or ($Conjoint_1 == -1) or (($depuis_pers) and ($Conjoint_1 != $Personne))) {
         aff_liste_pers_restreinte('Conjoint_1U', true, true, $Conjoint_1, get_crit_sexe($Sexe_2), 'Nom, Prenoms', true, '', $Ne_2, $Dec_2, 'C');
-        Img_Zone_Oblig('imgObligC1');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         if (($Conjoint_1 == -1) and (!$Uni_Sexe)) {
             echo " <input type=\"button\" onclick=\"sel_der('m')\" value=\"Dernier homme saisi\" name=\"DH\"/>";
         }
@@ -231,7 +231,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     // On affiche une liste si on ne vient pas de la fiche personne ou si le conjoint 2 est inconnu
     if ((!$depuis_pers) or ($Conjoint_2 == -1) or (($depuis_pers) and ($Conjoint_2 != $Personne))) {
         aff_liste_pers_restreinte('Conjoint_2U', true, true, $Conjoint_2, get_crit_sexe($Sexe_1), 'Nom, Prenoms', true, '', $Ne_1, $Dec_1, 'C');
-        Img_Zone_Oblig('imgObligC2');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         if (($Conjoint_2 == -1) and (!$Uni_Sexe)) {
             echo " <input type=\"button\" onclick=\"sel_der('f')\" value=\"Derni&egrave;re femme saisie\" name=\"DF\"/>";
         }
@@ -246,7 +246,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
 
     // Pavé date et lieu de l'union
     echo '<fieldset>' . "\n";
-    aff_legend(LG_UNION_WHERE_WHEN);
+    echo '<legend>' . ucfirst(LG_UNION_WHERE_WHEN) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     // Date mariage
     col_titre_tab_noClass(LG_UNION_WHEN, $P_Cent);
@@ -275,7 +275,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
 
     // Pavé contrat
     echo '<fieldset>' . "\n";
-    aff_legend(LG_UNION_CONTRACT);
+    echo '<legend>' . ucfirst(LG_UNION_CONTRACT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
 
     //Contrat
@@ -301,7 +301,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
 
     // Commentaires
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     echo '<tr>' . "\n";
     // Accès au commentaire
@@ -330,7 +330,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ref_Union, 'U', 'N');
         echo '<br /> Lier une nouvelle source &agrave; l\'union : ' .
-            Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -350,7 +350,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
             while ($row = $resE->fetch(PDO::FETCH_NUM)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
-                    echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . ' ' . $Nom . '</a> ';
+                    echo '<a href="' . $root . '/edition_personne.php?Refer=' . $Enfant . '">' . $Prenoms . ' ' . $Nom . '</a> ';
                     echo '<a href="' . $root . '/edition_filiation.php?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . LG_UNION_UPDATE_PARENTS . '" title="' . LG_UNION_UPDATE_PARENTS . '"></a><br />';
                 }
             }
@@ -410,10 +410,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     Aff_Documents_Objet($Ref_Union, 'U', 'N');
     // Possibilité de lier un document à l'union
     echo '<br /> ' . my_html(LG_UNION_ADD_DOC) . ' '
-        . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ref_Union .
+        . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $Ref_Union .
             '&amp;typeObjet=U&amp;refDoc=-1"', 'ajout', $LG_add) . "\n";
     echo '<br /> ' . my_html(LG_UNION_ADD_DOC_NEW) . ' '
-        . Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
+        . Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
             '&amp;typeObjet=U"', 'ajout', $LG_add) . "\n";
     echo '</div>' . "\n";
 
@@ -673,7 +673,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ref_Union != -1) {
         $compl = Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ref_Union . '&amp;Type_Ref=U"', 'images', 'Images') . ' ' .
-            Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union), 'fiche_fam', 'Fiche couple') . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt.php?Reference=' . $Ref_Union . '"', 'fiche_fam', 'Fiche couple') . "\n";
     }
     Insere_Haut($titre, $compl, 'Edition_Union', $Conjoint_1 . "/" . $Conjoint_2);
 
@@ -710,7 +710,14 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '	setupPanes("container1", "tab1", 40);' . "\n";
     echo '</script>' . "\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

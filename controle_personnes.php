@@ -84,7 +84,13 @@ $compl = Ajoute_Page_Info(700, 250) .
 if (! $texte) {
     Insere_Haut(my_html($titre), $compl, 'Controle_Personnes', '');
 } else {
-    Insere_Haut_texte(my_html($titre));
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
     echo '<br>';
     $deja = Recup_Variable('deja', 'S');
 }
@@ -273,8 +279,8 @@ if ($controle) {
 
             $ligne_P = '';
             if (!$texte) {
-                $ligne_P =  '<a ' . Ins_Ref_Pers($Ref, true) . '>' . my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '</a>'
-                    . ' <a ' . Ins_Edt_Pers($Ref, true) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>'
+                $ligne_P =  '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '" target="_blank">' . my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '</a>'
+                    . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>'
                     . ' <a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . my_html($LG_LPers_Check_Pers) . '" title="' . my_html($LG_LPers_Check_Pers) . '"></a>';
             } else {
                 $ligne_P = my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . ' ';
@@ -305,7 +311,14 @@ if (! $texte) {
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 function al_controle($niveau, $ctrl)

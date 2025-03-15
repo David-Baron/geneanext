@@ -68,7 +68,7 @@ else
 // Affiche une région
 function Aff_Region($enreg2)
 {
-    global $db, $chemin_images, $Ident, $Images, $Commentaire, $Diffusion_Commentaire_Internet, $LG_Data_tab, $LG_File, $LG_Edit_Region_Name, $LG_Edit_Region_Code, $LG_Edit_Region_Country, $lib_Okay, $lib_Annuler;
+    global $root, $Icones,$db, $chemin_images, $Ident, $Images, $Commentaire, $Diffusion_Commentaire_Internet, $LG_Data_tab, $LG_File, $LG_Edit_Region_Name, $LG_Edit_Region_Code, $LG_Edit_Region_Country, $lib_Okay, $lib_Annuler;
 
     echo '<div id="content">' . "\n";
     echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >' . "\n";
@@ -100,14 +100,14 @@ function Aff_Region($enreg2)
     col_titre_tab_noClass($LG_Edit_Region_Name, $largP);
     $Nom_Region_Min = $enreg2['Nom_Region_Min'];
     echo '<td><input type="text" size="70" class="oblig" name="Nom_Region" id="Nom_Region" value="' . $Nom_Region_Min . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ANom_Region" value="' . $Nom_Region_Min . '"/></td>' . "\n";
     echo "</tr>\n";
 
     col_titre_tab_noClass($LG_Edit_Region_Code, $largP);
     $Region = $enreg2['Region'];
     echo '<td><input type="text" size="3" class="oblig" name="Code_Region" id="Code_Region" value="' . $Region . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligCode');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ACode_Region" value="' . $Region . '"/></td>' . "\n";
     echo "</tr>\n";
 
@@ -132,7 +132,7 @@ function Aff_Region($enreg2)
 
     // Commentaires
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     echo '<tr>' . "\n";
     echo '<td>';
@@ -240,7 +240,7 @@ if (($ok == '') && ($annuler == '')) {
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Nom_Region,Code_Region\')" action="' . my_self() . '?Ident=' . $Ident . '">' . "\n";
 
     echo '<input type="hidden" name="Ident" value="' . $Ident . '"/>' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     if ($Modif) {
         // Récupération des données de la région
@@ -277,7 +277,14 @@ if (($ok == '') && ($annuler == '')) {
     echo '	setupPanes("container1", "tab1", 40);' . "\n";
     echo '</script>' . "\n";
 }
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

@@ -263,7 +263,7 @@ function Aff_Filiation($enreg)
 
     // Commentaires
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     //Divers
     echo '<tr>' . "\n";
@@ -302,10 +302,10 @@ function Aff_Filiation($enreg)
     Aff_Documents_Objet($Refer, 'F', 'N');
     // Possibilité de lier un document à la filiation
     echo '<br />&nbsp;' . my_html($LG_Ch_Filiation_Link_Doc . ' : ') .
-        Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Refer .
+        Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $Refer .
             '&amp;typeObjet=F&amp;refDoc=-1"', 'ajout', 'Ajout d\'un document') . "\n";
     echo '<br />&nbsp;' . my_html($LG_Ch_Filiation_Link_New_Doc . ' : ') .
-        Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=-1&amp;refObjet=' . $Refer .
+        Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1&amp;refObjet=' . $Refer .
             '&amp;typeObjet=F"', 'ajout', $LG_Ch_Filiation_Add_Doc) . "\n";
     echo '</div>' . "\n";
 
@@ -318,7 +318,7 @@ function Aff_Filiation($enreg)
     $x = Aff_Sources_Objet($Refer, 'F', 'N');
     // Possibilité de lier une source pour la filiation
     echo '<br />&nbsp;Lier une nouvelle source &agrave; la filiation : ' .
-        Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Refer . '&amp;typeObjet=F&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+        Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Refer . '&amp;typeObjet=F&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     echo '</div>' . "\n";
 
     echo '</div>' . "\n";    // <!-- panes -->
@@ -493,7 +493,14 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '	setupPanes("container1", "tab1", 40);' . "\n";
     echo '</script>' . "\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

@@ -105,7 +105,13 @@ if ($res = lect_sql($sql)) {
         else {
             $sortie = 'H';
             // Affichage du titre : numéros + génération
-            Insere_Haut_texte($enr_mari['Numero'] . '</b > x <b>' . $enr_femme['Numero']);
+            echo '</head>' . "\n";
+            echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+            echo '<table cellpadding="0" width="100%">' . "\n";
+            echo '<tr>' . "\n";
+            echo '<td align="center"><b>' . StripSlashes($enr_mari['Numero'] . '</b > x <b>' . $enr_femme['Numero']) . '</b></td>' . "\n";
+            echo '</tr>' . "\n";
+            echo '</table>' . "\n";
             echo '<table cellpadding="0" width="100%">' . "\n";
             echo '<tr><td align="center">' . Calc_Gener($enr_mari['Numero']) . '</td></tr>' . "\n";
             echo '</table>' . "\n";

@@ -73,8 +73,15 @@ Ce qui nous donne :
     </tr>
 </table>
 <br /><a href="<?= $root; ?>/calc_so.php">Calculette Sosa</a><br />
-<?php
-Insere_Bas($compl); ?>
+
+<table cellpadding="0" width="100%">
+    <tr>
+    <td align="right">
+    <?= $compl; ?>
+    <a href="<?= $root; ?>/"><img src="<?= $root; ?>/assets/img/<?= $Icones['home']; ?>" alt="Accueil" title="Accueil" /></a>
+    </td>
+    </tr>
+    </table>
 </body>
 
 </html>

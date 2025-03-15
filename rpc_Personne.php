@@ -25,15 +25,15 @@ function Etend_les_dates($date1, $date2, $forcage = false)
 
 
 if ($debug) {
-    $f_log = open_log();
-    ecrire($f_log, 'evt : ' . $_GET['idNomFam']);
-    ecrire($f_log, 'ref : ' . $_GET['ref']);
+    $f_log = ouvre_fic('log.txt', 'a+');
+    fputs($f_log, 'evt : ' . $_GET['idNomFam']);
+    fputs($f_log, 'ref : ' . $_GET['ref']);
 }
 
 if (isset($_GET['idNomFam'])) $idNomFam = ($_GET['idNomFam']);
 else exit;
 
-if ($debug) ecrire($f_log, 'suite...');
+if ($debug) fputs($f_log, 'suite...');
 
 $x = Lit_Env();
 
@@ -49,7 +49,7 @@ $sql = 'SELECT Reference, Prenoms, Ne_le, Decede_Le '
 if (!$_SESSION['estPrivilegie']) $sql = $sql . " and Diff_Internet = 'O' ";
 $sql = $sql . ' ORDER by Prenoms, Ne_Le';
 
-if ($debug) ecrire($f_log, 'sql : ' . $sql);
+if ($debug) fputs($f_log, 'sql : ' . $sql);
 
 $id_maxi = 0;
 $res = lect_sql($sql);
@@ -65,9 +65,9 @@ while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     $interdits = array('&');
     $prenoms = str_replace($interdits, '', $prenoms);
     if ($debug) {
-        ecrire($f_log, 'enreg : ' . $enreg['Reference']);
-        ecrire($f_log, 'enreg : ' . $prenoms);
-        ecrire($f_log, 'enreg : ' . $dates);
+        fputs($f_log, 'enreg : ' . $enreg['Reference']);
+        fputs($f_log, 'enreg : ' . $prenoms);
+        fputs($f_log, 'enreg : ' . $dates);
     }
     // $personnes = $dom->createElement('personnes', utf8_encode($prenoms.' '.$dates));
     $personnes = $dom->createElement('personnes', $prenoms . ' ' . $dates);

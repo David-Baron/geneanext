@@ -128,7 +128,7 @@ if ($presence) {
     $Nom = '';
     $Prenoms = '';
     if (Get_Nom_Prenoms($ref_femme_max_nb_enfants, $Nom, $Prenoms)) {
-        echo '<br />' . LG_CH_PER_MOTHER_MAX_WOMAN . ' : <a ' . Ins_Ref_Pers($ref_femme_max_nb_enfants) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a>';
+        echo '<br />' . LG_CH_PER_MOTHER_MAX_WOMAN . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_femme_max_nb_enfants . '">' . $Prenoms . '&nbsp;' . $Nom . '</a>';
         echo ' ; ' . LG_CH_PER_MOTHER_SHE_HAD . ' ' . $max_nb_enfants . ' ' . LG_CHILD . pluriel($max_nb_enfants) . '.';
     }
 }
@@ -136,7 +136,14 @@ if ($presence) {
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour);
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

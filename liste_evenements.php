@@ -140,7 +140,7 @@ if ($result->rowCount() > 0) {
         $ligne .= LG_EVENT_LIST_END_CAL . ';';
         $ligne .= LG_EVENT_LIST_TYPE . ';';
         $ligne .= LG_EVENT_LIST_TYPE_LABEL . ';';
-        ecrire($fp, $ligne);
+        fputs($fp, $ligne);
     }
 
     $premier = 1;
@@ -157,7 +157,7 @@ if ($result->rowCount() > 0) {
             $ligne .= Retourne_Date_CSV($enreg['Fin']) . ';';
             $ligne .= $enreg['Code_Type'] . ';';
             $ligne .= $enreg['Libelle_Type'] . ';';
-            ecrire($fp, $ligne);
+            fputs($fp, $ligne);
         } else {
             $page = 'fiche_evenement';
             if (($actualites) or ($enreg['Code_Type'] == 'AC3U')) $page = 'fiche_actualite';
@@ -251,7 +251,14 @@ if ($result->rowCount() > 0) {
         echo '<br><br>' . $LG_csv_available_in . ' <a href="' . $nom_fic . '" target="_blank">' . $nom_fic . '</a><br />' . "\n";
     }
 }
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

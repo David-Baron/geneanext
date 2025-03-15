@@ -167,7 +167,7 @@ function Aff_Pers($suffixe, $oblig)
     echo '<td><input type="' . $hidden . '" name="Nom' . $suffixe . '" id="Nom' . $suffixe . '" value="' . $laVal . '" ' . $style_z_oblig . '/>';
     echo '<input type="' . $hidden . '" name="ANom' . $suffixe . '" id="ANom' . $suffixe . '" value="' . $laVal . '"/>';
     Select_Noms($id_nom, 'NomSel' . $suffixe, 'Nom' . $suffixe);
-    if ($oblig) Img_Zone_Oblig('imgObligNom' . $suffixe);
+    if ($oblig) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
     // Possibilité d'ajouter un nom
     $texte_im = 'Ajout d\'un nom';
@@ -194,7 +194,7 @@ function Aff_Pers($suffixe, $oblig)
 
     col_titre_tab_noClass(LG_PERS_FIRST_NAME, 25);
     echo '     <td><input type="text" size="50" name="Prenoms' . $suffixe . '" value="" ' . $style_z_oblig . '/>&nbsp;';
-    if ($oblig) Img_Zone_Oblig('imgObligPrenoms' . $suffixe);
+    if ($oblig) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>';
     if (($suffixe != 'pere') and ($suffixe != 'mere')) {
         col_titre_tab_noClass(LG_SEXE, $largP);
@@ -348,11 +348,11 @@ function Aff_Donnees($Refer)
     // Pavé parents
     if (!$existe_filiation) {
         echo '<fieldset>';
-        aff_legend(LG_FATHER);
+        echo '<legend>' . LG_FATHER . '</legend>' . "\n";
         $x = Aff_Pers('pere', 0);
         echo '</fieldset>';
         echo '<fieldset>';
-        aff_legend(LG_MOTHER);
+        echo '<legend>' . LG_MOTHER . '</legend>' . "\n";
         $x = Aff_Pers('mere', 0);
         $suffixe = 'parents';
         echo '</fieldset>';
@@ -605,7 +605,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         Insere_Haut(LG_PERS_QUICK_ADD . '&nbsp;' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Rapide', $Refer);
         echo '<form id="saisie" method="post" action="' . $root . '/ajout_rapide.php?Refer=' . $Refer . '">';
         echo '<input type="' . $hidden . '" name="Refer" value="' . $Refer . '"/>';
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
         if (isset($_SESSION['Nom_Saisi']))
             echo '<input type="' . $hidden . '" name="Nom_Prec" value="' . $_SESSION['Nom_Saisi'] . '"/>';
 
@@ -628,7 +628,16 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '	setupPanes("container1", "tab_conj",40);';
         echo '</script>';
     }
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl != '') {
+        echo $compl;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

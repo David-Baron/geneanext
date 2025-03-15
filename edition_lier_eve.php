@@ -253,7 +253,7 @@ if (($bt_Sup) or ($bt_OK)) {
             $idNiveauLu = $enreg['Identifiant_Niveau'];
             $Dans_Etiq_GG = $enreg['Dans_Etiquette_GeneGraphe'];
             // Libellé spécifique pour évènement connu et personne connue
-            echo 'Lien de ' . $Prenoms . ' ' . $Nom . ' avec <a href="'. $root .'/fiche_evenement.php?refPar=' . $refEvt . '">' . $lib_evt . '</a><br />' . "\n";
+            echo 'Lien de ' . $Prenoms . ' ' . $Nom . ' avec <a href="' . $root . '/fiche_evenement.php?refPar=' . $refEvt . '">' . $lib_evt . '</a><br />' . "\n";
         }
     }
     // Initialisation des variables d'affichage en création
@@ -274,7 +274,7 @@ if (($bt_Sup) or ($bt_OK)) {
     //  Debut de la page
     echo '<br />';
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'' . $z_controle . '\');" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     // Zones actuelles
     echo '<input type="' . $hidden . '" name="persPrinAnc" value="' . $persPrin . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="idZoneF" value="' . $idZoneLu . '"/>' . "\n";
@@ -335,12 +335,12 @@ if (($bt_Sup) or ($bt_OK)) {
             echo '<option value="' . $enreg[0] . '">' . $enreg[1] . '</option>';
         }
         echo '</select>' . "\n";
-        echo '&nbsp;&nbsp;&nbsp;' . Img_Zone_Oblig('imgObligTEvt');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo "</td></tr>\n";
 
         echo colonne_titre_tab($LG_Link_Ev_Link_Event);
         echo '<select name="evenements" id="evenements" class="oblig"></select>';
-        echo '&nbsp;&nbsp;&nbsp;' . Img_Zone_Oblig('imgObligEvts');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<div class="buttons">';
         echo '<button type="submit" class="positive" ' .
             'onclick="document.forms.saisie.evenements.value = document.forms.saisie.maxi.value;return false;"> ' .
@@ -372,7 +372,7 @@ if (($bt_Sup) or ($bt_OK)) {
         echo '>' . my_html($enreg[1]) . "</option>\n";
     }
     echo '</select>&nbsp;';
-    Img_Zone_Oblig('imgObligRole');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo "</td></tr>\n";
     echo col_titre_tab($LG_Link_Ev_Main_Pers, $larg_titre);
     echo '<td class="value">';
@@ -381,7 +381,7 @@ if (($bt_Sup) or ($bt_OK)) {
     echo '/>';
     echo "</td></tr>\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     //  ===== Zone géographique
     echo colonne_titre_tab($LG_Link_Ev_Link_Place);
@@ -452,7 +452,7 @@ if (($bt_Sup) or ($bt_OK)) {
         echo '<input type="' . $hidden . '" name="Dans_Etiq_GGF" value="n"/>' . "\n";
     }
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     $lib_sup = '';
     if (($refEvt != -1) and ($refPers != -1)) $lib_sup = $lib_Supprimer;
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, $LG_this_link);
@@ -460,7 +460,14 @@ if (($bt_Sup) or ($bt_OK)) {
     echo "</table>";
 
     echo "</form>\n";
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

@@ -127,15 +127,15 @@ if (($ok == 'OK') and ($loc_base == 'I')) {
             if (! $fp1) die(LG_IMP_BACKUP_FILE_ERROR . $nom_fic_cnx_dist);
             else {
                 //ecriture des paramêtres saisis
-                ecrire($fp1, '<?php');
-                ecrire($fp1, '//--- Paramètres de connexion distants ---');
-                ecrire($fp1, '$ddb      = \'' . $base_int . '\';');
-                ecrire($fp1, '$dutil    = \'' . $uti_int . '\';');
-                ecrire($fp1, '$dmdp     = \'' . $mdp_int . '\';');
-                ecrire($fp1, '$dserveur = \'' . $site_int . '\';');
-                ecrire($fp1, '$dport    = \'' . $port_int . '\';');
-                ecrire($fp1, '//----------------- fin ------------------');
-                ecrire($fp1, '?>');
+                fputs($fp1, '<?php');
+                fputs($fp1, '//--- Paramètres de connexion distants ---');
+                fputs($fp1, '$ddb      = \'' . $base_int . '\';');
+                fputs($fp1, '$dutil    = \'' . $uti_int . '\';');
+                fputs($fp1, '$dmdp     = \'' . $mdp_int . '\';');
+                fputs($fp1, '$dserveur = \'' . $site_int . '\';');
+                fputs($fp1, '$dport    = \'' . $port_int . '\';');
+                fputs($fp1, '//----------------- fin ------------------');
+                fputs($fp1, '?>');
                 if ($gz) gzclose($fp1);
                 else fclose($fp1);
             }
@@ -518,13 +518,13 @@ if ($_SESSION['estGestionnaire']) {
         if (file_exists($nom_fic_cnx_dist)) include($nom_fic_cnx_dist);
         // Affichage du formulaire
         echo '<form id="saisie" method="post" enctype="multipart/form-data">';
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
        
         echo '<table width="80%" class="table_form">';
 
         // La ré-initialisation de la base n'est pas prévue pour les sites gratuits
         if (!$SiteGratuit) {
-            ligne_vide_tab_form(1);
+            echo '<tr><td colspan="2">&nbsp;</td></tr>';
             col_titre_tab(LG_IMP_BACKUP_RESET, $larg_titre);
             echo '<td class="value"><input type="checkbox" name="init_base"/>';
             echo ' <img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Attention" title="Attention"> ' . my_html(LG_IMP_BACKUP_RESET_TIP);
@@ -532,7 +532,7 @@ if ($_SESSION['estGestionnaire']) {
             echo '</tr>';
         }
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         col_titre_tab(LG_IMP_BACKUP_FILE, $larg_titre);
         echo '<td class="value"><input type="file" name="nom_du_fichier" size="80"/>';
         $dir = $chemin_exports;
@@ -557,9 +557,9 @@ if ($_SESSION['estGestionnaire']) {
                 if ($sel) {
                     if ($nb == 0) {
                         echo '<br>' . my_html(LG_IMP_BACKUP_FILE_SELECT);
-                        $nom_div = 'lediv';
-                        $x = Oeil_Div('ajout', my_html(LG_IMP_BACKUP_FILE_SHOW), $nom_div);
-                        echo '<table width="90%" border="0">' . "\n";
+                        echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . LG_IMP_BACKUP_FILE_SHOW . '" ' . Survole_Clic_Div('lediv') . '/>';
+                        echo '<div id="lediv">';
+                        echo '<table width="90%">' . "\n";
                     }
                     $nb++;
                     $col++;
@@ -587,14 +587,19 @@ if ($_SESSION['estGestionnaire']) {
         }
         if ($nb) {
             echo '</table>' . "\n";
-            fin_div_cache($nom_div);
+            echo '</div>' . "\n";
+            echo '<script type="text/javascript">' . "\n";
+            echo '<!--' . "\n";
+            echo 'cache_div(\'lediv\');' . "\n";
+            echo '//-->' . "\n";
+            echo '</script>' . "\n";
         }
         echo '</td>';
         echo '</tr>' . "\n";
 
         // Les options de destination ne sont pas disponibles pour les sites gratuits
         if (!$SiteGratuit) {
-            ligne_vide_tab_form(1);
+            echo '<tr><td colspan="2">&nbsp;</td></tr>';
             col_titre_tab(LG_IMP_BACKUP_TARGET, $larg_titre);
             echo '<td class="value">';
             echo '<input type="radio" name="loc_base" value="L" checked="checked" onclick="cache_div(\'p_int\');"/>' . my_html(LG_IMP_BACKUP_TARGET_LOCAL);
@@ -602,7 +607,7 @@ if ($_SESSION['estGestionnaire']) {
 
             echo ' <div id="p_int">' . "\n";
             echo '<fieldset>' . "\n";
-            aff_legend(LG_IMP_BACKUP_INTERNET_PARAMS);
+            echo '<legend>' . ucfirst(LG_IMP_BACKUP_INTERNET_PARAMS) . '</legend>' . "\n";
             echo '<table>' . "\n";
             echo '<tr><td>Base :</td><td><input type="text" name="base_int" value="' . $ddb . '"/></td></tr>' . "\n";
             echo '<tr><td>' . my_html(LG_IMP_BACKUP_INTERNET_PARAMS_DB) . LG_SEMIC . '</td><td><input type="text" name="uti_int" value="' . $dutil . '"/></td></tr>' . "\n";
@@ -621,7 +626,7 @@ if ($_SESSION['estGestionnaire']) {
         //if ('I' == 'I') {
         if ($Environnement == 'I') {
             $aff_pres_ut = true;
-            ligne_vide_tab_form(1);
+            echo '<tr><td colspan="2">&nbsp;</td></tr>';
             col_titre_tab(LG_IMP_BACKUP_KEEP_USERS, $larg_titre);
             echo '<td class="value">';
             echo '<input type="radio" name="aff_pres_ut" value="O" checked="checked" />' . my_html(ucfirst($LG_Yes));
@@ -630,9 +635,9 @@ if ($_SESSION['estGestionnaire']) {
         }
 
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>';
 
@@ -650,7 +655,14 @@ if ($_SESSION['estGestionnaire']) {
         echo '</script>' . "\n";
     }
 } else echo my_html($LG_function_noavailable_profile);
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

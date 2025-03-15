@@ -159,7 +159,7 @@
     Ecrit_Meta($objet, $objet, '');
     echo "</head>\n";
     $x = Lit_Env();
-    Ligne_Body();
+    echo '<body>';
 
     $auto_contrib = 'Cette page est accessible &agrave; partir du profil contributeur.';
 

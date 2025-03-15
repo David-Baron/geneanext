@@ -260,21 +260,28 @@ if ($abs) {
     echo '<table width="60%" class="table_form">' . "\n";
     $larg_titre = "20";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     for ($nb = 1; $nb <= $nb_docs; $nb++) {
         colonne_titre_tab(LG_IMP_DOCS_MISS_IMG_DOC);
         echo '<input type="file" name="nom_du_fichier[]" size="50"/></td></tr>' . "\n";
     }
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
     echo "</form>";
 }
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

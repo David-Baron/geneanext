@@ -157,7 +157,7 @@ function ajout9mois($laDate)
             $mois -= 12;
             $an += 1;
         }
-        return $an . zerofill2($mois) . substr($laDate, 6);
+        return $an . sprintf('%02s', $mois) . substr($laDate, 6);
     } else
         return '';
 }
@@ -216,8 +216,8 @@ $nomPers = $enreg['Prenoms'] . " " . $enreg['Nom'];
 $nom = 'Contr&ocirc;le de la fiche de ' . my_html($nomPers);
 
 $compl = Ajoute_Page_Info(800, 400) .
-    Affiche_Icone_Lien(Ins_Edt_Pers($Refer), 'fiche_edition', 'Modifier') . '&nbsp;' .
-    Affiche_Icone_Lien(Ins_Ref_Pers($Refer), 'fiche_fam', 'Fiche familiale') . "\n";
+    Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Refer . '"', 'fiche_edition', 'Modifier') . '&nbsp;' .
+    Affiche_Icone_Lien('href="' . $root . '/fiche_fam_pers.php?Refer=' . $Refer . '"', 'fiche_fam', 'Fiche familiale') . "\n";
 Insere_Haut($nom, $compl, 'Verif_Personne', '');
 
 titre_blocs(LG_CHK_PERS_CTRLS);
@@ -295,11 +295,11 @@ while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     $dCouple_OK = ctrl_date($enreg['Maries_Le'], "date de l'union avec " . $prenom . " " . $nom);
 
     $d1 = ajout15ans($D_Nai_PI);
-    $mesErr = $nomPers . ' n\'a pas pu se mettre en couple avec <a ' . Ins_Ref_Pers($c_ref) . '>' . $prenom . ' ' . $nom . '</a>';
+    $mesErr = $nomPers . ' n\'a pas pu se mettre en couple avec <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $c_ref . '">' . $prenom . ' ' . $nom . '</a>';
     $mesErr = $mesErr . ', elle n\'a pas 15 ans.';
     ctrlDates($dCouple, $d1, $mesErr, 4, 9);
 
-    $mesErr = $nomPers . ' n\'a pas pu se mettre en couple avec <a ' . Ins_Ref_Pers($c_ref) . '>' . $prenom . ' ' . $nom . '</a>';
+    $mesErr = $nomPers . ' n\'a pas pu se mettre en couple avec <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $c_ref . '">' . $prenom . ' ' . $nom . '</a>';
     $mesErr = $mesErr . ', elle est d&eacute;c&eacute;d&eacute;e avant.';
     ctrlDates($D_Dec_PI, $dCouple, $mesErr, 3, 4);
 }
@@ -344,7 +344,7 @@ while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     if ($Date_Nai_OK) {
         if ($Date_Nai_OK_E) {
             $d1 = ajout15ans($D_Nai_PI);
-            $mesErr = $nomPers . ' ne peut pas être ' . $lib1 . ' de <a ' . Ins_Ref_Pers($id) . '>' . $prenom . ' ' . $nom . '</a>, ';
+            $mesErr = $nomPers . ' ne peut pas être ' . $lib1 . ' de <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $id . '">' . $prenom . ' ' . $nom . '</a>, ';
             $mesErr = $mesErr . $article . ' n\'a pas 15 ans &agrave; la naissance de l\'enfant.';
             ctrlDates($Date_Nai_E, $d1, $mesErr, 11, 9);
         }
@@ -353,7 +353,7 @@ while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     if ($Date_Dec_OK) {
         if ($Date_Nai_OK_E) {
             $d1 = ajout9mois($D_Dec_PI);
-            $mesErr = $nomPers . ' ne peut pas &ecirc;tre ' . $lib1 . ' de <a ' . Ins_Ref_Pers($id) . '>' . $prenom . ' ' . $nom . '</a>, ';
+            $mesErr = $nomPers . ' ne peut pas &ecirc;tre ' . $lib1 . ' de <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $id . '">' . $prenom . ' ' . $nom . '</a>, ';
             $mesErr = $mesErr . $article . ' est d&eacute;c&eacute;d&eacute;' . $accord . ' depuis plus de 9 mois &agrave; la naissance de l\'enfant.';
             ctrlDates($d1, $Date_Nai_E, $mesErr, 10, 11);
         }
@@ -362,11 +362,17 @@ while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
 pasErreur();
 
 // Formulaire pour le bouton retour
-aff_origine();
+echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
-//  Bas d'ecran
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

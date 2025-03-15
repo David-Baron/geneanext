@@ -77,8 +77,7 @@ else {
         echo '<table width="70%" class="table_form" align="center">' . "\n";
         echo colonne_titre_tab(LG_ICSV_TOWN_NAME) . $n_ville_html;
         if (($Lat_V != 0) or ($Long_V != 0)) {
-            echo '&nbsp;';
-            appelle_carte_osm();
+            echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
         }
         echo '</td></tr>' . "\n";
 
@@ -100,7 +99,9 @@ else {
         // Affichage du commentaire
         if (Rech_Commentaire($Ident, $Type_Ref)) {
             echo '<br>';
-            Aff_Comment_Fiche($Commentaire, $Diffusion_Commentaire_Internet);
+            if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
+            }
         }
 
         //  Documents lies à la ville
@@ -160,7 +161,14 @@ else {
         // Formulaire pour le bouton retour
         Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
-        Insere_Bas($compl);
+        echo '<table cellpadding="0" width="100%">';
+        echo '<tr>';
+        echo '<td align="right">';
+        echo $compl;
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo "</td>";
+        echo '</tr>';
+        echo '</table>';
     }
 }
 

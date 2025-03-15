@@ -214,7 +214,14 @@ else {
     //Bouton_Retour($lib_Retour,'?'.Query_Str());
     bt_ok_an_sup(LG_CH_FUSIONNER, $lib_Retour, '', '', false, false);
 
-    Insere_Bas('');
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } ?>
 </body>
 

@@ -60,12 +60,12 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 150) .
-        Affiche_Icone_Lien('href="'. $root .'/fiche_categorie.php?categ=' . $Categ . '"', 'page', 'Fiche lien') . '&nbsp;';
+        Affiche_Icone_Lien('href="' . $root . '/fiche_categorie.php?categ=' . $Categ . '"', 'page', 'Fiche lien') . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Categorie', $Categ);
 
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Titre\')" action="' . my_self() . '?categ=' . $Categ . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     // Récupération des données
     $sql = 'select * from ' . nom_table('categories') . ' where Identifiant = ' . $Categ . ' limit 1';
@@ -76,12 +76,12 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $larg_titre = 25;
     echo '<table width="70%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     col_titre_tab($LG_Ch_Categ_Title, $larg_titre);
     echo '<td class="value">';
     echo '<input type="text" name="Titre" value="' . $TitreF . '" size="80"/>' . "\n";
-    Img_Zone_Oblig('Titre');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ATitre" value="' . $TitreF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
@@ -92,7 +92,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<input type="text" class="oblig" name="Ordre" id="Ordre" value="' . $OrdreF . '" size="3" onchange="verification_num(this);"/>' . "\n";
     echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $LG_Ch_Categ_Inc_Order . '" title="' . $LG_Ch_Categ_Inc_Order . '" border="0" ';
     echo 'onclick="document.forms.saisie.Ordre.value++;"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('ordre_img');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
 
     col_titre_tab($LG_Ch_Categ_Image, $larg_titre);
@@ -100,14 +100,21 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
 
     echo "</form>";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

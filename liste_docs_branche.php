@@ -63,7 +63,7 @@ else {
         $larg_titre = '30';
         echo '<table width="80%" border="0" class="table_form">' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_DOC_BRANCH_ORIGINE);
         $sql_noms = 'SELECT DISTINCT idNomFam, Nom FROM ' . nom_table('personnes') . ' WHERE Reference <> 0';
@@ -102,7 +102,7 @@ else {
 
         echo '</tr>';
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Afficher, $lib_Annuler, '', '');
 
         echo '</table>';
@@ -192,7 +192,7 @@ else {
                 $num_image++;
                 echo '<td>';
                 Aff_Img_Redim_Lien($rep . $row['Nom_Fichier'], 200, 200);
-                echo '<br /><a ' . Ins_Ref_Pers($ref_pers) . '>' . $row['Prenoms'] . ' ' . $row['Nom'] . '</a>';
+                echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_pers . '">' . $row['Prenoms'] . ' ' . $row['Nom'] . '</a>';
                 echo '</td>' . "\n";
                 if ($num_image == $nb_img_ligne) {
                     $num_image = 0;

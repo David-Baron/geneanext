@@ -101,7 +101,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '<form id="saisie" method="post" action="' . my_self() . '?refEvt=' . $refEvt .
         '&amp;refObjet=' . $refObjet .
         '&amp;TypeObjet=' . $TypeObjet . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="typeObjetF" value="' . $TypeObjet . '"/>' . "\n";
     echo "<br />\n";
 
@@ -220,7 +220,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, LG_LINK_THIS, false);
 
     echo "</form>\n";
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

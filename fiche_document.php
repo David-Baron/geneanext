@@ -46,7 +46,7 @@ else {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
     }
 
     //
@@ -74,7 +74,7 @@ else {
             echo $nomFic . '</td></tr>' . "\n";
 
             colonne_titre_tab($LG_Docs_Doc_Type);
-            echo '<a href="'. $root .'/fiche_type_document.php?code=' . $enreg['Id_Type_Document'] . '">'
+            echo '<a href="' . $root . '/fiche_type_document.php?code=' . $enreg['Id_Type_Document'] . '">'
                 . my_html($enreg['Libelle_Type'])
                 . '</a></td></tr>' . "\n";
 
@@ -100,7 +100,7 @@ else {
                 $req = 'SELECT 1 FROM ' . nom_table('concerne_doc') . ' WHERE id_document = ' . $Reference . ' limit 1';
                 $result = lect_sql($req);
                 if ($result->rowCount() > 0) {
-                    echo '<br /><a href="'. $root .'/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a>';
+                    echo '<br /><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a>';
                 }
             }
         } else aff_erreur($LG_Data_noavailable_profile);
@@ -109,7 +109,14 @@ else {
 
         // Formulaire pour le bouton retour
         Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-        Insere_Bas($compl);
+        echo '<table cellpadding="0" width="100%">';
+        echo '<tr>';
+        echo '<td align="right">';
+        echo $compl;
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo "</td>";
+        echo '</tr>';
+        echo '</table>';
     }
 }
 ?>

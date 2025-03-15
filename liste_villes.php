@@ -230,19 +230,19 @@ if ($res->rowCount() > 0) {
         $ligne = '';
         switch ($Type_Liste) {
             case 'S':
-                ecrire($fp, 'Identifiant_Subdivision;Nom_Subdivision;Nom_Ville;Latitude;Longitude;');
+                fputs($fp, 'Identifiant_Subdivision;Nom_Subdivision;Nom_Ville;Latitude;Longitude;');
                 break;
             case 'V':
-                ecrire($fp, 'Identifiant_Ville;Nom_Ville;Nom_Depart_Min;Latitude;Longitude;');
+                fputs($fp, 'Identifiant_Ville;Nom_Ville;Nom_Depart_Min;Latitude;Longitude;');
                 break;
             case 'D':
-                ecrire($fp, 'Identifiant_Departement;Nom_Depart;Nom_Region;');
+                fputs($fp, 'Identifiant_Departement;Nom_Depart;Nom_Region;');
                 break;
             case 'R':
-                ecrire($fp, 'Identifiant_Region;Nom_Region;Nom_Pays;');
+                fputs($fp, 'Identifiant_Region;Nom_Region;Nom_Pays;');
                 break;
             case 'P':
-                ecrire($fp, 'Nom_Pays;Code_Pays_ISO_Alpha;Code_Pays_ISO_Alpha3;');
+                fputs($fp, 'Nom_Pays;Code_Pays_ISO_Alpha;Code_Pays_ISO_Alpha3;');
                 break;
             default:
                 break;
@@ -273,7 +273,9 @@ if ($res->rowCount() > 0) {
                     echo $tab . '<a href="' . $root . '/fiche_subdivision.php?Ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[3];
                     $Long_V = $row[4];
-                    appelle_carte_osm();
+                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                    }
                     if ($est_gestionnaire) {
                         echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
@@ -282,7 +284,9 @@ if ($res->rowCount() > 0) {
                     echo $tab . '<a href="' . $root . '/fiche_ville.php?Ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[3];
                     $Long_V = $row[4];
-                    appelle_carte_osm();
+                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                    }
                     if ($est_gestionnaire) {
                         echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
@@ -343,7 +347,14 @@ if ($res->rowCount() > 0) {
     }
 }
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 function constit_ligne($max_champ)
 {
@@ -352,7 +363,7 @@ function constit_ligne($max_champ)
         $ligne .= $row[$nb] . ';';
     }
     if ($debug) echo $ligne . '<br />';
-    ecrire($fp, $ligne);
+    fputs($fp, $ligne);
 }
 ?>
 </body>

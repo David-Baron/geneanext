@@ -220,7 +220,13 @@ if ($retourPreced) Retour_Ar();
 if (!$est_contributeur) {
     Insere_Haut(my_html($titre), '', 'Edition_Evenement', "");
     Affiche_Stop($LG_function_noavailable_profile);
-    Insere_Bas('');
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
     return;
 } else {
     include(__DIR__ . '/assets/js/Edition_Evenement.js');
@@ -304,9 +310,9 @@ if (!$est_contributeur) {
         //if ($actualite) $ajout = '&amp;actu=o';
         //$compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_evenement.php?refPar=' .$refPar . $ajout. '"','page','Fiche évènement') . '&nbsp;';
         if ($actualite)
-            $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_actualite.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['New']) . '&nbsp;';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_actualite.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['New']) . '&nbsp;';
         else
-            $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_evenement.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['Event']) . '&nbsp;';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_evenement.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['Event']) . '&nbsp;';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Evenement', '');
@@ -356,7 +362,7 @@ if (!$est_contributeur) {
     // Titre
     col_titre_tab_noClass($LG_Event_Title, $largP);
     echo '<td><input type="text" size="50" name="titreF" id="titreF" value="' . $titreLu . '" class="oblig"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     if (!$actualite) {
         if ($refPar != -1) {
             // Texte à afficher en modification sur le type de lien
@@ -410,7 +416,7 @@ if (!$est_contributeur) {
             echo my_html($enregT['Libelle_Type']) . "</option>\n";
         }
         echo "</optgroup></select>&nbsp;";
-        Img_Zone_Oblig('imgObligType');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<input type="' . $hidden . '" name="codeTypeAnc" value="' . $codeTypeLu . '"/></td></tr>' . "\n";
     }
     //
@@ -487,7 +493,7 @@ if (!$est_contributeur) {
 
     // === Commentaire
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     //Divers
     echo '<tr>' . "\n";
@@ -518,7 +524,7 @@ if (!$est_contributeur) {
         // Ajout de lien autorisé en mise à jour uniquement
         if ($refPar != -1) {
             echo '<br /><br />Ajouter une personne : ' .
-                '<a href="'. $root .'/edition_lier_eve.php?refPers=-1&amp;refEvt=' . $refPar . '">' .
+                '<a href="' . $root . '/edition_lier_eve.php?refPers=-1&amp;refEvt=' . $refPar . '">' .
                 '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" border="0" alt="Ajouter un &eacute;v&egrave;nement"/></a>' . "\n";
         }
     }
@@ -541,7 +547,7 @@ if (!$est_contributeur) {
     Aff_Documents_Objet($refPar, 'E', 'N');
     // Possibilité de lier un document pour l'évènement
     echo '<br />&nbsp;Lier un document existant &agrave; l\'&eacute;v&egrave;nement : ' .
-        Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $refPar .
+        Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $refPar .
             '&amp;typeObjet=E&amp;refDoc=-1"', 'ajout', 'Ajout d\'un document') . "\n";
     echo '</div>' . "\n";
 
@@ -555,7 +561,7 @@ if (!$est_contributeur) {
         $x = Aff_Sources_Objet($refPar, 'E', 'N');
         // Possibilité de lier un document pour l'évènement
         echo '<br />&nbsp;Lier une source existante &agrave; l\'&eacute;v&egrave;nement : ' .
-            Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $refPar . '&amp;typeObjet=E&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $refPar . '&amp;typeObjet=E&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -579,7 +585,14 @@ if (!$est_contributeur) {
     echo '	setupPanes("container1", "tab1", 40);' . "\n";
     echo '</script>' . "\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

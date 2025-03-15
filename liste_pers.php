@@ -71,10 +71,9 @@ function Aff_Ne_Dec($row)
 }
 
 $deb_lien = 'href="' . $root . '/liste_pers.php?Type_Liste=' . $Type_Liste . '&amp;texte=O';
-$compl = Ajoute_Page_Info(600, 300) .
-    Affiche_Icone_Lien_TXT_PDF($deb_lien . '"', my_html($LG_printable_format), 'T') . '&nbsp;';
+$compl = Ajoute_Page_Info(600, 300) . '<a href="' . $root . '/liste_pers.php?Type_Liste=' . $Type_Liste . '&amp;texte=O" rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '" /></a>';
 if ((!$SiteGratuit) or ($Premium))
-    $compl .= Affiche_Icone_Lien_TXT_PDF($deb_lien . '&amp;pdf=O"', my_html($LG_pdf_format), 'P') . '&nbsp;';
+    $compl .= '<a href="' . $root . '/liste_pers.php?Type_Liste=' . $Type_Liste . '&amp;texte=O&amp;pdf=O" rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones['PDF'] . '" alt="' . $LG_pdf_format . '" title="' . $LG_pdf_format . '" /></a>';
 
 if (! $texte) Insere_Haut(my_html($objet), $compl, 'Liste_Pers', $Type_Liste);
 
@@ -95,7 +94,7 @@ if (isset($_SESSION['mem_pers'])) {
     if ((!$texte) and ($_SESSION['mem_pers'])) {
         for ($nb = 0; $nb < 3; $nb++) {
             if ($_SESSION['mem_pers'][$nb] != 0) {
-                echo '<a ' . Ins_Ref_Pers($_SESSION['mem_pers'][$nb]) . '>' .
+                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $_SESSION['mem_pers'][$nb] . '">' .
                     my_html($_SESSION['mem_prenoms'][$nb] . ' ' . $_SESSION['mem_nom'][$nb]) . '</a>&nbsp;' . "\n";
             }
         }
@@ -121,12 +120,12 @@ if ((!$texte) && ($est_contributeur)) {
     // Lien direct sur la dernière personne saisie
     if ($MaxRef > 0) {
         $aff_nom = UnPrenom($enrmax[2]) . ' ' . $enrmax[1];
-        echo $LG_last_pers . ' : <a ' . Ins_Ref_Pers($MaxRef) . '>' . $aff_nom . '</a>&nbsp;';
-        echo '&nbsp;<a ' . Ins_Edt_Pers($MaxRef) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
+        echo $LG_last_pers . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $MaxRef . '">' . $aff_nom . '</a>&nbsp;';
+        echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
     }
     $resmax->closeCursor();
     // Possibilité d'insérer une personne
-    echo $LG_add_pers . ' : ' . Affiche_Icone_Lien(Ins_Edt_Pers(-1), 'ajouter', $LG_add) . '<br><br>' . "\n";
+    echo $LG_add_pers . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=-1"', 'ajouter', $LG_add) . '<br><br>' . "\n";
 }
 
 $debut = microtime_float();
@@ -313,7 +312,10 @@ if (! $texte) {
                         if ($Type_Liste == 'D') echo '&nbsp;' . Affiche_Icone_Lien($deb_lien_crea . 'D' . $params . '"', 'ajouter', LG_CREATE_PERS_DEAD_IN . ' ' . $NomObj);
                     }
                     if (($Type_Liste == 'N') or ($Type_Liste == 'D')) {
-                        appelle_carte_osm();
+                        global $Lat_V, $Long_V, $LG_Show_On_Map;
+                        if (($Lat_V != 0) or ($Long_V != 0)) {
+                            echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                        }
                         echo '&nbsp;';
                     }
                     echo '(' . $row[0] . ')<br>' . "\n";
@@ -321,7 +323,10 @@ if (! $texte) {
                 case 'M':
                 case 'K':
                     echo $NomA . '&nbsp;(' . $row[0] . ')&nbsp;' . '<a href="' . $root . '/notaires_ville.php?Ville=' . $row[2] . '&amp;Nom=' . $le_nom . '">' . LG_LPERS_NOTARIES . '</a>&nbsp;';
-                    appelle_carte_osm();
+                    global $Lat_V, $Long_V, $LG_Show_On_Map;
+                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                    }
                     echo $deb_lien . $params . '&amp;Tri=F"><img src="' . $root . '/assets/img/' . $Icones['femme'] . '" alt="' . LG_ORDER_BY_WOMEN . '" title="' . LG_ORDER_BY_WOMEN . '"></a>';
                     echo $deb_lien . $params . '&amp;Tri=H"><img src="' . $root . '/assets/img/' . $Icones['homme'] . '" alt="' . LG_ORDER_BY_MEN . '" title="' . LG_ORDER_BY_MEN . '"></a>';
                     echo $deb_lien . $params . '&amp;Tri=D"><img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="' . LG_ORDER_BY_DATE . '" title="' . LG_ORDER_BY_DATE . '"></a><br>' . "\n";
@@ -352,7 +357,13 @@ else {
     // Sortie au format texte
     else {
         // Affichage du titre : numéros + génération
-        Insere_Haut_texte(my_html($objet));
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($objet) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     }
 
     // Constitution de la requête d'extraction
@@ -515,7 +526,16 @@ else {
     }
 }
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 ?>
 </body>

@@ -73,32 +73,32 @@ if ($ADiff === '') $ADiff = 'N';
 // Affiche un document
 function Aff_Formulaire()
 {
-    global $chemin_document, $Reference, $db, $Diff, $ADiff, $TypeDoc, $ATypeDoc, $TitreDoc, $ATitreDoc,
+    global $root, $Icones, $chemin_document, $Reference, $db, $Diff, $ADiff, $TypeDoc, $ATypeDoc, $TitreDoc, $ATitreDoc,
         $LG_Docs_Title, $LG_Docs_File, $LG_Docs_Doc_Type, $LG_show_on_internet,
         $hidden, $larg_titre,
         $NomFic, $ANomFic, $err_td;
 
     $larg_titre = '25';
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-    colonne_titre_tab($LG_Docs_Title);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_Title . '&nbsp;</td><td class="value">';
     echo '<input type="text" size="80" name="TitreDoc" id="Titre" value="' . $TitreDoc . '" class="oblig"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligDesc');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ATitreDoc" value="' . $ATitreDoc . '"/>';
     echo '</td>';
     echo '<td align="center" rowspan="4">';
     echo '</td></tr>' . "\n";
 
-    colonne_titre_tab($LG_Docs_File);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_File . '&nbsp;</td><td class="value">';
     if ($NomFic != '') echo 'Fichier = ' . $NomFic . "<br />\n";
     echo '<input type="file" name="nom_du_fichier" value="' . $NomFic . '" class="oblig" size="65"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ANomFic" value="' . $ANomFic . '"/>';
     echo '</td></tr>' . "\n";
 
     //	Type de document
-    colonne_titre_tab($LG_Docs_Doc_Type);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Docs_Doc_Type . '&nbsp;</td><td class="value">';
     $req = 'SELECT * FROM ' . nom_table('types_doc') . ' ORDER BY Libelle_Type';
     $result = lect_sql($req);
     $err_td = false;
@@ -121,7 +121,7 @@ function Aff_Formulaire()
     echo '</td></tr>' . "\n";
 
     // Diffusion Internet
-    colonne_titre_tab($LG_show_on_internet);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_show_on_internet . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="Diff" value="O"';
     if ($Diff == 'O') echo ' checked="checked"';
     echo '/><input type="' . $hidden . '" name="ADiff" value="' . $ADiff . '"/>';
@@ -262,7 +262,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     Insere_Haut(my_html($titre), $compl, 'Edition_Document', $Reference);
 
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this)" enctype="multipart/form-data" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     if ($Modif) {
         $sql = 'select * from ' . nom_table('documents') . ' where id_document = ' . $Reference . ' limit 1';
@@ -309,12 +309,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         $result = lect_sql($req);
         if ($result->rowCount() > 0) {
             $affBtSup = false;
-            ligne_vide_tab_form(1);
+            echo '<tr><td colspan="2">&nbsp;</td></tr>';
             echo '<tr><td colspan="2"><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a></td></tr>' . "\n";
         }
     }
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     // Bouton Supprimer en modification si pas d'utilisation du rôle
     $lib_sup = '';
     if ($affBtSup) $lib_sup = $lib_Supprimer;
@@ -327,7 +327,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     echo "</form>";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

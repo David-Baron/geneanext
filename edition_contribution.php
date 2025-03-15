@@ -1394,7 +1394,7 @@ if ((!$bt_OK) && (!$bt_An)) {
                 // Onglet parents
                 echo '<div id="pnlParents">' . "\n";
                 echo '<fieldset>' . "\n";
-                aff_legend(LG_FATHER);
+                echo '<legend>' . LG_FATHER . '</legend>' . "\n";
                 init_ini();
                 if ($pere != 0) {
                     Recup_Don_Pers($pere);
@@ -1413,7 +1413,7 @@ if ((!$bt_OK) && (!$bt_An)) {
                 $x = Aff_Pers2('pere', $donnees_ini, $donnees_prop);
                 echo '</fieldset>' . "\n";
                 echo '<fieldset>' . "\n";
-                aff_legend(LG_MOTHER);
+                echo '<legend>' . LG_MOTHER . '</legend>' . "\n";
                 init_ini();
                 if ($mere != 0) {
                     Recup_Don_Pers($mere);
@@ -1539,7 +1539,14 @@ if ((!$bt_OK) && (!$bt_An)) {
             aff_erreur(LG_CONTRIB_EDIT_FILE_ERROR . $nom_fic);
         }
     }
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

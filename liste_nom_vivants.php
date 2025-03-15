@@ -86,7 +86,13 @@ if (! $texte) {
     // Sortie au format texte
     else {
         // Affichage du titre : numéros + génération
-        Insere_Haut_texte($titre);
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     }
 }
 
@@ -94,9 +100,9 @@ if (! $texte) {
 $A = date('Y') - 130;
 $M = date('m');
 $J = date('d');
-$xA = zerofill4($A);
-$xM = zerofill2($M);
-$xJ = zerofill2($J);
+$xA = sprintf('%04s', $A);
+$xM = sprintf('%02s', $M);
+$xJ = sprintf('%02s', $J);
 $date_lim = $xA . $xM . $xJ;
 
 $num_lig = 0;
@@ -210,7 +216,7 @@ if ($Nom != '-1') {
                     $num_nom++;
                     $num_pers++;
                     if (! $texte) {
-                        oeil_div_simple('ajout' . $num_pers, 'ajout' . $num_pers, my_html($LG_show_noshow), 'div' . $num_pers);
+                        echo ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $LG_show_noshow . '" title="' . $LG_show_noshow . '" ' . Survole_Clic_Div('div' . $num_pers) . '/>';
                         echo '</td></tr>';
                     }
                     if (! $texte) echo '</table>';
@@ -227,10 +233,10 @@ if ($Nom != '-1') {
                         if ($row[4] == 'O') echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '">';
                         else echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
                     }
-                    echo '<a ' . Ins_Ref_Pers($row[0]) . '>' . my_html($row[2]) . '</a>' . "\n";
+                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row[0] . '">' . my_html($row[2]) . '</a>' . "\n";
                 } else HTML_ou_PDF($row[2], $sortie);
                 if (! $texte) {
-                    if ($est_gestionnaire) echo ' <a ' . Ins_Edt_Pers($row[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    if ($est_gestionnaire) echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 }
                 if ($naissance != '') HTML_ou_PDF(' ° ' . Etend_date($naissance), $sortie);
                 HTML_ou_PDF('</td></tr>', $sortie);
@@ -243,7 +249,16 @@ if ($Nom != '-1') {
     $res->closeCursor();
 }
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 if ($sortie_pdf) {
     $pdf->Output();

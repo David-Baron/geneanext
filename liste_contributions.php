@@ -115,7 +115,7 @@ while ($i < count($ListFiles)) {
         }
 
         if (($Ref_Pers != 0) and (Get_Nom_Prenoms($Ref_Pers, $Nom, $Prenoms)))
-            echo '<td align="left"><a ' . Ins_Ref_Pers($Ref_Pers) . '>' . $Nom . ' ' . $Prenoms . '</a></td>';
+            echo '<td align="left"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . $Nom . ' ' . $Prenoms . '</a></td>';
         else
             echo '<td>&nbsp;</td>';
 
@@ -136,7 +136,14 @@ while ($i < count($ListFiles)) {
 
 echo '</table>' . "\n";
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

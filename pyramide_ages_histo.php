@@ -176,16 +176,23 @@ echo '</table>';
 $Nom = '';
 $Prenoms = '';
 if (Get_Nom_Prenoms($ref_max_h, $Nom, $Prenoms)) {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a ' . Ins_Ref_Pers($ref_max_h) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_h) . ')';
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_max_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_h) . ')';
 }
 if (Get_Nom_Prenoms($ref_max_f, $Nom, $Prenoms)) {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a ' . Ins_Ref_Pers($ref_max_f) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_f) . ')';
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_max_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_f) . ')';
 }
 
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour);
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

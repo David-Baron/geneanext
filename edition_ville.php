@@ -153,11 +153,11 @@ function Aff_Ville($enreg2)
     // Onglet données générales
     echo '<div id="pnl_Gen">' . "\n";
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_DATA_TAB);
+    echo '<legend>' . ucfirst(LG_CH_DATA_TAB) . '</legend>' . "\n";
     echo '<table width="100%" border="0">' . "\n";
     col_titre_tab_noClass(LG_ICSV_TOWN_NAME, $largP);
     echo '<td><input class="oblig" type="text" size="50" name="Nom_VilleV" id="Nom_VilleV" value="' . $n_ville_html . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ANom_VilleV" value="' . $n_ville_html . '"/></td></tr>' . "\n";
     col_titre_tab_noClass(LG_ICSV_TOWN_ZIP_CODE, $largP);
     echo '<td><input type="text" size="10" name="Code_PostalV" value="' . $enreg2["Code_Postal"] . '"/>' . "\n";
@@ -183,23 +183,23 @@ function Aff_Ville($enreg2)
 
     // Coordonnées géographiques
     echo '<fieldset>' . "\n";
-    aff_legend(LG_ICSV_TOWN_GEO_COORDS);
+    echo '<legend>' . ucfirst(LG_ICSV_TOWN_GEO_COORDS) . '</legend>' . "\n";
     echo '<table width="100%" border="0">' . "\n";
     champ_carte(LG_ICSV_TOWN_ZIP_LATITUDE, 'Latitude', $enreg2['Latitude']);
     echo '</td></tr>' . "\n";
     champ_carte(LG_ICSV_TOWN_ZIP_LONGITUDE, 'Longitude', $enreg2['Longitude']);
     $id_image = 'carte_osm';
-    echo ' <img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' .LG_CALL_OPENSTREETMAP . '" title="' . LG_CALL_OPENSTREETMAP . '" onclick="apelle_carte(Latitude, Longitude)">';
+    echo ' <img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . LG_CALL_OPENSTREETMAP . '" title="' . LG_CALL_OPENSTREETMAP . '" onclick="apelle_carte(Latitude, Longitude)">';
     echo "</td></tr>\n";
     echo '<tr><td colspan="2">';
-    aff_tip_carte();
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '"><a href="http://www.OpenStreetMap.com" target="_blank">OpenStreetMap</a></td></tr>' . "\n";
     echo '</td></tr>' . "\n";
     echo "</table>\n";
     echo '</fieldset>' . "\n";
 
     // Commentaire
     echo '<fieldset>' . "\n";
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     //Divers
     echo '<tr>' . "\n";
@@ -233,7 +233,7 @@ function Aff_Ville($enreg2)
         $x = Aff_Sources_Objet($Ident, 'V', 'N');
         // Possibilité de lier un document pour la ville
         echo '<br>&nbsp;' . my_html(LG_ICSV_TOWN_LINK_SOURCE) . LG_SEMIC
-            . Affiche_Icone_Lien('href="'. $root .'/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -242,8 +242,8 @@ function Aff_Ville($enreg2)
         echo '<div id="pnl_Listes">' . "\n";
         echo '<br>';
 
-        $deb_lien_visu = '<a href="'. $root .'/liste_pers2.php?Type_Liste=';
-        $deb_lien_crea = 'href="'. $root .'/edition_personnes_ville.php?evt=';
+        $deb_lien_visu = '<a href="' . $root . '/liste_pers2.php?Type_Liste=';
+        $deb_lien_crea = 'href="' . $root . '/edition_personnes_ville.php?evt=';
         $fin_lien = '&amp;idNom=' . $Ident . '&amp;Nom=' . $n_ville . '"';
 
         echo '<br>';
@@ -262,7 +262,7 @@ function Aff_Ville($enreg2)
         Aff_Documents_Objet($Ident, 'V', 'N');
         // Possibilité de lier un document pour la personne
         echo '<br>' . LG_ICSV_TOWN_LINK_DOCUMENT . LG_SEMIC
-            . Affiche_Icone_Lien('href="'. $root .'/edition_lier_doc.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refDoc=-1"', 'ajout', LG_ICSV_TOWN_ADD_DOCUMENT) . "\n";
+            . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $Ident . '&amp;typeObjet=V&amp;refDoc=-1"', 'ajout', LG_ICSV_TOWN_ADD_DOCUMENT) . "\n";
         echo '</div>' . "\n";
     }
 
@@ -362,7 +362,7 @@ if (($ok == '') && ($annuler == '')) {
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ident != -1) {
         $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ident . '&amp;Type_Ref=V"', 'images', 'Images') . '&nbsp;' .
-            Affiche_Icone_Lien('href="'. $root .'/fiche_ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . '&nbsp;';
+            Affiche_Icone_Lien('href="' . $root . '/fiche_ville.php?Ident=' . $Ident . '"', 'page', 'Fiche ville') . '&nbsp;';
     }
 
     if ($bt_Sup) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -394,12 +394,12 @@ if (($ok == '') && ($annuler == '')) {
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
         aff_erreur(LG_ICSV_TOWN_UNKNOWN);
-        echo '<a href="'. $root .'/liste_villes.php?Type_Liste=V">' . LG_SUBDIV_LIST . '</a>';
+        echo '<a href="' . $root . '/liste_villes.php?Type_Liste=V">' . LG_SUBDIV_LIST . '</a>';
     } else {
         include(__DIR__ . '/assets/js/Insert_Tiny.js');
 
         echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Nom_VilleV\')" action="' . my_self() . '?Ident=' . $Ident . '">' . "\n";
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         $enreg2 = $enreg;
         if ($Ident != -1) Champ_car($enreg2, 'Nom_Ville');
@@ -425,7 +425,14 @@ if (($ok == '') && ($annuler == '')) {
         echo '	affiche_icone_carte(\'carte_osm\');' . "\n";
         echo '</script>' . "\n";
     }
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 function champ_carte($libelle, $nom_champ, $valeur)

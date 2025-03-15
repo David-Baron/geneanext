@@ -160,16 +160,16 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<form id="saisie" enctype="multipart/form-data" method="post" onsubmit="return verification_form(this,\'NomS,Adresse_MailS\')" action="' . my_self() . '" >' . "\n";
 
     echo '<table width="85%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     col_titre_tab($LG_Site_Param_Name, $larg_titre);
     echo '<td class="value"><input type="text" class="oblig" size="80" name="NomS" value="' . $Nom . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ANomS" value="' . $Nom . '"/></td></tr>' . "\n";
 
     col_titre_tab($LG_Site_Param_Mail, $larg_titre);
     echo '<td class="value"><input type="text" class="oblig" size="80" name="Adresse_MailS" value="' . $Adresse_Mail . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligMail');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="AAdresse_MailS" value="' . $Adresse_Mail . '"/></td></tr>' . "\n";
 
     col_titre_tab($LG_Site_Param_Year_Only, $larg_titre);
@@ -189,20 +189,20 @@ if ((!$bt_OK) && (!$bt_An)) {
     }
     echo '<input type="' . $hidden . '" name="APivot_MasquageS" value="' . $Pivot_Masquage . '"/></td></tr>' . "\n";
 
-    colonne_titre_tab($LG_Site_Param_Hover_Clic);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Site_Param_Hover_Clic . '&nbsp;</td><td class="value">';
     bouton_radio('ComportementG', 'S', $LG_Site_Param_Hover, ($Comportement == 'S'));
     bouton_radio('ComportementG', 'C', $LG_Site_Param_Click, ($Comportement == 'C'));
     echo '<input type="' . $hidden . '" name="AComportementG" value="' . $Comportement . '"/></td></tr>' . "\n";
 
     // === Commentaire
-    colonne_titre_tab(LG_CH_COMMENT);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire(0, $Type_Ref);
     echo '<textarea cols="80" rows="4" name="Divers">' . $Commentaire . '</textarea>' . "\n";
     echo '<input type="' . $hidden . '" name="ADivers" value="' . my_html($Commentaire) . '"/></td></tr>' . "\n";
 
     // Diffusion Internet commentaire
-    colonne_titre_tab(LG_CH_COMMENT_VISIBILITY);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT_VISIBILITY . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="Diff_Note" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
@@ -248,15 +248,22 @@ if ((!$bt_OK) && (!$bt_An)) {
     }
     echo '<input type="' . $hidden . '" name="ANom_Image" value="' . $Image_Index . '"/></td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
 
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '</form>';
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 
     echo '<script type="text/javascript" src="assets/js/jscolor.js"></script>';
 } else {

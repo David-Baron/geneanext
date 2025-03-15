@@ -223,7 +223,7 @@ function traite_date($str)
     // 3 champs => jour mois année
     if ($nb_zones_date == 3) {
         $Jour = $arr[$ch_date];
-        $Jour = zerofill2($Jour);
+        $Jour = sprintf('%02s', $Jour);
         $Mois = trim($arr[1 + $ch_date]);
         $Annee = $arr[2 + $ch_date];
     }
@@ -307,9 +307,9 @@ function traite_date_dt($arr)
 {
     // 0000-00-00 00:00:00
     global $Mois_Abr;
-    $Jour   = zerofill2($arr[2]);
-    $Mois  = zerofill2(array_search(strtoupper($arr[3]), $Mois_Abr) + 1);
-    $Annee = zerofill4(trim($arr[4]));
+    $Jour   = sprintf('%02s', $arr[2]);
+    $Mois  = sprintf('%02s', array_search(strtoupper($arr[3]), $Mois_Abr) + 1);
+    $Annee = sprintf('%04s', trim($arr[4]));
     return '\'' . $Annee . '-' . $Mois . '-' . $Jour . ' 00:00:00\'';
 }
 
@@ -1727,7 +1727,7 @@ if ($_SESSION['estGestionnaire']) {
 
         $larg_titre = '35';
         echo '<form id="saisie" method="post" enctype="multipart/form-data">';
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         echo '<table width="90%" class="table_form">';
         colonne_titre_tab(LG_IMP_GED_FILE);
@@ -1737,7 +1737,7 @@ if ($_SESSION['estGestionnaire']) {
             echo '<input type="checkbox" name="fic_utf8"></td></tr>';
         }
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_IMP_GED_INSERT);
         echo '<input type="checkbox" name="maj_oui"></td></tr>';
@@ -1750,7 +1750,7 @@ if ($_SESSION['estGestionnaire']) {
             $readonly = true;
         else
             $readonly = false;
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_IMP_GED_DEFAULT_VISIBILITY);
         if ($readonly) {
@@ -1776,7 +1776,7 @@ if ($_SESSION['estGestionnaire']) {
         colonne_titre_tab(LG_IMP_GED_IMPORT_DATES);
         echo '<input type="checkbox" name="reprise_date"/></td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_IMP_GED_PLACES);
         echo '<select id="sel_lieux" size="1" onchange="lieux.value += sel_lieux.options[sel_lieux.selectedIndex].text + \',\';" >';
@@ -1798,16 +1798,23 @@ if ($_SESSION['estGestionnaire']) {
         echo  '<img src="' . $root . '/assets/img/' . $Icones['efface'] . '" alt="Efface le format des lieux" title="Efface le format des lieux" onclick="document.getElementById(\'lieux\').value = \'\';">';
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>';
         echo '</form>';
     }
 } else aff_erreur($LG_function_noavailable_profile);
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

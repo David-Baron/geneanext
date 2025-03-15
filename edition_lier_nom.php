@@ -115,7 +115,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     //  Debut de la page
     echo '<form id="saisie" method="post" action="' . my_self() . '?refPers=' . $refPers . '&amp;refNom=' . $refNom . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<br />' . "\n";
 
     //  Valeurs par defaut
@@ -137,16 +137,16 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
         $larg_titre = '20';
         echo '<table width="80%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         // Nom
-        colonne_titre_tab($LG_Name);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Name . '&nbsp;</td><td class="value">';
         //  En création, on peut choisir le nom
         if ($refNom == -1) {
             echo '<input type="hidden" name="NomP" id="NomP" value="-1/--"/>' . "\n";
             // Select des noms de famille existants
             Select_Noms('', 'NomSel', 'NomP');
-            Img_Zone_Oblig('imgObligRole');
+            echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
             // Possibilité d'ajouter un nom
             $texte_im = $LG_Link_Name_New;
@@ -170,12 +170,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo "</td></tr>\n";
 
         // Commentaire
-        colonne_titre_tab(LG_CH_COMMENT);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
         echo '<input type="text" size="50" name="Comment" value="' . $comment . '"/>&nbsp;' . "\n";
         echo '<input type="hidden" name="AComment" value="' . $comment . '"' . "/>\n";
         echo "</td></tr>\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         $lib_sup = '';
         if (($refPers != -1) and ($refNom != -1)) $lib_sup = $lib_Supprimer;
         bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, $LG_Link_Name_Delete);
@@ -184,7 +184,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo "</table>";
     echo "</form>\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } ?>
 
 <script type="text/javascript">

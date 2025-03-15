@@ -132,7 +132,7 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
             echo '<hr>';
         }
 
-        oeil_div_simple('ajout_json', 'ajout_json', 'le json', 'div_json');
+        echo ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="le json" title="le json" ' . Survole_Clic_Div('div_json') . '/>';
         echo ' ' . LG_SCH_MATCH_SHOW_JSON;
         echo '<div id="div_json">';
         echo $json . '<br>';
@@ -140,7 +140,14 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     }
 }
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 // Reformatte une date retourné par MatchId ; format initial AAAAMMJJ
 function retourne_date($la_date)

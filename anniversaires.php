@@ -72,7 +72,7 @@ function aff_nai_dec($type, $req)
             if (($JDate == $Auj) and ($Mois == $cMois)) echo $aff_icone;
             echo '</td>' . "\n";
             $Ref_Pers = $row[2];
-            echo '<td>&nbsp;<a ' . Ins_Ref_Pers($Ref_Pers) . '>' . my_html(UnPrenom($row[1]) . ' ' . $row[0]) . '</a>';
+            echo '<td>&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . my_html(UnPrenom($row[1]) . ' ' . $row[0]) . '</a>';
 
             // Affichage de l'image par défaut
             $image = Rech_Image_Defaut($Ref_Pers, 'P');
@@ -91,7 +91,7 @@ $compl = Ajoute_Page_Info(600, 200);
 $nb = $Mois - 1;
 Insere_Haut('Anniversaires ' . du_mois($Mois), $compl, 'Anniversaires', '');
 
-$xMois = zerofill2($Mois);
+$xMois = sprintf('%02s',$Mois);
 $Auj = date('d');
 
 $n_personnes = nom_table('personnes');
@@ -158,10 +158,10 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         echo Etend_date($mar);
         if (($JDate == $Auj) and ($Mois == $cMois)) echo $aff_icone;
         echo '</td>' . "\n";
-        echo '<td>&nbsp;<a ' . Ins_Ref_Pers($row['RefM']) . '>'
+        echo '<td>&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['RefM'] . '">'
             . my_html(UnPrenom($row['PrenomsM'])) . '&nbsp;'
             . my_html($row['NomM']) . '</a>';
-        echo '<br />&nbsp;<a ' . Ins_Ref_Pers($row['RefF']) . '>'
+        echo '<br />&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['RefF'] . '">'
             . my_html(UnPrenom($row['PrenomsF'])) . '&nbsp;'
             . my_html($row['NomF']) . '</a>';
 
@@ -196,7 +196,16 @@ echo "</tr>";
 
 echo "</table>";
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+if ($compl != '') {
+    echo $compl;
+}
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

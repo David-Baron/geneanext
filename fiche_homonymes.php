@@ -200,14 +200,14 @@ else {
     echo '<table width="85%" align="center" border="0"  >' . "\n";
 
     echo '<tr class="rupt_table"><th> </th>';
-    echo '<th width="45%" ><a ' . Ins_Ref_Pers($ref1) . '>' . my_html(LG_CH_FUSION_PERS1) . '</a>';
+    echo '<th width="45%" ><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref1 . '">' . my_html(LG_CH_FUSION_PERS1) . '</a>';
     if ($_SESSION['estGestionnaire']) {
-        echo ' <a ' . Ins_Edt_Pers($ref1) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+        echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $ref1 . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
     }
     echo '</th>';
-    echo '<th width="45%"><a ' . Ins_Ref_Pers($ref2) . '>' . my_html(LG_CH_FUSION_PERS2) . '</a>';
+    echo '<th width="45%"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref2 . '">' . my_html(LG_CH_FUSION_PERS2) . '</a>';
     if ($_SESSION['estGestionnaire']) {
-        echo ' <a ' . Ins_Edt_Pers($ref2) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+        echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $ref2 . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
     }
     echo '</th>';
 
@@ -292,7 +292,14 @@ else {
     //Bouton_Retour($lib_Retour,'?'.Query_Str());
     bt_ok_an_sup(LG_CH_FUSIONNER, $lib_Retour, '', '', false, false);
 
-    Insere_Bas('');
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 // Champ à modifier ?
@@ -368,17 +375,18 @@ function case_comment($reference)
 
 function case_parents($reference)
 {
+    global $root;
     $lib_parents = '';
     if (Get_Parents($reference, $Pere, $Mere, $Rang)) {
         if ($Pere != 0) {
             if (Get_Nom_Prenoms($Pere, $Nom, $Prenoms)) {
-                $lib_parents .= '<a ' . Ins_Ref_Pers($Pere) . '>' . $Prenoms . ' ' . $Nom . '</a>';
+                $lib_parents .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Pere . '">' . $Prenoms . ' ' . $Nom . '</a>';
             }
         }
         if ($Mere != 0) {
             if (Get_Nom_Prenoms($Mere, $Nom, $Prenoms)) {
                 if ($lib_parents != '') $lib_parents .= ' et ';
-                $lib_parents .= '<a ' . Ins_Ref_Pers($Mere) . '>' . $Prenoms . ' ' . $Nom . '</a>';
+                $lib_parents .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Mere . '">' . $Prenoms . ' ' . $Nom . '</a>';
             }
         }
         if ($lib_parents != '') $lib_parents .= "\n";
@@ -389,7 +397,7 @@ function case_parents($reference)
 //	Conjoints et enfants
 function case_conjoints($reference, $sexe)
 {
-    global $nb_conjoints, $arr_unions;
+    global $root, $nb_conjoints, $arr_unions;
     $lib_conjoints = '';
     $sql = 'select * from ' . nom_table('unions') . ' where ';
     switch ($sexe) {
@@ -439,8 +447,8 @@ function case_conjoints($reference, $sexe)
             $arr_unions .= $Ref_Union;
             //
             if (Get_Nom_Prenoms($Conj, $Nom, $Prenoms)) {
-                $lib_conjoints .= '<a ' . Ins_Ref_Pers($Conj) . '>' . $Prenoms . ' ' . $Nom . '</a> '
-                    . Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union), 'text', my_html(LG_CH_COUPLE));
+                $lib_conjoints .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Conj . '">' . $Prenoms . ' ' . $Nom . '</a> '
+                    . Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt.php?Reference=' . $Ref_Union . '"', 'text', my_html(LG_CH_COUPLE));
             }
             //
             if (($Date_Mar != '') or ($Ville_Mar)) {
@@ -458,7 +466,7 @@ function case_conjoints($reference, $sexe)
 
 function Aff_Enfants2($Mari, $Femme)
 {
-    global $n_personnes;
+    global $root, $n_personnes;
     $lib_enfants = '';
     if (($Mari) or ($Femme)) {
         $sql = 'select Enfant from ' . nom_table('filiations') . ' where pere = ' . $Mari . ' and mere = ' . $Femme . ' order by rang';
@@ -473,7 +481,7 @@ function Aff_Enfants2($Mari, $Femme)
                 $resEnf = lect_sql($sqlEnf);
                 $enrEnf = $resEnf->fetch(PDO::FETCH_ASSOC);
                 $sexe = $enrEnf['Sexe'];
-                $lib_enfants .= '  <a ' . Ins_Ref_Pers($Enfant) . '>' . my_html($enrEnf['Prenoms'] . ' ' . $enrEnf['Nom']) . '</a> ';
+                $lib_enfants .= '  <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Enfant . '">' . my_html($enrEnf['Prenoms'] . ' ' . $enrEnf['Nom']) . '</a> ';
                 $Ne = $enrEnf['Ne_le'];
                 $Date_Nai = Etend_date($Ne);
                 if ($Date_Nai != '') {

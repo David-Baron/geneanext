@@ -60,7 +60,13 @@ if ($_SESSION['estContributeur']) {
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
     if ($Sortie == 't') {
-        Insere_Haut_texte('');
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b> </b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     } else {
         $compl = Ajoute_Page_Info(600, 250);
         Insere_Haut($titre, $compl, 'Recherche_Personne_Archive', '');
@@ -234,7 +240,7 @@ if ($_SESSION['estContributeur']) {
                     }
                     $ligne .= $nom_champ . ';';
                 }
-                ecrire($fp, $ligne);
+                fputs($fp, $ligne);
             } else {
                 echo '<table>';
             }
@@ -244,8 +250,8 @@ if ($_SESSION['estContributeur']) {
             if ($Sortie != 'c') echo '<tr><td>';
             switch ($Sortie) {
                 case 'e':
-                    echo '<a ' . Ins_Ref_Pers($row[0]) . '>' . my_html($row[2] . ' ' . $row[1]) . '</a>';
-                    echo ' <a ' . Ins_Edt_Pers($row[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row[0] . '">' . my_html($row[2] . ' ' . $row[1]) . '</a>';
+                    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     break;
                 case 't':
                     echo my_html($row[2] . ' ' . $row[1]);
@@ -264,7 +270,7 @@ if ($_SESSION['estContributeur']) {
                         $ligne .= '"' . $contenu . '";';
                     }
                     //echo $ligne.'<br />';
-                    ecrire($fp, $ligne);
+                    fputs($fp, $ligne);
                     break;
             }
             if ($Sortie != 'c') {
@@ -297,7 +303,7 @@ if ($_SESSION['estContributeur']) {
         if ($Sortie != 't') {
             // Nouvelle recherche
             echo '<form id="nouvelle" method="post" action="' . my_self() . '">' . "\n";
-            aff_origine();
+            echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
             echo '<input type="' . $hidden . '" name="reprise" value=""/>';
             echo '<input type="' . $hidden . '" name="Ville" value="' . $Ville . '"/>';
             if ($Annee_Debut == '0000') $Annee_Debut = '';
@@ -330,11 +336,11 @@ if ($_SESSION['estContributeur']) {
 
         echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
 
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         $larg_titre = 25;
         echo '<table width="80%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab($LG_Ch_Search_Town);
         echo '<select name="Ville">' . "\n";
@@ -437,17 +443,26 @@ if ($_SESSION['estContributeur']) {
         echo ' ( <input type="checkbox" id="ut_suf" name="ut_suf" onclick="document.forms.saisie.Sortie[2].checked=true;"/> <label for="ut_suf">' . $LG_Ch_Search_Suffix . '</label> )' . "\n";
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         // Pas de bouton OK s'il n'y a pas de ville
         if (!$existe_ville) $lib_Rechercher = '';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>' . "\n";
         echo '</form>' . "\n";
     }
 
-    if ($Sortie != 't') Insere_Bas($compl);
+    if ($Sortie != 't') {
+        echo '<table cellpadding="0" width="100%">';
+        echo '<tr>';
+        echo '<td align="right">';
+        echo $compl;
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo "</td>";
+        echo '</tr>';
+        echo '</table>';
+    }
 } else
     echo $LG_function_noavailable_profile . "\n";
 ?>

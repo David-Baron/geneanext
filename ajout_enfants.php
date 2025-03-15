@@ -155,18 +155,18 @@ if ((!$bt_OK) && (!$bt_An)) {
     $nom_mere = '';
 
     echo '<form id="saisie" method="post" action="' . $root . '/ajout_enfants.php?' . Query_Str() . '">';
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '<br />';
     if ($Conjoint_1 != 0) {
         if (Get_Nom_Prenoms($Conjoint_1, $Nom, $Prenoms)) {
-            echo my_html(LG_FATHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_1) . '>' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_1), 'fiche_edition', 'Modifier') . '<br />';
+            echo my_html(LG_FATHER) . LG_SEMIC . '<a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '"', 'fiche_edition', 'Modifier') . '<br />';
             $nom_pere = $Nom;
         }
     }
     if ($Conjoint_2 != 0) {
         if (Get_Nom_Prenoms($Conjoint_2, $Nom, $Prenoms)) {
-            echo my_html(LG_MOTHER) . LG_SEMIC . '<a ' . Ins_Ref_Pers($Conjoint_2) . '>' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien(Ins_Edt_Pers($Conjoint_2), 'fiche_edition', 'Modifier') . '<br />';
+            echo my_html(LG_MOTHER) . LG_SEMIC . '<a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '"', 'fiche_edition', 'Modifier') . '<br />';
             $nom_mere = $Nom;
         }
     }
@@ -182,7 +182,7 @@ if ((!$bt_OK) && (!$bt_An)) {
             while ($row = $resE->fetch(PDO::FETCH_NUM)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
-                    echo '<a ' . Ins_Edt_Pers($Enfant) . '>' . $Prenoms . ' ' . $Nom . '</a> ';
+                    echo '<a href="' . $root . '/edition_personne.php?Refer=' . $Enfant . '">' . $Prenoms . ' ' . $Nom . '</a> ';
                     echo '<a href="' . $root . '/edition_filiation.php?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modifier la filiation" title="Modifier la filiation">';
                 }
             }
@@ -228,7 +228,16 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     echo '</form>';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl != '') {
+        echo $compl;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 } else {
     echo "<body bgcolor=\"#FFFFFF\">";
 }

@@ -497,7 +497,7 @@ $x = Mot(LG_GLOSS_CENSUS, 'REC', 1); ?>
 $x = Mot(LG_GLOSS_SOSA, 'SOSA', 1); ?>
 <td>
     Num&eacute;ro que l'on attribue &agrave; un anc&ecirc;tre.
-    <?php echo '<a href="'.$root.'/glossaire_sosa.php">'
+    <?php echo '<a href="' . $root . '/glossaire_sosa.php">'
         . '<img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO . '"/>'; ?>
     </a>
 </td>
@@ -550,10 +550,16 @@ $x = Mot(LG_GLOSS_5PC_TAX, '', 1); ?>
         <td>&nbsp;</td>
     </tr>
 </table>
-<?php
 
-Insere_Bas($compl);
-?>
+<table cellpadding="0" width="100%">
+<tr>
+<td align="right">
+<?= $compl; ?>
+<a href="<?= $root; ?>/"><img src="<?= $root; ?>/assets/img/<?= $Icones['home']; ?>" alt="Accueil" title="Accueil" /></a>
+</td>
+</tr>
+</table>
+
 </body>
 
 </html>

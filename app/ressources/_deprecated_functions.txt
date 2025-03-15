@@ -107,3 +107,365 @@ function Affiche_Icone_Clic($nom_image, $Action_Clic, $texte_image = '')
     if ($Action_Clic != '') $oc = 'onclick="' . $Action_Clic . ';"';
     return '<img ' . $the_id . 'src="' . $chemin . '" alt="' . $texte_image . '" title="' . $texte_image . '" ' . $oc . '>';
 }
+
+// Affiche icone d'appel des textes et pdf ; lien en nofollow...
+function Affiche_Icone_Lien_TXT_PDF($lien, $texte_image, $le_type)
+{
+    global $root, $Icones;
+    $texte_image = my_html($texte_image);
+    switch ($le_type) {
+        case 'T':
+            $image = 'text';
+            break;
+        case 'P':
+            $image = 'PDF';
+            break;
+    }
+    return '<a ' . $lien . ' rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones[$image] . '" alt="' . $texte_image . '" title="' . $texte_image . '" /></a>';
+}
+
+function Img_Zone_Oblig($nom_image)
+{
+    global $root, $Icones;
+    $texte = 'Zone obligatoire';
+    echo '<img id="' . $nom_image . '" src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="' . $texte . '" title="' . $texte . '"/>';
+}
+
+function Affiche_Calendrier($nom_image, $fonc_click)
+{
+    global $root, $Icones;
+    $texte = 'Calendrier';
+    echo '<img id="' . $nom_image . '" src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="' . $texte . '" title="' . $texte . '" onclick="' . $fonc_click . '"/>' . "\n";
+}
+
+// Affiche les notes pour une fiche
+function Aff_Comment_Fiche($divers, $diff)
+{
+    global $est_privilegie, $def_enc;
+    if (($divers != '') and (($est_privilegie) or ($diff == 'O'))) {
+        echo '<fieldset><legend>Note</legend>' . html_entity_decode(my_html($divers), ENT_QUOTES, $def_enc) . '</fieldset><br>' . "\n";
+    }
+}
+
+function Retire_sr($nom_script)
+{
+    $position = strrpos($nom_script, '/');
+    if ($position) $nom_script = substr($nom_script, $position + 1, strlen($nom_script));
+    return $nom_script;
+}
+
+function Oeil_Div($nom_img, $alt_img, $div)
+{
+    Image_Div('oeil', $nom_img, $alt_img, $div);
+}
+
+// Positionnement d'une fin de div avec masquage
+function fin_div_cache($nom_div)
+{
+    echo '</div>' . "\n";
+    echo '<script type="text/javascript">' . "\n";
+    echo '<!--' . "\n";
+    echo 'cache_div(\'' . $nom_div . '\');' . "\n";
+    echo '//-->' . "\n";
+    echo '</script>' . "\n";
+}
+
+function Note_Div($nom_img, $alt_img, $div)
+{
+    Image_Div('note', $nom_img, $alt_img, $div);
+}
+
+function oeil_div_simple($image, $nom_img, $alt_img, $div)
+{
+    global $root, $Icones;
+    echo ' <img id="' . $image . '" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '" ' . Survole_Clic_Div($div) . '/>';
+}
+
+// Affiche une image avec son comportement associé et le début d'un div
+// Paramètre : nom de l'image, alt sur image, nom du div
+function Image_Div($image, $nom_img, $alt_img, $div)
+{
+    global $root, $Icones;
+    echo '<img id="' . $nom_img . '" src="' . $root . '/assets/img/' . $Icones[$image] . '" alt="' . my_html($alt_img) . '" ' . Survole_Clic_Div($div) . '/>' . "\n";
+    echo '<div id="' . $div . '">' . "\n";
+}
+
+function form_status()
+{
+    global $LG_Default_Status;
+    colonne_titre_tab($LG_Default_Status);
+    bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
+    bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
+    bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
+    echo '</td></tr>';
+}
+
+function form_header()
+{
+    global $LG_csv_header;
+    ligne_vide_tab_form(1);
+    colonne_titre_tab($LG_csv_header);
+    $deb_radio = '<input type="radio" name="entete" ';
+    echo $deb_radio . 'id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label>&nbsp;';
+    echo $deb_radio . 'id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label>&nbsp;';
+    echo $deb_radio . 'id="entete_P" value="P" onclick="cache_div(\'corresp\');"/><label for="entete_P">' . LG_IMP_CSV_HEADER_YES_CONSIDER . '</label>';
+    echo '</td></tr>';
+}
+
+
+function form_match()
+{
+    global $champ_lib, $radical_variable_champ, $radical_variable_csv;
+    echo '<tr><td class="label" width="35%">' . LG_IMP_CSV_COLS_MATCH . '</td><td class="value">';
+    echo '<div id="corresp">';
+    echo '<table>';
+    echo '<tr align="center">';
+    echo '<td>' . LG_IMP_CSV_COLS_CSV . '</td>';
+    echo '<td>' . LG_IMP_CSV_COLS_GEN . '</td></tr>';
+    // Les 3 zones suivantes sont fixes
+    echo '<tr>';
+    aff_corr_csv2(0);
+    echo '<td><input type="text" name="' . $radical_variable_champ . '0" readonly="readonly" value="' . $champ_lib[0] . '"/></td>';
+    echo '</tr><tr>';
+    aff_corr_csv2(1);
+    echo '<td><input type="text" name="' . $radical_variable_champ . '1" readonly="readonly" value="' . $champ_lib[1] . '"/></td>';
+    echo '</tr><tr>';
+    aff_corr_csv2(2);
+    echo '<td><input type="text" name="' . $radical_variable_champ . '2" readonly="readonly" value="' . $champ_lib[2] . '"/></td>';
+    echo '</tr>';
+    echo '</table>';
+    echo '</div>';
+    echo '</td></tr>';
+}
+
+function aff_origine()
+{
+    global $Horigine;
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
+}
+
+// Affiche des lignes vides dans un formaulaire de saisie
+function ligne_vide_tab_form($nb_lig)
+{
+    for ($nb = 1; $nb <= $nb_lig; $nb++) {
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    }
+}
+
+// Renvoye un nombre paddé à gauche avec des zéros (2 car) ==> jour, mois
+function zerofill2($zInitiale)
+{
+    return sprintf('%02s', $zInitiale);
+}
+
+// Renvoye un nombre paddé à gauche avec des zéros  (4 car) ==> année
+function zerofill4($zInitiale)
+{
+    return sprintf('%04s', $zInitiale);
+}
+
+function open_log()
+{
+    $f_log = ouvre_fic('log.txt', 'a+');
+    // $f_log = fopen('log.txt', 'a+');
+    return $f_log;
+}
+
+// Ecrit une ligne dans un fichier texte
+function ecrire($fic, $texte)
+{
+    global $cr;
+    fputs($fic, $texte . $cr);
+}
+
+// Appelle l'édition d'une personne
+function Ins_Edt_Pers($Reference, $new_window = false)
+{
+    global $root;
+    $target = '';
+    if ($new_window) $target = ' target="_blank"';
+    return 'href="' . $root . '/edition_personne.php?Refer=' . $Reference . '"' . $target;
+}
+
+// Appel de la page fiche couple de type texte
+function Ins_Ref_Fam($Reference, $sortie = "H")
+{
+    global $root;
+    if ($sortie == 'H') return 'href="' . $root . '/fiche_couple_txt.php?Reference=' . $Reference . '"';
+    else return 'href="' . $root . '/fiche_couple_txt.php?Reference=' . $Reference . '&amp;pdf=O"';
+}
+
+// Appel de la page fiche individuelle de type texte
+function Ins_Ref_Indiv($Reference, $sortie = "H")
+{
+    global $root;
+    if ($sortie == 'H') return 'href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Reference . '"';
+    else return 'href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Reference . '&amp;pdf=O"';
+}
+
+function Ins_Ref_Pers($Reference, $new_window = false)
+{
+    global $root;
+    $target = '';
+    if ($new_window) $target = ' target="_blank"';
+    return 'href="' . $root . '/fiche_fam_pers.php?Refer=' . $Reference . '"' . $target;
+}
+
+// Présence d'images pour une personne
+function Presence_ImagesP($Reference)
+{
+    return Presence_Images($Reference, 'P');
+}
+
+// Présence d'images pour une ville
+function Presence_ImagesV($Reference)
+{
+    return Presence_Images($Reference, 'V');
+}
+
+// Présence d'images pour une union
+function Presence_ImagesU($Reference)
+{
+    return Presence_Images($Reference, 'U');
+}
+
+// Affiche l'icone vers la chronologie d'une personne
+function Lien_Chrono_Pers($Reference)
+{
+    global $root;
+    return Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne.php?Refer=' . $Reference . '"', 'time_line', LG_FFAM_CHRONOLOGIE) . "\n";
+}
+
+function aff_legend($lib)
+{
+    echo '<legend>' . my_html(ucfirst($lib)) . '</legend>' . "\n";
+}
+
+// Affiche le conseil OpenStreetmap
+function aff_tip_carte()
+{
+    global $root, $Icones;
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '"><a href="http://www.OpenStreetMap.com" target="_blank">OpenStreetMap</a></td></tr>' . "\n";
+}
+
+// Demande l'affichage d'une carte OpenStreetMap si les coordonnées sont renseignées
+function appelle_carte_osm()
+{
+    global $Lat_V, $Long_V, $LG_Show_On_Map;
+    if (($Lat_V != 0) or ($Long_V != 0)) {
+        echo '&nbsp;' .
+            Affiche_Icone_Lien(
+                'href="http://www.openstreetmap.org/' . '?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"',
+                'map_go',
+                $LG_Show_On_Map
+            );
+    }
+}
+
+// Codage des champs de type caractère
+function Champs_car($res, $enreg)
+{
+    $enreg2 = $enreg;
+
+    foreach ($enreg as $key => $value)
+        echo $key . ' ==> ' . $value . '<br>';
+
+    while ($finfo = $res->fetch_field()) {
+        $type = $finfo->type;
+        $name = $finfo->name;
+        if ($type == 'string')
+            $enreg2[$name] = my_html($enreg2[$name]);
+    }
+    return $enreg2;
+}
+
+function Ligne_Body($aff_manuel = true)
+{
+    global $chemin_images, $Image_Fond, $Icones, $offset_info;
+
+    if (is_info()) {
+        $chemin = $offset_info . $chemin_images . $Image_Fond;
+    } else {
+        $chemin = $chemin_images . $Image_Fond;
+    }
+    if ($aff_manuel) {
+        echo Affiche_Icone_Lien('href="/documentation/Geneamania.pdf" target="_blank"', 'manuel', 'Manuel Généamania') . '<br>';
+    }
+}
+
+function Insere_Haut_texte($titre)
+{
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
+
+// Insère le bas de page
+function Insere_Bas($compl_entete)
+{
+    global $root, $Icones;
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl_entete != '') {
+        echo $compl_entete;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+    // Fichiers de session des bots : pool!
+    kill_sess_bot();
+}
+
+// Détruit toute la session, y compris le fichier de session pour les robots
+function kill_sess_bot()
+{
+    global $is_bot;
+    // Vérifie si l'agent utilisateur est un robot
+    if ($is_bot) {
+        // Détruit toutes les variables de session
+        $_SESSION = array();
+
+        // Obtenir l'identifiant de la session
+        $session_id = session_id();
+
+        // Construire le chemin vers le fichier de session
+        $session_file = session_save_path() . '/sess_' . $session_id;
+        // var_dump($session_file);
+
+        // Vérifier si le fichier de session existe et le supprimer
+        if (file_exists($session_file)) {
+            unlink($session_file);
+            // echo "Le fichier de session a été supprimé.";
+        } else {
+            echo "Le fichier de session n'existe pas.";
+        }
+
+        // Finalement, on détruit la session
+        session_destroy();
+    }
+    // else echo 'pas un robot';
+}
+
+// // Connexion à la base de données
+// function xconnexion($plantage="oui") {
+// global $db,$util,$mdp,$serveur,$ndb,$nutil,$nmdp,$nserveur;
+// $db      = $ndb;
+// $util    = $nutil;
+// $mdp     = $nmdp;
+// $serveur = $nserveur;
+// $mysqli = new mysqli($serveur, $util, $mdp, $db);
+// $linkid = true;
+// if ($plantage == "oui") {
+// if ($mysqli->connect_errno) {
+// $linkid = false;
+// echo "Echec de la connexion à MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+// }
+// }
+// return $linkid;
+// }

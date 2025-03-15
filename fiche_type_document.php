@@ -63,7 +63,7 @@ else {
         $icone_mod = '"><img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $LG_modify . '"/>';
         echo '<br />' . "\n";
         echo '<fieldset>';
-        aff_legend(LG_DOC_DOCS);
+        echo '<legend>' . ucfirst(LG_DOC_DOCS) . '</legend>' . "\n";
         while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
             echo '<a href="' . $root . '/fiche_document.php?Reference=' . $enreg[0] . '">'
                 . my_html($enreg[2]) . ' (' . $Natures_Docs[$enreg[1]] . ')</a>'
@@ -76,7 +76,14 @@ else {
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

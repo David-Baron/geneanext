@@ -320,7 +320,13 @@ if (is_numeric($san) and ($san > 0)) {
 echo aff_bouton(3, LG_CALEND_CALCULATE);
 echo '</form>';
 
-$x = insere_bas('');
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

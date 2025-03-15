@@ -87,7 +87,7 @@ $AStatut_Fiche        = Secur_Variable_Post($AStatut_Fiche, 1, 'S');
 // Affiche un Lien
 function Aff_Lien($enreg2)
 {
-    global $chemin_images, $chemin_images_util, $Commentaire, $Diffusion_Commentaire_Internet, $Images, $Ref, $SiteGratuit, $Premium, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_Yes, $LG_No, $hidden;
+    global $root, $Icones, $chemin_images, $chemin_images_util, $Commentaire, $Diffusion_Commentaire_Internet, $Images, $Ref, $SiteGratuit, $Premium, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_Yes, $LG_No, $hidden;
 
     echo '<br />';
     echo '<div id="content">' . "\n";
@@ -117,7 +117,7 @@ function Aff_Lien($enreg2)
 
     col_titre_tab_noClass(LG_LINK_TYPE, $larg);
     echo '<td colspan="2"><input type="text" size="30" name="Type_Lien" class="oblig" value="' . $enreg2['type_lien'] . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligType');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="AType_Lien" value="' . $enreg2['type_lien'] . '"/>';
 
     // Select avec les types existants
@@ -137,14 +137,14 @@ function Aff_Lien($enreg2)
     col_titre_tab_noClass(LG_LINK_DESCRIPTION, $larg);
     $cnt = $enreg2['description'];
     echo '<td colspan="2"><input type="text" size="80" name="Description" class="oblig" value="' . $cnt . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligDesc');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ADescription" value="' . $cnt . '"/></td>' . "\n";
     echo "</tr>\n";
 
     col_titre_tab_noClass(LG_LINK_URL, $larg);
     $cnt = $enreg2['URL'];
     echo '<td colspan="2"><input type="text" size="80" name="URL" class="oblig" value="' . $cnt . '"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligURL');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="AURL" value="' . $cnt . '"/></td>' . "\n";
     echo "</tr>\n";
 
@@ -187,7 +187,7 @@ function Aff_Lien($enreg2)
 
     // Commentaires
     echo '<fieldset>';
-    aff_legend(LG_CH_COMMENT);
+    echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     echo '<tr>' . "\n";
     // Accès au commentaire
@@ -212,7 +212,7 @@ function Aff_Lien($enreg2)
     echo '<div id="pan_Fiche">' . "\n";
     // Visibilité sur internet du lien²
     echo '<fieldset>' . "\n";
-    aff_legend(LG_LINK_VISIBILITY);
+    echo '<legend>' . ucfirst(LG_LINK_VISIBILITY) . '</legend>' . "\n";
     echo '<table width="95%" border="0">' . "\n";
     echo '<tr>' . "\n";
     $cont = $enreg2['Diff_Internet'];
@@ -378,13 +378,13 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
     // Lien vers la fiche uniquement en modification
     if ($Ref != -1)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Lien', $Ref);
 
     echo '<form id="saisie" method="post" enctype="multipart/form-data" onsubmit="return verification_form(this,\'Type_Lien,Description,URL\')" action="' . my_self() . '?Ref=' . $Ref . '">' . "\n";
     echo '<input type="' . $hidden . '" name="Ref" value="' . $Ref . '"/>' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     if ($Modif) {
         $sql = 'select * from ' . nom_table('liens') . ' where Ref_Lien = ' . $Ref . ' limit 1';
@@ -418,7 +418,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     echo '	setupPanes("container1", "tab1", 40);' . "\n";
     echo '</script>' . "\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

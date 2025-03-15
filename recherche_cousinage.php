@@ -101,7 +101,7 @@ function Affiche_Personne($Reference)
         if (($_SESSION['estPrivilegie']) or ($Personne[3]) == 'O') {
             if ($Sortie == 'e') {
                 $Ref_P = $Personne[0];
-                echo '<a ' . Ins_Ref_Pers($Ref_P) . '>' . $Personne[1] . ' ' . $Personne[2] . '</a> ';
+                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_P . '">' . $Personne[1] . ' ' . $Personne[2] . '</a> ';
                 echo Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref_P . '"', 'arbre_asc', $LG_assc_tree) . ' ' .
                     Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref_P . '"', 'arbre_desc', $LG_desc_tree) . ' ';
             } else {
@@ -118,8 +118,17 @@ $Ind_Ref = 0;
 
 if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
-if ($Sortie != 't') Insere_Haut($titre, $compl, 'Recherche_Cousinage', '');
-else                Insere_Haut_texte('');
+if ($Sortie != 't') {
+    Insere_Haut($titre, $compl, 'Recherche_Cousinage', '');
+} else {
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b></b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
 
 if ($Environnement == 'I') $max_gen = $max_gen_int;
 else                       $max_gen = $max_gen_loc;
@@ -144,7 +153,7 @@ if ($Sortie != 't') {
 
         echo '<table width="90%" class="table_form">' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_CH_RELATED_BETWEEN);
         Liste_Pers($res, 'Ref_Pers1', $Ref_Pers1);
@@ -170,7 +179,7 @@ if ($Sortie != 't') {
             echo ' name="sauver" value="save"/></td></tr>' . "\n";
         }
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
 
         echo '</table>' . "\n";
@@ -330,7 +339,16 @@ if ($bt_OK) {
     }
 }
 
-if ($Sortie != 't') Insere_Bas($compl);
+if ($Sortie != 't') {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 ?>
 </body>

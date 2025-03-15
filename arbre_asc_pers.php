@@ -167,7 +167,7 @@ for ($nb_enr = 0; $nb_enr < $c_ens; ++$nb_enr) {
                         if (($est_privilegie) or ($row[3] == 'O')) {
                             $Enfant = $row[0];
                             $P_N = ret_Nom_prenom($row[1], $row[2]);
-                            echo '<a ' . Ins_Ref_Pers($Enfant) . '>' . $P_N . '</a>' . "\n";
+                            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Enfant . '">' . $P_N . '</a>' . "\n";
                             echo '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Enfant . '">' . $img_asc . '</a>';
                             echo '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Enfant . '">' . $img_desc . '</a>';
                         } else {
@@ -201,7 +201,14 @@ for ($nb_enr = 0; $nb_enr < $c_ens; ++$nb_enr) {
 echo '<table cellpadding="0" width="100%"><tr><td>';
 $left += $Larg_Cellule;
 echo '<div style="position: absolute;  top: 570px; left:' . $left . '; width:200px;">' . "\n";
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 echo '</div>';
 echo '</td></tr></table>';
 

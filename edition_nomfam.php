@@ -233,7 +233,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 400);
     if ($idNomFam != -1)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_nomfam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_nomfam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_NomFam', $idNomFam);
 
@@ -264,14 +264,14 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo $ent_table;
 
     //	Zone de saisie du nom
-    colonne_titre_tab(LG_NAME);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_NAME . '&nbsp;</td><td class="value">';
     echo '<input type="text" size="50" name="nomFam" id="nomFam" value="' . $nomFam . '" class="oblig"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '&nbsp;<img id="majuscule" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
         ' onclick="NomMaj();document.getElementById(\'nomFam\').focus();"/>' . "\n";
     echo '<input type="' . $hidden . '" name="AnomFam" value="' . $nomFam . '"/></td></tr>' . "\n";
     //	Code phonétique
-    colonne_titre_tab(LG_NAME_PRONUNCIATION);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_NAME_PRONUNCIATION . '&nbsp;</td><td class="value">';
     echo '<span id="code" style="border-width: 1px; font-size: 15pt; border-style: solid; border-color: #000000;padding: 1pt 4pt;">&nbsp;</span>&nbsp;' . "\n";
     echo '<input type="' . $hidden . '" name="codePho" id="codePho" value="' . $codePho . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="AcodePho" value="' . $codePho . '"/>' . "\n";
@@ -279,7 +279,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</table>' . "\n";
 
     echo $ent_table;
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     //echo '<p><table border="1" cellpadding="3" cellspacing="0">' . "\n";
     echo '<tr><td rowspan="2" valign="middle" width="' . $larg_titre . '" class="label">' . my_html(LG_NAME_VOWELS) . '</td>' . "\n";
     celBouton('a', 0);
@@ -352,15 +352,15 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     // === Commentaires
     echo $ent_table;
-    ligne_vide_tab_form(1);
-    colonne_titre_tab(LG_CH_COMMENT);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire($idNomFam, $Type_Ref);
     echo '<textarea cols="50" rows="4" name="divers">' . $Commentaire . '</textarea>' . "\n";
     echo '<input type="' . $hidden . '" name="Adivers" value="' . my_html($Commentaire) . '"/>';
     echo '</td></tr>';
     // Diffusion Internet commentaire
-    colonne_titre_tab(LG_CH_COMMENT_VISIBILITY);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT_VISIBILITY . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="diffNote" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
@@ -379,7 +379,14 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     echo '</form>' . "\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

@@ -214,14 +214,20 @@ if ($sortie_pdf) {
 else {
     $sortie = 'H';
     // Affichage du titre : numéros + génération
-    Insere_Haut_texte($enr_pers['Prenoms'] . ' ' . $enr_pers['Nom']);
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . $enr_pers['Prenoms'] . ' ' . $enr_pers['Nom'] . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
     echo '<table cellpadding="0" width="100%">' . "\n";
     if ($gen != '')
         echo '<tr><td align="center">' . Calc_Gener($enr_pers['Numero']) . '</td></tr>' . "\n";
     echo '</table>' . "\n";
     if (!$sortie_pdf) {
         echo '<fieldset>';
-        aff_legend(LG_PERS_PERS);
+        echo '<legend>' . ucfirst(LG_PERS_PERS) . '</legend>' . "\n";
     }
 }
 

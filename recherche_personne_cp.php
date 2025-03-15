@@ -114,10 +114,17 @@ $compl = Ajoute_Page_Info(650, 300);
 
 if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
-if ($Sortie != 't')
+if ($Sortie != 't') {
     Insere_Haut($titre, $compl, 'Recherche_Personne', '');
-else
-    Insere_Haut_texte($titre);
+} else {
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
 
 $n_villes = nom_table('villes');
 
@@ -367,7 +374,7 @@ if ($bt_OK) {
                     }
                     $ligne .= $nom_champ . ';';
                 }
-                ecrire($fp, $ligne);
+                fputs($fp, $ligne);
             }
             $target = ($New_Window == 'O') ? true : false;
             while ($row = $res->fetch(PDO::FETCH_NUM)) {
@@ -377,9 +384,9 @@ if ($bt_OK) {
 
                 switch ($Sortie) {
                     case 'e':
-                        echo '<a ' . Ins_Ref_Pers($ref, $target) . '>' . $nom . ' ' . $prenom . '</a>';
+                        echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref . '" target="_blank">' . $nom . ' ' . $prenom . '</a>';
                         aff_n_dec();
-                        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien(Ins_Edt_Pers($ref), 'fiche_edition', $LG_modify);
+                        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $ref . '"', 'fiche_edition', $LG_modify);
                         echo '<br />' . "\n";
                         break;
                     case 't':
@@ -396,7 +403,7 @@ if ($bt_OK) {
                                 $ligne .= Retourne_Date_CSV($contenu) . ';';
                             } else $ligne .= '"' . $contenu . '";';
                         }
-                        ecrire($fp, $ligne);
+                        fputs($fp, $ligne);
                         break;
                 }
             }
@@ -413,7 +420,7 @@ if ($bt_OK) {
     if ($Sortie != 't') {
         // Nouvelle recherche
         echo '<form id="nouvelle" method="post" action="' . my_self()    . '">' . "\n";
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
         echo '<input type="' . $hidden . '" name="reprise" value=""/>';
         echo '<input type="' . $hidden . '" name="Sch_Type" value="' . $Sch_Type . '"/>';
         echo '<input type="' . $hidden . '" name="NomP" value="' . $NomP . '"/>';
@@ -448,7 +455,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $res = lect_sql($sql);
 
     echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '<br />';
     echo '<table width="90%" class="table_form">' . "\n";
@@ -582,7 +589,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td></tr>' . "\n";
     $res->closeCursor();
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     // Tri du résultat
     colonne_titre_tab(LG_PERS_REQ_SORT);
@@ -629,7 +636,16 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</form>';
 }
 
-if ($Sortie != 't') Insere_Bas($compl);
+if ($Sortie != 't') {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 ?>
 </body>
 

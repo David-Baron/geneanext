@@ -76,7 +76,13 @@ else {
     }
     // Sortie au format texte
     else {
-        Insere_Haut_texte(my_html($le_titre));
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($le_titre) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     }
 }
 if (! $texte)
@@ -187,7 +193,7 @@ if ($Depart != -1) {
                 $num_div++;
                 if (! $texte) {
                     // Affichage de l'oeil pour afficher / masquer un patronyme
-                    oeil_div_simple('im_' . $num_div, 'ajout' . $Nouv_Nom, my_html($LG_show_noshow), 'div' . $num_div);
+                    echo ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $LG_show_noshow . '" title="' . $LG_show_noshow . '" ' . Survole_Clic_Div('div' . $num_div) . '/>';
                 }
                 HTML_ou_PDF('</td></tr></table>' . "\n", $sortie);
                 $attente = false;
@@ -211,7 +217,16 @@ if ($Depart != -1) {
     if (! $texte) echo '</div>';
 }
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 if ($sortie_pdf) {
     $pdf->Output();

@@ -9,7 +9,7 @@ require(__DIR__ . '/app/ressources/fonctions.php');
 
 function affiche($req, $sexe)
 {
-    global $echo_modif;
+    global $root, $echo_modif;
     if ($res = lect_sql($req)) {
 
         $nb_res = $res->rowCount();
@@ -31,9 +31,9 @@ function affiche($req, $sexe)
         // Affichage
         while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
             $idPers = $enreg[0];
-            echo '<a ' . Ins_Ref_Pers($idPers) . '>' .
+            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $idPers . '">' .
                 my_html($enreg[1] . ' ' . $enreg[2]) . '</a>';
-            echo '&nbsp;<a ' . Ins_Edt_Pers($idPers) . '>' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $idPers . '">' . $echo_modif;
         }
         $res->closeCursor();
     }
@@ -143,7 +143,14 @@ $c = $b - $a;
 echo 'Diff : '.$c.'<br />';
 */
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

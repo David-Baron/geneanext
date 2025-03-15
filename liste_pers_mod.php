@@ -58,10 +58,10 @@ if ($nb_lignes > 0) {
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 
         echo '<tr>';
-        echo '<td>&nbsp;<a ' . Ins_Ref_Pers($enr[0]) . '>' . my_html($enr[2] . ' ' . $enr[1]) . '</a>';
+        echo '<td> <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enr[0] . '">' . my_html($enr[2] . ' ' . $enr[1]) . '</a>';
 
         // Lien vers la modification
-        if ($est_gestionnaire) echo '&nbsp;<a ' . Ins_Edt_Pers($enr[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+        if ($est_gestionnaire) echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $enr[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
 
         echo '</td>';
         echo '<td align="center">' . DateTime_Fr($enr[3]) . '</td>';
@@ -77,7 +77,14 @@ if ($nb_lignes > 0) {
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour, '');
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

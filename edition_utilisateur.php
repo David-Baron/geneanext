@@ -155,14 +155,14 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     $compl = Ajoute_Page_Info(900, 450);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_utilisateur.php?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_utilisateur.php?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Utilisateur', $Code);
     include(__DIR__ . '/assets/js/ctrlMotPasse.js');
 
     echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
 
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="motPasse" value=""/>' . "\n";
     echo '<input type="' . $hidden . '" name="code_pers" value="' . $Code . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="controle" id="controle" value="-"/>' . "\n";
@@ -197,17 +197,17 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '<input type="' . $hidden . '" name="motPasse3" value=""/>' . "\n";
 
     echo '<table width="80%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     colonne_titre_tab(LG_UTIL_NAME);
     echo '<input class="oblig" type="text" name="nom" id="nom" value="' . $nom . '" size="40" maxlength="40"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="Anom" value="' . $nom . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     colonne_titre_tab(LG_UTIL_CODE);
     echo '<input class="oblig" type="text" name="codeUtil" id="codeUtil" value="' . $codeUtil . '" size="35"/>' . "\n";
-    Img_Zone_Oblig('imgObligCode');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="AcodeUtil" value="' . $codeUtil . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
@@ -215,7 +215,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '<input type="password" ';
     if ($Creation) echo ' class="oblig"';
     echo ' name="motPasse1" value="" size="35"/>' . "\n";
-    if ($Creation) Img_Zone_Oblig('imgPsw1');
+    if ($Creation) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '&nbsp;<input type="button" onclick=" generer_passe()" value="' . LG_UTIL_PSW_GENER . '"/>&nbsp;';
     echo '<input type="text" readonly="readonly" name="PasseGen" id="PasseGen" value="" size="12"/>' . "\n";
     echo '&nbsp;<img src="' . $chemin_images_icones . $Icones['copier'] . '" alt = "' . LG_UTIL_PSW_COPY . '" title = "' . LG_UTIL_PSW_COPY
@@ -226,7 +226,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '<input type="password" ';
     if ($Creation) echo ' class="oblig"';
     echo ' name="motPasse2" value="" size="35"/>' . "\n";
-    if ($Creation) Img_Zone_Oblig('imgPsw2');
+    if ($Creation) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
 
     colonne_titre_tab(LG_UTIL_PROFILE);
@@ -259,7 +259,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
         }
     }
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     echo '<tr><td colspan="2" align="center">';
 
@@ -302,7 +302,14 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
 
     echo "</form>";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

@@ -83,8 +83,17 @@ $compl = Ajoute_Page_Info(650, 300);
 
 if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
-if ($Sortie != 't') Insere_Haut($titre, $compl, 'Recherche_Ville', '');
-else                Insere_Haut_texte('');
+if ($Sortie != 't') {
+    Insere_Haut($titre, $compl, 'Recherche_Ville', '');
+} else {
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b></b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
 
 //Demande de recherche
 if ($bt_OK) {
@@ -138,7 +147,7 @@ if ($bt_OK) {
                 $NomV_champ = $champs[$nb];
                 $ligne .= $NomV_champ . ';';
             }
-            ecrire($fp, $ligne);
+            fputs($fp, $ligne);
         }
 
         $target = '';
@@ -150,7 +159,9 @@ if ($bt_OK) {
                     echo '<a href="' . $root . '/fiche_ville.php?Ident=' . $ref . '"' . $target . '>' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[2];
                     $Long_V = $row[3];
-                    appelle_carte_osm();
+                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                    }
                     if ($est_gestionnaire) {
                         echo ' <a href="' . $root . '/edition_ville.php?Ident=' . $ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
@@ -166,7 +177,7 @@ if ($bt_OK) {
                         $contenu = $row[$nb];
                         $ligne .= '"' . $contenu . '";';
                     }
-                    ecrire($fp, $ligne);
+                    fputs($fp, $ligne);
                     break;
             }
         }
@@ -179,7 +190,7 @@ if ($bt_OK) {
     if ($Sortie != 't') {
         // Nouvelle recherche
         echo '<form id="nouvelle" method="post">';
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
         echo '<input type="hidden" name="reprise" value=""/>';
         echo '<input type="hidden" name="NomV" value="' . $NomV . '"/>';
         echo '<input type="hidden" name="Code_Postal" value="' . $Code_Postal . '"/>';
@@ -210,7 +221,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $res = lect_sql($sql);
 
     echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '<table width="90%" class="table_form">' . "\n";
 
@@ -265,7 +276,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '</td></tr>' . "\n";
     }
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     col_titre_tab($LG_Ch_Output_Format, $larg_titre);
     echo '<td class="value">';
@@ -281,14 +292,23 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo ' value="O"/>';
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
     echo '</form>';
 }
 
-if ($Sortie != 't') Insere_Bas($compl);
+if ($Sortie != 't') {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 ?>
 </body>
 

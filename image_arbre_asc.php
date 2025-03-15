@@ -130,7 +130,7 @@ function justifie($img, $font, $taille, $x, $y, $largeur, $text, $color, $align 
     $x = round($x);
     $y = round($y);
     if ($debug) {
-        ecrire($f_log, $taille);
+        fputs($f_log, $taille);
     }
     //ImageTTFText($img, $taille, 0, $x, $y, $color, $font, $text.'anc x : '.$anc_x.' x : '.$x.' largeur : '.$largeur.' larg texte : '.$largeur_texte);
     ImageTTFText($img, $taille, 0, $x, $y, $color, $font, $text);
@@ -241,16 +241,16 @@ $enreg = $res->fetch(PDO::FETCH_ASSOC);
 
 // Appel de l'image de fond
 if ($debug) {
-    $f_log = open_log();
-    ecrire($f_log, '$chemin_images_a_asc : ' . $chemin_images_a_asc);
+    $f_log = ouvre_fic('log.txt', 'a+');
+    fputs($f_log, '$chemin_images_a_asc : ' . $chemin_images_a_asc);
 }
-//if ($debug) ecrire($f_log,$chemin_images_a_asc.$enreg['Image_Arbre_Asc']);
+//if ($debug) fputs($f_log,$chemin_images_a_asc.$enreg['Image_Arbre_Asc']);
 $imagesource = $chemin_images_a_asc . $enreg['Image_Arbre_Asc'];
 $image = @ImageCreateFromPng($imagesource);
 //$image = @imagecreate (100, 50) or die ("Impossible d'initialiser la bibliothèque GD");
 $noir = ImageColorAllocate($image, 0, 0, 0);
 
-if ($debug) ecrire($f_log, $image);
+if ($debug) fputs($f_log, $image);
 
 // Récupération des coordonnées en fonction du type d'arbre
 // Le type d'arbre est la 3ème composante du nom de l'arbre
@@ -267,14 +267,14 @@ $Ref = $Refer;
 
 $font = Get_Font();
 
-if ($debug) ecrire($f_log, 'av Retourne_Pers pour ' . $Ref);
+if ($debug) fputs($f_log, 'av Retourne_Pers pour ' . $Ref);
 $x = Retourne_Pers($Ref);
-if ($debug) ecrire($f_log, 'ap Retourne_Pers pour ' . $Ref);
+if ($debug) fputs($f_log, 'ap Retourne_Pers pour ' . $Ref);
 
 if ($nb_Rangs > 1) {
-    if ($debug) ecrire($f_log, 'av Charge_Parents pour ' . $Ref);
+    if ($debug) fputs($f_log, 'av Charge_Parents pour ' . $Ref);
     $x = Charge_Parents($Ref);
-    if ($debug) ecrire($f_log, 'ap Charge_Parents pour ' . $Ref);
+    if ($debug) fputs($f_log, 'ap Charge_Parents pour ' . $Ref);
 }
 if ($nb_Rangs > 2) {
     for ($nb = 3; $nb <= $nb_Rangs; $nb++) {
@@ -283,9 +283,9 @@ if ($nb_Rangs > 2) {
         for ($nb2 = $Rang_Min; $nb2 <= $Rang_Max; $nb2++) {
             $nb3 = $nb2 - 1;
             $Ref = $Ensemble[$nb2 - 1];
-            if ($debug) ecrire($f_log, 'av Charge_Parents pour ' . $Ref);
+            if ($debug) fputs($f_log, 'av Charge_Parents pour ' . $Ref);
             $x = Charge_Parents($Ref);
-            if ($debug) ecrire($f_log, 'ap Charge_Parents pour ' . $Ref);
+            if ($debug) fputs($f_log, 'ap Charge_Parents pour ' . $Ref);
         }
     }
 }
@@ -352,7 +352,7 @@ for ($nb_enr = 0; $nb_enr < count($Ensemble); ++$nb_enr) {
     }
 }
 
-if ($debug) ecrire($f_log, 'Fin accès');
+if ($debug) fputs($f_log, 'Fin accès');
 
 @ImagePng($image);
 

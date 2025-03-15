@@ -42,7 +42,7 @@ function case_pers($LaRef, $before, $after, $trait = 'solid')
                 if ($LaRef) {
                     $P_N = ret_Nom_prenom($infos[0], $infos[1]);
                     echo '<table width="100%"><tr align="center">';
-                    echo '<td>' . '<a ' . Ins_Ref_Pers($LaRef);
+                    echo '<td><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $LaRef . '"';
                     // Présence d'une image ? Si oui, celle-ci sera affichée au survol de la case
                     $image = Rech_Image_Defaut($LaRef, 'P');
                     // Si l'image n'existe pas, on la zappe...

@@ -109,7 +109,7 @@ if (($ok == '') && ($annuler == '')) {
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'' . $var_ctrl . '\')" action="' . my_self() . '?Pere=' . $Pere . '&amp;Mere=' . $Mere . '">' . "\n";
     echo '<input type="' . $hidden . '" name="Pere" value="' . $Pere . '"/>' . "\n";
     echo '<input type="' . $hidden . '" name="Mere" value="' . $Mere . '"/>' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     // Récupération des enfants avec le conjoint
     echo '<table align="center" width="90%">';
@@ -154,7 +154,7 @@ if (($ok == '') && ($annuler == '')) {
         else           $style = 'liste2';
         echo '<tr class="' . $style . '">' . "\n";
 
-        echo '<td> <a ' . Ins_Ref_Pers($Enfants[$nb]) . '>' . $Prenoms[$nb] . '</a></td>' . "\n";
+        echo '<td> <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Enfants[$nb] . '">' . $Prenoms[$nb] . '</a></td>' . "\n";
         $Date_Nai = Etend_date($Nes[$nb]);
         $R_Cal = 0;
         $Ne = '----------';
@@ -217,7 +217,7 @@ if (($ok == '') && ($annuler == '')) {
         $texte_image = 'Augmenter le rang';
         echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
         echo 'onclick="document.forms.saisie.' . $var_R . '.value++;"/> ' . "\n";
-        Img_Zone_Oblig('imgObligNom' . $suf);
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
         echo '<input type="hidden" name="MemoRa_' . $suf . '" value="' . $Rangs[$nb] . '"/>';
         echo '<input type="hidden" name="Enfants_' . $suf . '" value="' . $Enfants[$nb] . '"/>';
@@ -249,7 +249,14 @@ if (($ok == '') && ($annuler == '')) {
     echo '</td></tr>' . "\n";
     echo '</table>' . "\n";
     echo '</form>' . "\n";
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 <script type="text/javascript">

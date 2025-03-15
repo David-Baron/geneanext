@@ -23,7 +23,14 @@ rectif_null("UPDATE " . nom_table('unions') . " SET Ville_Notaire = 0 WHERE Vill
 rectif_null("UPDATE " . nom_table('villes') . " SET latitude = 0 WHERE latitude is null", 'Villes : latitude');
 rectif_null("UPDATE " . nom_table('villes') . " SET longitude = 0 WHERE longitude is null", 'Villes : longitude');
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 function rectif_null($req, $lib)
 {

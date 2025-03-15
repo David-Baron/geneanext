@@ -54,7 +54,13 @@ if ($est_gestionnaire) {
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
     if ($Sortie == 't') {
-        Insere_Haut_texte($titre);
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     } else {
         $compl = Ajoute_Page_Info(600, 260);
         Insere_Haut($titre, $compl, 'Recherche_Document', '');
@@ -126,7 +132,7 @@ if ($est_gestionnaire) {
                         $nom_fic = $chemin_exports . $nom_fic_rech;
                         $fp = ouvre_fic($nom_fic, 'w+');
                         $ligne = LG_DOC_SCH_HEADER_CSV;
-                        ecrire($fp, $ligne);
+                        fputs($fp, $ligne);
                     }
                     $ligne = $Natures_Docs[$enreg['Nature_Document']] . ';' .
                         $Titre . ';' .
@@ -135,7 +141,7 @@ if ($est_gestionnaire) {
                         DateTime_Fr($enreg['Date_Creation']) . ';' .
                         DateTime_Fr($enreg['Date_Modification']) . ';' .
                         $enreg['Libelle_Type'] . ';';
-                    ecrire($fp, $ligne);
+                    fputs($fp, $ligne);
                     break;
             }
         }
@@ -147,7 +153,7 @@ if ($est_gestionnaire) {
         // Nouvelle recherche
         if ($Sortie != 't') {
             echo '<form id="nouvelle" method="post" action="' . my_self() . '">' . "\n";
-            aff_origine();
+            echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
             echo '<br />';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive">' .
@@ -161,11 +167,11 @@ if ($est_gestionnaire) {
     if ((!$bt_OK) && (!$bt_An)) {
 
         echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         $larg_titre = 30;
         echo '<table width="80%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         colonne_titre_tab(LG_DOC_SCH_LB_TITLE);
         echo '<input type="text" name="Recherche" size="80"/></td></tr>' . "\n";
@@ -197,15 +203,24 @@ if ($est_gestionnaire) {
         affiche_sortie(true);
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>' . "\n";
         echo '</form>' . "\n";
     }
 
-    if ($Sortie != 't') Insere_Bas($compl);
+    if ($Sortie != 't') {
+        echo '<table cellpadding="0" width="100%">';
+        echo '<tr>';
+        echo '<td align="right">';
+        echo $compl;
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo "</td>";
+        echo '</tr>';
+        echo '</table>';
+    }
 } else echo $LG_function_noavailable_profile . "\n";
 
 ?>

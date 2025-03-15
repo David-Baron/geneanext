@@ -102,15 +102,12 @@ $n_villes = nom_table('villes');
 $n_unions = nom_table('unions');
 
 $lien = 'href="' . $root . '/liste_pers2.php?Type_Liste=' . $Type_Liste .
-    '&amp;texte=O' .
-    '&amp;idNom=' . $idNom .
-    '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
+    '&amp;texte=O&amp;idNom=' . $idNom . '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 if ($Type_Liste != 'P') $lien .= '&amp;Ville=' . $Ville . '&amp;Tri=' . $Tri;
 
-$compl = Ajoute_Page_Info(600, 150) .
-    Affiche_Icone_Lien_TXT_PDF($lien . '"', 'Format imprimable', 'T') . '&nbsp;';
+$compl = Ajoute_Page_Info(600, 150) . '<a ' . $lien . '" rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="Format imprimable" title="Format imprimable" /></a> ';
 if ((!$SiteGratuit) or ($Premium))
-    $compl .= Affiche_Icone_Lien_TXT_PDF($lien . '&amp;pdf=O"', 'Liste au format PDF', 'P') . '&nbsp;';
+    $compl .= '<a ' . $lien . '&amp;pdf=O" rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones['PDF'] . '" alt="Liste au format PDF" title="Liste au format PDF" /></a> ';
 
 $sortie = 'H';
 
@@ -135,7 +132,13 @@ if (! $texte) {
     // Sortie au format texte
     else {
         // Affichage du titre : numéros + génération
-        Insere_Haut_texte($objet);
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($objet) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
         echo '<br>';
     }
 }
@@ -226,7 +229,7 @@ if (!$texte) {
     if (isset($_SESSION['mem_pers'])) {
         for ($nb = 0; $nb < 3; $nb++) {
             if ($_SESSION['mem_pers'][$nb] != 0) {
-                echo '<a ' . Ins_Ref_Pers($_SESSION['mem_pers'][$nb]) . '>' .
+                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $_SESSION['mem_pers'][$nb] . '">' .
                     my_html($_SESSION['mem_prenoms'][$nb] . ' ' . $_SESSION['mem_nom'][$nb]) . '</a>&nbsp;' . "\n";
             }
         }
@@ -250,12 +253,12 @@ if ((!$texte) and ($est_contributeur)) {
     // Lien direct sur la dernière personne saisie
     if ($MaxRef > 0) {
         $aff_nom = UnPrenom($enrmax[2]) . ' ' . $enrmax[1];
-        echo my_html($LG_last_pers) . ' : <a ' . Ins_Ref_Pers($MaxRef) . '>' . my_html($aff_nom) . '</a>&nbsp;';
-        echo '&nbsp;<a ' . Ins_Edt_Pers($MaxRef) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
+        echo my_html($LG_last_pers) . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $MaxRef . '">' . my_html($aff_nom) . '</a>&nbsp;';
+        echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
     }
     $resmax->closeCursor();
     // Possibilité d'insérer une personne
-    echo my_html($LG_add_pers) . ' : ' . Affiche_Icone_Lien(Ins_Edt_Pers(-1), 'ajouter', my_html($LG_add)) . '<br><br>' . "\n";
+    echo my_html($LG_add_pers) . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=-1"', 'ajouter', my_html($LG_add)) . '<br><br>' . "\n";
 
     if ($Type_Liste == 'P') {
         if ($est_contributeur)
@@ -332,7 +335,7 @@ if ($nb_lig > 0) {
 
                     if ($est_contributeur) {
                         if ($row['Diff_Internet'] == 'O') echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '">';
-                        else                              echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' .$LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
+                        else                              echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
                     }
                     switch ($row['Statut_Fiche']) {
                         case 'O':
@@ -383,7 +386,7 @@ if ($nb_lig > 0) {
                     //var_dump($nb_conj);
                     if ($nb_conj) $conj_ajout = ' [' . $conj_ajout . ']';
                 }
-                if (! $texte) echo '<a ' . Ins_Ref_Pers($Ref) . '>' . my_html($row['Prenoms'] . ' ' . $row['Nom']) . '</a>' . $conj_ajout . "\n";
+                if (! $texte) echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($row['Prenoms'] . ' ' . $row['Nom']) . '</a>' . $conj_ajout . "\n";
                 else echo HTML_ou_PDF($row['Prenoms'] . ' ' . $row['Nom'] . $conj_ajout . "\n", $sortie);
                 // else echo HTML_ou_PDF(my_html($row['Prenoms'].' '.$row['Nom'].$conj_ajout)."\n",$sortie);
                 $Ne = $row['Ne_le'];
@@ -398,7 +401,7 @@ if ($nb_lig > 0) {
                     HTML_ou_PDF(')', $sortie);
                 }
                 if (($est_gestionnaire) and (! $texte)) {
-                    echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
+                    echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
                     echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . $LG_LPers_Check_Pers . '" title="' . $LG_LPers_Check_Pers . '">';
                 }
                 break;
@@ -434,8 +437,8 @@ if ($nb_lig > 0) {
                     $Prenoms2 = $row['Prenomsf'];
                 }
                 if (!$texte) {
-                    echo '<a ' . Ins_Ref_Pers($Ref1) . '>' . my_html($Nom1 . ' ' . $Prenoms1) . '</a>';
-                    echo '&nbsp;x&nbsp;<a ' . Ins_Ref_Pers($Ref2) . '>' . my_html($Nom2 . ' ' . $Prenoms2) . '</a>' . "\n";
+                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref1 . '">' . my_html($Nom1 . ' ' . $Prenoms1) . '</a>';
+                    echo '&nbsp;x&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref2 . '">' . my_html($Nom2 . ' ' . $Prenoms2) . '</a>' . "\n";
                 } else {
                     HTML_ou_PDF(my_html($Nom1 . ' ' . $Prenoms1), $sortie);
                     HTML_ou_PDF('&nbsp;x&nbsp;' . my_html($Nom2 . ' ' . $Prenoms2) . "\n", $sortie);
@@ -463,7 +466,14 @@ if ($res)
 if (! $texte) {
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

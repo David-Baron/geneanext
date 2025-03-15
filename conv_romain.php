@@ -186,7 +186,6 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
         document.forms.calculette.zone_saisie.value = "";
         bloque_chiffres("X");
     }
-
 </script>
 
 <?php
@@ -269,7 +268,14 @@ echo '</tbody>';
 echo "</table>\n";
 echo "</form>\n";
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

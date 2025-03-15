@@ -158,7 +158,7 @@ if (($ok == '') && ($annuler == '')) {
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
         aff_erreur(LG_DEPART_UNKNOWN);
-        echo '<a href="'. $root .'/liste_villes.php?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
+        echo '<a href="' . $root . '/liste_villes.php?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
     } else {
         if ($Modif)
             Champ_car($enreg2, 'Nom_Depart_Min');
@@ -194,13 +194,13 @@ if (($ok == '') && ($annuler == '')) {
         echo '<table width="100%" border="0">' . "\n";
         col_titre_tab_noClass($LG_County_Name, $largP);
         echo '<td><input type="text" size="70" class="oblig" name="Nom_Depart" id="Nom_Depart" value="' . $enreg2['Nom_Depart_Min'] . '" />&nbsp;' . "\n";
-        Img_Zone_Oblig('imgObligNom');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<input type="' . $hidden . '" name="ANom_Depart" value="' . $enreg2['Nom_Depart_Min'] . '"/></td>' . "\n";
         echo "</tr>\n";
 
         col_titre_tab_noClass($LG_County_Id, $largP);
         echo '<td><input type="text" size="3" class="oblig" name="Code_Depart" id="Code_Depart" value="' . $enreg2['Departement'] . '" />&nbsp;' . "\n";
-        Img_Zone_Oblig('imgObligCode');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<input type="' . $hidden . '" name="ACode_Depart" value="' . $enreg2['Departement'] . '"/></td>' . "\n";
         echo "</tr>\n";
 
@@ -225,7 +225,7 @@ if (($ok == '') && ($annuler == '')) {
 
         // Commentaires
         echo '<fieldset>' . "\n";
-        aff_legend(LG_CH_COMMENT);
+        echo '<legend>' . ucfirst(LG_CH_COMMENT) . '</legend>' . "\n";
         echo '<table width="95%" border="0">' . "\n";
         //Divers
         echo '<tr>' . "\n";
@@ -258,7 +258,7 @@ if (($ok == '') && ($annuler == '')) {
 
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         echo '</div> <!-- tab container -->' . "\n";
         echo '</td></tr>';
@@ -274,7 +274,14 @@ if (($ok == '') && ($annuler == '')) {
     echo '	setupPanes("container1", "tab1", 40);' . "\n";
     echo '</script>' . "\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 

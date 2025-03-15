@@ -179,7 +179,14 @@ utilisez G&eacute;n&eacute;amania pour organiser vos donn&eacute;es et c'est par
 Soyez minutieux, ne n&eacute;gligez aucune piste ; l'exp&eacute;rience montre que des informations peuvent se r&eacute;v&eacute;ler utiles apr&egrave;s coup.<br />
 Bonnes recherches...
 
-<?php Insere_Bas($compl); ?>
+<?php echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>'; ?>
 
 </body>
 

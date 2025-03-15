@@ -41,7 +41,7 @@ $n_pers = nom_table('personnes');
 // Accède à une personne et l'affiche
 function Accede_Personne($Reference)
 {
-    global $db, $Personne, $Sosa, $echo_modif, $num_lig, $def_enc, $n_pers;
+    global $root, $db, $Personne, $Sosa, $echo_modif, $num_lig, $def_enc, $n_pers;
     $Sql = 'select Reference, Nom, Prenoms, Numero from ' . $n_pers . ' where Reference = ' . $Reference . ' limit 1';
     $Res = lect_sql($Sql);
     if ($Personne = $Res->fetch(PDO::FETCH_NUM)) {
@@ -55,8 +55,8 @@ function Accede_Personne($Reference)
             echo '<td width="20%">' . $Personne[3] . '</td>';
             echo '<td width="20%">' . $Sosa . '</td>';
             echo '<td width="50%">';
-            echo '<a ' . Ins_Ref_Pers($Ref) . '>' . my_html($Personne[2] . ' ' . $Personne[1]) . '</a>';
-            echo '&nbsp;<a ' . Ins_Edt_Pers($Ref) . '>' . $echo_modif;
+            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($Personne[2] . ' ' . $Personne[1]) . '</a>';
+            echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '">' . $echo_modif;
             //echo 'mem : '.memory_get_usage();
             echo '</td></tr>' . "\n";
         }
@@ -192,7 +192,7 @@ if ($Personne = $Res->fetch(PDO::FETCH_ASSOC)) {
     echo '</table>';
 
     echo '<br />';
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     bt_ok_an_sup($lib_Rectifier, $lib_Annuler, '', '', false, true);
 
@@ -201,7 +201,14 @@ if ($Personne = $Res->fetch(PDO::FETCH_ASSOC)) {
     echo '<br /><a href="' . $root . '/init_sosa.php">' . my_html($LG_Menu_Title['Delete_Sosa']) . '</a>';
 } else $x = Erreur_DeCujus();
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

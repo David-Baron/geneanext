@@ -190,16 +190,21 @@ if ($est_gestionnaire) {
 
         $larg_titre = '35';
         echo '<form id="saisie" method="post" enctype="multipart/form-data" action="' . my_self() . '">' . "\n";
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         echo '<table width="90%" class="table_form">' . "\n";
         colonne_titre_tab($LG_csv_file_upload);
+
         echo '<input type="file" name="nom_du_fichier" size="80"/></td>';
         echo '</tr>' . "\n";
 
-        form_status();
+        echo '<tr><td class="label" width="35%">' . $LG_Default_Status . '</td><td class="value">';
+        bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
+        bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
+        bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
+        echo '</td></tr>';
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         colonne_titre_tab(LG_COUNTY);
         // Département de la ville
         $req = 'select Identifiant_zone, Nom_Depart_Min from ' . $n_departements . ' order by Nom_Depart_Min';
@@ -214,7 +219,11 @@ if ($est_gestionnaire) {
         }
         echo '</td></tr>' . "\n";
 
-        form_header();
+        echo '<tr><td class="label" width="35%">' . $LG_csv_header . '</td><td class="value">';
+        echo '<input type="radio" name="entete" id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label>&nbsp;';
+        echo '<input type="radio" name="entete" id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label>&nbsp;';
+        echo '<input type="radio" name="entete" id="entete_P" value="P" onclick="cache_div(\'corresp\');"/><label for="entete_P">' . LG_IMP_CSV_HEADER_YES_CONSIDER . '</label>';
+        echo '</td></tr>';
 
         colonne_titre_tab(LG_ICSV_TOWN_COL_MATCHING);
         echo '<div id="corresp">';
@@ -240,16 +249,23 @@ if ($est_gestionnaire) {
         echo '</div>';
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>';
         echo '</form>';
     }
 } else echo my_html($LG_function_noavailable_profile);
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

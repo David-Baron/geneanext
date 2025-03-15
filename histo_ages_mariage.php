@@ -122,7 +122,7 @@ if ($res = lect_sql($sql)) {
                 $nb_pers[$rang]++;
             if ($debug) {
                 echo $ref_nouv . ', âge : ' . Decompose_Mois($mois)
-                    . ' : <a ' . Ins_Ref_Pers($ref_nouv) . '>' . $ref_nouv . '</a>'
+                    . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
                     . '<br />';
             }
         }
@@ -169,7 +169,7 @@ if ($res = lect_sql($sql)) {
                 $nb_pers[$rang]++;
             if ($debug) {
                 echo $ref_nouv . ', âge : ' . Decompose_Mois($mois)
-                    . ' : <a ' . Ins_Ref_Pers($ref_nouv) . '>' . $ref_nouv . '</a>'
+                    . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
                     . '<br />';
             }
         }
@@ -223,10 +223,10 @@ echo '</table>';
 $Nom = '';
 $Prenoms = '';
 if (Get_Nom_Prenoms($ref_min_h, $Nom, $Prenoms)) {
-    echo '<br />' . $Ch_Histo_Age_Youngest_M . ' : <a ' . Ins_Ref_Pers($ref_min_h) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_h) . ')';
+    echo '<br />' . $Ch_Histo_Age_Youngest_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_min_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_h) . ')';
 }
 if (Get_Nom_Prenoms($ref_min_f, $Nom, $Prenoms)) {
-    echo '<br />' . $Ch_Histo_Age_Youngest_W . ' : <a ' . Ins_Ref_Pers($ref_min_f) . '>' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_f) . ')';
+    echo '<br />' . $Ch_Histo_Age_Youngest_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_min_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_f) . ')';
 }
 
 // Un age d'évènement (naissance enfant, union) est antérieur à la date de naissance
@@ -238,7 +238,14 @@ if ($est_contributeur) {
 
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour, '?' . Query_Str());
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

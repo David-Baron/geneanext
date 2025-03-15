@@ -95,12 +95,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 300);
     if ($Code != $code_crea)
-        $compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_type_document.php?code=' . $Code . '"', 'page', 'Fiche évènement') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_document.php?code=' . $Code . '"', 'page', 'Fiche évènement') . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Type_Document', $Code);
 
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'LibelleF\')" action="' . my_self() . '?code=' . $Code . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     if (!$Creation) {
         $sql = 'select * from ' . $n_types_doc . ' where Id_Type_Document = \'' . $Code . '\' limit 1';
@@ -124,16 +124,16 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $larg_titre = '20';
 
     echo '<table width="70%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-    colonne_titre_tab(LG_DOC_TYPE_LABEL);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_DOC_TYPE_LABEL . '&nbsp;</td><td class="value">';
     echo '<input type="text" class="oblig" name="LibelleF" value="' . $LibelleF . '" size="50"/>' . "\n";
     echo '&nbsp;';
-    Img_Zone_Oblig('imgObligCode');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ALibelleF" value="' . $LibelleF . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     // Bouton Supprimer en modification si pas d'utilisation du rôle
     $lib_sup = '';
     if ((!$Creation) and (! $utilise)) $lib_sup = $lib_Supprimer;
@@ -143,7 +143,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     echo "</form>";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

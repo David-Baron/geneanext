@@ -54,7 +54,7 @@ else {
         'order by Libelle_Type';
 
     echo '<form id="saisie" action="' . my_self() . '" method="post">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<table border="0" width="50%" align="center">' . "\n";
     echo '<tr align="center">';
 
@@ -111,7 +111,7 @@ else {
                     $x = Get_Nom_Prenoms($ref_objet, $Nom, $Prenoms);
                     if ($debug) echo '$x ' . $x . ', est_privilegie' . $est_privilegie . ', $Diff_Internet_P' . $Diff_Internet_P . '<br />';
                     if (($x) and (($est_privilegie) or ($Diff_Internet_P == 'O'))) {
-                        echo '<br /><a ' . Ins_Ref_Pers($ref_objet) . '>' . $Prenoms . ' ' . $Nom . '</a>';
+                        echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
                     }
                     break;
                 // Union
@@ -128,12 +128,12 @@ else {
                         echo '<br />' . my_html(LG_IMAGES_GAL_UNION) . ' ';
                         // Conjoint 1
                         if (($est_privilegie) or ($rowU['c1Diff'] != 'N')) {
-                            echo '<br /><a ' . Ins_Ref_Pers($rowU['c1Ref']) . '>' . my_html($rowU['c1Prenoms'] . ' ' . $rowU['c1Nom']) . '</a>';
+                            echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $rowU['c1Ref'] . '">' . my_html($rowU['c1Prenoms'] . ' ' . $rowU['c1Nom']) . '</a>';
                         } else echo 'x';
                         // Conjoint 2
                         echo ' ' . my_html(LG_IMAGES_GAL_UNION_AND) . ' ';
                         if (($est_privilegie) or ($rowU['c2Diff'] != 'N')) {
-                            echo '<br /><a ' . Ins_Ref_Pers($rowU['c2Ref']) . '>' . my_html($rowU['c2Prenoms'] . ' ' . $rowU['c2Nom']) . '</a>';
+                            echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $rowU['c2Ref'] . '">' . my_html($rowU['c2Prenoms'] . ' ' . $rowU['c2Nom']) . '</a>';
                         } else echo 'x';
                     }
                     break;
@@ -162,17 +162,17 @@ else {
                                 default:
                                     $texte = LG_IMAGES_GAL_CHILD;
                             }
-                            echo '<br />' . my_html(LG_IMAGES_GAL_FILIATION) . ' <a ' . Ins_Ref_Pers($ref_objet) . '>' . my_html($rowF['ePrenoms'] . ' ' . $rowF['eNom']) . '</a>';
+                            echo '<br />' . my_html(LG_IMAGES_GAL_FILIATION) . ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_objet . '">' . my_html($rowF['ePrenoms'] . ' ' . $rowF['eNom']) . '</a>';
                             echo '&nbsp;' . my_html($texte) . ' ';
                         } else echo 'x';
                         // Père
                         if (($est_privilegie) or ($rowF['pDiff'] != 'N')) {
-                            echo '<br /><a ' . Ins_Ref_Pers($rowF['pRef']) . '>' . my_html($rowF['pPrenoms'] . ' ' . $rowF['pNom']) . '</a>';
+                            echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $rowF['pRef'] . '">' . my_html($rowF['pPrenoms'] . ' ' . $rowF['pNom']) . '</a>';
                         } else echo 'x';
                         // Mère
                         echo ' et de ';
                         if (($est_privilegie) or ($rowF['eDiff'] != 'N')) {
-                            echo '<br /><a ' . Ins_Ref_Pers($rowF['mRef']) . '>' . my_html($rowF['mPrenoms'] . ' ' . $rowF['mNom']) . '</a>';
+                            echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $rowF['mRef'] . '">' . my_html($rowF['mPrenoms'] . ' ' . $rowF['mNom']) . '</a>';
                         } else echo 'x';
                     }
                     break;
@@ -181,12 +181,12 @@ else {
                     $sqlE = 'SELECT Reference, Titre FROM ' . nom_table('evenements') . ' WHERE reference = ' . $ref_objet . ' limit 1';
                     $resE = lect_sql($sqlE);
                     if ($rowE = $resE->fetch(PDO::FETCH_NUM)) {
-                        echo '<br /><a href="'.$root.'/fiche_evenement.php?refPar=' . $rowE[0] . '">' . my_html($rowE[1]) . '</a>';
+                        echo '<br /><a href="' . $root . '/fiche_evenement.php?refPar=' . $rowE[0] . '">' . my_html($rowE[1]) . '</a>';
                     }
                     break;
                 // Ville
                 case 'V':
-                    echo '<br /><a href="'.$root.'/fiche_ville.php?Ident=' . $ref_objet . '">' . lib_ville($ref_objet) . '</a>';
+                    echo '<br /><a href="' . $root . '/fiche_ville.php?Ident=' . $ref_objet . '">' . lib_ville($ref_objet) . '</a>';
                     break;
             }
 
@@ -206,7 +206,14 @@ else {
     bt_ok_an_sup('', $lib_Retour, '', '', false);
     echo '</form>';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

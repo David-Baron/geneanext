@@ -229,12 +229,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $image = $chemin_images_util . $nom_img;
     $larg_titre = '25';
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-    colonne_titre_tab($LG_Ch_Image_Title);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Ch_Image_Title . '&nbsp;</td><td class="value">';
     $titre = $enreg2['Titre'];
     echo '<input type="text" size="80" name="Titre" value="' . $titre . '" class="oblig"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgObligDesc');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="ATitre" value="' . $titre . '"/>' . "\n";
     echo '</td>' . "\n";
     echo '<td align="center" rowspan="4">';
@@ -246,27 +246,27 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     } else echo '<img id="idimg" src="" border="0" alt="" title="" width="150" height="150"/>';
     echo '</td></tr>' . "\n";
 
-    colonne_titre_tab($LG_Ch_Image_Name);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Ch_Image_Name . '&nbsp;</td><td class="value">';
     echo '<input type="file" name="nom_du_fichier" value="' . $nom_img . '" class="oblig" size="50" onchange="readURL(this,\'idimg\');"/>&nbsp;';
-    Img_Zone_Oblig('imgObligNom');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<br />(' . $LG_Ch_Image_No_Need . ')';
     echo '<input type="' . $hidden . '" name="ANom" value="' . $nom_img . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    colonne_titre_tab(LG_CH_COMMENT);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
     $Existe_Commentaire = Rech_Commentaire($ident_image, 'I');
     echo '<textarea cols="50" rows="4" name="DiversI">' . $Commentaire . '</textarea>' . "\n";
     echo '<input type="' . $hidden . '" name="ADiversI" value="' . my_html($Commentaire) . '"/>';
     echo '</td></tr>' . "\n";
 
-    colonne_titre_tab(LG_CH_COMMENT_VISIBILITY);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT_VISIBILITY . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="Diff_Internet_Note" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
     echo '<input type="hidden" name="ADiff_Internet_Note" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    colonne_titre_tab($LG_Ch_Image_Default);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Ch_Image_Default . '&nbsp;</td><td class="value">';
     $val_defaut = $enreg2['Defaut'];
     echo '<input type="radio" id="DefautO" name="Defaut" value="O"';
     if ($val_defaut == 'O') echo ' checked="checked"';
@@ -281,14 +281,14 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     if ($ident_image != -1) $diff_img = $enreg2['Diff_Internet_Img'];
     else $diff_img = 'o';
 
-    colonne_titre_tab($LG_Ch_Image_Visibility);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Ch_Image_Visibility . '&nbsp;</td><td class="value">';
     echo '<input type="checkbox" name="Diff_Internet_Image" value="o"';
     if ($diff_img == 'o') echo ' checked="checked"';
     echo "/>\n";
     echo '<input type="' . $hidden . '" name="ADiff_Internet_Image" value="' . $diff_img . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     $lib_sup = '';
     if ($ident_image != -1) $lib_sup = $lib_Supprimer;
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, $LG_Ch_Image_This);
@@ -299,12 +299,18 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $_SESSION['message'] = '';
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>
 <script type="text/javascript">
-    <!--
     // Vérification des zones obligatoires seulement sur le bouton ok
     // non standard car FF se comporte bizarrement avec la value du type file
     function verification_form_image(formulaire) {
@@ -327,9 +333,6 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         }
         return retour;
     }
-
-    //
-    -->
 </script>
 </body>
 

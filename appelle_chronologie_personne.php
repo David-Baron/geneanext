@@ -9,11 +9,11 @@ require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Lien_vers_Pers()
 {
-    global $composants, $texte, $sortie;
+    global $root, $Icones, $composants, $texte, $sortie;
     if (count($composants) >= 5) {
         if (! $texte) {
-            return '<a ' . Ins_Ref_Pers($composants[5], false) . '>' . my_html($composants[3] . ' ' . $composants[2]) . '</a>&nbsp;'
-                . Lien_Chrono_Pers($composants[5]);
+            return '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $composants[5] . '" target="_blank">' . my_html($composants[3] . ' ' . $composants[2]) . '</a>&nbsp;'
+                . '<a href="' . $root . '/appelle_chronologie_personne.php?Refer=' . $composants[5] . '"><img src="' . $root . '/assets/img/' . $Icones['time_line'] . '" alt="' . LG_FFAM_CHRONOLOGIE . '" title="' . LG_FFAM_CHRONOLOGIE . '"></a>';
         } else
             return $composants[3] . ' ' . $composants[2];
     }
@@ -106,7 +106,13 @@ else {
     // Sortie au format texte
     else {
         // Affichage du titre : numéros + génération
-        Insere_Haut_texte('Chronologie');
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>Chronologie</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     }
 }
 
@@ -560,7 +566,18 @@ if (!$texte) {
     Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 }
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl != '') {
+        echo $compl;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 if ($dates_OK and $sortie_pdf) {
     $pdf->Output();

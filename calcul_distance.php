@@ -69,9 +69,9 @@ if ($res->rowCount() > 0) {
 
     echo '<table width="80%" class="table_form">' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-    colonne_titre_tab($LG_Ch_Dist_Between);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' .$LG_Ch_Dist_Between . '&nbsp;</td><td class="value">';
     echo '<select name="Ref_Ville1">' . "\n";
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         echo '<option value="' . $row[0] . '"';
@@ -84,7 +84,7 @@ if ($res->rowCount() > 0) {
     $res->closeCursor();
     $res = lect_sql($sql);
 
-    colonne_titre_tab($LG_Ch_Dist_And);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' .$LG_Ch_Dist_And . '&nbsp;</td><td class="value">';
     echo '<select name="Ref_Ville2">' . "\n";
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         echo '<option value="' . $row[0] . '"';
@@ -94,13 +94,13 @@ if ($res->rowCount() > 0) {
     echo "</select>\n";
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     echo '<tr><td colspan="2">';
     echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '"> ' .
         my_html($LG_Ch_Dist_Tip);
     echo '</td></tr>';
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     bt_ok_an_sup($lib_Calculer, $lib_Annuler, '', '');
 
     echo '</table>' . "\n";
@@ -153,7 +153,16 @@ if ($bt_OK) {
     }
 }
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+if ($compl != '') {
+    echo $compl;
+}
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

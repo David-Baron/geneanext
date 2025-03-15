@@ -14,7 +14,13 @@ $compl = '';
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');
 
-Insere_Haut_texte('&nbsp;');
+echo '</head>' . "\n";
+echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+echo '<table cellpadding="0" width="100%">' . "\n";
+echo '<tr>' . "\n";
+echo '<td align="center"><b> </b></td>' . "\n";
+echo '</tr>' . "\n";
+echo '</table>' . "\n";
 
 echo '<table width="90%">';
 echo '<tr><td align="center"><img src="image_arbre_asc.php?Refer=' . $Refer . '" alt="Image"/></td></tr>';

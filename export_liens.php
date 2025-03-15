@@ -58,7 +58,7 @@ if ($nb_enr > 0) {
     $fp = ouvre_fic($nom_fic, 'w+');
     if ($fp) {
 
-        ecrire($fp, LG_LINKS_EXTRACT_HEADER);        //Type de lien;Description;URL
+        fputs($fp, LG_LINKS_EXTRACT_HEADER);        //Type de lien;Description;URL
 
         while ($row = $res->fetch(PDO::FETCH_NUM)) {
             $ligne = '';
@@ -69,7 +69,7 @@ if ($nb_enr > 0) {
                 $ligne .= '"' . $contenu . '";';
             }
             //echo $ligne.'<br />';
-            ecrire($fp, $ligne);
+            fputs($fp, $ligne);
         }
 
         if ($nb_enr > 0) {
@@ -86,7 +86,14 @@ if ($nb_enr > 0) {
 }
 
 Bouton_Retour($lib_Retour, '?' . Query_Str());
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

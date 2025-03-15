@@ -233,7 +233,7 @@ if ($clic_boutons) {
     else echo 'n';
     echo '" />';
 
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo "<br />";
 
     $larg_titre = '30';
@@ -241,7 +241,7 @@ if ($clic_boutons) {
 
     //  En création, on peut choisir la personne
     if ($Creation) {
-        echo colonne_titre_tab($LG_Name);
+
         // On retient les noms de personnes qui ne sont pas déjà reliées
         // les évènements uniques qui ne sont pas déjà utilisés
         $sql_types = 'SELECT DISTINCT p.idNomFam, p.Nom' .
@@ -251,17 +251,18 @@ if ($clic_boutons) {
             '  and reference not in (select Personne_2 from ' . nom_table('relation_personnes') . ' where Personne_1 = ' . $refPers1 . ')' .
             ' ORDER by p.Nom';
         $res = lect_sql($sql_types);
+
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Name . '&nbsp;</td><td class="value">';
         echo '<select name="nom" id="noms" onchange="updatePersonnes(this.value)" class="oblig">';
         while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
             echo '<option value="' . $enreg[0] . '">' . $enreg[1] . '</option>';
         }
         echo '</select>' . "\n";
-        echo '&nbsp;&nbsp;&nbsp;' . Img_Zone_Oblig('imgObligTEvt');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo "</td></tr>\n";
-
-        echo colonne_titre_tab($LG_Link_Pers_Pers);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Link_Pers_Pers . '&nbsp;</td><td class="value">';
         echo '<select name="personnes" id="personnes" class="oblig"></select>';
-        echo '&nbsp;&nbsp;&nbsp;' . Img_Zone_Oblig('imgObligPers');
+        echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
         echo '<div class="buttons">';
         echo '<button type="submit" class="positive" ' .
             'onclick="document.forms.saisie.personnes.value = document.forms.saisie.maxi.value;return false;"> ' .
@@ -271,17 +272,18 @@ if ($clic_boutons) {
     }
     //  En modification, la personne est fixe
     else {
-        echo colonne_titre_tab($LG_Link_Pers_Pers);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Link_Pers_Pers . '&nbsp;</td><td class="value">';
         if ($orig == 1) echo '&nbsp;' . $Prenoms2 . '&nbsp;' . $Nom2 . "\n";
         else echo '&nbsp;' . $Prenoms1 . '&nbsp;' . $Nom1 . "\n";
         echo '</td></tr>' . "\n";
     }
 
     // Rôle
-    colonne_titre_tab($LG_Link_Pers_Role);
     $refRole = '';
     $requete = 'SELECT Code_Role, Libelle_Role FROM ' . nom_table('roles') . ' ORDER BY Libelle_Role';
     $result = lect_sql($requete);
+
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Link_Pers_Role . '&nbsp;</td><td class="value">';
     echo '<select name="refRoleF" class="oblig">' . "\n";
     while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
         $code = $enreg[0];
@@ -290,17 +292,17 @@ if ($clic_boutons) {
         echo '>' . my_html($enreg[1]) . "</option>\n";
     }
     echo '</select>&nbsp;';
-    Img_Zone_Oblig('imgObligRole');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="' . $hidden . '" name="roleAnc" value="' . $RoleLu . '"/>' . "\n";
     echo "</td></tr>\n";
 
     //  ===== Date de début de lien
-    colonne_titre_tab($LG_Link_Pers_Beg);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Link_Pers_Beg . '&nbsp;</td><td class="value">';
     zone_date2('dDebAnc', 'dDebAff', 'dDebCache', $dDebLue);
     echo "</td></tr>\n";
 
     //  ===== Date de fin de lien
-    colonne_titre_tab($LG_Link_Pers_End);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Link_Pers_End . '&nbsp;</td><td class="value">';
     zone_date2('dFinAnc', 'dFinAff', 'dFinCache', $dFinLue);
     $txt_img = $LG_Link_Pers_Copy_Date;
     echo '&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['copie_calend'] .
@@ -308,21 +310,20 @@ if ($clic_boutons) {
     echo "</td></tr>\n";
 
     // ==== Personnage principal
-    colonne_titre_tab($Prenoms . ' ' . $Nom . ', ' . $LG_Link_Pers_Main);
-    // colonne_titre_tab( html_entity_decode($Prenoms.' '.$Nom, ENT_QUOTES, $def_enc).', '.$LG_Link_Pers_Main);
+    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . my_html($Prenoms) . ' ' . my_html($Nom) . ', ' . $LG_Link_Pers_Main . '&nbsp;</td><td class="value">';
     echo '<input type="radio" id="PrincipalF_O" name="PrincipalF" value="O"';
-    if ($PrincLue == 'O') echo ' checked="checked"';
+    if ($PrincLue == 'O') echo ' checked';
     echo '/><label for="PrincipalF_O">' . $LG_Yes . '</label>&nbsp;';
     echo '<input type="radio" id="PrincipalF_N" name="PrincipalF" value="N"';
-    if ($PrincLue == 'N') echo ' checked="checked"';
+    if ($PrincLue == 'N') echo ' checked';
     echo '/><label for="PrincipalF_N">' . $LG_No . '</label>&nbsp;';
     echo '<input type="radio" id="PrincipalF_I" name="PrincipalF" value="I"';
-    if (($PrincLue == 'I') or ($Creation)) echo ' checked="checked"';
+    if (($PrincLue == 'I') or ($Creation)) echo ' checked';
     echo '/><label for="PrincipalF_I">' . $LG_Link_Pers_No_Matter . '</label>';
     echo '<input type="' . $hidden . '" name="APrincipalF" value="' . $PrincLue . '"/>' . "\n";
     echo '</td></tr>' . "\n";
 
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
     // Bouton Supprimer en modification si pas de lien
     $lib_sup = '';
     if ($refPers2 != -1) $lib_sup = $lib_Supprimer;
@@ -331,12 +332,18 @@ if ($clic_boutons) {
     echo "</table>";
     echo "</form>\n";
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>
 <script type="text/javascript">
-    <!--
     function updatePersonnes(id) {
         //window.alert('rpc_Personne.php?idNomFam=' + id);
         xhr.open('get', 'rpc_Personne.php?idNomFam=' + id);
@@ -388,9 +395,6 @@ if ($clic_boutons) {
     }
 
     var xhr = getXMLHttpRequest();
-
-    //
-    -->
 </script>
 
 </body>

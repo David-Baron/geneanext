@@ -52,7 +52,13 @@ if ($est_gestionnaire) {
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
     if ($Sortie == 't') {
-        Insere_Haut_texte('');
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b> </b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     } else {
         $compl = Ajoute_Page_Info(600, 310);
         Insere_Haut($titre, $compl, 'Recherche_Commentaire', '');
@@ -162,7 +168,7 @@ if ($est_gestionnaire) {
                             break;
                     }
                     if ($Sortie == 't') echo $tmp;
-                    else ecrire($fp, '"' . $tmp . '";"' . $row[3] . '";');
+                    else fputs($fp, '"' . $tmp . '";"' . $row[3] . '";');
                     $num_lig = 1;
                     break;
             }
@@ -183,7 +189,7 @@ if ($est_gestionnaire) {
         // Nouvelle recherche
         if ($Sortie != 't') {
             echo '<form id="nouvelle" method="post">' . "\n";
-            aff_origine();
+            echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
             echo '<br />';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive">' .
@@ -197,11 +203,11 @@ if ($est_gestionnaire) {
     if ((!$bt_OK) && (!$bt_An)) {
 
         echo '<form id="saisie" method="post">' . "\n";
-        aff_origine();
+        echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
         $larg_titre = 30;
         echo '<table width="80%" class="table_form">' . "\n";
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         col_titre_tab(LG_SCH_COMMENT_CONTAINING, $larg_titre);
         echo '<td class="value"><textarea cols="50" rows="4" name="Divers"></textarea></td>' . "\n";
@@ -223,9 +229,9 @@ if ($est_gestionnaire) {
         affiche_sortie(true);
         echo '</td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Rechercher, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>' . "\n";
         echo '</form>' . "\n";
@@ -233,7 +239,16 @@ if ($est_gestionnaire) {
         include(__DIR__ . '/assets/js/Insert_Tiny.js');
     }
 
-    if ($Sortie != 't') Insere_Bas($compl);
+    if ($Sortie != 't') {
+        echo '<table cellpadding="0" width="100%">';
+        echo '<tr>';
+        echo '<td align="right">';
+        echo $compl;
+        echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+        echo "</td>";
+        echo '</tr>';
+        echo '</table>';
+    }
 } else echo my_html($LG_function_noavailable_profile) . "\n";
 ?>
 </body>

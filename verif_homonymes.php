@@ -37,7 +37,13 @@ if ($_SESSION['estGestionnaire']) {
 if (!$texte) {
     Insere_Haut(my_html($titre), $compl, 'Verif_Homonymes', '');
 } else {
-    Insere_Haut_texte(my_html($titre));
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
     echo '<br />';
 }
 
@@ -111,14 +117,14 @@ if ($res = lect_sql($sql)) {
                 echo '<tr>';
                 echo '<td ' . $classe . '>';
                 if (!$texte) {
-                    echo $x_Ref . ' : ' . '<a ' . Ins_Ref_Pers($enreg2['Reference']) . '>' . $enreg2['Reference'] . '</a>' . "\n";
+                    echo $x_Ref . ' : ' . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg2['Reference'] . '">' . $enreg2['Reference'] . '</a>' . "\n";
                 } else {
                     echo '&nbsp;&nbsp;&nbsp;' . $x_Ref . '&nbsp;' . $enreg2['Reference'] . "\n";
                 }
                 if ($enreg2['Ne_le'] != '') echo ',' . $x_ne . Etend_date($enreg2['Ne_le']);
                 if ($enreg2['Decede_Le'] != '') echo ', + ' . Etend_date($enreg2['Decede_Le']);
                 if (!$texte) {
-                    echo '&nbsp;<a ' . Ins_Edt_Pers($enreg2['Reference']) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $enreg2['Reference'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 }
                 echo '</td>' . "\n";
                 if (!$texte) {
@@ -146,7 +152,16 @@ if ($res = lect_sql($sql)) {
 
 if ($nb == 0) echo '<br />' . my_html(LG_NAMESAKE_ZERO);
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 ?>
 <script type="text/javascript">

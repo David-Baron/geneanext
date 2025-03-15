@@ -107,17 +107,15 @@ if ($bt_OK) {
 }
 
 echo '<form id="saisie" method="post">';
-aff_origine();
-$larg_titre = '25';
-echo '<table width="60%" class="table_form">';
+echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
-echo colonne_titre_tab($LG_Ch_Adm_T_Action);
+echo '<table width="60%" class="table_form">';
+echo '<tr><td class="label" width="25%">' . $LG_Ch_Adm_T_Action . '</td><td class="value">';
 echo '<input type="radio" name="type_action" value="R" checked="checked"/>' . my_html($LG_Ch_Adm_T_Repair);
 echo '<input type="radio" name="type_action" value="O"/>' . my_html($LG_Ch_Adm_T_Optim);
 echo '</td></tr>';
-
-echo colonne_titre_tab($LG_Ch_Adm_T_Tables);
-echo '<input type="checkbox" name="selTous" value="on" onclick="checkUncheckAll(this);"/>&nbsp;' . $LG_Ch_Adm_T_All_None . '<br /><hr/>';
+echo '<tr><td class="label" width="25%">' . $LG_Ch_Adm_T_Tables . '</td><td class="value">';
+echo '<input type="checkbox" name="selTous" value="on" onclick="checkUncheckAll(this);"/>' . $LG_Ch_Adm_T_All_None . '<br /><hr/>';
 $nb_tables = count($liste_tables);
 for ($nb = 0; $nb < $nb_tables; $nb++) {
     $tablename = $liste_tables[$nb];
@@ -125,12 +123,21 @@ for ($nb = 0; $nb < $nb_tables; $nb++) {
 }
 echo '</td></tr>';
 
-ligne_vide_tab_form(1);
+echo '<tr><td colspan="2">&nbsp;</td></tr>';
 bt_ok_an_sup($lib_ok, $lib_Annuler, '', '');
 
 echo '</table></form>';
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+if ($compl != '') {
+    echo $compl;
+}
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

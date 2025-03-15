@@ -125,8 +125,8 @@ if ($nbPers > 0) {
         else               $style = 'liste2';
         echo '<tr  class="' . $style . '">';
         echo '<td>';
-        echo '<a ' . Ins_Ref_Pers($enreg[0]) . '>' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>' . "\n";
-        echo ' <a ' . Ins_Edt_Pers($enreg[0]) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+        echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg[0] . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>' . "\n";
+        echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $enreg[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
         echo '</td>' . "\n";
         echo '<td align="center">';
         echo '<input type="checkbox" name="S_Int[' . $numLig . ']"' . $internet . '/>';
@@ -143,11 +143,18 @@ if ($nbPers > 0) {
     echo '<br>';
 }
 
-aff_origine();
+echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 bt_ok_an_sup($lib_Rectifier, $lib_Annuler, '', '', false, true);
 echo '</form>';
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

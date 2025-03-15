@@ -35,7 +35,7 @@ if (($SiteGratuit) and (!$Premium)) $centralise = true;
 
 $compl = Ajoute_Page_Info(600, 150);
 if (($est_gestionnaire) and (!$centralise)) {
-    $compl .= Affiche_Icone_Lien('href="'. $root .'/edition_evenement.php?refPar=' . $refPar . '&amp;actu=o"', 'fiche_edition', $LG_Menu_Title['New_Edit']) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_evenement.php?refPar=' . $refPar . '&amp;actu=o"', 'fiche_edition', $LG_Menu_Title['New_Edit']) . '&nbsp;';
 }
 
 Insere_Haut($titre, $compl, 'Fiche_Actualite', '');
@@ -80,12 +80,21 @@ echo '</table>' . "\n";
 
 //  ===== Affichage du commentaire
 if (Rech_Commentaire($refPar, $Type_Ref)) {
-    Aff_Comment_Fiche($Commentaire, $Diffusion_Commentaire_Internet);
+    if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+        echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
+    }
 }
 
 // Formulaire pour le bouton retour
 Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

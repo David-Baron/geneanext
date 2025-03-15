@@ -85,7 +85,7 @@ else {
 
     echo '<br />' . "\n";
     echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'sujet,message\')" action="' . my_self() . '">' . "\n";
-    aff_origine();
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     // R�cup�ration des identifiants d'utilisateurs re�us depuis la liste
     $nom_var = 'msg_ut_';
@@ -104,18 +104,18 @@ else {
     $larg_titre = '25';
 
     echo '<table width="70%" class="table_form">' . "\n";
-    ligne_vide_tab_form(1);
+    echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
     col_titre_tab(LG_MAIL_SUBJECT, $larg_titre);
     echo '<td class="value">';
     echo '<input class="oblig" type="text" name="sujet" id="sujet" size="80" maxlength="80"/>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgOblig1');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
 
     col_titre_tab(LG_MAIL_MSG, $larg_titre);
     echo '<td class="value">';
     echo '<textarea cols="50" rows="5" name="message" id="message"></textarea>&nbsp;' . "\n";
-    Img_Zone_Oblig('imgOblig2');
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
 
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', true);
@@ -128,7 +128,14 @@ else {
     echo '</form>';
 }
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

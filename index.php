@@ -159,7 +159,6 @@ if ($NomU != '') {
     if ($niveauNouveau != '') {
         // Ré-init du compteur de tentaives échouées
         $_SESSION['tentatives'] = 0;
-
         $_SESSION['niveau'] = $niveauNouveau;
         $_SESSION['nomUtilisateur'] = $enreg[1];
         $_SESSION['idUtil'] = $enreg[2];
@@ -201,7 +200,11 @@ Ecrit_Meta($LG_index_title . ' ' . $Nom, $LG_index_desc . ' ' . $Nom, '');
 echo '</head>';
 
 // Affichage de l'image de fond
-Ligne_Body(false);
+if (file_exists(__DIR__ . '/assets/img/fonds/'. $Image_Fond)) {
+    echo '<body background="' . $root . '/assets/img/fonds/'. $Image_Fond . '">'; // TODO: background as nothing to do in body tag
+} else {
+    echo '<body>';
+}
 
 // Informations
 // @deprecated and no replace.
@@ -254,11 +257,11 @@ echo '</table>';
 //echo '<a href="'.$root.'/demarrage_rapide.php">Demarrage_Rapide</a>';
 
 // Menus...
-if (($vers_fic == $Version) and (!$maintenance)  and (!$verrou)) {
+if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
 
     $Existe_Commentaire = false;
     $Presence_Commentaire = Rech_Commentaire(0, 'G');
-    if (($Presence_Commentaire) and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+    if (($Presence_Commentaire) && (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
         $anniv_comment = true;
         $Existe_Commentaire = true;
     }

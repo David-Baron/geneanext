@@ -974,8 +974,8 @@ function traite_date_csv($la_date)
         }
 
         if ($date_ok) {
-            $jour  = zerofill2($c_date[0]);
-            $mois  = zerofill2($c_date[1]);
+            $jour  = sprintf('%02s', $c_date[0]);
+            $mois  = sprintf('%02s', $c_date[1]);
             $annee = $c_date[2];
         }
 
@@ -1022,11 +1022,11 @@ function aff_corr_csv($nb)
 function aff_corr_csv2($nb)
 {
     global $radical_variable_csv;
-    echo '<td><select name="' . $radical_variable_csv . $nb . '" id="' . $radical_variable_csv . $nb . '">' . "\n";
-    echo '<option value="-1">' . my_html('Sélectionnez une colonne') . '</option>' . "\n";
+    echo '<td><select name="' . $radical_variable_csv . $nb . '" id="' . $radical_variable_csv . $nb . '">';
+    echo '<option value="-1">Sélectionnez une colonne</option>';
     $num_col = 0;
     for ($nb2 = ord('A'); $nb2 <= ord('Z'); $nb2++) echo '<option value="' . $num_col++ . '">' . chr($nb2) . '</option>';
-    echo '</select></td>' . "\n";
+    echo '</select></td>';
 }
 
 /* Affiche une zone date avec son calendrier
@@ -1037,15 +1037,14 @@ function aff_corr_csv2($nb)
 	$fonction : fonction d'appel du calendrier */
 function zone_date2($prev_field, $disp_field, $hidden_field, $value = '')
 {
-    global $hidden;
-    $fonction = "Calendrier2('" . $hidden_field . "', '" . $disp_field . "')";
+    global $root, $Icones;
+
     $et_value = '';
     if ($value != '') {
         $et_value = 'value="' . Etend_date($value) . '" ';
-        $value = 'value="' . $value . '" ';
     }
-    echo '<input type="' . $hidden . '" name="' . $prev_field . '" ' . $value . '/>';
-    echo '<input type="text" readonly="readonly" size="25" name="' . $disp_field . '" onclick="' . $fonction . '"' . $et_value . '/>';
-    Affiche_Calendrier('img_' . $disp_field, $fonction);
-    echo '<input type="' . $hidden . '" name="' . $hidden_field . '" id="' . $hidden_field . '"' . $value . '/>';
+    echo '<input type="hidden" name="' . $prev_field . '" value="' . $value . '"/>';
+    echo '<input type="text" readonly="readonly" size="25" name="' . $disp_field . '" onclick="Calendrier2(' . $hidden_field . ', ' . $disp_field . ')" ' . $et_value . '/>';   
+    echo '<img src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="Calendrier" title="Calendrier" onclick="Calendrier2(' . $hidden_field . ', ' . $disp_field . ')"/>';
+    echo '<input type="hidden" name="' . $hidden_field . '" id="' . $hidden_field . '" value="' . $value . '"/>';
 }

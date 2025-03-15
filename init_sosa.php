@@ -53,7 +53,7 @@ $compl = Ajoute_Page_Info(600, 200);
 Insere_Haut(my_html($titre), $compl, 'Init_Sosa', '');
 
 echo '<form id="saisie" method="post">' . "\n";
-aff_origine();
+echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 echo '<br /><br />';
 echo '<table width="50%" class="table_form">' . "\n";
 col_titre_tab(LG_DEL_SOSA_KEEP, 60);
@@ -67,7 +67,14 @@ echo '</form>';
 
 echo '<br /><a href="' . $root . '/verif_sosa.php">' . my_html($LG_Menu_Title['Check_Sosa']) . '</a>';
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 ?>
 </body>
 

@@ -65,8 +65,7 @@ if ($simu_invit) $est_privilegie = false;
 // Affiche le libbellé xème génération sur une ligne
 function Affiche_Generation($Gener)
 {
-    global $texte, $num_lig, $sortie, $CSV, $LG_show_noshow,
-        $LG_LPersG_first, $LG_LPersG_next, $LG_LPersG_generation;
+    global $root, $Icones, $texte, $num_lig, $sortie, $CSV, $LG_show_noshow, $LG_LPersG_first, $LG_LPersG_next, $LG_LPersG_generation;
     $num_lig = 0;
     if (!$CSV) {
         if ($Gener != 1) {
@@ -87,7 +86,7 @@ function Affiche_Generation($Gener)
         else HTML_ou_PDF($LG_LPersG_next, $sortie);
         HTML_ou_PDF(' ' . $LG_LPersG_generation, $sortie);
         // Affichage de l'oeil pour afficher / masquer une génération
-        if (! $texte) oeil_div_simple('ajout' . $Gener, 'ajout' . $Gener, my_html($LG_show_noshow), 'div' . $Gener);
+        if (! $texte) echo ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $LG_show_noshow . '" title="' . $LG_show_noshow . '" ' . Survole_Clic_Div('div' . $Gener) . '/>';
         if ($texte) HTML_ou_PDF('</b>', $sortie);
         HTML_ou_PDF('</td></tr></table>' . "\n", $sortie);
         if (! $texte) echo '<div id="div' . $Gener . '">' . $ent_table . "\n";
@@ -99,7 +98,7 @@ function Affiche_Generation($Gener)
 // Affiche une personne sur une ligne
 function Affiche_Personne($Personne, $nb, $nb_gen)
 {
-    global $root, $Icones, $texte, $num_lig, $Vil_Prec, $Ville, $lieux, $_SESSION, $sortie, $pdf, $CSV, $fp, $LG_Data_noavailable_profile, $LG_LPersG_Implex_or_error, $LG_at, $est_privilegie, $omanquant;
+    global $root, $Icones, $LG_Show_On_Map, $texte, $num_lig, $Vil_Prec, $Ville, $lieux, $_SESSION, $sortie, $pdf, $CSV, $fp, $LG_Data_noavailable_profile, $LG_LPersG_Implex_or_error, $LG_at, $est_privilegie, $omanquant;
     if (!$omanquant) {
         // Ordre des champs : Reference, Nom, Prenoms, Numero, Ne_le, Decede_Le, Diff_Internet, Ville_Naissance, Ville_Deces
         //                    0          1    2        3       4      5          6              7                8
@@ -122,7 +121,7 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
             if (($est_privilegie) or ($Personne[6] == 'O')) {
                 HTML_ou_PDF('<td width="48%">', $sortie);
                 if (! $texte)
-                    echo '<a ' . Ins_Ref_Pers($Personne[0]) . '>' . $Personne[1] . ' ' . $Personne[2] . '</a>';
+                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Personne[0] . '">' . $Personne[1] . ' ' . $Personne[2] . '</a>';
                 else
                     HTML_ou_PDF($Personne[1] . ' ' . $Personne[2], $sortie);
                 HTML_ou_PDF('</td>' . "\n", $sortie);
@@ -139,7 +138,9 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
                         if (!$texte) {
                             $Lat_V = $Personne[9];
                             $Long_V = $Personne[10];
-                            appelle_carte_osm();
+                            if (($Lat_V != 0) or ($Long_V != 0)) {
+                                echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                            }
                         }
                     }
                 }
@@ -154,7 +155,9 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
                         if (!$texte) {
                             $Lat_V = $Personne[9];
                             $Long_V = $Personne[10];
-                            appelle_carte_osm();
+                            if (($Lat_V != 0) or ($Long_V != 0)) {
+                                echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                            }
                         }
                     }
                 }
@@ -177,7 +180,7 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
                 if ($lieux) $ligne .= $Personne[7] . ';';            // Né(e) à
                 $ligne .= Retourne_Date_CSV($Personne[5]) . ';';    // Décédé(e) le
                 if ($lieux) $ligne .= $Personne[8] . ';';            // Décédé(e) à
-                ecrire($fp, $ligne);
+                fputs($fp, $ligne);
             }
         }
     }
@@ -186,7 +189,7 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
 // Affiche une personne sur une ligne
 function Affiche_Personne_Absente($Personne, $nb, $nb_gen)
 {
-    global $texte, $num_lig, $sortie, $CSV, $fp, $lieux,
+    global $root, $texte, $num_lig, $sortie, $CSV, $fp, $lieux,
         $LG_Data_noavailable_profile, $LG_LPersG_missing,
         $LG_LPersG_father_of, $LG_LPersG_mother_of,
         $est_privilegie;
@@ -206,7 +209,7 @@ function Affiche_Personne_Absente($Personne, $nb, $nb_gen)
             }
             $texte2 = $texte2 . ' ';
             if (! $texte)
-                echo $texte2 . '<a ' . Ins_Ref_Pers($Personne[0]) . '>' . $Personne[1] . ' ' . $Personne[2] . '</a>';
+                echo $texte2 . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Personne[0] . '">' . $Personne[1] . ' ' . $Personne[2] . '</a>';
             else
                 HTML_ou_PDF($texte2 . $Personne[1] . ' ' . $Personne[2], $sortie);
             HTML_ou_PDF('</td>' . "\n", $sortie);
@@ -228,7 +231,7 @@ function Affiche_Personne_Absente($Personne, $nb, $nb_gen)
             if ($lieux) $ligne .= ';';    // Né(e) à
             $ligne .= ';';                // Décédé(e) le
             if ($lieux) $ligne .= ';';    // Décédé(e) à
-            ecrire($fp, $ligne);
+            fputs($fp, $ligne);
         }
     }
     return true;
@@ -304,7 +307,13 @@ else {
     // Sortie au format texte
     else {
         // Affichage du titre : numéros + génération
-        Insere_Haut_texte(my_html($titre));
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
     }
 }
 
@@ -401,7 +410,7 @@ if ($decujus = get_decujus()) {
         $ligne .= LG_PERS_DEAD . ';';
         $ligne .= $LG_LPersG_dead_calendar . ';';
         if ($lieux) $ligne .= $LG_LPersG_dead_where . ';';
-        ecrire($fp, $ligne);
+        fputs($fp, $ligne);
     }
 
     if ((! $texte) and (! $CSV)) {
@@ -501,7 +510,16 @@ if ($CSV) {
     fclose($fp);
     echo '<br /><br />' . my_html($LG_csv_available_in) . ' <a href="' . $nom_fic . '" target="_blank">' . $nom_fic . '</a><br />' . "\n";
 }
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 if (!$erreur and $sortie_pdf) {
     $pdf->Output();

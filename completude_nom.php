@@ -52,7 +52,13 @@ $compl = Ajoute_Page_Info(700, 250) .
 if (! $texte) {
     Insere_Haut(my_html($titre), $compl, 'Completude_Nom', $NomL);
 } else {
-    Insere_Haut_texte(my_html($titre));
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
     echo '<br />';
 }
 
@@ -90,7 +96,7 @@ if ($res = lect_sql($sql)) {
             $ligne .= LG_PERS_IS_COUPLE . ';';
             $ligne .= LG_PERS_UNION_DATE . ';';
             $ligne .= LG_PERS_UNION_AT . ';';
-            ecrire($fp, $ligne);
+            fputs($fp, $ligne);
             $img_vert   = 'O';
             $img_orange = 'P';
             $img_rouge  = 'N';
@@ -147,8 +153,8 @@ if ($res = lect_sql($sql)) {
             if (!$CSV) {
                 echo '<td>';
                 if (!$texte) {
-                    echo ' <a ' . Ins_Ref_Pers($Ref) . '>' . my_html($row['Prenoms']) . '</a>' . "\n";
-                    echo ' <a ' . Ins_Edt_Pers($Ref) . '><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+                    echo ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($row['Prenoms']) . '</a>' . "\n";
+                    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
                     echo ' <a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . LG_PERS_CONTROL . '" title="' . LG_PERS_CONTROL . '"></a>';
                 } else echo my_html($row['Prenoms']) . "\n";
                 echo '</td>';
@@ -273,7 +279,7 @@ if ($res = lect_sql($sql)) {
             }
 
             if (!$CSV) echo '</tr>' . "\n";
-            else ecrire($fp, $ligne);
+            else fputs($fp, $ligne);
         }
         if (!$CSV) {
             echo '</table>' . "\n";
@@ -294,7 +300,14 @@ if (! $texte) {
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

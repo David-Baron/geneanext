@@ -173,7 +173,10 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                             if ($Ville_Nai <> 0) {
                                 echo $h_LG_AT . ' ' . lib_ville_new($Ville_Nai, 'O', $rech_comment_ville);
                                 if ($premier_lib_v) {
-                                    appelle_carte_osm();
+                                    global $Lat_V, $Long_V, $LG_Show_On_Map;
+                                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                                    }
                                     if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
                                         echo Div_Note($Commentaire);
                                     }
@@ -188,7 +191,10 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                             if ($Ville_Dec <> 0) {
                                 echo $h_LG_AT . ' ' . lib_ville_new($Ville_Dec, 'O', $rech_comment_ville);
                                 if ($premier_lib_v) {
-                                    appelle_carte_osm();
+                                    global $Lat_V, $Long_V, $LG_Show_On_Map;
+                                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                                    }
                                     if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
                                         echo Div_Note($Commentaire);
                                     }
@@ -260,7 +266,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
             $compl .= Affiche_Icone_Lien('href="' . $root . '/cache_montre_rapide.php?Refer=' . $Refer . '&amp;Diff=O"', 'internet_oui', LG_FFAM_SHOW_INTERNET) . "\n";
     }
 
-    $compl .= Lien_Chrono_Pers($Refer) . "\n";
+    $compl .= '<a href="' . $root . '/appelle_chronologie_personne.php?Refer=' . $Refer . '"><img src="' . $root . '/assets/img/' . $Icones['time_line'] . '" alt="' . LG_FFAM_CHRONOLOGIE . '" title="' . LG_FFAM_CHRONOLOGIE . '"></a>' . "\n";
     $compl .= Ajoute_Page_Info(600, 150);
     if ($est_privilegie)
         $compl .= Affiche_Icone_Lien('href="' . $root . '/exp_gedcom_personne.php?Refer=' . $Refer . '"', 'gedcom', $LG_Menu_Title['Exp_Ged_Pers']) . "\n";
@@ -269,11 +275,11 @@ if ((!$enreg_sel) or ($Refer == 0)) {
         '</a> ' .
         Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '"', 'arbre_desc', $LG_desc_tree) . "\n";
     if ($est_contributeur) {
-        $compl .= Affiche_Icone_Lien(Ins_Edt_Pers($Refer), 'fiche_edition', $LG_modify) . ' ' .
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Refer . '"', 'fiche_edition', $LG_modify) . ' ' .
             Affiche_Icone_Lien('href="' . $root . '/ajout_rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . ' ';
     }
 
-    if (Presence_ImagesP($Refer)) {
+    if (Presence_Images($Refer, 'P')) {
         $compl = Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Refer . '&amp;Type_Ref=P"', 'images', 'Images') . ' ' . $compl;
     }
 
@@ -327,9 +333,9 @@ if ((!$enreg_sel) or ($Refer == 0)) {
 
     // Fiche individuelle et export pdf disponible à partir de privilégié
     if ($est_privilegie) {
-        echo Affiche_Icone_Lien(Ins_Ref_Indiv($Refer), 'text', $LG_Menu_Title['Indiv_Text_Report']) . ' ';
+        echo Affiche_Icone_Lien('href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Refer . '"', 'text', $LG_Menu_Title['Indiv_Text_Report']) . ' ';
         if ((!$SiteGratuit) or ($Premium)) {
-            echo Affiche_Icone_Lien(Ins_Ref_Indiv($Refer, 'P'), 'PDF', LG_FFAM_INDIV_TEXT_PDF) . ' ';
+            echo Affiche_Icone_Lien('href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Refer . '&amp;pdf=O"', 'PDF', LG_FFAM_INDIV_TEXT_PDF) . ' ';
         }
         echo '<br />';
     }
@@ -414,9 +420,9 @@ if ((!$enreg_sel) or ($Refer == 0)) {
 
                 // Fiche couple et export pdf disponible à partir de privilégié
                 if ($est_privilegie) {
-                    echo Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union), 'text', LG_FFAM_COUPLE_REC) . ' ';
+                    echo Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt.php?Reference=' . $Ref_Union . '"', 'text', LG_FFAM_COUPLE_REC) . ' ';
                     if ((!$SiteGratuit) or ($Premium)) {
-                        echo Affiche_Icone_Lien(Ins_Ref_Fam($Ref_Union, 'P'), 'PDF', LG_FFAM_COUPLE_REC_PDF) . ' ';
+                        echo Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt.php?Reference=' . $Ref_Union . '&amp;pdf=O"', 'PDF', LG_FFAM_COUPLE_REC_PDF) . ' ';
                     }
                 }
                 echo Affiche_Icone_Lien('href="' . $root . '/arbre_noyau.php?Reference=' . $Ref_Union . '"', 'groupe', $LG_Menu_Title['Nuclear_Family']) . ' ';
@@ -427,11 +433,16 @@ if ((!$enreg_sel) or ($Refer == 0)) {
                     echo ' ' . Etend_date_2($Date_Mar);
                     if ($Ville_Mar != 0) {
                         echo ' ' . $h_LG_AT . ' ' . lib_ville_new($Ville_Mar, 'O', false);
-                        if ($premier_lib_v) appelle_carte_osm();
+                        if ($premier_lib_v) {
+                            global $Lat_V, $Long_V, $LG_Show_On_Map;
+                            if (($Lat_V != 0) or ($Long_V != 0)) {
+                                echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                            }
+                        }
                     }
                 }
 
-                if (Presence_ImagesU($Ref_Union)) {
+                if (Presence_Images($Ref_Union, 'U')) {
                     echo ' ' . Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ref_Union . '&amp;Type_Ref=U"', 'images', 'Images du couple') . ' ';
                 }
 
@@ -439,7 +450,12 @@ if ((!$enreg_sel) or ($Refer == 0)) {
                     echo ', ' . my_html(LG_PERS_CONTRACT) . ' ' . Etend_date_2($Date_K);
                     if ($Notaire != '') echo ' ' . my_html(LG_PERS_MAITRE . ' ' . $Notaire);
                     if ($Ville_Notaire != 0) echo ', ' . my_html(LG_PERS_NOTARY) . ' ' . $h_LG_AT . ' ' . lib_ville_new($Ville_Notaire, 'O', true);
-                    if ($premier_lib_v) appelle_carte_osm();
+                    if ($premier_lib_v) {
+                        global $Lat_V, $Long_V, $LG_Show_On_Map;
+                        if (($Lat_V != 0) or ($Long_V != 0)) {
+                            echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                        }
+                    }
                     echo ' ';
                 }
 
@@ -496,7 +512,14 @@ if ((!$enreg_sel) or ($Refer == 0)) {
         echo '<a href="' . $root . '/parentees.php?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
     }
 
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 
 ?>

@@ -62,10 +62,10 @@ function Stocke_Personne($Personne)
 // Affiche une personne sur une ligne
 function Affiche_Personne2($Personne)
 {
-    global $Vil_Prec, $Ville, $texte, $lieux, $est_privilegie, $LG_Data_noavailable_profile, $LG_at, $sortie;
+    global $root, $Icones, $Vil_Prec, $Ville, $texte, $lieux, $est_privilegie, $LG_Data_noavailable_profile, $LG_at, $sortie;
     if (($est_privilegie) or ($Personne['Diff_Internet'] == 'O')) {
         if (! $texte) {
-            echo '<a ' . Ins_Ref_Pers($Personne['Reference']) . '>' . my_html($Personne['Nom'] . ' ' . $Personne['Prenoms']) . '</a>';
+            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Personne['Reference'] . '">' . my_html($Personne['Nom'] . ' ' . $Personne['Prenoms']) . '</a>';
         } else {
             HTML_ou_PDF($Personne['Nom'] . ' ' . $Personne['Prenoms'], $sortie);
         }
@@ -81,7 +81,12 @@ function Affiche_Personne2($Personne)
                     $Vil_Prec = $Vil_Cour;
                 }
                 HTML_ou_PDF($LG_at . ' ' . $Ville, $sortie);
-                if (!$texte) appelle_carte_osm();
+                if (!$texte) {
+                    global $Lat_V, $Long_V, $LG_Show_On_Map;
+                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                    }
+                }
             }
             HTML_ou_PDF('<br />' . "\n", $sortie);
         }
@@ -96,7 +101,12 @@ function Affiche_Personne2($Personne)
                     $Vil_Prec = $Vil_Cour;
                 }
                 HTML_ou_PDF($LG_at . ' ' . $Ville, $sortie);
-                if (!$texte) appelle_carte_osm();
+                if (!$texte) {
+                    global $Lat_V, $Long_V, $LG_Show_On_Map;
+                    if (($Lat_V != 0) or ($Long_V != 0)) {
+                        echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                    }
+                }
             }
             HTML_ou_PDF('<br />' . "\n", $sortie);
         }
@@ -168,7 +178,13 @@ else {
     }
     // Sortie au format texte
     else {
-        Insere_Haut_texte($titre);
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
         echo '<br />';
     }
 }
@@ -333,7 +349,7 @@ if ($decujus = get_decujus()) {
                 if (!$texte) echo $deb_lien_nom . $ar_ligne[3] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . '</a>';
                 HTML_ou_PDF('</b>', $sortie);
                 // Affichage de l'oeil pour afficher / masquer un patronyme
-                if (! $texte) oeil_div_simple('ajout' . $num_div, 'ajout' . $i, $h_LG_show_noshow, 'div' . $num_div);
+                echo ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $h_LG_show_noshow . '" title="' . $h_LG_show_noshow . '" ' . Survole_Clic_Div('div' . $num_div) . '/>';
                 if (!$texte) HTML_ou_PDF('</td></tr>', $sortie);
                 if (($texte) and (!$sortie_pdf)) echo '</th></tr></thead><tr><td></td></tr>';
                 HTML_ou_PDF('</table>', $sortie);
@@ -356,7 +372,7 @@ if ($decujus = get_decujus()) {
                 HTML_ou_PDF('<td width="5%"> </td>', $sortie);
             } else {
                 HTML_ou_PDF('<td width="5%">' . "\n", $sortie);
-                if (! $texte) echo '<img src="' . $root . '/assets/img/' . $Icones['couple_donne'] . '" alt="' . LG_PATRO_THEN . '" title="' .LG_PATRO_THEN . '"> ' . "\n";
+                if (! $texte) echo '<img src="' . $root . '/assets/img/' . $Icones['couple_donne'] . '" alt="' . LG_PATRO_THEN . '" title="' . LG_PATRO_THEN . '"> ' . "\n";
                 HTML_ou_PDF($h_LG_PATRO_THEN . ' ', $sortie);
                 HTML_ou_PDF('</td>', $sortie);
             }
@@ -422,7 +438,12 @@ if ($decujus = get_decujus()) {
             if ($DifU == 0) {
                 if ($Aff_Union != 'x') {
                     HTML_ou_PDF($Aff_Union, $sortie);
-                    if (($lieux) and (!$texte)) appelle_carte_osm();
+                    if (($lieux) and (!$texte)) {
+                        global $Lat_V, $Long_V, $LG_Show_On_Map;
+                        if (($Lat_V != 0) or ($Long_V != 0)) {
+                            echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
+                        }
+                    }
                 } else HTML_ou_PDF(' ', $sortie);
             } else {
                 echo HTML_ou_PDF(my_html($LG_Data_noavailable_profile) . '<br />', $sortie);
@@ -446,7 +467,16 @@ if ($sortie_pdf) {
     exit;
 }
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 ?>
 </body>
 

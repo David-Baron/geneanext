@@ -126,18 +126,18 @@ function affiche_donnees($Objet_Cible, $Ref_Objet, $fonction)
 
     switch ($Objet_Cible) {
         case 'P':
-            echo $action . ' <a ' . Ins_Ref_Pers($Ref_Objet) . '>' . $Prenoms . ' ' . $Nom . '</a>';
-            echo '&nbsp;<a ' . Ins_Edt_Pers($Ref_Objet) . '>' . $echo_modif;
+            echo $action . ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'U':
-            echo $action . ' ' . $cible . ' de <a ' . Ins_Ref_Pers($Mari) . '>' . $Prenoms_M . ' ' . $Nom_M . '</a>' .
-                ' et <a ' . Ins_Ref_Pers($Femme) . '>' . $Prenoms_F . ' ' . $Nom_F . '</a>';
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Mari . '">' . $Prenoms_M . ' ' . $Nom_M . '</a>' .
+                ' et <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Femme . '">' . $Prenoms_F . ' ' . $Nom_F . '</a>';
             $us = 'n';
             if ($Sexe_M == $Sexe_F) $us = 'o';
             echo '&nbsp;<a href="' . $root . '/edition_union.php?Reference=' . $Ref_Objet . '&amp;us=' . $us . '">' . $echo_modif;
             break;
         case 'F':
-            echo $action . ' ' . $cible . ' de <a ' . Ins_Ref_Pers($Ref_Objet) . '>' . $Prenoms . ' ' . $Nom . '</a>';
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
             echo '&nbsp;<a href="' . $root . '/edition_filiation.php?Refer=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'E':

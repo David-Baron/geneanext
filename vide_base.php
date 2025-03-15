@@ -127,21 +127,28 @@ if ($_SESSION['estGestionnaire']) {
 
         echo '<table width="70%" class="table_form">' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
-        colonne_titre_tab(LG_RESET_CONFIRM);
+        echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_RESET_CONFIRM . '&nbsp;</td><td class="value">';
         echo '<input type="checkbox" name="init_base"/></td></tr>' . "\n";
 
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
         bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '');
-        ligne_vide_tab_form(1);
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
         echo '</table>';
         echo '</form>';
     }
 } else aff_erreur($LG_function_noavailable_profile);
 
-Insere_Bas($compl);
+echo '<table cellpadding="0" width="100%">';
+echo '<tr>';
+echo '<td align="right">';
+echo $compl;
+echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+echo "</td>";
+echo '</tr>';
+echo '</table>';
 
 ?>
 </body>

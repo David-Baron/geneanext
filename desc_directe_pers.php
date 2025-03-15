@@ -35,7 +35,7 @@ function Affiche_Pers($num)
                 echo $num . '&nbsp;:&nbsp;';
                 $Ref_Pers = $enreg[0];
                 if (! $texte)
-                    echo '<a ' . Ins_Ref_Pers($Ref_Pers) . '>' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>';
+                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>';
                 else
                     echo my_html($enreg[2] . ' ' . $enreg[1]);
                 $Ne = $enreg[4];
@@ -108,7 +108,15 @@ $compl = Ajoute_Page_Info(600, 250) .
     Affiche_Icone_Lien('href="' . $root . '/desc_directe_pers.php?Numero=' . $Numero . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
 
 if (! $texte) Insere_Haut($titre, $compl, 'Desc_Directe_Pers', $Numero);
-else          Insere_Haut_texte('&nbsp;');
+else {
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b> </b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
 
 
 if (! $texte) {
@@ -136,7 +144,16 @@ do {
     $Numero = floor($Numero / 2);
 } while ($Numero >= 1);
 
-if (! $texte) Insere_Bas($compl);
+if (! $texte) {
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+}
 
 ?>
 </body>

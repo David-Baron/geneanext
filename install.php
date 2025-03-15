@@ -292,14 +292,14 @@ $msg = '';
         if (! $fp1) die("impossible de créer $nom_fic.");
         else {
             //ecriture des paramêtres saisis
-            ecrire($fp1, "<?php");
-            ecrire($fp1, "//--- Paramètres de connexion ---");
-            ecrire($fp1, "\$ndb      = \"" . $dbs . "\";");
-            ecrire($fp1, "\$nutil    = \"" . $utils . "\";");
-            ecrire($fp1, "\$nmdp     = \"" . $mdps . "\";");
-            ecrire($fp1, "\$nserveur = \"" . $serveurs . "\";");
-            ecrire($fp1, "//------------- fin -------------");
-            ecrire($fp1, "?>");
+            fputs($fp1, "<?php");
+            fputs($fp1, "//--- Paramètres de connexion ---");
+            fputs($fp1, "\$ndb      = \"" . $dbs . "\";");
+            fputs($fp1, "\$nutil    = \"" . $utils . "\";");
+            fputs($fp1, "\$nmdp     = \"" . $mdps . "\";");
+            fputs($fp1, "\$nserveur = \"" . $serveurs . "\";");
+            fputs($fp1, "//------------- fin -------------");
+            fputs($fp1, "?>");
             fclose($fp1);
             $msgMaj = 'OKMaj';
         }

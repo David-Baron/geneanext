@@ -48,10 +48,9 @@ $lien = 'href="' . $root . '/notaires_ville.php?texte=O' .
     '&amp;Ville=' . $idVille .
     '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 
-$compl = Ajoute_Page_Info(600, 150) .
-    Affiche_Icone_Lien_TXT_PDF($lien . '"', $LG_printable_format, 'T') . '&nbsp;';
+$compl = Ajoute_Page_Info(600, 150) . '<a ' . $lien . '" rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '" /></a> ';
 if ((!$SiteGratuit) or ($Premium))
-    $compl .= Affiche_Icone_Lien_TXT_PDF($lien . '&amp;pdf=O"', $LG_pdf_format, 'P') . '&nbsp;';
+    $compl .= '<a ' . $lien . '&amp;pdf=O" rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones['PDF'] . '" alt="' . $LG_pdf_format . '" title="' . $LG_pdf_format . '" /></a> ';
 
 $sortie = 'H';
 
@@ -74,7 +73,13 @@ if (! $texte) {
     // Sortie au format texte
     else {
         // Affichage du titre : numéros + génération
-        Insere_Haut_texte($objet);
+        echo '</head>' . "\n";
+        echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+        echo '<table cellpadding="0" width="100%">' . "\n";
+        echo '<tr>' . "\n";
+        echo '<td align="center"><b>' . StripSlashes($objet) . '</b></td>' . "\n";
+        echo '</tr>' . "\n";
+        echo '</table>' . "\n";
         echo '<br />';
     }
 }
@@ -110,7 +115,7 @@ if ($nb_lig > 0) {
         }
         $Ref = $row['Reference'];
         HTML_ou_PDF("<br />\n", $sortie);
-        if (! $texte) echo $tab . '&nbsp;<a ' . Ins_Ref_Pers($Ref) . '>' . my_html($row['Prenoms'] . ' ' . $row['Nom'] . ' x ' . $row['Prenoms2'] . ' ' . $row['Nom2']) . '</a>' . "\n";
+        if (! $texte) echo $tab . '&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($row['Prenoms'] . ' ' . $row['Nom'] . ' x ' . $row['Prenoms2'] . ' ' . $row['Nom2']) . '</a>' . "\n";
         else echo HTML_ou_PDF(my_html($tab . ' ' . $row['Prenoms'] . ' ' . $row['Nom'] . ' x ' . $row['Prenoms2'] . ' ' . $row['Nom2']) . "\n", $sortie);
         $Date_K = $row['Date_K'];
         if ($Date_K != '') {
@@ -130,7 +135,14 @@ $res->closeCursor();
 if (! $texte) {
     // Formulaire pour le bouton retour
     Bouton_Retour($lib_Retour, '?' . Query_Str());
-    Insere_Bas($compl);
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    echo $compl;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
 }
 ?>
 </body>

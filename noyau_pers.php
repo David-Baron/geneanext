@@ -371,13 +371,13 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '<tr>';
         echo '<td>';
         echo '<fieldset>';
-        aff_legend(LG_FATHER);
+        echo '<legend>' . ucfirst(LG_FATHER) . '</legend>' . "\n";
         case_personne('PDec');
         echo '</fieldset>';
         echo '</td>';
         echo '<td>';
         echo '<fieldset>';
-        aff_legend(LG_MOTHER);
+        echo '<legend>' . ucfirst(LG_MOTHER) . '</legend>' . "\n";
         case_personne('MDec');
         echo '</fieldset>';
         echo '</td>';
@@ -386,7 +386,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '<tr>';
         echo '<td colspan="2">';
         echo '<fieldset>';
-        aff_legend(LG_DECUJUS_DECUJUS);
+        echo '<legend>' . ucfirst(LG_DECUJUS_DECUJUS) . '</legend>' . "\n";
         case_personne('Dec');
         echo '</fieldset>';
         echo '</td>';
@@ -395,7 +395,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '<tr>';
         echo '<td colspan="2">';
         echo '<fieldset>';
-        aff_legend(LG_HUSB_WIFE);
+        echo '<legend>' . ucfirst(LG_HUSB_WIFE) . '</legend>' . "\n";
         case_personne('Conj');
         echo '</fieldset>';
         echo '</td>';
@@ -404,13 +404,13 @@ if ((!$bt_OK) && (!$bt_An)) {
         echo '<tr>';
         echo '<td>';
         echo '<fieldset>';
-        aff_legend(LG_FATHER);
+        echo '<legend>' . ucfirst(LG_FATHER) . '</legend>' . "\n";
         case_personne('PConj');
         echo '</fieldset>';
         echo '</td>';
         echo '<td>';
         echo '<fieldset>';
-        aff_legend(LG_MOTHER);
+        echo '<legend>' . ucfirst(LG_MOTHER) . '</legend>' . "\n";
         case_personne('MConj');
         echo '</fieldset>';
         echo '</td>';
@@ -427,14 +427,14 @@ if ((!$bt_OK) && (!$bt_An)) {
 
 function case_personne($suff)
 {
-    global $texte_im_maj, $icone_maj, $hidden;
+    global $root, $Icones, $texte_im_maj, $icone_maj, $hidden;
     echo '<label for="nom' . $suff . '">' . my_html(LG_PERS_NAME) . ' :</label><input type="text" id="nom' . $suff . '" name="nom' . $suff . '" class="oblig" />&nbsp;';
-    Img_Zone_Oblig('ObligNom' . $suff);
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '&nbsp;<img id="maj' . $suff . '" src="' . $icone_maj . '" alt="' . $texte_im_maj . '" title="' . $texte_im_maj . '"' .
         ' onclick="document.forms.saisie.nom' . $suff . '.value = document.forms.saisie.nom' . $suff . '.value.toUpperCase();"/>';
     echo '<br />';
     echo '<label for="prenom' . $suff . '">' . my_html(LG_PERS_FIRST_NAME) . ' :</label><input type="text" id="prenom' . $suff . '" name="prenom' . $suff . '" class="oblig" />&nbsp;';
-    Img_Zone_Oblig('ObligPrenoms' . $suff);
+    echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<br />';
     $chkM = '';
     $chkF = '';
