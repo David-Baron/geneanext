@@ -216,7 +216,7 @@ echo '<tr>' . "\n";
 echo '<td colspan="5" valign="middle" align="center"><font color="#0000ff" size="3">' . "\n";
 echo '<input onkeydown="if (event.keyCode==13) {enter.click();}" style="FONT-WEIGHT: bold; FONT-SIZE: 10pt; WIDTH: 100%; HEIGHT: 25px" size="15" name="zone_saisie"/></font>' . "\n";
 echo "</td>\n";
-echo '<td bgcolor="' . $fond_calc . '" align="center" valign="middle">&nbsp;<img id="efface" src="' . $chemin_images_icones . $Icones['efface']
+echo '<td bgcolor="' . $fond_calc . '" align="center" valign="middle">&nbsp;<img id="efface" src="' . $root . '/assets/img/' . $Icones['efface']
     . '" alt="' . $LG_Ch_Calc_Clear . '" title="' . $LG_Ch_Calc_Clear . '" onclick="efface_entree();"/>';
 echo "</td></tr>\n";
 
@@ -257,7 +257,7 @@ echo '<tr><td>';
 echo '<div class="buttons">';
 echo '<button type="submit" class="positive" ' .
     'onclick="conversion();return false;"> ' .
-    '<img src="' . $chemin_images_icones . $Icones['conversion'] . '" alt=""/>Conversion</button>';
+    '<img src="' . $root . '/assets/img/' . $Icones['conversion'] . '" alt=""/>Conversion</button>';
 echo '</div>';
 echo '</td></tr>';
 echo '</table>' . "\n";

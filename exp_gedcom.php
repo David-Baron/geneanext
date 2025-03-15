@@ -43,7 +43,7 @@ $nom_fic_exp = construit_fic($chemin_Gedcom, 'Export_gedcom#', 'ged');
 $n_fic = basename($nom_fic_exp);
 
 // if ($fp=fopen($nom_fic_exp,'w+')) {
-if ($fp = ouvre_fic($nom_fic_exp, 'w')) {
+if ($fp = fopen($nom_fic_exp, 'w')) {
 
     // Données d'entête
     Entete_Gedcom($fp, $n_fic);

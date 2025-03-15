@@ -134,7 +134,7 @@ function Rattrape_null($Contenu, $Nom_Rub)
 
 function Aff_Pers($suffixe, $oblig)
 {
-    global $root, $style_z_oblig, $enregP, $list_opt_villes, $idNomPers, $Nom, $Sexe, $chemin_images_icones, $Icones, $hidden, $largP, $lg_date_a;
+    global $root, $style_z_oblig, $enregP, $list_opt_villes, $idNomPers, $Nom, $Sexe, $Icones, $hidden, $largP, $lg_date_a;
     if (!$oblig) $style_z_oblig = '';
     if (($suffixe == 'pere') or ($suffixe == 'mere')) {
         if ($suffixe == 'pere') $val = 'm';
@@ -169,14 +169,14 @@ function Aff_Pers($suffixe, $oblig)
     if ($oblig) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
     // Possibilité d'ajouter un nom
-    echo '<img id="ajout_nom' . $suffixe . '" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajout d\'un nom" title="Ajout d\'un nom" ' .
+    echo '<img id="ajout_nom' . $suffixe . '" src="' . $root . '/assets/img/add.png" alt="Ajout d\'un nom" title="Ajout d\'un nom" ' .
         'onclick="inverse_div(\'id_div_ajout_nom' . $suffixe . '\');document.getElementById(\'nouveau_nom' . $suffixe . '\').focus();"/>';
     if (isset($_SESSION['Nom_Saisi'])) {
         echo ' <img src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_PERS_COPY_NAME . '" title="' . LG_PERS_COPY_NAME . '" onclick="reprend_nom(\'' . $suffixe . '\');">';
     }
     echo '<div id="id_div_ajout_nom' . $suffixe . '">';
     echo LG_ADD_NAME . ' <input type="text" size="50" name="nouveau_nom' . $suffixe . '" id="nouveau_nom' . $suffixe . '"/>';
-    echo ' <img id="majuscule' . $suffixe . '" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
+    echo ' <img id="majuscule' . $suffixe . '" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
         // ' onclick="NomMaj(\''.$suffixe.'\');document.getElementById(\'NomP'.$suffixe.'\').focus();"/>'."\n";
         ' onclick="NomMaj(\'' . $suffixe . '\');"/>';
     echo '<input type="button" name="ferme_OK_nom' . $suffixe . '" value="OK" onclick="ajoute_nom(\'' . $suffixe . '\')"/>';

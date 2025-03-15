@@ -5,8 +5,6 @@
 require(__DIR__ . '/app/bootstrap.php');
 require(__DIR__ . '/app/ressources/fonctions.php');
 
-$debug = false;
-
 function Etend_les_dates($date1, $date2, $forcage = false)
 {
     $texte = '';
@@ -23,17 +21,8 @@ function Etend_les_dates($date1, $date2, $forcage = false)
     return $texte;
 }
 
-
-if ($debug) {
-    $f_log = ouvre_fic('log.txt', 'a+');
-    fputs($f_log, 'evt : ' . $_GET['idNomFam']);
-    fputs($f_log, 'ref : ' . $_GET['ref']);
-}
-
 if (isset($_GET['idNomFam'])) $idNomFam = ($_GET['idNomFam']);
 else exit;
-
-if ($debug) fputs($f_log, 'suite...');
 
 $x = Lit_Env();
 
@@ -49,8 +38,6 @@ $sql = 'SELECT Reference, Prenoms, Ne_le, Decede_Le '
 if (!$_SESSION['estPrivilegie']) $sql = $sql . " and Diff_Internet = 'O' ";
 $sql = $sql . ' ORDER by Prenoms, Ne_Le';
 
-if ($debug) fputs($f_log, 'sql : ' . $sql);
-
 $id_maxi = 0;
 $res = lect_sql($sql);
 
@@ -64,11 +51,6 @@ while ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
     $prenoms = $enreg['Prenoms'];
     $interdits = array('&');
     $prenoms = str_replace($interdits, '', $prenoms);
-    if ($debug) {
-        fputs($f_log, 'enreg : ' . $enreg['Reference']);
-        fputs($f_log, 'enreg : ' . $prenoms);
-        fputs($f_log, 'enreg : ' . $dates);
-    }
     // $personnes = $dom->createElement('personnes', utf8_encode($prenoms.' '.$dates));
     $personnes = $dom->createElement('personnes', $prenoms . ' ' . $dates);
     $personnes = $message->appendChild($personnes);
@@ -91,4 +73,3 @@ Donne :
 <maxi>1041</maxi>
 </message>
 */
-if ($debug) fclose($f_log);

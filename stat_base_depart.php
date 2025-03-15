@@ -158,7 +158,7 @@ echo '<td>' . $tot_M . '</td>';
 echo '<td>' . $tot_D . '</td>';
 echo '</tr>' . "\n";
 
-$img_carte = '<img src="' . $chemin_images . $Icones['carte_france'] . '" alt="' . LG_STAT_COUNTY_MAP . '" title="' . LG_STAT_COUNTY_MAP . '" border="0"/></a>' . "\n";
+$img_carte = '<img src="' . $root . '/assets/img/' . $Icones['carte_france'] . '" alt="' . LG_STAT_COUNTY_MAP . '" title="' . LG_STAT_COUNTY_MAP . '" border="0"/></a>' . "\n";
 $deb_carte = '<a href="' . $root . '/appelle_image_france_dep.php?Type_Liste=';
 
 echo '<tr  class="' . $style . '" align="center">';

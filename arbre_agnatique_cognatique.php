@@ -82,9 +82,9 @@ else $max_gen_AD = $max_gen_AD_int;
 // On autorise 2 fois plus de génération que pour la liste par générations
 $max_gen_AD *= 2;
 
-$img_asc = '<img src="' . $chemin_images_icones . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/>';
-$img_desc = '<img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" border="0" title="' . $LG_desc_tree . '" alt="' . $LG_desc_tree . '"/>';
-$img_image = '&nbsp;&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['images'] . '" border="0" ';
+$img_asc = '<img src="' . $root . '/assets/img/' . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/>';
+$img_desc = '<img src="' . $root . '/assets/img/' . $Icones['arbre_desc'] . '" border="0" title="' . $LG_desc_tree . '" alt="' . $LG_desc_tree . '"/>';
+$img_image = '&nbsp;&nbsp;&nbsp;<img src="' . $root . '/assets/img/' . $Icones['images'] . '" border="0" ';
 
 $nb_gen = 0;
 $ref = $Refer;

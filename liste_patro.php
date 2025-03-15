@@ -235,7 +235,7 @@ if ($decujus = get_decujus()) {
 
         echo '<td class="rupt_table"><input type="submit" value="' . my_html($LG_modify_list) . '"/>';
         $alt_img = my_html(LG_PATRO_SHOW_NOSHOW_FIL);
-        echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
+        echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
             ' onmouseover="Survole_Clic_Div_Tous(\'MO\',\'' . $Comportement . '\');" onclick="Survole_Clic_Div_Tous(\'CL\',\'' . $Comportement . '\');"/>';
         echo '</td>' . "\n";
         echo '</tr></table>';

@@ -45,7 +45,6 @@ if (isset($_GET['modif'])) $modif  =  $_GET['modif'];
     } ?>
 
     <script type="text/javascript">
-        <!--
         // Ajoute une zone géographique dans la liste
         function ajoute() {
             nouv_val = document.forms.formZone.nouvelle_zone.value;
@@ -67,9 +66,6 @@ if (isset($_GET['modif'])) $modif  =  $_GET['modif'];
             window.opener.document.forms['saisie'].elements['<?php echo $zoneLib; ?>'].value = leLib;
             window.close();
         }
-
-        //
-        -->
     </script>
 </head>
 <?php
@@ -77,8 +73,8 @@ if (isset($_GET['modif'])) $modif  =  $_GET['modif'];
 $x  = Lit_Env();
 
 $bg = '';
-if (file_exists($chemin_images . $Image_Fond))
-    $bg = ' background="' . $chemin_images . $Image_Fond . '"';
+if (file_exists(__DIR__ . '/assets/img/' . $Image_Fond))
+    $bg = ' background="' . $root . '/assets/img/' . $Image_Fond . '"';
 
 echo '<body vlink="#0000ff" link="#0000ff" ' . $bg . '>';
 
@@ -129,7 +125,7 @@ while ($row = $res->fetch(PDO::FETCH_NUM)) {
 }
 echo "</select>\n";
 if ($modif == 'O') {
-    echo '&nbsp;<img id="ajout" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajout zone" ' .
+    echo '&nbsp;<img id="ajout" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="Ajout zone" ' .
         'onclick="inverse_div(\'id_div_ajout\');document.getElementById(\'nouvelle_zone\').focus();"/>';
     echo '<div id="id_div_ajout">';
     echo 'Zone &agrave; ajouter &agrave; la liste&nbsp;<input type="text" name="nouvelle_zone"/>';
@@ -149,8 +145,8 @@ echo '<tr><td colspan="3">&nbsp;</td></tr>';
 
 echo '<tr><td colspan="3" align="center">';
 echo '<div class="buttons">';
-echo '<button type="submit" class="positive" onclick="lien();"><img src="' . $chemin_images_icones . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
-echo '<button type="submit" onclick="window.close();"><img src="' . $chemin_images_icones . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
+echo '<button type="submit" class="positive" onclick="lien();"><img src="' . $root . '/assets/img/' . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
+echo '<button type="submit" onclick="window.close();"><img src="' . $root . '/assets/img/' . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
 echo '</div>';
 echo '</td></tr>';
 echo '</table>';

@@ -131,7 +131,7 @@ function entete_ligne($lib, $nombre)
 // Calcul du pourcentage de personnes visibles sur le net
 function get_pourcentage($nb_pers)
 {
-    global $n_personnes, $SiteGratuit, $Premium, $chemin_images_icones, $Icones;
+    global $root, $n_personnes, $SiteGratuit, $Premium, $Icones;
     $sql = 'select count(*) from ' . $n_personnes . ' where Reference <> 0 and Diff_Internet = "O"';
     if ($res = lect_sql($sql)) {
         if ($enreg = $res->fetch(PDO::FETCH_NUM)) {
@@ -141,10 +141,10 @@ function get_pourcentage($nb_pers)
             if (($SiteGratuit) and (!$Premium)) {
                 // if (0==0) {
                 if ($pourcent_N < 50)
-                    echo '&nbsp;<img src="' . $chemin_images_icones . $Icones['drapeau_orange']
+                    echo '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['drapeau_orange']
                         . '" alt="' . LG_STAT_ALL_FLAG_ORANGE_ALT . '" title="' . LG_STAT_ALL_FLAG_ORANGE_TITLE . '" border="0"/>';
                 else
-                    echo '&nbsp;<img src="' . $chemin_images_icones . $Icones['drapeau_vert']
+                    echo '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['drapeau_vert']
                         . '" alt="' . LG_STAT_ALL_FLAG_GREEN_ALT . '" title="' . LG_STAT_ALL_FLAG_GREEN_TITLE . '" border="0"/>';
             }
         }

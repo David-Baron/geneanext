@@ -52,7 +52,6 @@ if ((!$gre) and (!$rev)) $gre  = true;
     <?php Ecrit_Meta(LG_CAL_TITLE, 'Choix date', ''); ?>
 </head>
 
-
 <?php
 echo '<body vlink="#0000ff" link="#0000ff" ' . $bg . ' onload="dateinit(this.form)">';
 echo '<form id="formInsert" method="post">';
@@ -61,50 +60,54 @@ echo '<legend>' . LG_CAL_WITH_SELECT . '</legend>' . "\n";
 echo '<table align="center">';
 echo '<tr><td colspan="2" align="center" class="rupt_table">';
 echo '<input type="hidden" name="contenu" value="' . $contenu . '"/>';
-bouton_radio('Precision', 'E', $LG_year['abt'], $precision == 'E' ? true : false);
-bouton_radio('Precision', 'A', $LG_year['bf'], $precision == 'A' ? true : false);
-bouton_radio('Precision', 'L', $LG_day['on'], $precision == 'L' ? true : false);
-bouton_radio('Precision', 'P', $LG_year['af'], $precision == 'P' ? true : false);
+echo '<input type="radio" id="PrecisionE" name="Precision" value="E" ' . ($precision == 'E') ? ' checked' : '' . '/>'
+        . '<label for="PrecisionE">' . $LG_year['abt'] . '</label> ';
+echo '<input type="radio" id="PrecisionA" name="Precision" value="A" ' . ($precision == 'A') ? ' checked' : '' . '/>'
+        . '<label for="PrecisionA">' . $LG_year['bf'] . '</label> ';
+echo '<input type="radio" id="PrecisionL" name="Precision" value="L" ' . ($precision == 'L') ? ' checked' : '' . '/>'
+        . '<label for="PrecisionL">' . $LG_day['on'] . '</label> ';
+echo '<input type="radio" id="PrecisionP" name="Precision" value="P" ' . ($precision == 'P') ? ' checked' : '' . '/>'
+        . '<label for="PrecisionP">' . $LG_year['af'] . '</label> ';
 echo '</td></tr>';
 echo '<tr class="liste">';
 echo '<td><input type="radio" name="typeDate" value="G" onclick="bloque(\'R\')" ';
-if ($gre) echo 'checked="checked"';
+if ($gre) echo ' checked';
 echo '/>' . my_html(LG_CAL_GREGORIAN) . '</td>';
 echo '<td>';
 echo '<select id="listJour" name="listJour"';
 if ($rev) {
-    echo ' disabled="disabled"';
+    echo ' disabled';
 }
 echo ">";
 for ($j = 1; $j <= 31; $j++) {
     echo "<option value=\"" . sprintf("%02d", $j) . "\"";
     if (isset($jour) and $gre and (sprintf("%02d", $j) == $jour)) {
-        echo ' selected="selected"';
+        echo ' selected';
     }
     echo ">" . sprintf("%02d", $j);
     echo "</option>\n";
 }
 echo "</select>";
-echo "&nbsp;<select id=\"listMois\" name=\"listMois\"";
+echo " <select id=\"listMois\" name=\"listMois\"";
 if ($rev) {
-    echo ' disabled="disabled"';
+    echo ' disabled';
 }
 echo ">";
 for ($m = 0; $m <= 11; $m++) {
     echo "<option value=\"" . sprintf("%02d", ($m + 1)) . "\"";
-    if (isset($mois) and $gre and ($m + 1 == $mois)) {
-        echo ' selected="selected"';
+    if (isset($mois) && $gre && ($m + 1 == $mois)) {
+        echo ' selected';
     }
     echo ">" . $Mois_Lib[$m] . "</option>\n";
 }
 echo "</select>";
-echo '&nbsp;<input type="text" id="Annee" name="Annee" size="4" maxlength="4" value="';
-if (isset($an) and $gre) {
+echo ' <input type="text" id="Annee" name="Annee" size="4" maxlength="4" value="';
+if (isset($an) && $gre) {
     echo $an;
 }
 echo '"';
 if ($rev) {
-    echo ' disabled="disabled"';
+    echo ' disabled';
 }
 echo '/>';
 echo ' <img src="' . $root . '/assets/img/' . $Icones['aujourdhui'] . '" alt="' . LG_CAL_TODAY . '" title="' . LG_CAL_TODAY . '" onclick="aujourdui();">';
@@ -117,7 +120,7 @@ echo '/>' . my_html(LG_CAL_REVOLUTIONARY) . '</td>';
 echo '<td>';
 echo '<select id="listJourR" name="listJourR"';
 if ($gre) {
-    echo ' disabled="disabled"';
+    echo ' disabled';
 }
 echo ">";
 for ($j = 1; $j <= 30; $j++) {
@@ -129,9 +132,9 @@ for ($j = 1; $j <= 30; $j++) {
     echo "</option>\n";
 }
 echo '</select>';
-echo '&nbsp;<select id="listMoisR" name="listMoisR"';
+echo ' <select id="listMoisR" name="listMoisR"';
 if ($gre) {
-    echo ' disabled="disabled"';
+    echo ' disabled';
 }
 echo ">";
 for ($m = 0; $m <= 12; $m++) {
@@ -142,9 +145,9 @@ for ($m = 0; $m <= 12; $m++) {
     echo ">" . $ListeMoisRev[$m] . "</option>\n";
 }
 echo '</select>';
-echo '&nbsp;<select id="AnneeR" name="AnneeR"';
+echo ' <select id="AnneeR" name="AnneeR"';
 if ($gre) {
-    echo ' disabled="disabled"';
+    echo ' disabled';
 }
 echo '>';
 for ($a = 0; $a <= 13; $a++) {
@@ -177,24 +180,24 @@ echo '<legend>' . LG_CAL_CALCULATE . '</legend>' . "\n";
 echo '<form action="" id="cDate" method="post">';
 echo '<table align="center">';
 echo '<tr class="liste2">';
-echo '<td>&nbsp;</td>';
-echo '<td>' . my_html(LG_CAL_MONTH) . '</td>';
-echo '<td>' . my_html(LG_CAL_YEAR) . '</td>';
+echo '<td> </td>';
+echo '<td>' . LG_CAL_MONTH . '</td>';
+echo '<td>' . LG_CAL_YEAR . '</td>';
 echo '</tr>';
 echo '<tr class="liste">';
-echo '<td>' . my_html(LG_CAL_BEG) . '</td>';
+echo '<td>' . LG_CAL_BEG . '</td>';
 echo '<td><input type="text" name="dMois" id="dMois" size="2" value="' . $xMoisA . '"/></td>';
 echo '<td><input type="text" name="dAnnee" id="dAnnee" size="4" value="' . $xAnnee . '"/></td>';
 echo '<td align="center"><input class="BoutonCalc2" style="width:100%;" onclick="plus_date();" type="button" value="+" name="TP"/></td>';
 echo '</tr>';
 echo '<tr class="liste">';
-echo '<td>' . my_html(LG_CAL_OFFSET) . '</td>';
+echo '<td>' . LG_CAL_OFFSET . '</td>';
 echo '<td><input type="text" name="decal_Mois" id="decal_Mois" size="2" value="00"/></td>';
 echo '<td><input type="text" name="decal_Annee" id="decal_Annee" size="4" value="0000"/></td>';
 echo '<td align="center"><input class="BoutonCalc2" style="width:100%;" onclick="moins_date();" type="button" value="-" name="TM"/></td>';
 echo '</tr>';
 echo '<tr class="liste2">';
-echo '<td>' . my_html(LG_CAL_RESULT) . '</td>';
+echo '<td>' . LG_CAL_RESULT . '</td>';
 echo '<td><input type="text" readonly="readonly" name="rMois" id="rMois" size="2"/></td>';
 echo '<td><input type="text" readonly="readonly" name="rAnnee" id="rAnnee" size="4"/></td>';
 echo '<td><input class="BoutonCalc2" style="color:red;" onclick="efface_entree_date();" type="button" value="C" name="T0"/></td>';
@@ -207,12 +210,12 @@ echo '<table align="center">';
 echo '<tr>';
 echo '<td colspan="2" align="center">';
 echo '<div id="boutons">' . "\n";
-echo '<table border="0" cellpadding="0" cellspacing="0">' . "\n";
-echo '<tr><td>&nbsp;';
+echo '<table cellpadding="0" cellspacing="0">' . "\n";
+echo '<tr><td> ';
 echo '<div class="buttons">';
-echo '<button type="submit" class="positive" onclick="lien();"><img src="' . $chemin_images_icones . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
-echo '<button type="submit" onclick="window.close();"><img src="' . $chemin_images_icones . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
-echo '<button type="submit" class="negative" onclick="efface();"><img src="' . $chemin_images_icones . $Icones['supprimer'] . '" alt=""/>' . $lib_Erase . '</button>';
+echo '<button type="submit" class="positive" onclick="lien();"><img src="' . $root . '/assets/img/' . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
+echo '<button type="submit" onclick="window.close();"><img src="' . $root . '/assets/img/' . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
+echo '<button type="submit" class="negative" onclick="efface();"><img src="' . $root . '/assets/img/' . $Icones['supprimer'] . '" alt=""/>' . $lib_Erase . '</button>';
 echo '</div>';
 echo '</td></tr>';
 echo '</table>';

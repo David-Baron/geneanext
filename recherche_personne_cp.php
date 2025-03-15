@@ -142,7 +142,7 @@ if ($bt_OK) {
     if ($Sortie == 'c') {
         // Traiter le cas d'erreur sur l'ouverture du fichier
         $nom_fic = $chemin_exports . 'recherche.csv';
-        $fp = ouvre_fic($nom_fic, 'w+');
+        $fp = fopen($nom_fic, 'w+');
     }
     $tab = '   ';
     // Init des zones de requête
@@ -436,10 +436,10 @@ if ($bt_OK) {
         echo '<input type="hidden" name="New_Window" value="' . $New_Window . '"/>';
         echo '<br />';
         echo '<div class="buttons">';
-        echo '<button type="submit" class="positive"><img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
+        echo '<button type="submit" class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
         if ((!$SiteGratuit) or ($Premium)) {
             echo '<button type="submit" onclick="document.forms.nouvelle.reprise.value=\'reprise\'; "' .
-                ' class="positive"><img src="' . $chemin_images_icones . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
+                ' class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
         }
         echo '</div>';
         echo '</form>' . "\n";
@@ -531,13 +531,13 @@ if ((!$bt_OK) && (!$bt_An)) {
         if ($TypeAnnee == 'd') echo ' checked';
     }
     echo '/><label for="TypeAnnee_d">' . $LG_death . '</label> ';
-    echo ' (+/- <img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . LG_PERS_REQ_OFF_DOWN . '" title="' . LG_PERS_REQ_OFF_DOWN . '" ';
+    echo ' (+/- <img src="' . $root . '/assets/img/' . $Icones['moins'] . '" alt="' . LG_PERS_REQ_OFF_DOWN . '" title="' . LG_PERS_REQ_OFF_DOWN . '" ';
     echo 'onclick="if (document.forms.saisie.Tolerance.value>0) {document.forms.saisie.Tolerance.value--;}"/>' . "\n";
     echo '<input type="text" size="2" name="Tolerance" value="';
     if ($reprise) echo $Tolerance;
     else echo '0';
     echo '" onchange="verification_num(this);"/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . LG_PERS_REQ_OFF_UP . '" title="' . LG_PERS_REQ_OFF_UP . '" ';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['plus'] . '" alt="' . LG_PERS_REQ_OFF_UP . '" title="' . LG_PERS_REQ_OFF_UP . '" ';
     echo 'onclick="document.forms.saisie.Tolerance.value++;"/> ' . my_html(LG_PERS_REQ_OFF_YEARS) . ')  ' . "\n";
     echo '<input type="radio" id="TypeAnnee" name="TypeAnnee" value="v"';
     if ($reprise) {

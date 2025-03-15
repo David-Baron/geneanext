@@ -85,16 +85,16 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Categ_Order) . '</td>';
     echo '<td class="value">';
-    echo '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $LG_Ch_Categ_Dec_Order . '" title="' . $LG_Ch_Categ_Dec_Order . '" border="0" ';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['moins'] . '" alt="' . $LG_Ch_Categ_Dec_Order . '" title="' . $LG_Ch_Categ_Dec_Order . '" border="0" ';
     echo 'onclick="if (document.forms.saisie.Ordre.value>1) {document.forms.saisie.Ordre.value--;}"/>' . "\n";
     echo '<input type="text" class="oblig" name="Ordre" id="Ordre" value="' . $OrdreF . '" size="3" onchange="verification_num(this);"/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $LG_Ch_Categ_Inc_Order . '" title="' . $LG_Ch_Categ_Inc_Order . '" border="0" ';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['plus'] . '" alt="' . $LG_Ch_Categ_Inc_Order . '" title="' . $LG_Ch_Categ_Inc_Order . '" border="0" ';
     echo 'onclick="document.forms.saisie.Ordre.value++;"/>' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="25%">' . ucfirst($LG_Ch_Categ_Image) . '</td>';
     echo '<td class="value">';
-    echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
     echo '</td></tr>' . "\n";
 
     echo '<tr><td colspan="2"></td></tr>';

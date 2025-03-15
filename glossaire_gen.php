@@ -15,7 +15,7 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Entête sur changement d'initiale
 function Lettre($lettre)
 {
-    global $chemin_images_icones, $Icones, $Comportement, $num_lig;
+    global $root, $Icones, $Comportement, $num_lig;
     $num_lig = 0;
     echo '</table>';
     if ($lettre != 'A') echo '</div>';
@@ -23,7 +23,7 @@ function Lettre($lettre)
     echo '<tr><td align="center" colspan="2" class="rupt_table">' . "\n";
     echo '<b><a name="' . $lettre . '"></a>' . $lettre . '</b>' . "\n";
     echo '&nbsp;&nbsp;' . Affiche_Icone_Lien('href="#top"', 'page_haut', 'Haut de page');
-    echo '&nbsp;&nbsp;<img id="ajout' . $lettre . '" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="Fl&egrave;che"' . Survole_Clic_Div('div' . $lettre) . '/>' . "\n";
+    echo '&nbsp;&nbsp;<img id="ajout' . $lettre . '" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="Fl&egrave;che"' . Survole_Clic_Div('div' . $lettre) . '/>' . "\n";
     echo '</td></tr></table>' . "\n";
     echo '<div id="div' . $lettre . '"><table width="95%" cellspacing="1" cellpadding="3" align="center">' . "\n";
     return 0;
@@ -62,7 +62,7 @@ for ($nb = ord('A'); $nb <= ord('Z'); $nb++) {
 
 echo $ent_table . '<tr>' .
     '<td colspan="26" align="center"><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . LG_GLOSS_TIP_1 . ' <font color="blue">' . LG_GLOSS_TIP_2 . '</font>, '
-    . LG_GLOSS_TIP_3 . ' <img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO
+    . LG_GLOSS_TIP_3 . ' <img src="' . $root . '/assets/img/' . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO
     . '"/> ' . LG_GLOSS_TIP_4
     . '</td></tr><tr>' . $alpha . '</tr><tr><td colspan="26">&nbsp;</td></tr>' . "\n";
 
@@ -498,7 +498,7 @@ $x = Mot(LG_GLOSS_SOSA, 'SOSA', 1); ?>
 <td>
     Num&eacute;ro que l'on attribue &agrave; un anc&ecirc;tre.
     <?php echo '<a href="' . $root . '/glossaire_sosa.php">'
-        . '<img src="' . $chemin_images_icones . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO . '"/>'; ?>
+        . '<img src="' . $root . '/assets/img/' . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO . '"/>'; ?>
     </a>
 </td>
 <?php $x = Mot(LG_GLOSS_SOURCES); ?>

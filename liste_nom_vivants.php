@@ -150,7 +150,7 @@ if (!$texte) {
     echo '/></td>' . "\n";
     echo '<td class="rupt_table"><input type="submit" value="' . $LG_modify_list . '"/>' . "\n";
     $alt_img = LG_LIVING_SHOW_HIDE;
-    echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
         ' onmouseover="Survole_Clic_Div_Tous(\'MO\',\'' . $Comportement . '\');" onclick="Survole_Clic_Div_Tous(\'CL\',\'' . $Comportement . '\');"/>';
     echo '</td></tr>';
     echo "  </table>\n";

@@ -193,9 +193,12 @@ if ($est_gestionnaire) {
         echo '<input type="file" name="nom_du_fichier" size="80"/></td>';
         echo '</tr>' . "\n";
         echo '<tr><td class="label" width="35%">' . $LG_Default_Status . '</td><td class="value">';
-        bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
-        bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
-        bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
+        echo '<input type="radio" id="val_statutO" name="val_statut" value="O" checked/>'
+        . '<label for="val_statutO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="val_statutN" name="val_statut" value="N"/>'
+        . '<label for="val_statutN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="val_statutI" name="val_statut" value="I"/>'
+        . '<label for="val_statutI">' . LG_FROM_INTERNET . '</label> ';
         echo '</td></tr>';
 
         echo '<tr><td colspan="2"> </td></tr>';

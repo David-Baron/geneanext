@@ -144,7 +144,7 @@ echo "<tr>\n";
 echo '<td colspan="5" valign="middle" align="center"><font color="#0000ff" size="3">' . "\n";
 echo '<input style="FONT-WEIGHT: bold; FONT-SIZE: 10pt; WIDTH: 100%; HEIGHT: 25px" size="15" name="zone_saisie"/></font>' . "\n";
 echo "</td>\n";
-echo '<td bgcolor="' . $fond_calc . '" align="center" valign="middle">&nbsp;<img id="efface" src="' . $chemin_images_icones . $Icones['efface']
+echo '<td bgcolor="' . $fond_calc . '" align="center" valign="middle">&nbsp;<img id="efface" src="' . $root . '/assets/img/' . $Icones['efface']
     . '" alt="' . $LG_Ch_Calc_Clear . '" title="' . $LG_Ch_Calc_Clear . '" onclick="efface_entree();"/>';
 
 echo "</td></tr>\n";

@@ -267,7 +267,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive" ' .
                 'onclick="document.forms.saisie.refDoc.value = document.forms.saisie.maxi.value;return false;"> ' .
-                '<img src="' . $chemin_images_icones . $Icones['dernier_ajoute'] . '" alt=""/>' . my_html($LG_Docs_Last_Doc) . '</button>';
+                '<img src="' . $root . '/assets/img/' . $Icones['dernier_ajoute'] . '" alt=""/>' . my_html($LG_Docs_Last_Doc) . '</button>';
             echo '</div>';
             echo "</td></tr>\n";
         }

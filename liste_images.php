@@ -63,7 +63,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     echo '<td valign="middle">';
     if ($row['Defaut'] == 'O') {
         $texte = $LG_Ch_Image_Default;
-        echo '<img id="imgDefaut" src="' . $chemin_images_icones . $Icones['image_defaut'] . '" alt="' . $texte . '" title="' . $texte . '"/>&nbsp;' . "\n";
+        echo '<img id="imgDefaut" src="' . $root . '/assets/img/' . $Icones['image_defaut'] . '" alt="' . $texte . '" title="' . $texte . '"/>&nbsp;' . "\n";
     }
     Aff_Img_Redim_Lien($image, 200, 200);
     echo '</td>';
@@ -99,7 +99,7 @@ Bouton_Retour($lib_Retour, '?' . Query_Str());
 
 if ((isset($_SESSION['message'])) and ($_SESSION['message'] != '')) {
     $texte_im = 'Erreur';
-    echo '<p><img id="erreur" src="' . $chemin_images_icones . $Icones['stop'] . '" BORDER=0 alt="' . $texte_im . '" title="' . $texte_im . '">' .
+    echo '<p><img id="erreur" src="' . $root . '/assets/img/' . $Icones['stop'] . '" BORDER=0 alt="' . $texte_im . '" title="' . $texte_im . '">' .
         '&nbsp;Votre image n\'a pu &ecirc;tre charg&eacute;e, ' .
         $_SESSION['message'] . "\n";
     $_SESSION['message'] = '';

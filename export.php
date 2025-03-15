@@ -196,7 +196,7 @@ if ($bt_OK) {
     $nom_fic_svg = construit_fic($chemin_exports, 'Export_' . $type_export . $pre_suf . $suffixe . '#', $ext);
     // Tentative de création du fichier
     // $fp = fopen($nom_fic_svg, 'wb');
-    $fp = ouvre_fic($nom_fic_svg, 'wb');
+    $fp = fopen($nom_fic_svg, 'wb');
     if (! $fp) die("impossible de créer $nom_fic_svg.");
     // $_fputs = ($gz) ? @gzputs : @fputs;
 

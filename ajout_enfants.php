@@ -160,20 +160,20 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<br />';
     if ($Conjoint_1 != 0) {
         if (Get_Nom_Prenoms($Conjoint_1, $Nom, $Prenoms)) {
-            echo my_html(LG_FATHER) . LG_SEMIC . '<a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '"', 'fiche_edition', 'Modifier') . '<br />';
+            echo LG_FATHER . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '"', 'fiche_edition', 'Modifier') . '<br />';
             $nom_pere = $Nom;
         }
     }
     if ($Conjoint_2 != 0) {
         if (Get_Nom_Prenoms($Conjoint_2, $Nom, $Prenoms)) {
-            echo my_html(LG_MOTHER) . LG_SEMIC . '<a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '"', 'fiche_edition', 'Modifier') . '<br />';
+            echo LG_MOTHER . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '"', 'fiche_edition', 'Modifier') . '<br />';
             $nom_mere = $Nom;
         }
     }
     echo '<br />';
 
     // Enfants déjà saisis
-    echo '<hr/>' . my_html(LG_PERS_CHILDREN_PRESENT) . LG_SEMIC . '<br />';
+    echo '<hr/>' . LG_PERS_CHILDREN_PRESENT . ' ' . '<br />';
     if (($Conjoint_1 != 0) and ($Conjoint_2 != 0)) {
         $sqlE = 'select Enfant from ' . nom_table('filiations') .
             ' where pere = ' . $Conjoint_1 . ' and mere = ' . $Conjoint_2 . ' order by rang';
@@ -191,18 +191,18 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     // Ajout rapide d'enfants avec création
     echo '<br />';
-    echo '<hr/>' . my_html(LG_PERS_CHILDREN_ADD);
-    echo '<br />' . my_html(LG_PERS_DEFAULT_NAME) . ' : ';
+    echo '<hr/>' . LG_PERS_CHILDREN_ADD;
+    echo '<br />' . LG_PERS_DEFAULT_NAME . ' : ';
 
-    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked="checked"/>' . $nom_pere . ' ';
+    echo '<input type="radio" name="Nom_Defaut" value="' . $nom_pere . '" checked>' . $nom_pere . ' ';
     echo '<input type="radio" name="Nom_Defaut" value="' . $nom_mere . '"/>' . $nom_mere . ' ';
 
     echo '<table border="0" id="tblSampleE" width="80%" align="center">';
     echo '<tr align="center">';
-    echo '<td class="rupt_table">' . my_html(LG_PERS_FIRST_NAME) . '</td>';
-    echo '<td class="rupt_table">' . my_html(LG_PERS_BORN) . '</td>';
-    echo '<td class="rupt_table">' . my_html(LG_PERS_DEAD) . '</td>';
-    echo '<td class="rupt_table">' . my_html(LG_SEXE) . '</td>';
+    echo '<td class="rupt_table">' . LG_PERS_FIRST_NAME . '</td>';
+    echo '<td class="rupt_table">' . LG_PERS_BORN . '</td>';
+    echo '<td class="rupt_table">' . LG_PERS_DEAD . '</td>';
+    echo '<td class="rupt_table">' . LG_SEXE . '</td>';
     echo '</tr>';
 
     for ($nb = 1; $nb <= $max_enf_rapides; $nb++) {

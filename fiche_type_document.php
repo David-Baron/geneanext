@@ -58,7 +58,7 @@ else {
     $req = 'select  Id_Document, Nature_Document, Titre from ' . nom_table('documents') . ' where Id_Type_Document = ' . $Code;
     $result = lect_sql($req);
     if ($result->rowCount() > 0) {
-        $icone_mod = '"><img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $LG_modify . '"/>';
+        $icone_mod = '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" border="0" alt="' . $LG_modify . '"/>';
         echo '<br />' . "\n";
         echo '<fieldset>';
         echo '<legend>' . ucfirst(LG_DOC_DOCS) . '</legend>' . "\n";

@@ -182,9 +182,12 @@ if ($est_gestionnaire) {
         echo '<input type="file" name="nom_du_fichier" size="80"/></td>';
         echo '</tr>' . "\n";
         echo '<tr><td class="label" width="35%">' . $LG_Default_Status . '</td><td class="value">';
-        bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
-        bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
-        bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
+        echo '<input type="radio" id="val_statutO" name="val_statut" value="O" checked/>'
+        . '<label for="val_statutO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="val_statutN" name="val_statut" value="N"/>'
+        . '<label for="val_statutN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="val_statutI" name="val_statut" value="I"/>'
+        . '<label for="val_statutI">' . LG_FROM_INTERNET . '</label> ';
         echo '</td></tr>';
         echo '<tr><td colspan="2"> </td></tr>';
         echo '<tr><td class="label" width="35%">' . ucfirst($LG_ICSV_Event_Where) . '</td><td class="value">';
@@ -202,7 +205,7 @@ if ($est_gestionnaire) {
             echo '<input type="radio" name="idNiveauF" id="' . $id . '" value="' . $id_niveau . '" onclick="bascule_image(\'img_zone\')"/><label for="' . $id . '">' . $enr_zone['Libelle_Niveau'] . '</label> ' . "\n";
         }
         echo '<input type="text" readonly="readonly" name="zoneAff" value=""/>' . "\n";
-        echo '<img id="img_zone" style="display:none; visibility:hidden;" src="' . $chemin_images . $Icones['localisation'] . '"  alt="' . $LG_Place_Select . '" title="' . $LG_Place_Select . '"' .
+        echo '<img id="img_zone" style="display:none; visibility:hidden;" src="' . $root . '/assets/img/' . $Icones['localisation'] . '"  alt="' . $LG_Place_Select . '" title="' . $LG_Place_Select . '"' .
             ' onclick="Appelle_Zone_Lect()"/>' . "\n";
         echo "</td></tr>\n";
         echo '<tr><td class="label" width="35%">' . ucfirst($LG_ICSV_Event_Type) . '</td><td class="value">';

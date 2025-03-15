@@ -343,7 +343,7 @@ if (($bt_Sup) or ($bt_OK)) {
         echo '<div class="buttons">';
         echo '<button type="submit" class="positive" ' .
             'onclick="document.forms.saisie.evenements.value = document.forms.saisie.maxi.value;return false;"> ' .
-            '<img src="' . $chemin_images_icones . $Icones['dernier_ajoute'] . '" alt=""/>' . my_html($LG_Link_Ev_Link_Last_Event) . '</button>';
+            '<img src="' . $root . '/assets/img/' . $Icones['dernier_ajoute'] . '" alt=""/>' . my_html($LG_Link_Ev_Link_Last_Event) . '</button>';
         echo '</div>';
         echo "</td></tr>\n";
     }
@@ -416,7 +416,7 @@ if (($bt_Sup) or ($bt_OK)) {
         }
     }
     echo '<input type="text" readonly="readonly" name="zoneAff" size="50" value="' . $lib_zone . '"' . "/>\n";
-    echo '<img id="img_zone" src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="' . $LG_Place_Select . '" title="' . $LG_Place_Select .
+    echo '<img id="img_zone" src="' . $root . '/assets/img/' . $Icones['localisation'] . '" alt="' . $LG_Place_Select . '" title="' . $LG_Place_Select .
         '" onclick="Appelle_Zone();" ';
     if ($idNiveauLu == 0) echo ' style="display:none; visibility:hidden;"';
     echo '/>' . "\n";
@@ -430,7 +430,7 @@ if (($bt_Sup) or ($bt_OK)) {
     //  ===== Date de fin de participation
     echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Link_Ev_Link_End_Part) . '</td><td class="value">';
     zone_date2('dFinAnc', 'dFinAff', 'dFinCache', $dFinLue);
-    echo ' <img src="' . $chemin_images_icones . $Icones['copie_calend'] . '" alt= "' . $LG_Link_Ev_Link_Paste_Beg . '" title="' . $LG_Link_Ev_Link_Paste_Beg .
+    echo ' <img src="' . $root . '/assets/img/' . $Icones['copie_calend'] . '" alt= "' . $LG_Link_Ev_Link_Paste_Beg . '" title="' . $LG_Link_Ev_Link_Paste_Beg .
         '"onclick="copieDate();"/>' . "\n";
     echo "</td></tr>\n";
 

@@ -546,3 +546,66 @@ function colonne_titre_tab($lib)
     global $larg_titre;
     echo col_titre_tab($lib, $larg_titre) . '<td class="value">';
 }
+
+function bouton_radio($nom, $valeur, $lib, $chk = false)
+{
+    if ($chk) $chk = 'checked';
+    else $chk = '';
+    echo '<input type="radio" id="' . $nom . $valeur . '" name="' . $nom . '" value="' . $valeur . '" ' . $chk . '/>'
+        . '<label for="' . $nom . $valeur . '">' . $lib . '</label> ';
+}
+
+function affiche_var($nom)
+{
+    global $$nom;
+    //echo ' variable $'.$nom.' = '.$$nom.'<br>';
+    echo '$' . $nom . ' = ';
+    var_dump($$nom);
+    echo '<br>';
+}
+
+// Affiche le label d'un bouton radio
+function lb_radio($id_for, $lib)
+{
+    return '<label for="' . $id_for . '">' . $lib . '</label>';
+}
+
+// Affiche le choix de la sortie : écran, texte ou csv (facultatif)
+function affiche_sortie($csv)
+{
+    global $LG_Ch_Output_Screen, $LG_Ch_Output_Text, $LG_Ch_Output_CSV, $est_privilegie;
+    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+    echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
+    if ($csv) {
+        // L'export CSV n'est disponible qu'à partir du profil privilégié
+        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+    }
+}
+
+// Affiche le temps d'exécution d'une fonction
+function affiche_temps($quoi)
+{
+    global $debut;
+    $fin = microtime_float();
+    $totaltime = ($fin - $debut);
+    $exec_time = number_format($totaltime, 3);
+    echo "Debut : " . date("H:i:s", $debut);
+    echo "<br>Fin : " . date("H:i:s", $fin);
+    echo "<br> $quoi exécuté en " . $exec_time . " sec<br>";
+}
+
+function affiche_heure_precise($quoi)
+{
+    $ladate = DateTime::createFromFormat('U.u', microtime(TRUE));
+    echo $quoi . ' ' . $ladate->format('d-m-Y H:i:s.u') . '<br>';
+}
+
+// Ouvre un fichier avec le BOM éventuel pour l'UTF-8
+function ouvre_fic($nom_fic, $mode)
+{
+    global $def_enc;
+    $fp = fopen($nom_fic, $mode);
+    // Byte Order mark (BOM) for UTF-8
+    if ($def_enc == 'UTF-8') fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
+    return $fp;
+}

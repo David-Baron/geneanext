@@ -124,7 +124,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . ' ';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Type_Evenement', $Code);
 
@@ -170,12 +170,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo '<input type="hidden" name="Code_ModifiableF" value="' . $Code_ModifiableF . '"/>' . "\n";
         echo '<input type="hidden" name="ACode_ModifiableF" value="' . $Code_ModifiableF . '"/>' . "\n";
         echo '<table width="80%" class="table_form">' . "\n";
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         echo '<tr><td class="label" width="25%">' . ucfirst(LG_EVENT_TYPE_CODE) . '</td><td class="value">';
         // On ne peut modifier le code qu'en création ou s'il n'est pas utilisé
         if (($Creation) or (! $utilise)) {
             echo '<input class="oblig" type="text" name="CodeF" id="CodeF" value="' . $CodeF . '" size="4" maxlength="4" onchange="verification_code(this);"/>' . "\n";
-            echo '&nbsp;';
+            echo ' ';
             echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
             // Liste des types existants
@@ -195,18 +195,24 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         echo '<input type="hidden" name="ALibelleF" value="' . $LibelleF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
         echo '<tr><td class="label" width="25%">' . ucfirst(LG_TARGET_OBJECT) . '</td><td class="value">';
-        bouton_radio('Objet_CibleF', 'P', LG_TARGET_OBJECT_PERS, ($Objet_CibleF == 'P'));
-        bouton_radio('Objet_CibleF', 'U', LG_TARGET_OBJECT_UNION, ($Objet_CibleF == 'U'));
-        bouton_radio('Objet_CibleF', 'F', LG_TARGET_OBJECT_FILIATION, ($Objet_CibleF == 'F'));
-        bouton_radio('Objet_CibleF', '', LG_TARGET_OBJECT_OTHER, (($Objet_CibleF != 'U') && ($Objet_CibleF != 'F') && ($Objet_CibleF != 'P')));
+        echo '<input type="radio" id="Objet_CibleFP" name="Objet_CibleF" value="P"' . ($Objet_CibleF == 'P') ? ' checked' : '' . '/>'
+            . '<label for="Objet_CibleFP">' . LG_TARGET_OBJECT_PERS . '</label> ';
+        echo '<input type="radio" id="Objet_CibleFU" name="Objet_CibleF" value="U"' . ($Objet_CibleF == 'U') ? ' checked' : '' . '/>'
+            . '<label for="Objet_CibleFU">' . LG_TARGET_OBJECT_UNION . '</label> ';
+        echo '<input type="radio" id="Objet_CibleFF" name="Objet_CibleF" value="F"' . ($Objet_CibleF == 'F') ? ' checked' : '' . '/>'
+            . '<label for="Objet_CibleFF">' . LG_TARGET_OBJECT_FILIATION . '</label> ';
+        echo '<input type="radio" id="Objet_CibleF" name="Objet_CibleF" value=""' . (($Objet_CibleF != 'U') && ($Objet_CibleF != 'F') && ($Objet_CibleF != 'P')) ? ' checked' : '' . '/>'
+            . '<label for="Objet_CibleF">' . LG_TARGET_OBJECT_OTHER . '</label> ';
         echo '<input type="hidden" name="AObjet_CibleF" value="' . $Objet_CibleF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
         echo '<tr><td class="label" width="25%">' . ucfirst(LG_EVENT_TYPE_UNIQ) . '</td><td class="value">';
-        bouton_radio('UniciteF', 'U', $LG_Yes, ($UniciteF == 'U'));
-        bouton_radio('UniciteF', 'M', $LG_No, ($UniciteF == 'M'));
+        echo '<input type="radio" id="UniciteFU" name="UniciteF" value="U" ' . ($UniciteF == 'U') ? 'checked' : '' . '/>'
+            . '<label for="UniciteFU">' . $LG_Yes . '</label> ';
+        echo '<input type="radio" id="UniciteFM" name="UniciteF" value="M" ' . ($UniciteF == 'M') ? 'checked' : '' . '/>'
+            . '<label for="UniciteFM">' . $LG_No . '</label> ';
         echo '<input type="hidden" name="AUniciteF" value="' . $UniciteF . '"/>' . "\n";
         echo '</td></tr>' . "\n";
-        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+        echo '<tr><td colspan="2"> </td></tr>';
         // Bouton Supprimer en modification si pas d'utilisation du rôle
         $lib_sup = '';
         if ((!$Creation) and (!$utilise)) $lib_sup = $lib_Supprimer;

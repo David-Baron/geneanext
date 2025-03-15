@@ -11,7 +11,7 @@ function recup_liste_tables()
 {
     global $db, $pref_tables, $LG_Ch_Adm_T_Err_List;
     $liste_tables = [];
-    $sql = 'show tables from `' . $db . '` like \'' . $pref_tables . '%\'';
+    $sql = 'SHOW TABLES FROM `' . $db . '` like \'' . $pref_tables . '%\'';
     $result = lect_sql($sql);
     if (!$result) {
         echo $LG_Ch_Adm_T_Err_List . '<br />';

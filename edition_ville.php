@@ -120,7 +120,7 @@ function est_utilisee($aff)
 // Affiche une ville
 function Aff_Ville($enreg2)
 {
-    global $root, $Icones, $chemin_images, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_ville = $enreg['Nom_Ville'];
     $n_ville_html = $enreg2['Nom_Ville'];

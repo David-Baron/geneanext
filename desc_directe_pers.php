@@ -32,7 +32,7 @@ function Affiche_Pers($num)
     if ($res = lect_sql($sql)) {
         if ($enreg = $res->fetch(PDO::FETCH_NUM)) {
             if (($_SESSION['estGestionnaire']) or ($enreg[3] == 'O')) {
-                echo $num . '&nbsp;:&nbsp;';
+                echo $num . ' : ';
                 $Ref_Pers = $enreg[0];
                 if (! $texte)
                     echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>';
@@ -41,7 +41,7 @@ function Affiche_Pers($num)
                 $Ne = $enreg[4];
                 $Decede = $enreg[5];
                 if (($Ne != '') or ($Decede != '')) {
-                    echo '&nbsp;(';
+                    echo ' (';
                     if ($Ne != '') echo '&deg; ' . Etend_date($Ne);
                     if ($Decede != '') {
                         if ($Ne != '') echo ', ';
@@ -50,8 +50,8 @@ function Affiche_Pers($num)
                     echo ')';
                 }
                 if (!$texte) {
-                    echo '&nbsp;&nbsp;<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref_Pers . '"' . $fin_arbres_asc;
-                    echo '&nbsp;<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref_Pers . '"' . $fin_arbres_desc;
+                    echo '  <a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref_Pers . '"' . $fin_arbres_asc;
+                    echo ' <a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref_Pers . '"' . $fin_arbres_desc;
                 }
 
                 // Si les conjoints ont été demandés, on va les chercher
@@ -105,7 +105,7 @@ $comp_texte = '';
 if ($conj_demandes) $comp_texte .= '&amp;avec_conjoints=O';
 
 $compl = Ajoute_Page_Info(600, 250) .
-    Affiche_Icone_Lien('href="' . $root . '/desc_directe_pers.php?Numero=' . $Numero . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/desc_directe_pers.php?Numero=' . $Numero . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . ' ';
 
 if (! $texte) Insere_Haut($titre, $compl, 'Desc_Directe_Pers', $Numero);
 else {
@@ -121,10 +121,10 @@ else {
 
 if (! $texte) {
     echo '<form action="' . my_self() . '?Numero=' . $Numero . '" method="post">' . "\n";
-    echo '<table border="0" width="60%" align="center">' . "\n";
+    echo '<table width="60%" align="center">' . "\n";
     echo '<tr align="center">';
 
-    echo '<td class="rupt_table">' . my_html($LG_Tree_Show_Partners) . '&nbsp;:&nbsp;' . "\n";
+    echo '<td class="rupt_table">' . my_html($LG_Tree_Show_Partners) . ' : ' . "\n";
     echo '<input type="checkbox"';
     if ($conj_demandes) echo ' checked="checked"';
     echo ' name="conj_demandes" value="1"/></td>' . "\n";
@@ -136,8 +136,8 @@ if (! $texte) {
     echo '</form>' . "\n";
 }
 
-$fin_arbres_asc = '><img src="' . $chemin_images_icones . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/></a>';
-$fin_arbres_desc = '><img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" alt="' . $LG_desc_tree . '" border="0" title="' . $LG_desc_tree . '"/></a>&nbsp;';
+$fin_arbres_asc = '><img src="' . $root . '/assets/img/' . $Icones['arbre_asc'] . '" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/></a>';
+$fin_arbres_desc = '><img src="' . $root . '/assets/img/' . $Icones['arbre_desc'] . '" alt="' . $LG_desc_tree . '" title="' . $LG_desc_tree . '"/></a> ';
 
 do {
     Affiche_Pers($Numero);

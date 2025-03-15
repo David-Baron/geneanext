@@ -267,7 +267,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_NAME . '&nbsp;</td><td class="value">';
     echo '<input type="text" size="50" name="nomFam" id="nomFam" value="' . $nomFam . '" class="oblig"/>&nbsp;' . "\n";
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '&nbsp;<img id="majuscule" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
+    echo '&nbsp;<img id="majuscule" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
         ' onclick="NomMaj();document.getElementById(\'nomFam\').focus();"/>' . "\n";
     echo '<input type="' . $hidden . '" name="AnomFam" value="' . $nomFam . '"/></td></tr>' . "\n";
     //	Code phonétique

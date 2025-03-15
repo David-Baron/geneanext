@@ -241,7 +241,7 @@ $enreg = $res->fetch(PDO::FETCH_ASSOC);
 
 // Appel de l'image de fond
 if ($debug) {
-    $f_log = ouvre_fic('log.txt', 'a+');
+    $f_log = fopen('log.txt', 'a+');
     fputs($f_log, '$chemin_images_a_asc : ' . $chemin_images_a_asc);
 }
 //if ($debug) fputs($f_log,$chemin_images_a_asc.$enreg['Image_Arbre_Asc']);

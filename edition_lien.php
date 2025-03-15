@@ -87,14 +87,14 @@ $AStatut_Fiche        = Secur_Variable_Post($AStatut_Fiche, 1, 'S');
 // Affiche un Lien
 function Aff_Lien($enreg2)
 {
-    global $root, $Icones, $chemin_images, $chemin_images_util, $Commentaire, $Diffusion_Commentaire_Internet, $Images, $Ref, $SiteGratuit, $Premium, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_Yes, $LG_No, $hidden;
+    global $root, $Icones, $chemin_images_util, $Commentaire, $Diffusion_Commentaire_Internet, $Images, $Ref, $SiteGratuit, $Premium, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_Yes, $LG_No, $hidden;
 
     echo '<br />';
     echo '<div id="content">' . "\n";
     echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="800" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="800" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
     echo '<tr>' . "\n";
     echo '<td class="left">' . "\n";
@@ -254,7 +254,7 @@ if ($bt_OK) {
         $erreur = Controle_Charg_Image();
         // Erreur constatée sur le chargement
         if ($erreur != '') {
-            echo '<img src="' . $chemin_images_icones . $Icones['warning'] . '" alt="warning" title="warning"/> Erreur : ' . $erreur . '<br />';
+            echo '<img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="warning" title="warning"/> Erreur : ' . $erreur . '<br />';
         } else { // Sinon on peut télécharger
             if (!ctrl_fichier_ko()) {
                 move_uploaded_file(

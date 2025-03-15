@@ -225,7 +225,7 @@ if ($res->rowCount() > 0) {
             default:
                 break;
         }
-        $fp = ouvre_fic($nom_fic, 'w+');
+        $fp = fopen($nom_fic, 'w+');
         // Ecriture de l'entête
         $ligne = '';
         switch ($Type_Liste) {

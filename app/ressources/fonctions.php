@@ -463,11 +463,13 @@ function Insere_Haut($titre, $compl_entete, $page, $param)
 {
     global $root, $Icones, $Image_Fond, $Insert_Compteur, $Environnement, $connexion;
     echo '</head>';
+    /* 
     if (file_exists(__DIR__ . '/../../assets/img/fonds/' . $Image_Fond)) {
         echo '<body background="' . $root . '/assets/img/fonds/' . $Image_Fond . '">'; // TODO: background as nothing to do in body tag
     } else {
         echo '<body>';
-    }
+    } */
+    echo '<body>';
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td width="15%">';
@@ -581,19 +583,20 @@ function controle_utilisateur($niveauRequis)
 /**
  * @deprecated will be removed
  */
-function Ecrit_meta($titre, $cont, $mots, $index_follow = 'IF')
+function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
 {
-    global $root, $HTTP_REFERER, $Horigine, $avec_js, $chemin_images, $chemin_images_icones, $Image_Barre, $Images,
+    global $root, $HTTP_REFERER, $Horigine, $avec_js, $Image_Barre, $Images,
         $Coul_Lib, $Coul_Val, $Coul_Bord, $Coul_Paires, $Coul_Impaires, $coul_fond_table, $Chemin_Barre, $chemin_images_barres, $Image_Fond, $def_enc;
+
+    echo '<meta charset="UTF-8">';
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     echo '<title>' . my_html($titre) . '</title>';
     echo '<meta name="description" content="' . $cont . '">';
-    echo '<meta name="keywords" content="';
-    if ($mots != '') echo ', ' . $mots;
-    echo '">';
-    // echo '<meta name="owner" content="support@geneamania.net">';
-    // echo '<meta name="author" content="Jean-Luc Servin">';
-    // echo '<meta http-equiv="content-LANGUAGE" content="French">'; transféré dans l'entête html
-    echo '<meta http-equiv="content-TYPE" content="text/html; charset=' . $def_enc . '">';
+    echo '<meta name="keywords" content="' . $mots . '">';
+    # echo '<meta name="owner" content="support@geneamania.net">';
+    # echo '<meta name="author" content="Jean-Luc Servin">';
+    # echo '<meta http-equiv="content-LANGUAGE" content="French">'; // transféré dans l'entête html
+    # echo '<meta http-equiv="content-TYPE" content="text/html; charset=' . $def_enc . '">';
     // Balises index et follow pour restreindre les robots ==> NOINDEX, NOFOLLOW
     if ($index_follow != 'IF') {
         $p1 = '';
@@ -603,27 +606,31 @@ function Ecrit_meta($titre, $cont, $mots, $index_follow = 'IF')
         echo '<meta name="robots" content="' . $p1 . 'INDEX, ' . $p2 . 'FOLLOW">';
     }
     echo '<meta name="REVISIT-AFTER" content="7 days">';
+
     // echo '<link rel="stylesheet" href="divers_styles.css">'."\n";
     include(__DIR__ . '/../../assets/css/divers_styles.css');
-    if (file_exists(__DIR__ . '/../../assets/css/divers_styles_part.css'))
+    if (file_exists(__DIR__ . '/../../assets/css/divers_styles_part.css')) {
         echo '<link rel="stylesheet" href="' . $root . '/assets/css/divers_styles_part.css">';
+    }
 
-    if (isset($_SERVER['HTTP_REFERER']))
-        $HTTP_REFERER = $_SERVER['HTTP_REFERER'];
-    // La première fois, Horigine n'est pas renseignée...
+    /** @deprecated */
+    if (isset($_SERVER['HTTP_REFERER'])) $HTTP_REFERER = $_SERVER['HTTP_REFERER'];
+    /** @deprecated */
     if ($Horigine == '') $Horigine = $HTTP_REFERER;
     if ($Horigine == '') $Horigine = $root . '/';
 
     // Cet indicateur permet de d'intégrer ou non le js
     // Lors de la mise à jour suite à une saisie, l'intégration du js peut provoquer une erreur Cannot modify header information sur la commande header...
     // Par défaut, on demande le javascript
+    /** @deprecated */
     if (!isset($avec_js)) $avec_js = 1;
     // Pas de javascript sur les pages d'information
+    /** @deprecated */
     if (is_info()) {
         $avec_js = false;
     }
+    /** @deprecated */
     if ($avec_js) include(__DIR__ . '/../../assets/js/monSSG.js');
-    return 0;
 }
 
 /* Etend une date */
@@ -728,7 +735,7 @@ function Etend_date_2($LaDate, $forcage = false)
             switch ($aff_rev) {
                 case 'I':
                     $texte_image = Etend_date($LaDate);
-                    $LaDate2 .= '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['arrange']
+                    $LaDate2 .= ' <img src="' . $root . '/assets/img/' . $Icones['arrange']
                         . '" alt="' . $texte_image . '" title="' . $texte_image . '" />';
                     break;
                 case 'P':
@@ -985,25 +992,31 @@ function Affiche_Fiche($enreg, $fs = 0)
         echo '<tr>' . "\n";
         // Validation fiche
         echo '<td colspan="2">Statut fiche';
-        bouton_radio('Statut_Fiche', 'O', LG_CHECKED_RECORD_SHORT, $Statut_Fiche == 'O' ? true : false);
-        bouton_radio('Statut_Fiche', 'N', LG_NOCHECKED_RECORD_SHORT, $Statut_Fiche == 'N' ? true : false);
-        bouton_radio('Statut_Fiche', 'I', LG_FROM_INTERNET, $Statut_Fiche == 'I' ? true : false);
+        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O"' . ($Statut_Fiche == 'O') ? ' checked' : '' . '/>'
+            . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N"' . ($Statut_Fiche == 'N') ? ' checked' : '' . '/>'
+            . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I"' . ($Statut_Fiche == 'I') ? ' checked' : '' . '/>'
+            . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
         echo '<input type="hidden" name="AStatut_Fiche" value="' . $Statut_Fiche . '">';
         echo '</td>';
         echo '<td>Création : ' . DateTime_Fr($enreg['Date_Creation']) . '</td>' . "\n";
         echo '<td>Modification : ' . DateTime_Fr($enreg['Date_Modification']) . '</td>' . "\n";
-        if ($Statut_Fiche == 'O') echo ' checked="checked"';
-        echo '/>Validée&nbsp;' . "\n";
+        if ($Statut_Fiche == 'O') echo ' checked';
+        echo '/>Validée ' . "\n";
         echo '<input type="radio" name="Statut_Fiche" value="N"';
-        if ($Statut_Fiche == 'N') echo ' checked="checked"';
+        if ($Statut_Fiche == 'N') echo ' checked';
         echo '</tr>' . "\n";
         echo '</table>' . "\n";
     } else {
         echo '<fieldset>' . "\n";
         echo '<legend>Statut</legend>' . "\n";
-        bouton_radio('Statut_Fiche', 'O', LG_CHECKED_RECORD_SHORT, $Statut_Fiche == 'O' ? true : false);
-        bouton_radio('Statut_Fiche', 'N', LG_NOCHECKED_RECORD_SHORT, $Statut_Fiche == 'N' ? true : false);
-        bouton_radio('Statut_Fiche', 'I', LG_FROM_INTERNET, $Statut_Fiche == 'I' ? true : false);
+        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O"' . ($Statut_Fiche == 'O') ? ' checked' : '' . '/>'
+            . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N"' . ($Statut_Fiche == 'N') ? ' checked' : '' . '/>'
+            . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I"' . ($Statut_Fiche == 'I') ? ' checked' : '' . '/>'
+            . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
         echo '<input type="hidden" name="AStatut_Fiche" value="' . $Statut_Fiche . '"/>';
         echo '</fieldset>' . "\n";
         echo '<fieldset>' . "\n";
@@ -1107,7 +1120,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
                 echo '<table><tr><td align="center" valign="middle">' . "\n";
                 $image = $chemin_images_util . $image;
                 Aff_Img_Redim_Lien($image, 150, 150, 'img_' . $ref_pers);
-                echo '</td><td>&nbsp;</td><td>' . "\n";
+                echo '</td><td> </td><td>' . "\n";
             }
         }
         if ($Decalage) $tab = '   ';
@@ -1200,7 +1213,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
                     if (Rech_Commentaire($enregP[3], 'E')) {
                         if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
                             $cmt = div_note($Commentaire);
-                            //'&nbsp;<a href="#" class="info2">'.Affiche_Icone('note').'<span>'.$Commentaire.'</span></a>';
+                            //' <a href="#" class="info2">'.Affiche_Icone('note').'<span>'.$Commentaire.'</span></a>';
                         }
                     }
                 }
@@ -1604,7 +1617,7 @@ function Aff_Evenements_Pers($numPers, $modif)
     if ($modif == 'O') {
         $lib = $LG_Add_Existing_Event;
         // $lib = 'Ajouter un évènement existant';
-        echo '<br>' . $lib . '&nbsp;:&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_eve.php?refPers=' . $numPers . '&amp;refEvt=-1"', 'ajout', $lib) . "\n";
+        echo '<br>' . $lib . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_eve.php?refPers=' . $numPers . '&amp;refEvt=-1"', 'ajout', $lib) . "\n";
     }
 }
 
@@ -1615,7 +1628,7 @@ function Aff_Evenements_Pers($numPers, $modif)
  */
 function Aff_Liens_Pers($numPers, $modif)
 {
-    global $root, $Icones, $chemin_images_icones;
+    global $root, $Icones;
 
     $requete = 'SELECT Personne_1, Personne_2, rp.Code_Role AS codeRole,Libelle_Role,Debut,Fin, Principale ' .
         ',Symetrie, Libelle_Inv_Role ' .
@@ -1626,7 +1639,7 @@ function Aff_Liens_Pers($numPers, $modif)
     if ($res->rowCount()) {
         // En mode lecture, on ne montre que s'il existe des liens
         if ($modif == 'N') {
-            echo 'Liens avec d\'autres personnes&nbsp;' . "\n";
+            echo 'Liens avec d\'autres personnes ' . "\n";
             echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="Montrer les liens" ' . Survole_Clic_Div('id_div_liens') . '/>';
             echo '<div id="id_div_liens">';
         }
@@ -1646,7 +1659,7 @@ function Aff_Liens_Pers($numPers, $modif)
             //echo 'sym/princ : '.$Symetrie.'/'.$Principale.'<br>';
 
             if (Get_Nom_Prenoms($LaRef, $Nom, $Prenoms)) {
-                echo '  <fieldset><legend>Avec ' . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $LaRef . '">' . $Prenoms . '&nbsp;' . $Nom . '</a>' . '</legend>' . "\n";
+                echo '  <fieldset><legend>Avec ' . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $LaRef . '">' . $Prenoms . ' ' . $Nom . '</a>' . '</legend>' . "\n";
                 echo '<table width="85%" border="0">' . "\n";
                 echo '<tr><td>R&ocirc;le : ' . $role . '</td>' . "\n";
                 if ($modif == 'O') {
@@ -1680,7 +1693,7 @@ function Aff_Liens_Pers($numPers, $modif)
     }
     if ($modif == 'O') {
         $lib = 'Ajouter un lien vers une personne';
-        echo '<br>' . $lib . '&nbsp;:&nbsp;' .
+        echo '<br>' . $lib . ' : ' .
             Affiche_Icone_Lien('href="' . $root . '/edition_lier_pers.php?ref1=' . $numPers . '&amp;ref2=-1"', 'ajout', $lib) . "\n";
     }
 }
@@ -1692,7 +1705,7 @@ function Aff_Liens_Pers($numPers, $modif)
  */
 function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
 {
-    global $root, $Icones, $Environnement, $chemin_images_icones, $LG_Add_Existing_Event;
+    global $root, $Icones, $Environnement, $LG_Add_Existing_Event;
 
     $Lib_Type = lib_pfu($TypeObjet, true);
     $requete  = 'SELECT Libelle_Type, Titre, e.Debut AS dDebE , e.Fin AS dFinE , c.Evenement as refEve ,' .
@@ -1708,7 +1721,7 @@ function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
     if ($res->rowCount()) {
         // En mode lecture, on ne montre que s'il existe des évènements
         if ($modif == 'N') {
-            echo 'Ev&egrave;nements et faits pour ' . $Lib_Type . '&nbsp;' . "\n";
+            echo 'Ev&egrave;nements et faits pour ' . $Lib_Type . ' ' . "\n";
             echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="Montrer les évènements" ' . Survole_Clic_Div('id_div_eve_obj_' . $TypeObjet . $RefObjet) . '/>';
             echo '<div id="id_div_eve_obj_' . $TypeObjet . $RefObjet . '">';
         }
@@ -1724,7 +1737,7 @@ function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
             }
 
             echo '<tr>' . "\n";
-            echo '<td>&nbsp;<a href="' . $root . '/fiche_evenement.php?refPar=' . $enreg['refEve'] . '">' . $enreg['Titre'] . '</a></td>' . "\n";
+            echo '<td> <a href="' . $root . '/fiche_evenement.php?refPar=' . $enreg['refEve'] . '">' . $enreg['Titre'] . '</a></td>' . "\n";
             if ($modif == 'O') {
                 echo '<td align="center"><a href="' . $root . '/edition_lier_objet.php?refEvt=' . $enreg['refEve'] .
                     '&amp;refObjet=' . $RefObjet .
@@ -1790,7 +1803,7 @@ function Aff_Documents_Objet($refObjet, $typeObjet, $masquer)
     $res_doc = lect_sql($req_doc);
     // Affichage
     if ($res_doc->rowCount()) {
-        echo 'Documents liés &agrave;&nbsp;' . lib_pfu($typeObjet, true) . '&nbsp;' . "\n";
+        echo 'Documents liés &agrave; ' . lib_pfu($typeObjet, true) . ' ' . "\n";
         echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="Montrer les documents" ' . Survole_Clic_Div('id_div_doc_obj_' . $typeObjet . '_' . $refObjet) . '/>';
         echo '<div id="id_div_doc_obj_' . $typeObjet . '_' . $refObjet . '">';
         $natureAncien = '';
@@ -1809,9 +1822,9 @@ function Aff_Documents_Objet($refObjet, $typeObjet, $masquer)
             $chemin_docu = get_chemin_docu($natureCourante);
             $le_type = Get_Type_Mime($natureCourante);
             if ($_SESSION['estGestionnaire']) {
-                echo '&nbsp;&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $refObjet .
+                echo '  ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $refObjet .
                     '&amp;typeObjet=' . $typeObjet . '&amp;refDoc=' . $enr_doc[1] . '"', 'fiche_edition', $LG_update_link) .
-                    '&nbsp;&nbsp;';
+                    '  ';
             }
             echo Affiche_Icone_Lien('href="' . $chemin_docu . $enr_doc[3] . '" type="' . $le_type . '"', 'oeil', $LG_see_document, 'n') .
                 '</td></tr>' . "\n";
@@ -1848,7 +1861,7 @@ function Aff_Sources_Objet($refObjet, $typeObjet, $masquer)
         $res_src = lect_sql($req_src);
         // Affichage
         if ($res_src->rowCount()) {
-            echo 'Sources liées &agrave;&nbsp;' . lib_pfu($typeObjet, true) . '&nbsp;' . "\n";
+            echo 'Sources liées &agrave; ' . lib_pfu($typeObjet, true) . ' ' . "\n";
             echo '<img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="Montrer les sources" ' . Survole_Clic_Div('id_div_src_obj_' . $typeObjet . '_' . $refObjet) . '/>';
             echo '<div id="id_div_src_obj_' . $typeObjet . '_' . $refObjet . '">';
             $premier = true;
@@ -1858,7 +1871,7 @@ function Aff_Sources_Objet($refObjet, $typeObjet, $masquer)
                     $premier = false;
                 }
                 echo '<tr><td>' . '<a href="' . $root . '/fiche_source.php?ident=' . $enr_src[1] . '">' . my_html($enr_src[0]) . '</a>' . "\n";
-                echo '&nbsp;&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $refObjet .
+                echo '  ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $refObjet .
                     '&amp;typeObjet=' . $typeObjet . '&amp;refSrc=' . $enr_src[1] . '"', 'fiche_edition', 'Modification de la liaison');
             }
             echo '</table></fieldset>' . "\n";
@@ -1953,7 +1966,7 @@ function Ajoute_Page_Info($largeur, $hauteur)
     $texte = 'Aide sur la page';
     $nom_script = substr($nom_script, 0, $l_p);
     return '<a href=\'javascript:PopupCentrer("' . $root . '/appel_info.php?aide=' . $nom_script . '",' . $largeur . ',' . $hauteur . ',"menubar=no,scrollbars=yes,statusbar=no")\'>' .
-        '<img src="' . $root . '/assets/img/' . $Icones['information'] . '" alt="' . $texte . '" title="' . $texte . '" /></a>&nbsp;';
+        '<img src="' . $root . '/assets/img/' . $Icones['information'] . '" alt="' . $texte . '" title="' . $texte . '" /></a> ';
 }
 
 
@@ -2031,7 +2044,7 @@ function aff_annees_pers($Ne, $Decede)
     $Ne     = affiche_date($Ne);
     $Decede = affiche_date($Decede);
     if (($Ne != '?') or ($Decede != '?')) {
-        $Dates = '&nbsp;(' . $Ne . '-' . $Decede . ')';
+        $Dates = ' (' . $Ne . '-' . $Decede . ')';
     }
     return $Dates;
 }
@@ -2075,7 +2088,7 @@ function aff_liste_pers($nom_select, $premier, $dernier, $cle_sel, $crit, $order
         if ($cle_sel == $row[0]) echo ' selected="selected" ';
         echo '>' . my_html($row[1] . ' ' . $row[2]) . aff_annees_pers($row[3], $row[4]) . '</option>' . "\n";
     }
-    echo '</select>&nbsp;';
+    echo '</select> ';
     if ($dernier) $res->closeCursor();
 }
 
@@ -2113,7 +2126,7 @@ function ne_dec_approx(&$naissance, &$deces)
  */
 function aff_lien_pers($refPar, $modif = 'N')
 {
-    global $root, $chemin_images_icones, $Icones;
+    global $root, $Icones;
     //  ===== Recherche de liens avec des personnes
     $requete = 'SELECT Reference, Debut, Fin, Nom, Prenoms, r.Code_Role, Libelle_Role as libRole, Diff_Internet ' .
         ' FROM ' . nom_table('participe') . ' AS pa , ' . nom_table('personnes') . ' AS pe , ' .
@@ -2142,7 +2155,7 @@ function aff_lien_pers($refPar, $modif = 'N')
                 }
                 // En mode modification, on va mettre un lien pour modifier la liaison
                 if ($modif == 'O') {
-                    echo '&nbsp;<a href="' . $root . '/edition_lier_eve.php?typeLienPar=P&amp;refPers=' . $enreg['Reference'] .
+                    echo ' <a href="' . $root . '/edition_lier_eve.php?typeLienPar=P&amp;refPers=' . $enreg['Reference'] .
                         '&amp;refEvt=' . $refPar .
                         '&amp;refRolePar=' . $enreg['Code_Role'] . '">' .
                         $icone_mod . '</a>';
@@ -2160,7 +2173,7 @@ function aff_lien_pers($refPar, $modif = 'N')
  */
 function aff_lien_filiations($refPar, $modif = 'N')
 {
-    global $root, $chemin_images_icones, $Icones;
+    global $root, $Icones;
     $requete = 'SELECT ev.Reference,fi.Enfant,fi.Pere,fi.Mere,Reference_objet,' .
         'enf.Reference AS eRef,enf.Sexe AS eSexe,enf.Prenoms AS ePrenoms,enf.Nom AS eNom,enf.Diff_Internet AS eDiff,' .
         'pere.Reference AS pRef,pere.Prenoms AS pPrenoms,pere.Nom AS pNom,pere.Diff_Internet AS pDiff,' .
@@ -2194,7 +2207,7 @@ function aff_lien_filiations($refPar, $modif = 'N')
             }
 
             //
-            echo '<br>&nbsp;&nbsp;' . $texte;
+            echo '<br>  ' . $texte;
             if (($_SESSION['estPrivilegie']) || ($enreg['pDiff'] != 'N')) {
                 echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['pRef'] . '">' . my_html($enreg['pPrenoms'] . ' ' . $enreg['pNom']) . '</a>';
             }
@@ -2204,7 +2217,7 @@ function aff_lien_filiations($refPar, $modif = 'N')
             }
             // En mode modification, on va mettre un lien pour modifier la liaison (utile uniquement pour la suppression)
             if ($modif == 'O') {
-                echo '&nbsp;<a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
+                echo ' <a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
                     '&amp;refObjet=' . $enreg['eRef'] .
                     '&amp;TypeObjet=F' .
                     '">' .
@@ -2230,7 +2243,7 @@ function aff_lien_filiations($refPar, $modif = 'N')
  */
 function aff_lien_unions($refPar, $modif = 'N')
 {
-    global $root, $chemin_images_icones, $Icones;
+    global $root, $Icones;
     $requete = 'SELECT ev.Reference,un.Reference as uRef,un.Conjoint_1,un.Conjoint_2,Reference_objet,' .
         'pere.Reference AS pRef,pere.Prenoms AS pPrenoms,pere.Nom AS pNom,pere.Diff_Internet AS pDiff,' .
         'mere.Reference AS mRef,mere.Prenoms AS mPrenoms,mere.Nom AS mNom,mere.Diff_Internet AS mDiff,type_Objet,Debut,Fin' .
@@ -2256,7 +2269,7 @@ function aff_lien_unions($refPar, $modif = 'N')
             }
             // En mode modification, on va mettre un lien pour modifier la liaison (utile uniquement pour la suppression)
             if ($modif == 'O') {
-                echo '&nbsp;<a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
+                echo ' <a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
                     '&amp;refObjet=' . $enreg['uRef'] .
                     '&amp;TypeObjet=U' .
                     '">' .
@@ -2305,7 +2318,7 @@ function get_decujus()
  */
 function aff_menu($type_menu, $droits, $formu = true)
 {
-    global $root, $RepGenSite, $Version, $adr_rech_gratuits, $gestionnaire, $SiteGratuit, $Premium, $chemin_images_icones, $Icones, $Base_Vide, $def_enc, $LG_Menu_Title;
+    global $root, $RepGenSite, $Version, $adr_rech_gratuits, $gestionnaire, $SiteGratuit, $Premium, $Icones, $Base_Vide, $def_enc, $LG_Menu_Title;
 
     /* 4 niveaux d'autorisation
 	Invité       : I
@@ -2487,7 +2500,7 @@ function aff_menu($type_menu, $droits, $formu = true)
                     echo '<option value="';
                     echo $rep . $elements[1] . '">' . my_html($elements[2]) . '</option>';
                 } else {
-                    echo '&nbsp;&nbsp;&nbsp;<img id="puce' . ++$num_puce . '" src="' . $root . '/assets/img/' . $Icones['menu_option'] . '" alt="Puce"/>';
+                    echo '   <img id="puce' . ++$num_puce . '" src="' . $root . '/assets/img/' . $Icones['menu_option'] . '" alt="Puce"/>';
                     echo '<a href="' . $rep . $rep . $elements[1] . '">' . my_html($elements[2]) . '</a><br>';
                 }
             }
@@ -2663,15 +2676,15 @@ function memo_pers($Refer, $Nom, $Prenoms)
  */
 function bt_ok_an_sup($lib_ok, $lib_an, $lib_sup, $lib_conf, $dans_table = true, $suppl = false)
 {
-    global $root, $Icones, $lib_Retour, $lib_Annuler, $lib_Rechercher, $hidden;
+    global $root, $Icones, $lib_Retour, $lib_Annuler, $lib_Rechercher;
 
     if ($dans_table) echo '<tr><td colspan="2" align="center">';
     // Lors d'un appel supplémentaire, il ne faut pas re-créer les champs cachés
     if (!$suppl) {
-        echo '<input type="' . $hidden . '" name="cache" id="cache" value=""/>' . "\n";
-        echo '<input type="' . $hidden . '" name="ok" id="ok" value=""/>' . "\n";
-        echo '<input type="' . $hidden . '" name="annuler" id="annuler" value=""/>' . "\n";
-        echo '<input type="' . $hidden . '" name="supprimer" id="supprimer" value=""/>' . "\n";
+        echo '<input type="hidden" name="cache" id="cache" value=""/>' . "\n";
+        echo '<input type="hidden" name="ok" id="ok" value=""/>' . "\n";
+        echo '<input type="hidden" name="annuler" id="annuler" value=""/>' . "\n";
+        echo '<input type="hidden" name="supprimer" id="supprimer" value=""/>' . "\n";
     }
 
     $id_but = 'boutons';
@@ -2679,7 +2692,7 @@ function bt_ok_an_sup($lib_ok, $lib_an, $lib_sup, $lib_conf, $dans_table = true,
     echo '<div id="' . $id_but . '">' . "\n";
     echo '<br>';
     echo '<table cellpadding="0" cellspacing="0">' . "\n";
-    echo '<tr><td>&nbsp;';
+    echo '<tr><td> ';
     echo '<div class="buttons">';
     if ($lib_ok != '') {
         if ($lib_ok == $lib_Rechercher) $Icone = 'chercher';
@@ -2862,7 +2875,6 @@ function Affiche_Icone_Lien_Bt($lien, $icone, $lib)
 }
 
 // Ajout d'un bouton retour
-
 /**
  * @deprecated will be removed
  */
@@ -2933,7 +2945,6 @@ function PDF_AddPolice($PDF)
 }
 
 // Renvoye un Query String compatible W3C ??? lol nothing to do with it
-
 /**
  * @deprecated will be removed
  */
@@ -2985,30 +2996,6 @@ function get_fields($req, $enleve_descripteur)
     return $res;
 }
 
-/**
- * @deprecated will be removed
- */
-function bouton_radio($nom, $valeur, $lib, $chk = false)
-{
-    if ($chk) $chk = 'checked';
-    else $chk = '';
-    echo '<input type="radio" id="' . $nom . $valeur . '" name="' . $nom . '" value="' . $valeur . '" ' . $chk . '/>'
-        . '<label for="' . $nom . $valeur . '">' . $lib . '</label>&nbsp;';
-}
-
-
-
-/**
- * @deprecated will be removed
- */
-function affiche_var($nom)
-{
-    global $$nom;
-    //echo ' variable $'.$nom.' = '.$$nom.'<br>';
-    echo '$' . $nom . ' = ';
-    var_dump($$nom);
-    echo '<br>';
-}
 
 /* Retourne le libellé d'une ville */
 /* P1 :numéro de la ville ; P2 : sortie HTML du libellé ; P3 : recherche du commentaire sur la ville */
@@ -3066,12 +3053,12 @@ function lib_ville_new($num_ville, $html = 'O', $rech_comment = false)
  */
 function Div_Note($texte)
 {
-    //return '<a href="#" class="info2">'.Affiche_Icone('note').'<span>'.$texte.'</span></a>';	
+    // return '<a href="#" class="info2">'.Affiche_Icone('note').'<span>'.$texte.'</span></a>';	
     $strip_list = array('p', 'span');
     foreach ($strip_list as $tag) {
         $texte = preg_replace('/<\/?' . $tag . '(.|\s)*?>/', '', $texte);
     }
-    return '&nbsp;<span class="help-tip"><span >' . $texte . '</span></span>&nbsp;';
+    return ' <span class="help-tip"><span >' . $texte . '</span></span> ';
 }
 
 // Affiche un div pour les notes ; "old style"
@@ -3089,9 +3076,7 @@ function Div_Note_Old($nom_image, $nom_div, $texte)
     echo '<hr width="80%" align="left"/>';
     echo '</div>' . "\n";
     echo '<script type="text/javascript">' . "\n";
-    echo '<!--' . "\n";
     echo 'cache_div(\'' . $nom_div . '\');' . "\n";
-    echo '//-->' . "\n";
     echo '</script>' . "\n";
 }
 
@@ -3103,7 +3088,7 @@ function my_self()
     return my_html($_SERVER['PHP_SELF']);
 }
 
-// Recherche d'un divorce éventuel ; prend en entrée la référence de l'union
+// Recherche d'un divorce éventuel; prend en entrée la référence de l'union
 function get_divorce($Reference)
 {
     global $lib_div;
@@ -3130,18 +3115,7 @@ function get_divorce($Reference)
 }
 
 /*
-http://assemblysys.com/fr/calcul-de-distance-en-fonction-de-la-latitude-et-longitude-en-php/
 Description : Calcul de la distance entre 2 points en fonction de leur latitude/longitude
-Auteur : Rajesh Singh (2014)
-Site web : AssemblySys.com
- 
-Si vous trouvez ce code utile, vous pouvez montrer votre
-appréciation à Rajesh en lui offrant un café ;)
-PayPal: rajesh.singh@assemblysys.com
- 
-Du moment que cette notice (y compris le nom et détails sur l'auteur) est
-inclue et N'EST PAS ALTÉRÉE, ce code est distribué selon la GNU General
-Public License version 3 : http://www.gnu.org/licenses/gpl-3.0.fr.html
 */
 function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_long, $unit = 'km', $decimals = 2)
 {
@@ -3174,6 +3148,9 @@ function construit_fic($chemin, $nom_fic, $ext = '')
 
 
 // Chaine pdf pour utf-8 ?
+/**
+ * @deprecated update ext lib pdf and use pdf utf-8
+ */
 function chaine_pdf($chaine)
 {
     global $def_enc;
@@ -3182,64 +3159,6 @@ function chaine_pdf($chaine)
         // Compatibilité PHP 8.2, correction de Christian
         $chaine = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $chaine);
     return $chaine;
-}
-
-// Ouvre un fichier avec le BOM éventuel pour l'UTF-8
-function ouvre_fic($nom_fic, $mode)
-{
-    global $def_enc;
-    $fp = fopen($nom_fic, $mode);
-    // Byte Order mark (BOM) for UTF-8
-    if ($def_enc == 'UTF-8') fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
-    return $fp;
-}
-
-// Affiche le label d'un bouton radio
-/**
- * @deprecated will be removed
- */
-function lb_radio($id_for, $lib)
-{
-    return '<label for="' . $id_for . '">' . $lib . '</label>';
-}
-
-// Affiche le choix de la sortie : écran, texte ou csv (facultatif)
-/**
- * @deprecated will be removed
- */
-function affiche_sortie($csv)
-{
-    global $LG_Ch_Output_Screen, $LG_Ch_Output_Text, $LG_Ch_Output_CSV, $est_privilegie;
-    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label>&nbsp;';
-    echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label>&nbsp;';
-    if ($csv) {
-        // L'export CSV n'est disponible qu'à partir du profil privilégié
-        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
-    }
-}
-
-// Affiche le temps d'exécution d'une fonction
-/**
- * @deprecated will be removed
- */
-function affiche_temps($quoi)
-{
-    global $debut;
-    $fin = microtime_float();
-    $totaltime = ($fin - $debut);
-    $exec_time = number_format($totaltime, 3);
-    echo "Debut : " . date("H:i:s", $debut);
-    echo "<br>Fin : " . date("H:i:s", $fin);
-    echo "<br> $quoi exécuté en " . $exec_time . " sec<br>";
-}
-
-/**
- * @deprecated will be removed
- */
-function affiche_heure_precise($quoi)
-{
-    $ladate = DateTime::createFromFormat('U.u', microtime(TRUE));
-    echo $quoi . ' ' . $ladate->format('d-m-Y H:i:s.u') . '<br>';
 }
 
 // Corrige les null sur un enregistrement personne; peuvent générer des plantages

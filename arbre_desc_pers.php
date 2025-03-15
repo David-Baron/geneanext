@@ -201,15 +201,15 @@ if (!$x) {
     //for ($nb = 0; $nb < $Pers; $nb++) echo 'Ligne : '.$Lignes[$nb].'<br />';
 
     // Préparation des liens pour optimisation
-    $fin_arbres_asc = '><img src="' . $chemin_images_icones . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/></a>';
-    $fin_arbres_desc = '><img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" alt="' . $LG_desc_tree . '" border="0" title="' . $LG_desc_tree . '"/></a>';
+    $fin_arbres_asc = '><img src="' . $root . '/assets/img/' . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/></a>';
+    $fin_arbres_desc = '><img src="' . $root . '/assets/img/' . $Icones['arbre_desc'] . '" alt="' . $LG_desc_tree . '" border="0" title="' . $LG_desc_tree . '"/></a>';
 
     // Préparation image ligne pour optimisation
     if ($texte)
-        $img_ligne = '&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['ligne_vert'] . '" border="0" title="" alt="ligne"/>';
+        $img_ligne = '&nbsp;&nbsp;<img src="' . $root . '/assets/img/' . $Icones['ligne_vert'] . '" border="0" title="" alt="ligne"/>';
     else {
-        $img_ligne_v = '&nbsp;<img src="' . $chemin_images_icones . $Icones['fleche_bas'] . '" border="0" title="" alt="ligne"/>';
-        $img_ligne = '&nbsp;<img src="' . $chemin_images_icones . $Icones['couple_donne'] . '" border="0" title="" alt="ligne"/>';
+        $img_ligne_v = '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['fleche_bas'] . '" border="0" title="" alt="ligne"/>';
+        $img_ligne = '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['couple_donne'] . '" border="0" title="" alt="ligne"/>';
     }
 
     //$icone_Puis = Affiche_Icone('couple_donne','puis').'&nbsp;'."\n";

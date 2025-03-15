@@ -45,7 +45,7 @@ if (($_SESSION['estPrivilegie']) or ($EnrPers[8] == 'O')) {
     Insere_Haut($EnrPers[2] . ' ' . $EnrPers[1], $compl, 'exp_Gedcom_Personne', $Refer);
 
     $nom_fic_ged = $chemin_Gedcom . 'export_ged_' . $Refer . '.ged';
-    if ($fp = ouvre_fic($nom_fic_ged, 'w')) {
+    if ($fp = fopen($nom_fic_ged, 'w')) {
 
         get_Lib_FR();
 

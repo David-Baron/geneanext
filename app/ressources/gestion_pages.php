@@ -125,24 +125,6 @@ if (isset($Environnement)) {
         }
     }
 
-    /*
-	if ($courante != $_SESSION['page_prec']) $_SESSION['pages'][] = $courante;
-	$_SESSION['page_prec'] = $courante;
-	$nb_p = count($_SESSION['pages']);
-	if ($_SESSION['pages'][$nb_p-1] == $_SESSION['pages'][$nb_p-2]) $dest = array_pop($_SESSION['pages']);
-	*/
-
-    if ($debug) {
-        $dh = date("d/m/Y H:i:s");
-        $f_log = ouvre_fic('log.txt', 'a+');
-        fputs($f_log, '');
-        fputs($f_log, $dh . ' ===== avant');
-        fputs($f_log, ' Pages mémorisées');
-        for ($nb = 0; $nb < count($_SESSION['pages']); $nb++) {
-            fputs($f_log, '   ' . $_SESSION['pages'][$nb]);
-        }
-    }
-
     $memo_page = true;
     if (isset($not_memo))
         $memo_page = false;
@@ -165,16 +147,6 @@ if (isset($Environnement)) {
         fputs($f_log, ' Page précédente ' . $precedente);
         fclose($f_log);
     }
-
-    // Sécurisation de $JScript
-    //$JScript = preg_replace('/([^._a-z0-9]+)/i', '', $JScript);
-
-    /*
-	echo 'Courante : '.$courante.'<br>';
-	echo '$_SESSION[page_prec] : '.$_SESSION['page_prec'].'<br>';
-	echo 'Pages mémo : '.count($_SESSION['pages']).'<br>';
-	for ($nb=0;$nb<count($_SESSION['pages']);$nb++) echo 'Page '.$nb.' : '.$_SESSION['pages'][$nb]."<br>\n";
-	*/
 }
 // Valeurs par défaut si non définies
 if (!isset($_SESSION['estInvite'])) $_SESSION['estInvite'] = false;

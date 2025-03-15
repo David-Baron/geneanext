@@ -44,7 +44,7 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Traitement en rupture sur le nom de la table ==> uniquement pour les sites gratuits
 function traite_rup_table($nom_table)
 {
-    global $nb_req_table, $chemin_images, $Icones, $SiteGratuit, $Premium, $Pivot_Masquage, $depuis_heberge, $Environnement, $debug;
+    global $root, $nb_req_table, $Icones, $SiteGratuit, $Premium, $Pivot_Masquage, $depuis_heberge, $Environnement, $debug;
     if ($debug) echo $nb_req_table . ' ' . my_html(LG_IMP_BACKUP_READ_LINES) . '<br>';
     // Traitement de cohérence : on vérifie que le nombre de lignes de la table correspond au nombre de lignes du fichier
     // Si ce n'est pas le cas, on considère qu'il y falsification du fichier
@@ -55,7 +55,7 @@ function traite_rup_table($nom_table)
         if ($row = $res->fetch(PDO::FETCH_NUM)) {
             if ($row[0] != $nb_req_table) {
                 $image = $Icones['stop'];
-                echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"> '
+                echo '<img src="' . $root . '/assets/img/' . $image . '" alt="' . $image . '" title="' . $image . '"> '
                     . my_html(LG_IMP_BACKUP_LINES_ERROR) . '<br>';
                 // var_dump ($row[0]);
                 // var_dump ($nb_req_table);
@@ -479,7 +479,7 @@ if ($bt_OK) {
                     // Table non trouvée dans la liste initiale
                     if (array_search($row[0], $liste_tables) === false) {
                         $image = $Icones['stop'];
-                        echo '<img src="' . $chemin_images . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"> '
+                        echo '<img src="' . $root . '/assets/img/' . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '"> '
                             . $row[0] . ' ' . '<br>';
                         // Vidage de la table
                         $req = 'drop ' . $row[0];

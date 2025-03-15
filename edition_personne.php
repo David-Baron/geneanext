@@ -91,7 +91,7 @@ function lien_aj_union($unisexe)
 // Affiche une personne et ses parents
 function Aff_PersonneI($enreg2, $Personne, $Decalage)
 {
-    global $root, $Refer, $Pere_GP, $Mere_GP, $Rang_GP, $Comportement, $Icones, $Images, $chemin_images_util, $chemin_images, $chemin_images_icones, $Commentaire, $Diffusion_Commentaire_Internet, $Modif, $Existe_Filiation, $Existe_Union, $Existe_Enfants, $SexePers, $SiteGratuit, $Premium, $LG_Data_tab, $LG_File, $lib_OK, $lib_Annuler, $LG_at, $LG_with, $LG_tip, $LG_of, $LG_andof, $largP, $death_def_min_year, $url_matchid, $url_matchid_sch, $LG_Menu_Title;
+    global $root, $Refer, $Pere_GP, $Mere_GP, $Rang_GP, $Comportement, $Icones, $Images, $chemin_images_util, $Commentaire, $Diffusion_Commentaire_Internet, $Modif, $Existe_Filiation, $Existe_Union, $Existe_Enfants, $SexePers, $SiteGratuit, $Premium, $LG_Data_tab, $LG_File, $lib_OK, $lib_Annuler, $LG_at, $LG_with, $LG_tip, $LG_of, $LG_andof, $largP, $death_def_min_year, $url_matchid, $url_matchid_sch, $LG_Menu_Title;
 
     $Existe_Filiation = false;
     $Existe_Enfants = false;
@@ -104,7 +104,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="850" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="850" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";
@@ -140,15 +140,15 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<input type="hidden" name="ANomP" value="' . $enreg2['idNomFam'] . '/' . $enreg2['Nom'] . '"/>' . "\n";
     // Possibilité d'ajouter un nom
-    echo '<img id="ajout_nom" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_PERS_ADD_NAME . '" title="' . LG_PERS_ADD_NAME . '"' .
+    echo '<img id="ajout_nom" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . LG_PERS_ADD_NAME . '" title="' . LG_PERS_ADD_NAME . '"' .
         'onclick="inverse_div(\'id_div_ajout_nom\');document.getElementById(\'nouveau_nom\').focus();"/>' . "\n";
     if (isset($_SESSION['Nom_Saisi'])) {
-        echo ' <img id="Ireprend_nom" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . LG_PERS_SAME_NAME . '" title="' . LG_PERS_SAME_NAME . '"' .
+        echo ' <img id="Ireprend_nom" src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_PERS_SAME_NAME . '" title="' . LG_PERS_SAME_NAME . '"' .
             ' onclick="reprend_nom();"/>' . "\n";
     }
     echo '<div id="id_div_ajout_nom">' . "\n";
     echo LG_ADD_NAME . ' <input type="text" size="50" name="nouveau_nom" id="nouveau_nom"/>' . "\n";
-    echo ' <img id="majuscule" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
+    echo ' <img id="majuscule" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
         ' onclick="NomMaj();document.getElementById(\'NomP\').focus();"/>' . "\n";
     echo '<input type="button" name="ferme_OK_nom" value="' . $lib_OK_h . '" onclick="ajoute_nom()"/>' . "\n";
     echo '<input type="button" name="ferme_An_nom" value="' . $lib_Annuler_h . '" onclick="inverse_div(\'id_div_ajout_nom\')"/>' . "\n";
@@ -202,10 +202,10 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     ); // Clé de sélection de la ligne
     echo '<input type="hidden" name="AVille_NaissanceP" value="' . $enreg2['Ville_Naissance'] . '"/>' . "\n";
     // Possibilité d'ajouter une ville
-    echo '<img id="ajout1" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
+    echo '<img id="ajout1" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         ' onclick="inverse_div(\'id_div_ajout1\');document.getElementById(\'nouvelle_ville1\').focus();"/>' . "\n";
     if (isset($_SESSION['Nom_Saisi'])) {
-        echo ' <img id="Ireprend_villeN" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . LG_PERS_SAME_BIRTH_TOWN . '" title="' . LG_PERS_SAME_BIRTH_TOWN . '"' .
+        echo ' <img id="Ireprend_villeN" src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_PERS_SAME_BIRTH_TOWN . '" title="' . LG_PERS_SAME_BIRTH_TOWN . '"' .
             ' onclick="reprend_villeN();"/>' . "\n";
     }
     echo '<div id="id_div_ajout1">' . "\n";
@@ -223,10 +223,10 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     aff_liste_villes('Ville_DecesP', 0, 1, $enreg2['Ville_Deces']); // Clé de sélection de la ligne
     echo '<input type="hidden" name="AVille_DecesP" value="' . $enreg2['Ville_Deces'] . '"/>';
     // Possibilité d'ajouter une ville
-    echo '<img id="ajout2" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
+    echo '<img id="ajout2" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         'onclick="inverse_div(\'id_div_ajout2\');document.getElementById(\'nouvelle_ville2\').focus();"/>' . "\n";
     if (isset($_SESSION['Nom_Saisi'])) {
-        echo ' <img id="Ireprend_villeD" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . LG_PERS_SAME_DEATH_TOWN . '" title="' . LG_PERS_SAME_DEATH_TOWN . '"' .
+        echo ' <img id="Ireprend_villeD" src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_PERS_SAME_DEATH_TOWN . '" title="' . LG_PERS_SAME_DEATH_TOWN . '"' .
             ' onclick="reprend_villeD();"/>' . "\n";
     }
     echo '<div id="id_div_ajout2">' . "\n";
@@ -264,10 +264,10 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<tr><td width="' . $largP . '%">' . LG_PERS_NUMBER . '</td>';
     echo '<td><input type="text" size="20" name="NumeroP" id="NumeroP" value="' . $enreg2['Numero'] . '"/>' . "\n";
     // Calculette pour étendre le numéro Sosa
-    echo '<img id="calc1" src="' . $chemin_images_icones . $Icones['calculette'] . '" alt="' . LG_PERS_CALC_SOSA . '" title="' . LG_PERS_CALC_SOSA . '"' .
+    echo '<img id="calc1" src="' . $root . '/assets/img/' . $Icones['calculette'] . '" alt="' . LG_PERS_CALC_SOSA . '" title="' . LG_PERS_CALC_SOSA . '"' .
         ' onclick="etend_num_sosa();document.getElementById(\'NumeroP\').focus();"/>' . "\n";
     // Bouton pour numéro 1 ==> de cujus
-    echo '<img id="im_decujus" src="' . $chemin_images_icones . $Icones['decujus'] . '" alt="' . LG_PERS_DECUJUS . '" title="' . LG_PERS_DECUJUS . '"' .
+    echo '<img id="im_decujus" src="' . $root . '/assets/img/' . $Icones['decujus'] . '" alt="' . LG_PERS_DECUJUS . '" title="' . LG_PERS_DECUJUS . '"' .
         ' onclick="decujus();document.getElementById(\'NumeroP\').focus();"/>' . "\n";
     echo '<input type="hidden" name="ANumeroP" value="' . $enreg2['Numero'] . '"/></td>' . "\n";
     echo "</tr>\n";
@@ -328,7 +328,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         echo '<input type="radio" id="Categorie_' . $num_cat . '" name="Categorie" value="' . $num_cat . '"';
         if ($categ_Fiche == $num_cat) echo ' checked="checked"';
         echo '/><label for="Categorie_' . $num_cat . '">'
-            . '<img src="' . $chemin_images_icones . $Icones[$nom_cat] . '" alt="' . $titre_cat . '" title="' . $titre_cat . '"/>' . '</label>  ' . "\n";
+            . '<img src="' . $root . '/assets/img/' . $Icones[$nom_cat] . '" alt="' . $titre_cat . '" title="' . $titre_cat . '"/>' . '</label>  ' . "\n";
     }
     $nb_tag = 0;
     echo '<input type="radio" id="Categorie_0" name="Categorie" value="0"';

@@ -44,8 +44,8 @@ Insere_Haut($titre, $compl, 'Stat_Base_Generations', '');
 
 $n_personnes = nom_table('personnes');
 
-$im_moins = '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . LG_STAT_GEN_DEC . '" title="' . LG_STAT_GEN_DEC . '" border="0" ';
-$im_plus = '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . LG_STAT_GEN_INC . '" title="' . LG_STAT_GEN_INC . '" border="0" ';
+$im_moins = '<img src="' . $root . '/assets/img/' . $Icones['moins'] . '" alt="' . LG_STAT_GEN_DEC . '" title="' . LG_STAT_GEN_DEC . '" border="0" ';
+$im_plus = '<img src="' . $root . '/assets/img/' . $Icones['plus'] . '" alt="' . LG_STAT_GEN_INC . '" title="' . LG_STAT_GEN_INC . '" border="0" ';
 
 echo '<form  id="saisieG" action="' . my_self() . '" method="post">' . "\n";
 echo '<table border="0" width="60%" align="center">' . "\n";

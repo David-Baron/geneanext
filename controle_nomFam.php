@@ -34,11 +34,6 @@ $res = lect_sql($sql);
 if ($res->rowCount() > 0) {
     $row = $res->fetch(PDO::FETCH_NUM);
     echo $row[0];
-    if ($debug) {
-        $fp = ouvre_fic('log_nom.txt', 'wb');
-        fputs($fp, $row[0]);
-        fclose($fp);
-    }
     return;
 }
 echo 'OK';

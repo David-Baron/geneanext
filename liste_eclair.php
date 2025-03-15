@@ -88,7 +88,7 @@ else {
 if (! $texte)
     include(__DIR__ . '/assets/js/Liste_Patro.js');        // Même javascript que la liste patronymique
 
-$style_fond = 'style="background-image:url(\'' . $chemin_images . 'bar_off.gif\');background-repeat:repeat-x;"';
+$style_fond = 'style="background-image:url(\'' . $root . '/assets/img/' . 'bar_off.gif\');background-repeat:repeat-x;"';
 $ent_table = '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';
 $ent_table_texte = '<table width="95%" align="center">';
 
@@ -123,7 +123,7 @@ if (!$texte) {
     echo "</td>\n";
     echo '<td width="50%" class="rupt_table"><input type="submit" value="' . $LG_modify_list . '"/>' . "\n";
     $alt_img = my_html(LG_COUNTY_LIST_SHOW_HIDE);
-    echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
         ' onmouseover="Survole_Clic_Div_Tous(\'MO\',\'' . $Comportement . '\');" onclick="Survole_Clic_Div_Tous(\'CL\',\'' . $Comportement . '\');"/>';
     echo '</td>' . "\n";
     echo '</tr></table>';

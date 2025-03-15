@@ -43,7 +43,7 @@ $n_unions = nom_table('unions');
 
 // Optimisation : préparation echo des images
 $texte = $LG_add;
-$echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $texte . '" title="' . $texte . '"/></a>';
+$echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $texte . '" title="' . $texte . '"/></a>';
 
 // Lien direct sur le dernier évènement saisi et possibilité d'insérer un évènement
 if ($est_gestionnaire) {
@@ -127,7 +127,7 @@ if ($result->rowCount() > 0) {
     if ($CSV) {
         // Crée le fichier et écrit la ligne d'entête
         $nom_fic = $chemin_exports . 'liste_evenements.csv';
-        $fp = ouvre_fic($nom_fic, 'w+');
+        $fp = fopen($nom_fic, 'w+');
         $ligne = '';
         // $ligne .= 'Ref'.';';
         $ligne .= $LG_Event_Title . ';';

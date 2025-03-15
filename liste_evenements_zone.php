@@ -48,7 +48,7 @@ else {
 
     // Optimisation : préparation echo des images
     $texte = $LG_add;
-    $echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" border="0" alt="' . $texte . '" title="' . $texte . '"/></a>';
+    $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" border="0" alt="' . $texte . '" title="' . $texte . '"/></a>';
 
     // Récupération des informations sur la zone géographique
     switch ($nivZone) {

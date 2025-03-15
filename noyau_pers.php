@@ -71,22 +71,14 @@ require(__DIR__ . '/app/ressources/gestion_pages.php');
 // Retour sur demande d'annulation
 if ($bt_An) Retour_Ar();
 
-$n_unions = nom_table('unions');
-$n_filiations = nom_table('filiations');
-$n_personnes = nom_table('personnes');
-$n_villes = nom_table('villes');
-$n_noms_personnes = nom_table('noms_personnes');
-$noms_famille = nom_table('noms_famille');
-
-
 // Reset de la base pour les tests ; à supprimer !!!!
 if ($test) {
-    $res = maj_sql('delete from ' . $n_unions);
-    $res = maj_sql('delete from ' . $n_filiations);
-    $res = maj_sql('delete from ' . $n_personnes);
-    $res = maj_sql('delete from ' . $n_villes);
-    $res = maj_sql('delete from ' . $n_noms_personnes);
-    $res = maj_sql('delete from ' . $noms_famille);
+    $res = maj_sql('delete from ' . nom_table('unions'));
+    $res = maj_sql('delete from ' . nom_table('filiations'));
+    $res = maj_sql('delete from ' . nom_table('personnes'));
+    $res = maj_sql('delete from ' . nom_table('villes'));
+    $res = maj_sql('delete from ' . nom_table('noms_personnes'));
+    $res = maj_sql('delete from ' . nom_table('noms_famille'));
 }
 
 
@@ -149,10 +141,10 @@ if ($bt_OK) {
     $Diff_InternetP = 'O';
     $Statut_Fiche = 'N';
 
-    $deb_req_P = 'insert into ' . $n_personnes . ' values(';
-    $deb_req_F = 'insert into ' . $n_filiations . ' values(';
+    $deb_req_P = 'insert into ' . nom_table('personnes') . ' values(';
+    $deb_req_F = 'insert into ' . nom_table('filiations') . ' values(';
     // On ne charge pas toutes les colonnes sur les unions
-    $deb_req_U = 'insert into ' . $n_unions . ' (Conjoint_1,Conjoint_2,Date_Creation,Date_Modification,Statut_Fiche) values(';
+    $deb_req_U = 'insert into ' . nom_table('unions') . ' (Conjoint_1,Conjoint_2,Date_Creation,Date_Modification,Statut_Fiche) values(';
 
     $PDec = false;
     if (($nomPDec != '') and ($prenomPDec != '')) $PDec = true;
@@ -352,20 +344,15 @@ if ((!$bt_OK) && (!$bt_An)) {
     Insere_Haut($titre, $compl, 'noyau', '');
 
     $vide = true;
-    $sqlP = 'select Reference from ' . $n_personnes . ' where Reference <> 0 limit 1';
-    $sqlV = 'select Identifiant_zone from ' . $n_villes . ' where Identifiant_zone <> 0 limit 1';
+    $sqlP = 'select Reference from ' . nom_table('personnes') . ' where Reference <> 0 limit 1';
+    $sqlV = 'select Identifiant_zone from ' . nom_table('villes') . ' where Identifiant_zone <> 0 limit 1';
     $ut = exec_req_vide($sqlP);
     $ut = exec_req_vide($sqlV);
 
-    if ($debug) $vide = true;
     if (!$vide) {
         echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . LG_DECUJUS_ERR_NO_EMPTY . '<br>';
     } else {
         echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'NomP,PrenomsP\')">';
-
-        $texte_im_maj = LG_PERS_NAME_TO_UPCASE;
-        $icone_maj = $chemin_images_icones . $Icones['majuscule'];
-
         echo '<div class="labels">';
         echo '<table>';
         echo '<tr>';
@@ -427,29 +414,29 @@ if ((!$bt_OK) && (!$bt_An)) {
 
 function case_personne($suff)
 {
-    global $root, $Icones, $texte_im_maj, $icone_maj, $hidden;
-    echo '<label for="nom' . $suff . '">' . my_html(LG_PERS_NAME) . ' :</label><input type="text" id="nom' . $suff . '" name="nom' . $suff . '" class="oblig" />&nbsp;';
+    global $root, $Icones;
+    echo '<label for="nom' . $suff . '">' . LG_PERS_NAME . ' :</label><input type="text" id="nom' . $suff . '" name="nom' . $suff . '" class="oblig" /> ';
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '&nbsp;<img id="maj' . $suff . '" src="' . $icone_maj . '" alt="' . $texte_im_maj . '" title="' . $texte_im_maj . '"' .
+    echo ' <img id="maj' . $suff . '" src="' . $root . '/assets/img/text_uppercase.png" alt="' . LG_PERS_NAME_TO_UPCASE . '" title="' . LG_PERS_NAME_TO_UPCASE . '"' .
         ' onclick="document.forms.saisie.nom' . $suff . '.value = document.forms.saisie.nom' . $suff . '.value.toUpperCase();"/>';
     echo '<br />';
-    echo '<label for="prenom' . $suff . '">' . my_html(LG_PERS_FIRST_NAME) . ' :</label><input type="text" id="prenom' . $suff . '" name="prenom' . $suff . '" class="oblig" />&nbsp;';
+    echo '<label for="prenom' . $suff . '">' . LG_PERS_FIRST_NAME . ' :</label><input type="text" id="prenom' . $suff . '" name="prenom' . $suff . '" class="oblig" /> ';
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '<br />';
     $chkM = '';
     $chkF = '';
-    if (($suff == 'PDec') or ($suff == 'PConj')) $chkM = ' checked="checked"';
-    if (($suff == 'MDec') or ($suff == 'MConj')) $chkF = ' checked="checked"';
-    echo '<label for="sexe' . $suff . '">' . my_html(LG_SEXE) .
+    if (($suff == 'PDec') or ($suff == 'PConj')) $chkM = ' checked';
+    if (($suff == 'MDec') or ($suff == 'MConj')) $chkF = ' checked';
+    echo '<label for="sexe' . $suff . '">' . LG_SEXE .
         ' :</label>' .
-        '<input type="radio" name="sexe' . $suff . '" id="sexe' . $suff . '" value="m"' . $chkM . '/>' . my_html(LG_SEXE_MAN) .
-        '<input type="radio" name="sexe' . $suff . '"  value="f"' . $chkF . '/>' . my_html(LG_SEXE_WOMAN) . '<br />';
-    echo '<label for="naissance' . $suff . '">' . my_html(LG_PERS_BORN) . ' :</label>';
+        '<input type="radio" name="sexe' . $suff . '" id="sexe' . $suff . '" value="m"' . $chkM . '/>' . LG_SEXE_MAN .
+        '<input type="radio" name="sexe' . $suff . '"  value="f"' . $chkF . '/>' . LG_SEXE_WOMAN . '<br />';
+    echo '<label for="naissance' . $suff . '">' . LG_PERS_BORN . ' :</label>';
     zone_date2('Anaissance' . $suff, 'naissance' . $suff, 'Cnaissance' . $suff, '');
-    echo my_html(LG_AT) . '&nbsp;<input type="text" id="Lnaissance' . $suff . '" name="Lnaissance' . $suff . '" /><br />';
-    echo '<label for="deces' . $suff . '">' . my_html(LG_PERS_DEAD) . ' :</label>';
+    echo LG_AT . ' <input type="text" id="Lnaissance' . $suff . '" name="Lnaissance' . $suff . '" /><br />';
+    echo '<label for="deces' . $suff . '">' . LG_PERS_DEAD . ' :</label>';
     zone_date2('Adeces' . $suff, 'deces' . $suff, 'Cdeces' . $suff, '');
-    echo my_html(LG_AT) . '&nbsp;<input type="text" id="Ldeces' . $suff . '" name="Ldeces' . $suff . '" /><br />';
+    echo LG_AT . ' <input type="text" id="Ldeces' . $suff . '" name="Ldeces' . $suff . '" /><br />';
 }
 
 function exec_req_vide($req)
@@ -476,7 +463,7 @@ function exec_req_vide($req)
 
 function cree_ville($nom_ville)
 {
-    global $n_villes, $max_id_ville, $tab_villes, $debug;
+    global $max_id_ville, $tab_villes, $debug;
     if ($debug) echo 'cre ville : ' . $nom_ville . '<br />';
     $id_ville = 0;
     if ($nom_ville <> '') {
@@ -492,7 +479,7 @@ function cree_ville($nom_ville)
         else {
             $tab_villes[$max_id_ville] = $nom_ville;
             $max_id_ville++;
-            $req = 'insert into ' . $n_villes .
+            $req = 'insert into ' . nom_table('villes') .
                 ' values(' . $max_id_ville . ',' . "'" . $nom_ville . "'" . ',null,current_timestamp,current_timestamp,' . "'N'" . ',0,null,null)';
             $id_ville = $max_id_ville;
             $res = maj_sql($req);

@@ -116,7 +116,7 @@ if (!$CSV) {
     // Sortie CSV
     if ($CSV) {
         $nom_fic = $chemin_exports . 'liste_connexions.csv';
-        $fp = ouvre_fic($nom_fic, 'w+');
+        $fp = fopen($nom_fic, 'w+');
 
         // Ecriture entête
         $ligne = '';

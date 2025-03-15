@@ -82,7 +82,7 @@ if ($res = lect_sql($sql)) {
         // Sortie CSV
         if ($CSV) {
             $nom_fic = construit_fic($chemin_exports, 'completude_' . $NomL . '#', 'csv');
-            $fp = ouvre_fic($nom_fic, 'w+');
+            $fp = fopen($nom_fic, 'w+');
             // Ecriture de la ligne d'entête
             $ligne = '';
             $ligne .= LG_PERS_REF . ';';
@@ -104,9 +104,9 @@ if ($res = lect_sql($sql)) {
         // Sortie écran
         else {
 
-            $img_vert   = '<img src="' . $chemin_images_icones . $Icones['drapeau_vert'] . '" alt="Drapeau vert"/>';
-            $img_orange = '<img src="' . $chemin_images_icones . $Icones['drapeau_orange'] . '" alt="Drapeau orange"/>';
-            $img_rouge  = '<img src="' . $chemin_images_icones . $Icones['drapeau_rouge'] . '" alt="Drapeau rouge"/>';
+            $img_vert   = '<img src="' . $root . '/assets/img/' . $Icones['drapeau_vert'] . '" alt="Drapeau vert"/>';
+            $img_orange = '<img src="' . $root . '/assets/img/' . $Icones['drapeau_orange'] . '" alt="Drapeau orange"/>';
+            $img_rouge  = '<img src="' . $root . '/assets/img/' . $Icones['drapeau_rouge'] . '" alt="Drapeau rouge"/>';
 
             $bord = '0';
             if (!$texte) {

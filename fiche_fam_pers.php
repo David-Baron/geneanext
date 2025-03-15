@@ -271,7 +271,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
     if ($est_privilegie)
         $compl .= Affiche_Icone_Lien('href="' . $root . '/exp_gedcom_personne.php?Refer=' . $Refer . '"', 'gedcom', $LG_Menu_Title['Exp_Ged_Pers']) . "\n";
     $compl .= '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Refer . '">' .
-        '<img border="0" src="' . $chemin_images_icones . $Icones['arbre_ascP'] . '" alt="Arbres" onmouseover="inverse_div(\'bonus\');"/>' .
+        '<img border="0" src="' . $root . '/assets/img/' . $Icones['arbre_ascP'] . '" alt="Arbres" onmouseover="inverse_div(\'bonus\');"/>' .
         '</a> ' .
         Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '"', 'arbre_desc', $LG_desc_tree) . "\n";
     if ($est_contributeur) {

@@ -136,13 +136,13 @@ function Jour_Semaine($jour, $mois, $annee)
 
 function aff_bouton($nb, $txt)
 {
-    global $chemin_images_icones, $Icones, $def_enc;
+    global $root, $Icones, $def_enc;
     echo '<div id="boutons' . $nb . '">' . "\n";
     echo '<table border="0" cellpadding="0" cellspacing="0">' . "\n";
     echo '<tr><td>';
     echo '<div class="buttons">';
     echo '<button type="submit" class="positive">';
-    if ($txt == 'Convertir') echo '<img src="' . $chemin_images_icones . $Icones['conversion'] . '" alt=""/>';
+    if ($txt == 'Convertir') echo '<img src="' . $root . '/assets/img/' . $Icones['conversion'] . '" alt=""/>';
     echo htmlentities($txt, ENT_QUOTES, $def_enc) . '</button>';
     echo '</div>';
     echo '</td></tr>';

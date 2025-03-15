@@ -59,9 +59,9 @@ if ($Reference == 0) {
     // Top pour savoir s'il existe des images à afficher
     $existe_images = false;
 
-    $img_asc = '<img src="' . $chemin_images_icones . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/>';
-    $img_desc = '<img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" border="0" title="' . $LG_desc_tree . '" alt="' . $LG_desc_tree . '"/>';
-    $img_image = '&nbsp;&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['images'] . '" border="0" ';
+    $img_asc = '<img src="' . $root . '/assets/img/' . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/>';
+    $img_desc = '<img src="' . $root . '/assets/img/' . $Icones['arbre_desc'] . '" border="0" title="' . $LG_desc_tree . '" alt="' . $LG_desc_tree . '"/>';
+    $img_image = '&nbsp;&nbsp;&nbsp;<img src="' . $root . '/assets/img/' . $Icones['images'] . '" border="0" ';
 
     if ($Comportement == 'C') $evenement = 'onclick';
     else $evenement = 'onmouseover';

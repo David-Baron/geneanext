@@ -1701,7 +1701,7 @@ if ($ok == 'OK') {
 
             if ($maj_oui == 'on') {
                 maj_date_site(true);
-                $ic_conseil = '<img src="' . $chemin_images_icones . $Icones['tip'] . '" alt="' . LG_TIP . '"/> ';
+                $ic_conseil = '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '"/> ';
                 echo $ic_conseil . LG_IMP_GED_REMIND_SOSA_1
                     . '<a href="' . $root . '/liste_pers.php?Type_Liste=P">'
                     . LG_IMP_GED_REMIND_SOSA_2 . '</a>. ' . LG_IMP_GED_REMIND_SOSA_3
@@ -1756,9 +1756,12 @@ if ($_SESSION['estGestionnaire']) {
         echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_IMAGE_DEFAULT_VISIBILITY) . '</td><td class="value">';
         echo '<input type="checkbox" name="diff_internet_img" checked></td></tr>' . "\n";
         echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_DEFAULT_STATUS) . '</td><td class="value">';
-        bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
-        bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
-        bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
+        echo '<input type="radio" id="val_statutO" name="val_statut" value="O" checked/>'
+        . '<label for="val_statutO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="val_statutN" name="val_statut" value="N"/>'
+        . '<label for="val_statutN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="val_statutI" name="val_statut" value="I"/>'
+        . '<label for="val_statutI">' . LG_FROM_INTERNET . '</label> ';
         echo '</td></tr>' . "\n";
         echo '<tr><td class="label" width="35%">' . ucfirst(LG_IMP_GED_IMPORT_DATES) . '</td><td class="value">';
         echo '<input type="checkbox" name="reprise_date"/></td></tr>' . "\n";

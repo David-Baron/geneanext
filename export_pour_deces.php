@@ -80,7 +80,7 @@ if ($bt_OK) {
             // Ouverture du fichier et écriture de l'entête
             $nom_fic = $chemin_exports . 'export_deces';
             $nom_fic .= '.csv';
-            $fp = ouvre_fic($nom_fic, 'w+');
+            $fp = fopen($nom_fic, 'w+');
             if ($fp) {
                 fputs($fp, $LG_Name . ';' . $LG_birth . ';' . LG_EXPORT_DEATH_BIRTH_PLACE . ';' . LG_FIRST_NAME . ';');
                 while ($row = $res->fetch(PDO::FETCH_NUM)) {

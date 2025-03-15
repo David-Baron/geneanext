@@ -149,7 +149,7 @@ function dernier($Sexe)
 // Affiche l'union
 function Aff_Union($enreg2, $Ref_Union, $Decalage)
 {
-    global $root, $chemin_images_icones, $Icones, $Images, $chemin_images, $hidden, $max_enf_rapides, $Commentaire, $Diffusion_Commentaire_Internet, $lib_OK, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_add, $def_enc, $Uni_Sexe, $Conjoint, $Conjoint_1, $Conjoint_2, $Sexe_1, $Sexe_2, $LG_birth, $LG_death
+    global $root, $Icones, $Images, $hidden, $max_enf_rapides, $Commentaire, $Diffusion_Commentaire_Internet, $lib_OK, $lib_Okay, $lib_Annuler, $lib_Supprimer, $LG_add, $def_enc, $Uni_Sexe, $Conjoint, $Conjoint_1, $Conjoint_2, $Sexe_1, $Sexe_2, $LG_birth, $LG_death
         // Info de la personne dont on vient
         , $Personne, $Nom, $Prenoms, $Ne_Pers, $Dec_Pers, $P_Sexe;
 
@@ -162,7 +162,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">';
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="1000" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="1000" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";
@@ -253,7 +253,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     echo LG_AT . ' ';
     aff_liste_villes('Ville_MariageU', true, false, $enreg2['Ville_Mariage']);    // Clé de sélection de la ligne
     echo '<input type="hidden" name="AVille_MariageU" value="' . $enreg2["Ville_Mariage"] . '"/>' . "\n";
-    echo '<img id="ajout1" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
+    echo '<img id="ajout1" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         ' onclick="inverse_div(\'id_div_ajout1\');document.getElementById(\'nouvelle_ville1\').focus();"/>' . "\n";
     echo '<div id="id_div_ajout1">';
     echo LG_ADD_TOWN_LIST . ' <input type="text" name="nouvelle_ville1"  id="nouvelle_ville1" maxlength="80"/>' . "\n";
@@ -279,7 +279,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     aff_liste_villes('Ville_NotaireU', false, false, $enreg2['Ville_Notaire']);
     echo '<input type="hidden" name="ANotaire_KU" value="' . $enreg2["Notaire_K"] . '"/>';
     echo '<input type="hidden" name="AVille_NotaireU" value="' . $enreg2["Ville_Notaire"] . '"/>';
-    echo ' <img id="ajout2" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
+    echo ' <img id="ajout2" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . LG_ADD_TOWN . '" title="' . LG_ADD_TOWN . '"' .
         'onclick="inverse_div(\'id_div_ajout2\');document.getElementById(\'nouvelle_ville2\').focus();"/>' . "\n";
     echo '<div id="id_div_ajout2">';
     echo LG_ADD_TOWN_LIST . ' <input type="text" name="nouvelle_ville2" maxlength="80"/>' . "\n";

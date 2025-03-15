@@ -92,7 +92,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         }
         echo '<table width="95%" class="classic" align="center">' . "\n";
         echo '<tr align="center" ><td class="rupt_table" colspan="' . $nb_Cols . '">' . $Nouv_Type;
-        echo '&nbsp;&nbsp;<img id="ajout' . $suf . '" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . LG_LINKS_EYE . '" ' .
+        echo '&nbsp;&nbsp;<img id="ajout' . $suf . '" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . LG_LINKS_EYE . '" ' .
             Survole_Clic_Div('div' . $suf) . '/>' . "\n";
         // Possibilité d'extraire les liens du type de lien. Page interdite sur les gratuits non Premium
         if (($est_gestionnaire) and ((!$SiteGratuit) or ($Premium))) {

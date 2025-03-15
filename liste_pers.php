@@ -291,7 +291,7 @@ if (! $texte) {
             }
             // Dans le cas de la catégorie, on affiche l'icone qui correspond
             else {
-                echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[3]] . '" alt="' . $NomObj . '" title="' . $NomObj . '"/>' . '&nbsp;';
+                echo '<img src="' . $root . '/assets/img/' . $Icones['tag_' . $row[3]] . '" alt="' . $NomObj . '" title="' . $NomObj . '"/>' . '&nbsp;';
             }
             // Traitement de chaque nom
             // Récupération de la latitude et de la logitude de la ville

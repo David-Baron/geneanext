@@ -103,7 +103,7 @@ if ($bt_OK) {
     if ($Sortie == 'c') {
         // Traiter le cas d'erreur sur l'ouverture du fichier
         $NomV_fic = $chemin_exports . 'recherche_villes.csv';
-        $fp = ouvre_fic($NomV_fic, 'w+');
+        $fp = fopen($NomV_fic, 'w+');
     }
     //Init des zones de requête
     echo 'Critères demandés :<br>';
@@ -199,10 +199,10 @@ if ($bt_OK) {
         echo '<input type="hidden" name="New_Window" value="' . $New_Window . '"/>';
         echo '<br>';
         echo '<div class="buttons">';
-        echo '<button type="submit" class="positive"><img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
+        echo '<button type="submit" class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
         if ((!$SiteGratuit) or ($Premium)) {
             echo '<button type="submit" onclick="document.forms.nouvelle.reprise.value=\'reprise\'; "' .
-                ' class="positive"><img src="' . $chemin_images_icones . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
+                ' class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
         }
         echo '</div>';
         echo '</form>' . "\n";
@@ -271,7 +271,9 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
     echo '<tr><td class="label" width="20%"> ' . ucfirst($LG_Ch_Output_Format) . ' </td>';
     echo '<td class="value">';
-    affiche_sortie(true);
+    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+    echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
+    if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_NEW_TAB) . ' </td>';
     echo '<td class="value">';

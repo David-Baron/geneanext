@@ -341,7 +341,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
         echo '<form method="post" action="Recherche_Personne.php" >';
         echo '<table>';
         echo '<tr><td>' . LG_PERS_NAME . ' :</td><td><input type="text" size="30" name="NomP"/></td>';
-        echo '<td rowspan="2" valign="middle"><input type="submit" name="ok" value="' . $lib_Rechercher . '" style="background:url(' . $chemin_images_icones . $Icones['chercher'] . ') no-repeat;padding-left:18px;" /></td></tr>';
+        echo '<td rowspan="2" valign="middle"><input type="submit" name="ok" value="' . $lib_Rechercher . '" style="background:url(' . $root . '/assets/img/' . $Icones['chercher'] . ') no-repeat;padding-left:18px;" /></td></tr>';
         echo '<tr><td>' . LG_PERS_FIRST_NAME . ' :</td><td><input type="text" size="30" name="Prenoms"/></td></tr>';
         echo '</table>';
         echo '<input type="hidden" name="Horigine" value="index.php">';
@@ -358,7 +358,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
         echo '<input type="hidden" name="Sortie" value="e">';
         echo '<input type="hidden" name="Code_Postal" value="">';
         echo '<input type="hidden" name="Departement" value="-1">';
-        echo '<input type="submit" name="ok" value="' . $lib_Rechercher . '" style="background:url(' . $chemin_images_icones . $Icones['chercher'] . ') no-repeat;padding-left:18px;" />';
+        echo '<input type="submit" name="ok" value="' . $lib_Rechercher . '" style="background:url(' . $root . '/assets/img/' . $Icones['chercher'] . ') no-repeat;padding-left:18px;" />';
         echo '</form>';
         echo '</fieldset>';
         echo '</td>';
@@ -539,7 +539,7 @@ if ($vers_fic == $Version) {
                 // $max_tentatives = 99999;
                 if ($_SESSION['tentatives'] <= $max_tentatives) {
                     echo '<tr align="center"><td colspan="2">';
-                    echo '<input type="submit" name="ok" value="' . $lib_Connecter . '" style="background:url(' . $chemin_images_icones . $Icones['connecter'] . ') no-repeat;padding-left:18px;"
+                    echo '<input type="submit" name="ok" value="' . $lib_Connecter . '" style="background:url(' . $root . '/assets/img/' . $Icones['connecter'] . ') no-repeat;padding-left:18px;"
 					 onclick="return avantEnvoiIndex(this.form);" />';
                     if ($SiteGratuit)
                         echo ' <a href="' . $root . '/aide_mdp.php" target="_blank">' . my_html($LG_index_psw_forgoten) . ' ?</a> ';
@@ -551,7 +551,7 @@ if ($vers_fic == $Version) {
                 echo '<tr align="center"><td><i>' . $LG_index_connected_user . ' ' . $_SESSION['nomUtilisateur'] . ' ' . $LG_index_connected_level . ' ' . libelleNiveau($_SESSION['niveau']) . '</i></td></tr>';
                 //echo '<tr align="center"><td><input type="submit" name="sortir" value="'.$val_sortir.'"/></td></tr>';
                 echo '<tr align="center"><td>';
-                echo '<input type="submit" name="sortir" value="' . $lib_Deconnecter . '" style="background:url(' . $chemin_images_icones . $Icones['deconnecter'] . ') no-repeat;padding-left:18px;" />';
+                echo '<input type="submit" name="sortir" value="' . $lib_Deconnecter . '" style="background:url(' . $root . '/assets/img/' . $Icones['deconnecter'] . ') no-repeat;padding-left:18px;" />';
                 echo '</td></tr>';
             }
         }
@@ -568,7 +568,7 @@ if ($vers_fic == $Version) {
             echo '<form id="f1" action="' . $self . '" method="post">';
             echo '<input type="hidden" name="geneGraphe" value="exec"/>';
             $info = my_html($LG_index_info_genegraphe);
-            echo '<img src="' . $chemin_images_icones . $Icones['GeneGraphe'] . '" alt="' . $info . '" title="' . $info . '"' .
+            echo '<img src="' . $root . '/assets/img/' . $Icones['GeneGraphe'] . '" alt="' . $info . '" title="' . $info . '"' .
                 ' onclick="javascript:document.forms[\'f1\'].submit();"/> ';
             echo ' ' . Affiche_Icone_Lien('href="' . $root . '/documentation/index.php" target="_blank"', 'help', $LG_index_doc_genegraphe);
             echo '</form>';

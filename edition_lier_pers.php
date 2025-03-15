@@ -266,7 +266,7 @@ if ($clic_boutons) {
         echo '<div class="buttons">';
         echo '<button type="submit" class="positive" ' .
             'onclick="document.forms.saisie.personnes.value = document.forms.saisie.maxi.value;return false;"> ' .
-            '<img src="' . $chemin_images_icones . $Icones['dernier_ajoute'] . '" alt=""/>' . my_html($LG_Link_Pers_Last_Pers) . '</button>';
+            '<img src="' . $root . '/assets/img/' . $Icones['dernier_ajoute'] . '" alt=""/>' . my_html($LG_Link_Pers_Last_Pers) . '</button>';
         echo '</div>';
         echo "</td></tr>\n";
     }
@@ -305,7 +305,7 @@ if ($clic_boutons) {
     echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . $LG_Link_Pers_End . '&nbsp;</td><td class="value">';
     zone_date2('dFinAnc', 'dFinAff', 'dFinCache', $dFinLue);
     $txt_img = $LG_Link_Pers_Copy_Date;
-    echo '&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['copie_calend'] .
+    echo '&nbsp;&nbsp;<img src="' . $root . '/assets/img/' . $Icones['copie_calend'] .
         '" alt="' . $txt_img . '"  title="' . $txt_img . '"onclick="copieDate();"/>' . "\n";
     echo "</td></tr>\n";
 

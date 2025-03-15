@@ -150,12 +150,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
             // Possibilité d'ajouter un nom
             $texte_im = $LG_Link_Name_New;
-            echo '<img id="ajout_nom" src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
+            echo '<img id="ajout_nom" src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
                 'onclick="inverse_div(\'id_div_ajout_nom\');document.getElementById(\'nouveau_nom\').focus();"/>' . "\n";
             echo '<div id="id_div_ajout_nom">' . "\n";
             echo 'Nom &agrave; ajouter&nbsp;<input type="text" size="50" name="nouveau_nom" id="nouveau_nom"/>' . "\n";
             $texte_im = $LG_Link_Name_Upper;
-            echo '&nbsp;<img id="majuscule" src="' . $chemin_images_icones . $Icones['majuscule'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
+            echo '&nbsp;<img id="majuscule" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . $texte_im . '" title="' . $texte_im . '"' .
                 ' onclick="NomMaj();document.getElementById(\'NomP\').focus();"/>' . "\n";
             echo '<input type="button" name="ferme_OK_nom" value="OK" onclick="ajoute_nom();"/>' . "\n";
             echo '<input type="button" name="ferme_An_nom" value="Annuler" onclick="inverse_div(\'id_div_ajout_nom\');"/>' . "\n";

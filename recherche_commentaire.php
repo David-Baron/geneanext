@@ -71,7 +71,7 @@ if ($est_gestionnaire) {
 
         if ($Sortie == 'c') {
             $nom_fic = $chemin_exports . 'recherche_commentaires.csv';
-            $fp = ouvre_fic($nom_fic, 'w+');
+            $fp = fopen($nom_fic, 'w+');
         }
 
         if ($Restriction != '-')
@@ -193,7 +193,7 @@ if ($est_gestionnaire) {
             echo '<br />';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive">' .
-                '<img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>Nouvelle recherche</button>';
+                '<img src="' . $root . '/assets/img/' . $Icones['chercher'] . '" alt=""/>Nouvelle recherche</button>';
             echo '</div>';
             echo '</form>' . "\n";
         }
@@ -223,7 +223,9 @@ if ($est_gestionnaire) {
         echo '</select>' . "\n";
         echo '</td></tr>' . "\n";
         echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
-        affiche_sortie(true);
+        echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+        echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
+        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
         echo '</td></tr>' . "\n";
 
         echo '<tr><td colspan="2"> </td></tr>';

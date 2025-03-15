@@ -134,7 +134,7 @@ function ligne_contrib($ligne)
 
 function Aff_Pers($suffixe, $oblig)
 {
-    global $root, $enregP, $Icones, $chemin_images, $chemin_images_icones, $Nom, $larg_col, $at;
+    global $root, $enregP, $Icones, $Nom, $larg_col, $at;
     if (!$oblig) $style_z_oblig2 = '';
     else $style_z_oblig2 = ' class = "oblig" ';
     if (($suffixe == 'pere') or ($suffixe == 'mere')) {
@@ -165,7 +165,7 @@ function Aff_Pers($suffixe, $oblig)
 
     // Proposition du nom de la personne sauf pour le conjoint
     if ($suffixe != 'conj') {
-        echo '<img id="copier_' . $suffixe . '" src="' . $chemin_images_icones . $Icones['copier'] . '" alt="' . LG_CONTRIBS_COPY_REF_NAME . '" title="' . LG_CONTRIBS_COPY_REF_NAME . '"' .
+        echo '<img id="copier_' . $suffixe . '" src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt="' . LG_CONTRIBS_COPY_REF_NAME . '" title="' . LG_CONTRIBS_COPY_REF_NAME . '"' .
             ' onclick="document.getElementById(\'Nom' . $suffixe . '\').value = \'' . $Nom . '\'"/>';
     }
 
@@ -191,7 +191,7 @@ function Aff_Pers($suffixe, $oblig)
     zone_date2('ANe_le' . $suffixe, 'Ne_le' . $suffixe, 'CNe_le' . $suffixe, '');
     echo '<input type="hidden" name="idNeZone' . $suffixe . '" value=""/>';
     echo $at . '<input type="text" readonly="readonly" name="Ne' . $suffixe . '" value=""/>';
-    echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Naissance(\'' . $suffixe . '\')"/>';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Naissance(\'' . $suffixe . '\')"/>';
     echo '</td></tr>';
     echo '<tr><td width="' . $larg_col . '%">' . ucfirst(lib_sexe_dead($sexe_lib)) . '</td>';
     // echo '<td><input type="text" readonly="readonly" size="25" name="Decede_le'.$suffixe.'" value=""/>'."\n";
@@ -201,7 +201,7 @@ function Aff_Pers($suffixe, $oblig)
     zone_date2('ADecede_le' . $suffixe, 'Decede_le' . $suffixe, 'CDecede_le' . $suffixe, '');
     echo '<input type="hidden" name="idDecedeZone' . $suffixe . '" value=""/>';
     echo $at . '<input type="text" readonly="readonly" name="Decede' . $suffixe . '" value=""/>';
-    echo '<img src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Deces(\'' . $suffixe . '\')"/>';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['localisation'] . '" alt="Sélection ville" onclick="Appelle_Zone_Deces(\'' . $suffixe . '\')"/>';
     echo '</td></tr>';
     echo '</table>';
 }
@@ -234,29 +234,28 @@ function Aff_Donnees($Refer)
     echo '<div id="pnlParents">';
     echo '  <fieldset>';
     echo '<legend>' . LG_FATHER . '</legend>' . "\n";
-    $x = Aff_Pers('pere', 0);
+    Aff_Pers('pere', 0);
     echo '  </fieldset>';
     echo '  <fieldset>';
     echo '<legend>' . LG_MOTHER . '</legend>' . "\n";
-    $x = Aff_Pers('mere', 0);
+    Aff_Pers('mere', 0);
     echo '  </fieldset>';
     echo '</div>';
 
     // Onglet conjoint
     echo '<div id="pnlConjoint">';
-    $suffixe = 'conj';
-    $x = Aff_Pers('conj', 0);
+    Aff_Pers('conj', 0);
     echo '</div>';
 
     // Onglet enfants
     echo '<div id="pnlEnfants">';
     echo '<fieldset>';
     echo '<legend>' . LG_CONTRIBS_CHILD_1 . '</legend>' . "\n";
-    $x = Aff_Pers('enfant1', 0);
+    Aff_Pers('enfant1', 0);
     echo '</fieldset>';
     echo '<fieldset>';
     echo '<legend>' . LG_CONTRIBS_CHILD_2 . '</legend>' . "\n";
-    $x = Aff_Pers('enfant2', 0);
+    Aff_Pers('enfant2', 0);
     echo '</fieldset>';
     echo '</div>';
 
@@ -287,7 +286,7 @@ function Aff_Donnees($Refer)
     echo '</tr>';
     echo '</table>';
     echo '<br /><br />';
-    echo '<i>' . my_html(LG_CONTRIBS_IP_RECORD) . '</i>';
+    echo '<i>' . LG_CONTRIBS_IP_RECORD . '</i>';
     echo '</div>';
 
     echo '</div> <!-- panes -->';

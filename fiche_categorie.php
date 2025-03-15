@@ -50,7 +50,7 @@ if ($res = lect_sql($sql)) {
         echo '<td class="value">' . $OrdreF . '</td></tr>' . "\n";
         echo '<tr><td class="label" width="25%"> ' . ucfirst($LG_Ch_Categ_Image) . ' </td>';
         echo '<td class="value">';
-        echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
+        echo '<img src="' . $root . '/assets/img/' . $Icones['tag_' . $enreg['Image']] . '" border="0" alt="' . $TitreF . '" title="' . $TitreF . '"/>';
         echo '</td></tr>' . "\n";
         echo '</table>' . "\n";
 

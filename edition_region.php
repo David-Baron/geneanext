@@ -68,13 +68,13 @@ else
 // Affiche une région
 function Aff_Region($enreg2)
 {
-    global $root, $Icones,$db, $chemin_images, $Ident, $Images, $Commentaire, $Diffusion_Commentaire_Internet, $LG_Data_tab, $LG_File, $LG_Edit_Region_Name, $LG_Edit_Region_Code, $LG_Edit_Region_Country, $lib_Okay, $lib_Annuler;
+    global $root, $Icones, $Ident, $Images, $Commentaire, $Diffusion_Commentaire_Internet, $LG_Data_tab, $LG_File, $LG_Edit_Region_Name, $LG_Edit_Region_Code, $LG_Edit_Region_Country, $lib_Okay, $lib_Annuler;
 
     echo '<div id="content">' . "\n";
     echo '<table id="cols"  cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="590" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="590" height="1" alt="clear"/>' . "\n";
     echo '</td>' . "\n";
     echo '</tr>' . "\n";
 

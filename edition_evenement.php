@@ -462,7 +462,7 @@ if (!$est_contributeur) {
         }
     }
     echo '<input type="text" readonly="readonly" name="zoneAff" id="zoneAff" value="' . $lib_zone . '"/>' . "\n";
-    echo '<img id="img_zone" src="' . $chemin_images_icones . $Icones['localisation'] . '" alt="' . $LG_Place_Select . '" title="' . $LG_Place_Select .
+    echo '<img id="img_zone" src="' . $root . '/assets/img/' . $Icones['localisation'] . '" alt="' . $LG_Place_Select . '" title="' . $LG_Place_Select .
         '" onclick="Appelle_Zone();" ';
     if ($idNiveauLu == 0) echo ' style="display:none; visibility:hidden;"';
     echo '/>' . "\n";
@@ -484,7 +484,7 @@ if (!$est_contributeur) {
     echo '<td>';
     zone_date2('dFinAnc', 'dFinAff', 'dFinCache', $dFinLu);
     $lib = $LG_Event_Event_Copy_Date;
-    echo '  <img src="' . $chemin_images_icones . $Icones['copie_calend'] .
+    echo '  <img src="' . $root . '/assets/img/' . $Icones['copie_calend'] .
         '" alt = "' . $lib . '" title = "' . $lib . '" onclick="copieDate();"/>' . "\n";
     echo "</td></tr>\n";
 
@@ -525,7 +525,7 @@ if (!$est_contributeur) {
         if ($refPar != -1) {
             echo '<br /><br />Ajouter une personne : ' .
                 '<a href="' . $root . '/edition_lier_eve.php?refPers=-1&amp;refEvt=' . $refPar . '">' .
-                '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" alt="Ajouter un &eacute;v&egrave;nement"/></a>' . "\n";
+                '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="Ajouter un &eacute;v&egrave;nement"/></a>' . "\n";
         }
     }
 

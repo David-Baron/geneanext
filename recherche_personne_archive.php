@@ -220,7 +220,7 @@ if ($_SESSION['estContributeur']) {
                 $nom_fic = 'recherche_archives';
                 if ($ut_suf == 'on') $nom_fic = $nom_fic . '_' . $l_ville;
                 $nom_fic = construit_fic($chemin_exports, $nom_fic . '#', 'csv');
-                $fp = ouvre_fic($nom_fic, 'w+');
+                $fp = fopen($nom_fic, 'w+');
                 $ligne = '';
                 for ($nb = 0; $nb < $nb_champs - 1; $nb++) {
                     $nom_champ = $champs[$nb];
@@ -321,10 +321,10 @@ if ($_SESSION['estContributeur']) {
             echo '<input type="hidden" name="ut_suf" value="' . $ut_suf . '"/>';
             echo '<br />';
             echo '<div class="buttons">';
-            echo '<button type="submit" class="positive"><img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
+            echo '<button type="submit" class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
             if ((!$SiteGratuit) or ($Premium)) {
                 echo '<button type="submit" onclick="document.forms.nouvelle.reprise.value=\'reprise\'; "' .
-                    ' class="positive"><img src="' . $chemin_images_icones . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
+                    ' class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
             }
             echo '</div>';
             echo '</form>' . "\n";

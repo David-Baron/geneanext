@@ -462,12 +462,12 @@ function Recup_Types_Evt($Cible)
 // Ajout rapide d'évènements
 function Aff_Ajout_Rapide_Evt($Cible)
 {
-    global $chemin_images_icones, $Icones, $LG_Add_Event_Mult_Quick, $LG_Add_Event_Quick, $LG_Add_Event, $LG_Del_Event;
+    global $root, $Icones, $LG_Add_Event_Mult_Quick, $LG_Add_Event_Quick, $LG_Add_Event, $LG_Del_Event;
     echo '<br /><br />' . "\n";
     if ($Cible == 'P') echo my_html($LG_Add_Event_Mult_Quick) . ' : ' . "\n";
     else echo my_html($LG_Add_Event_Quick) . ' : ' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['ajout'] . '" id = "ajout" alt="' . $LG_Add_Event . '" title="' . $LG_Add_Event . '" onclick=\'addRowToTable();\'/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['supp'] . '" id="delete" alt="' . $LG_Del_Event . '" title="' . $LG_Del_Event . '" onclick=\'removeRowFromTable();\'/> ' . "\n";
+    echo '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" id = "ajout" alt="' . $LG_Add_Event . '" title="' . $LG_Add_Event . '" onclick=\'addRowToTable();\'/>' . "\n";
+    echo '<img src="' . $root . '/assets/img/' . $Icones['supp'] . '" id="delete" alt="' . $LG_Del_Event . '" title="' . $LG_Del_Event . '" onclick=\'removeRowFromTable();\'/> ' . "\n";
     echo '<table border="0" id="tblSample" width="80%">' . "\n";
     echo '<tr><td colspan="2"></td></tr>' . "\n";
     echo '<tr><td>Type</td><td>Titre</td></tr>' . "\n";
@@ -1012,19 +1012,17 @@ function traite_date_csv($la_date)
 
 function aff_corr_csv($nb)
 {
-    global $radical_variable_csv;
-    echo '<td><select name="' . $radical_variable_csv . $nb . '" id="' . $radical_variable_csv . $nb . '">' . "\n";
-    echo '<option value="-1">' . my_html('Sélectionnez une colonne') . '</option>' . "\n";
+    echo '<td><select name="var_csv_' . $nb . '" id="var_csv_' . $nb . '">' . "\n";
+    echo '<option value="-1">Sélectionnez une colonne</option>' . "\n";
     for ($nb2 = ord('A'); $nb2 <= ord('Z'); $nb2++) echo '<option>' . chr($nb2) . '</option>';
     echo '</select></td>' . "\n";
 }
 
 function aff_corr_csv2($nb)
 {
-    global $radical_variable_csv;
-    echo '<td><select name="' . $radical_variable_csv . $nb . '" id="' . $radical_variable_csv . $nb . '">';
-    echo '<option value="-1">Sélectionnez une colonne</option>';
     $num_col = 0;
+    echo '<td><select name="var_csv_' . $nb . '" id="var_csv_' . $nb . '">';
+    echo '<option value="-1">Sélectionnez une colonne</option>';
     for ($nb2 = ord('A'); $nb2 <= ord('Z'); $nb2++) echo '<option value="' . $num_col++ . '">' . chr($nb2) . '</option>';
     echo '</select></td>';
 }

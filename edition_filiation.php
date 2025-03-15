@@ -110,8 +110,8 @@ function dernier($Sexe)
 // Affiche une union
 function Aff_Filiation($enreg)
 {
-    global $root, $chemin_images_icones, $Comportement, $Icones, $Images, $Refer, $Nom,
-        $enreg, $Sexe, $chemin_images,
+    global $root, $Icones, $Images, $Refer, $Nom,
+        $enreg, $Sexe,
         $Commentaire, $Diffusion_Commentaire_Internet,
         $lib_Okay, $lib_Annuler, $lib_Supprimer,
         $ne_pers, $dec_pers, $LG_Father, $LG_Mother, $LG_Data_tab, $LG_Ch_Filiation_Events, $LG_Ch_Filiation_Docs, $LG_File, $LG_Ch_Filiation_Parent_Choice, $LG_Ch_Filiation_Related_Choice, $LG_Ch_Filiation_Last_Union, $LG_Ch_Filiation_Rank, $LG_Ch_Filiation_Brother, $LG_Ch_Filiation_Sister, $LG_Ch_Filiation_Related, $LG_Ch_Filiation_Rank_Inc, $LG_Ch_Filiation_Rank_Dec, $LG_Ch_Filiation_Link_Doc, $LG_Ch_Filiation_Add_Doc, $LG_Ch_Filiation_Link_New_Doc;
@@ -139,7 +139,7 @@ function Aff_Filiation($enreg)
     echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">';
-    echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="850" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="850" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";
@@ -243,10 +243,10 @@ function Aff_Filiation($enreg)
     echo '<table width="95%">' . "\n";
     echo '<tr><td width="10%">' . $LG_Ch_Filiation_Rank . '</td>';
     echo '<td>';
-    echo '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $LG_Ch_Filiation_Rank_Dec . '" title="' . $LG_Ch_Filiation_Rank_Dec . '" ';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['moins'] . '" alt="' . $LG_Ch_Filiation_Rank_Dec . '" title="' . $LG_Ch_Filiation_Rank_Dec . '" ';
     echo 'onclick="if (document.forms.saisie.RangP.value>0) {document.forms.saisie.RangP.value--;}"/>' . "\n";
     echo '<input type="text" size="2" name="RangP" value="' . $LeRang . '" onchange="verification_num(this);"/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $LG_Ch_Filiation_Rank_Inc . '" title="' . $LG_Ch_Filiation_Rank_Inc . '" ';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['plus'] . '" alt="' . $LG_Ch_Filiation_Rank_Inc . '" title="' . $LG_Ch_Filiation_Rank_Inc . '" ';
     echo 'onclick="document.forms.saisie.RangP.value++;"/>' . "\n";
     echo '<input type="hidden" name="ARangP" value="' . $LeRang . '"/>';
     echo "</td>\n";

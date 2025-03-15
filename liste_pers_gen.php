@@ -354,7 +354,7 @@ if (! $texte) {
 
     echo '<td class="rupt_table"><input type="submit" value="' . my_html($LG_modify_list) . '"/>';
     $alt_img = my_html($LG_LPersG_hint_eye);
-    echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $chemin_images_icones . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;<img id="masque" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '"' .
         ' onmouseover="Survole_Clic_Div_Tous(\'MO\',\'' . $Comportement . '\');" onclick="Survole_Clic_Div_Tous(\'CL\',\'' . $Comportement . '\');"/>';
     echo '</td>' . "\n";
     echo '</tr></table>';
@@ -392,7 +392,7 @@ if ($decujus = get_decujus()) {
     // Sortie CSV
     if ($CSV) {
         $nom_fic = $chemin_exports . 'liste_personnes_' . $mod_nom_fic . 'gen.csv';
-        $fp = ouvre_fic($nom_fic, 'w+');
+        $fp = fopen($nom_fic, 'w+');
 
         //$req_Pers_d = 'select Reference, Nom, Prenoms, Numero, Ne_le, Decede_Le, Diff_Internet, n.Nom_Ville, d.Nom_Ville, n.Latitude, n.Longitude, d.Latitude, d.Longitude '.
         // Ecriture de la ligne d'entête

@@ -107,9 +107,9 @@ $Mariage = '';
 $existe_images = false;
 $c_ens = count($Ensemble);
 
-$img_asc = '<img src="' . $chemin_images_icones . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/>';
-$img_desc = '<img src="' . $chemin_images_icones . $Icones['arbre_desc'] . '" border="0" title="' . $LG_desc_tree . '" alt="' . $LG_desc_tree . '"/>';
-$img_image = '&nbsp;&nbsp;&nbsp;<img src="' . $chemin_images_icones . $Icones['images'] . '" border="0" ';
+$img_asc = '<img src="' . $root . '/assets/img/' . $Icones['arbre_asc'] . '" border="0" title="' . $LG_assc_tree . '" alt="' . $LG_assc_tree . '"/>';
+$img_desc = '<img src="' . $root . '/assets/img/' . $Icones['arbre_desc'] . '" border="0" title="' . $LG_desc_tree . '" alt="' . $LG_desc_tree . '"/>';
+$img_image = '&nbsp;&nbsp;&nbsp;<img src="' . $root . '/assets/img/' . $Icones['images'] . '" border="0" ';
 
 if ($Comportement == 'C') $evenement = 'onclick';
 else $evenement = 'onmouseover';
@@ -152,7 +152,7 @@ for ($nb_enr = 0; $nb_enr < $c_ens; ++$nb_enr) {
                 $top_e = round($top + ($Haut_Cellule / 2)) + 3;
                 $left_e = $left + $Larg_Cellule + 3;
                 echo '<div id="d_img_' . $LaRef . '" style="position:absolute; top:' . $top_e . 'px; left:' . $left_e . 'px;">';
-                echo '<img id="img_' . $LaRef . '" src="' . $chemin_images_icones . $Icones['groupe'] . '" alt="' . my_html($LG_Tree_Show_Hide_Child) . '" ' .
+                echo '<img id="img_' . $LaRef . '" src="' . $root . '/assets/img/' . $Icones['groupe'] . '" alt="' . my_html($LG_Tree_Show_Hide_Child) . '" ' .
                     Survole_Clic_Div('enf_' . $LaRef) . '/>' . "\n";
                 echo '</div>';
                 $top_e += 17;

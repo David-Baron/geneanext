@@ -130,7 +130,7 @@ if ($est_gestionnaire) {
                 case 'c':
                     if ($num_lig == 1) {
                         $nom_fic = $chemin_exports . $nom_fic_rech;
-                        $fp = ouvre_fic($nom_fic, 'w+');
+                        $fp = fopen($nom_fic, 'w+');
                         $ligne = LG_DOC_SCH_HEADER_CSV;
                         fputs($fp, $ligne);
                     }
@@ -157,7 +157,7 @@ if ($est_gestionnaire) {
             echo '<br />';
             echo '<div class="buttons">';
             echo '<button type="submit" class="positive">' .
-                '<img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . LG_DOC_SCH_NEW . '</button>';
+                '<img src="' . $root . '/assets/img/' . $Icones['chercher'] . '" alt=""/>' . LG_DOC_SCH_NEW . '</button>';
             echo '</div>';
             echo '</form>' . "\n";
         }
@@ -194,7 +194,9 @@ if ($est_gestionnaire) {
         echo '</td></tr>' . "\n";
         echo '</td></tr>' . "\n";
         echo '<tr><td class="label" width="30%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
-        affiche_sortie(true);
+        echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+        echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
+        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
         echo '</td></tr>' . "\n";
 
         echo '<tr><td colspan="2">&nbsp;</td></tr>';

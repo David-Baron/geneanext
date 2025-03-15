@@ -101,7 +101,7 @@ if ($bt_OK) {
         if ($erreur != '') {
             $_SESSION['message'] = $erreur;
             $image = 'exclamation.png';
-            echo '<img src="' . $chemin_images_icones . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '">';
+            echo '<img src="' . $root . '/assets/img/' . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '">';
             echo '&nbsp;Erreur : ' . $erreur . '<br />';
         }
         // Sinon on peut télécharger

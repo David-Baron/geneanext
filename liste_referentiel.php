@@ -135,7 +135,7 @@ if ($res->rowCount() > 0) {
                 break;
             case 'C':
                 $lib = my_html($row[1]);
-                echo '<img src="' . $chemin_images_icones . $Icones['tag_' . $row[2]] . '" border="0" alt="' . $lib . '" title="' . $lib . '"/>' . ' ';
+                echo '<img src="' . $root . '/assets/img/' . $Icones['tag_' . $row[2]] . '" border="0" alt="' . $lib . '" title="' . $lib . '"/>' . ' ';
                 echo '<a href="' . $root . '/fiche_categorie.php?categ=' . $row[0] . '">' . $lib . '</a>';
                 if (($est_gestionnaire)) {
                     echo ' <a href="' . $root . '/edition_categorie.php?categ=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";

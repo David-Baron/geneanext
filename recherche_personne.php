@@ -170,7 +170,7 @@ if ($bt_OK) {
     if ($Sortie == 'c') {
         // Traiter le cas d'erreur sur l'ouverture du fichier
         $nom_fic = $chemin_exports . 'recherche.csv';
-        $fp = ouvre_fic($nom_fic, 'w+');
+        $fp = fopen($nom_fic, 'w+');
     }
     // Init des zones de requête
     echo LG_PERS_REQ_FIELDS . ' ' . '<br />';
@@ -481,10 +481,10 @@ if ($bt_OK) {
         echo '<input type="hidden" name="New_Window" value="' . $New_Window . '"/>';
         echo '<br />';
         echo '<div class="buttons">';
-        echo '<button type="submit" class="positive"><img src="' . $chemin_images_icones . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
+        echo '<button type="submit" class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher'] . '" alt=""/>' . $lib_Nouv_Rech . '</button>';
         if ((!$SiteGratuit) or ($Premium)) {
             echo '<button type="submit" onclick="document.forms.nouvelle.reprise.value=\'reprise\'; "' .
-                ' class="positive"><img src="' . $chemin_images_icones . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
+                ' class="positive"><img src="' . $root . '/assets/img/' . $Icones['chercher_plus'] . '" alt=""/>' . $lib_Nouv_Rech_Aff . '</button>';
         }
         echo '</div>';
         echo '</form>' . "\n";
@@ -581,7 +581,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($reprise) echo ' value="' . $NumeroP . '"';
     echo '/>';
     // Calculette pour étendre le numéro Sosa
-    echo '<img id="calc1" src="' . $chemin_images_icones . $Icones['calculette'] . '" alt="' . LG_PERS_CALC_SOSA . '" title="' . LG_PERS_CALC_SOSA . '"' .
+    echo '<img id="calc1" src="' . $root . '/assets/img/' . $Icones['calculette'] . '" alt="' . LG_PERS_CALC_SOSA . '" title="' . LG_PERS_CALC_SOSA . '"' .
         ' onclick="etend_num_sosa();document.getElementById(\'NumeroP\').focus();"/>' . "\n";
     echo ' </td></tr>' . "\n";
     echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_YEAR) . '</td><td class="value">';
@@ -598,13 +598,13 @@ if ((!$bt_OK) && (!$bt_An)) {
         if ($TypeAnnee == 'd') echo ' checked';
     }
     echo '/><label for="TypeAnnee_d">' . $LG_death . '</label> ';
-    echo ' (+/- <img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . LG_PERS_REQ_OFF_DOWN . '" title="' . LG_PERS_REQ_OFF_DOWN . '" ';
+    echo ' (+/- <img src="' . $root . '/assets/img/' . $Icones['moins'] . '" alt="' . LG_PERS_REQ_OFF_DOWN . '" title="' . LG_PERS_REQ_OFF_DOWN . '" ';
     echo 'onclick="if (document.forms.saisie.Tolerance.value>0) {document.forms.saisie.Tolerance.value--;}"/>' . "\n";
     echo '<input type="text" size="2" name="Tolerance" value="';
     if ($reprise) echo $Tolerance;
     else echo '0';
     echo '" onchange="verification_num(this);"/>' . "\n";
-    echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . LG_PERS_REQ_OFF_UP . '" title="' . LG_PERS_REQ_OFF_UP . '" ';
+    echo '<img src="' . $root . '/assets/img/' . $Icones['plus'] . '" alt="' . LG_PERS_REQ_OFF_UP . '" title="' . LG_PERS_REQ_OFF_UP . '" ';
     echo 'onclick="document.forms.saisie.Tolerance.value++;"/> ' . LG_PERS_REQ_OFF_YEARS . ')  ' . "\n";
     echo '<input type="radio" id="TypeAnnee" name="TypeAnnee" value="v"';
     if ($reprise) {
@@ -687,7 +687,7 @@ if ((!$bt_OK) && (!$bt_An)) {
             if ($reprise) {
                 if ($Categorie == $num_cat) echo ' checked';
             }
-            echo '/><img src="' . $chemin_images_icones . $Icones[$nom_cat] . '" alt="' . $titre_cat . '" title="' . $titre_cat . '"/>' . '  ' . "\n";
+            echo '/><img src="' . $root . '/assets/img/' . $Icones[$nom_cat] . '" alt="' . $titre_cat . '" title="' . $titre_cat . '"/>' . '  ' . "\n";
         }
         $nb_tag = 0;
         echo '<input type="radio" id ="categ_0" name="Categorie" value="0"/><label for="categ_0">' . LG_PERS_NO_CATEGORY . '</label>';

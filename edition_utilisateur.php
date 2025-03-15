@@ -212,7 +212,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     if ($Creation) echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
     echo '&nbsp;<input type="button" onclick=" generer_passe()" value="' . LG_UTIL_PSW_GENER . '"/>&nbsp;';
     echo '<input type="text" readonly="readonly" name="PasseGen" id="PasseGen" value="" size="12"/>' . "\n";
-    echo '&nbsp;<img src="' . $chemin_images_icones . $Icones['copier'] . '" alt = "' . LG_UTIL_PSW_COPY . '" title = "' . LG_UTIL_PSW_COPY
+    echo '&nbsp;<img src="' . $root . '/assets/img/' . $Icones['copier'] . '" alt = "' . LG_UTIL_PSW_COPY . '" title = "' . LG_UTIL_PSW_COPY
         . '" onclick="document.forms.saisie.motPasse1.value = document.forms.saisie.PasseGen.value;document.forms.saisie.motPasse2.value = document.forms.saisie.PasseGen.value;"/>' . "\n";
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PSW_CONFIRM) . '</td><td class="value">';
@@ -271,14 +271,14 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '<div class="buttons">';
     echo '<button type="submit" class="positive" ' .
         'onclick=";document.forms.saisie.cache.value=\'ok\';document.forms.saisie.ok.value=\'OK\';return avantEnvoiEU(this.form);"> ' .
-        '<img src="' . $chemin_images_icones . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
+        '<img src="' . $root . '/assets/img/' . $Icones['fiche_validee'] . '" alt=""/>' . $lib_Okay . '</button>';
     echo '<button type="submit" ' .
         'onclick="document.forms.saisie.cache.value=\'an\';document.forms.saisie.annuler.value=\'' . $lib_Annuler . '\';"> ' .
-        '<img src="' . $chemin_images_icones . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
+        '<img src="' . $root . '/assets/img/' . $Icones['cancel'] . '" alt=""/>' . $lib_Annuler . '</button>';
     if ($lib_sup != '')
         echo '<button type="submit" class="negative" ' .
             'onclick="confirmer(\'' . LG_UTIL_THIS . '\',this);"> ' .
-            '<img src="' . $chemin_images_icones . $Icones['supprimer'] . '" alt=""/>' . $lib_sup . '</button>';
+            '<img src="' . $root . '/assets/img/' . $Icones['supprimer'] . '" alt=""/>' . $lib_sup . '</button>';
     echo '</div>';
     echo '</td></tr>';
     echo '</table>' . "\n";

@@ -135,7 +135,7 @@ if ($res = lect_sql($sql)) {
                 }
                 if ($num_pers == 1) {
                     if (!$texte) {
-                        echo '<td width="10%" align="center" valign="middle" rowspan="' . $nb_homonymes . '"><input type="image" src="' . $chemin_images_icones . $Icones['2personnes'] . '" alt="' . $LG_Menu_Title['Compare_Persons'] . '" ' .
+                        echo '<td width="10%" align="center" valign="middle" rowspan="' . $nb_homonymes . '"><input type="image" src="' . $root . '/assets/img/' . $Icones['2personnes'] . '" alt="' . $LG_Menu_Title['Compare_Persons'] . '" ' .
                             'title="' . $LG_Menu_Title['Compare_Persons'] . '" onclick="return controle(this.form.id);"/></td>';
                     }
                 }

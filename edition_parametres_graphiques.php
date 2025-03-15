@@ -12,10 +12,8 @@ require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Liste_Noms_Images($chemin)
 {
-    global $chemin_images, $ext_poss;
+    global $ext_poss;
     $dir = $chemin;
-    //$dir = $chemin_images.$chemin;
-    // echo '$chemin demande : '.$chemin.'<br>';
     $dossier = opendir($dir);
     $premier = true;
     while ($fichier = readdir($dossier)) {
@@ -30,7 +28,7 @@ function Liste_Noms_Images($chemin)
 
 function affiche_images($extension, $nb_cases, $cancel = false)
 {
-    global $chemin_images, $chemin_images_arbres, $Icones, $aff_infos, $chemin_images_icones, $LG_Graphics_First, $LG_Graphics_Stop, $LG_Graphics_Next, $LG_Graphics_Last, $w_fonds, $h_fonds, $w_barres, $h_barres, $w_lettres, $h_lettres, $w_arbres, $h_arbres, $Chemin_Lettre, $Chemin_Barre, $Image_Fond, $Lettre_B, $Image_Barre, $Image_Arbre_Asc;
+    global $root, $chemin_images_arbres, $Icones, $aff_infos, $LG_Graphics_First, $LG_Graphics_Stop, $LG_Graphics_Next, $LG_Graphics_Last, $w_fonds, $h_fonds, $w_barres, $h_barres, $w_lettres, $h_lettres, $w_arbres, $h_arbres, $Chemin_Lettre, $Chemin_Barre, $Image_Fond, $Lettre_B, $Image_Barre, $Image_Arbre_Asc;
     echo '<table cellpadding="1" width="100%" border="0">';
     echo '<tr>';
     for ($nb = 1; $nb <= $nb_cases; $nb++)
@@ -39,7 +37,7 @@ function affiche_images($extension, $nb_cases, $cancel = false)
     if ($cancel) {
         $texte_im = 'Pas de ' . $extension;
         $texte_im = rtrim($texte_im, 's');
-        echo '&nbsp;&nbsp;<img id="im_cancel_' . $extension . '" src="' . $chemin_images_icones . $Icones['cancel'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="efface(\'' . $extension . '\')"/>';
+        echo '&nbsp;&nbsp;<img id="im_cancel_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['cancel'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="efface(\'' . $extension . '\')"/>';
     }
     echo '</td>';
     $src = '';
@@ -48,7 +46,7 @@ function affiche_images($extension, $nb_cases, $cancel = false)
         case 'fonds':
             $larg = $w_fonds;
             $haut = $h_fonds;
-            $src = $chemin_images . $Image_Fond;
+            $src = $root . '/assets/img/' . $Image_Fond;
             break;
         case 'barres':
             $larg = $w_barres;
@@ -63,7 +61,7 @@ function affiche_images($extension, $nb_cases, $cancel = false)
         case 'arbres_asc':
             $larg = $w_arbres;
             $haut = $h_arbres;
-            $src = $chemin_images . 'arbres_asc/' . $Image_Arbre_Asc;
+            $src = $root . '/assets/img/arbres_asc/' . $Image_Arbre_Asc;
             break;
     }
     // Si le nom de fichier est '-', on init la source
@@ -74,14 +72,14 @@ function affiche_images($extension, $nb_cases, $cancel = false)
     echo '</td></tr>' . "\n";
 
     echo '<tr align="center"><td colspan="' . $nb_cases . '">';
-    echo '<img id ="im_premier_' . $extension . '" src="' . $chemin_images_icones . $Icones['first']
+    echo '<img id ="im_premier_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['first']
         . '" alt="' . $LG_Graphics_First . '" title="' . $LG_Graphics_First . '" onclick="premier(\'' . $extension . '\')"/>&nbsp;';
-    echo '<img id="im_precedent_' . $extension . '" src="' . $chemin_images_icones . $Icones['stop']
+    echo '<img id="im_precedent_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['stop']
         . '" alt="' . $LG_Graphics_Stop . '" title="' . $LG_Graphics_Stop . '" onclick="recule(\'' . $extension . '\',nb_cases_' . $extension . ')"/>';
     echo '&nbsp;&nbsp;<input type="text" style="text-align:center;" readonly="readonly" name="page_' . $extension . '" id="page_' . $extension . '" size="3" />&nbsp;&nbsp;';
-    echo '<img id="im_suivant_' . $extension . '" src="' . $chemin_images_icones . $Icones['next']
+    echo '<img id="im_suivant_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['next']
         . '" alt="' . $LG_Graphics_Next . '" title="' . $LG_Graphics_Next . '" onclick="avance(\'' . $extension . '\',nb_cases_' . $extension . ')"/>&nbsp;';
-    echo '<img id="im_dernier_' . $extension . '" src="' . $chemin_images_icones . $Icones['last']
+    echo '<img id="im_dernier_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['last']
         . '" alt="' . $LG_Graphics_Last . '" title="' . $LG_Graphics_Last . '" onclick="dernier(\'' . $extension . '\',nb_cases_' . $extension . ',nb_images_' . $extension . ')"/>';
     echo '</td>' . "\n";
     echo '<td>&nbsp;</td></tr>' . "\n";
@@ -95,12 +93,12 @@ function affiche_images($extension, $nb_cases, $cancel = false)
 // Affiche une ligne pour choisir les couleurs
 function ligne_couleurs($libelle, $nom, $anc_val)
 {
-    global $chemin_images_icones, $Icones, $LG_Graphics_Init_Color;
+    global $root, $Icones, $LG_Graphics_Init_Color;
     echo '<tr><td>' . my_html($libelle) . ' :</td>' . "\n";
     echo '<td><input readonly="readonly" type="text" id="Anc_' . $nom . '" name="Anc_' . $nom . '" size="7" maxlength="7" value="' . $anc_val . '" style="background-color:' . $anc_val . '"/></td>' . "\n";
     echo '<td><input class="color" type="text" id="Nouv_' . $nom . '" name="Nouv_' . $nom . '" size="7" maxlength="6" value="' . $anc_val . '" style="background-color:' . $anc_val . '"/></td>' . "\n";
     echo '<td valign="middle">'
-        . '&nbsp;<img id="im_dernier_' . $nom . '" src="' . $chemin_images_icones . $Icones['conversion']
+        . '&nbsp;<img id="im_dernier_' . $nom . '" src="' . $root . '/assets/img/' . $Icones['conversion']
         . '" alt="' . $LG_Graphics_Init_Color . '" title="' . $LG_Graphics_Init_Color
         . '" onclick="remet_code_coul(\'' . $nom . '\');"/>';
     echo '</td></tr>' . "\n";
@@ -277,12 +275,12 @@ if ($bt_OK) {
             if (!ctrl_fichier_ko()) {
                 move_uploaded_file(
                     $_FILES['nom_du_fichier']['tmp_name'],
-                    $chemin_images . 'fonds/' . $_FILES['nom_du_fichier']['name']
+                    $root . '/assets/img/fonds/' . $_FILES['nom_du_fichier']['name']
                 );
                 // la zone nom_du_fichier n'est pas alimentée...
                 $nom_du_fichier = $_FILES['nom_du_fichier']['name'];
                 // On chmod le fichier si on n'est pas sous Windows
-                if (!$is_windows) chmod($chemin_images . 'fonds/' . $nom_du_fichier, 0644);
+                if (!$is_windows) chmod($root . '/assets/img/fonds/' . $nom_du_fichier, 0644);
                 $Sel_fonds = $nom_du_fichier;
             } else $erreur = '-'; // ==> pas de maj en base en cas d'erreur
         }
@@ -367,7 +365,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<li><a href="#" onclick="return showPane(\'arbres_asc\', this)" id="tab_arbres_asc">' . $LG_Graphics_Tree . '</a></li>' . "\n";
     echo '</ul>' . "\n";
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '" enctype="multipart/form-data" >' . "\n";
+    echo '<form id="saisie" method="post" enctype="multipart/form-data" >' . "\n";
 
     echo '<div class="tab-panes">' . "\n";
 
@@ -381,7 +379,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo $LG_Graphics_BG . '<br>';
     echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';
     echo '<tr align="center">';
-    echo '<td id="fond" style="background-color:white; background-image:url(\'' . $chemin_images . $Image_Fond . '\'); background-repeat:repeat;">';
+    echo '<td id="fond" style="background-color:white; background-image:url(\'' . $root . '/assets/img/' . $Image_Fond . '\'); background-repeat:repeat;">';
     echo '<img id="lettre" src="' . $Chemin_Lettre . '" alt="B" title="B" />' . $LG_Graphics_Welcome . ' ...';
     echo '</td></tr>';
     echo '</table>' . "\n";
@@ -524,13 +522,13 @@ $ext_poss = '/gif/jpg/png/';
 
 <script type="text/javascript">
     <?php
-    echo 'var im_stop = "' . $chemin_images_icones . $Icones['stop'] . '";' . "\n";
-    echo 'var im_next = "' . $chemin_images_icones . $Icones['next'] . '";' . "\n";
-    echo 'var im_prev = "' . $chemin_images_icones . $Icones['previous'] . '";' . "\n";
-    echo 'var im_clear = "' . $chemin_images . $Images['clear'] . '";' . "\n";
+    echo 'var im_stop = "' . $root . '/assets/img/' . $Icones['stop'] . '";' . "\n";
+    echo 'var im_next = "' . $root . '/assets/img/' . $Icones['next'] . '";' . "\n";
+    echo 'var im_prev = "' . $root . '/assets/img/' . $Icones['previous'] . '";' . "\n";
+    echo 'var im_clear = "' . $root . '/assets/img/' . $Images['clear'] . '";' . "\n";
 
     echo 'var nb_cases_fonds = ' . $nb_cases_fonds . ';' . "\n";
-    echo 'var chemin_images_fonds = "' . $chemin_images . 'fonds/";' . "\n";
+    echo 'var chemin_images_fonds = "' . $root . '/assets/img/fonds/";' . "\n";
 
     echo 'var nb_cases_lettres = ' . $nb_cases_lettres . ';' . "\n";
     echo 'var chemin_images_lettres = "' . $chemin_images_lettres . '";' . "\n";
@@ -554,7 +552,7 @@ $ext_poss = '/gif/jpg/png/';
     var lextension = '';
 
     // Liste des fonds d'écran possibles
-    var images_fonds = [<?php Liste_Noms_Images($chemin_images . 'fonds'); ?>];
+    var images_fonds = [<?php Liste_Noms_Images($root . '/assets/img/fonds'); ?>];
     var nb_images_fonds = images_fonds.length;
 
     // Liste des barres possibles
@@ -600,7 +598,7 @@ $ext_poss = '/gif/jpg/png/';
 
     function affiche(la_case) {
         var indice = document.getElementById("indice").value;
-        var cont_demande = '<img src="' + <?php echo $chemin_images; ?> + images[indice] + '" width="100" height="100" border="1" onclick="copie(this);"/>';
+        var cont_demande = '<img src="' + <?= $root . '/assets/img/'; ?> + images[indice] + '" width="100" height="100" border="1" onclick="copie(this);"/>';
         document.getElementById(la_case).innerHTML = cont_demande;
     }
 

@@ -211,11 +211,11 @@ if (($ok == '') && ($annuler == '')) {
         $var_R = 'LeRang_' . $suf;
 
         $texte_image = 'Diminuer le rang';
-        echo '<img src="' . $chemin_images_icones . $Icones['moins'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
+        echo '<img src="' . $root . '/assets/img/' . $Icones['moins'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
         echo 'onclick="if (document.forms.saisie.' . $var_R . '.value>0) {document.forms.saisie.' . $var_R . '.value--;}"/>' . "\n";
         echo '<input type="text" class="oblig" name="' . $var_R . '" id="' . $var_R . '" value="' . $Rangs[$nb] . '" size="3" onchange="verification_num(this);"/>' . "\n";
         $texte_image = 'Augmenter le rang';
-        echo '<img src="' . $chemin_images_icones . $Icones['plus'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
+        echo '<img src="' . $root . '/assets/img/' . $Icones['plus'] . '" alt="' . $texte_image . '" title="' . $texte_image . '" border="0" ';
         echo 'onclick="document.forms.saisie.' . $var_R . '.value++;"/> ' . "\n";
         echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
 
@@ -241,7 +241,7 @@ if (($ok == '') && ($annuler == '')) {
     echo '<tr align="right"><td>' . "\n";
     echo '<div class="buttons">';
     echo '<button onclick="Accepter(this);return false;"> ' .
-        '<img src="' . $chemin_images_icones . $Icones['accepter'] . '" alt=""/>' . $LG_Rank_Accept . '</button>';
+        '<img src="' . $root . '/assets/img/' . $Icones['accepter'] . '" alt=""/>' . $LG_Rank_Accept . '</button>';
     echo '</div>';
     echo '</td></tr>' . "\n";
     echo '<tr><td align="left">' . "\n";

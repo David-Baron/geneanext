@@ -84,7 +84,7 @@ if ($_SESSION['estGestionnaire']) {
 //  Affichage des documents
 if ($result->rowCount() > 0) {
     // Optimisation : pr�paration echo des images
-    $echo_modif = '<img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '"  title="' . $LG_modify . '"/></a>';
+    $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '"  title="' . $LG_modify . '"/></a>';
 
     $premier = 1;
     while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
