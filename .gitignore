@@ -1,3 +1,5 @@
 /vendor
 /setup
 /TODO
+/app/AppComponent.php
+/app/AppUserAuthenticator.php

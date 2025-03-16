@@ -4,9 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
-// Affiche une option pour le niveau d'autorisation
 function aff_option_niveau($niv_option)
 {
     global $niv;

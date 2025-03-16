@@ -5,11 +5,8 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
-// On simule le bouton OK pour ne pas écrire l'entête de la page
 $ok = 'OK';
-
 $acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Vue personnalisée rapide';    // Titre pour META
 $x = Lit_Env();

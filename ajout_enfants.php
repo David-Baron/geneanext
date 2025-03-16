@@ -4,7 +4,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'Nom_Defaut', 'Horigine');

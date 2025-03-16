@@ -12,7 +12,6 @@ if (!isset($est_privilegie)) $est_privilegie = false;
 include_once(__DIR__ . '/parametres.php');
 include_once(__DIR__ . '/icones.php');
 
-$deb = '';
 $suffixe_info = '_info.php';
 
 $langue = 'FR';
@@ -626,9 +625,9 @@ function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
     if (!isset($avec_js)) $avec_js = 1;
     // Pas de javascript sur les pages d'information
     /** @deprecated */
-    if (is_info()) {
+    /* if (is_info()) {
         $avec_js = false;
-    }
+    } */
     /** @deprecated */
     if ($avec_js) include(__DIR__ . '/../../assets/js/monSSG.js');
 }
@@ -1587,7 +1586,7 @@ function Aff_Evenements_Pers($numPers, $modif)
                 echo '<tr><td colspan="2">' . "\n";
                 $ligne = false;
                 if (($libRole != '') and ($Code_Role != '')) {
-                    echo $tab . 'R&ocirc;le : ' . $libRole;
+                    echo $tab . 'Rôle : ' . $libRole;
                     $ligne = true;
                 }
                 if (($dDebP != '') or ($dFinP != '')) {
@@ -1661,7 +1660,7 @@ function Aff_Liens_Pers($numPers, $modif)
             if (Get_Nom_Prenoms($LaRef, $Nom, $Prenoms)) {
                 echo '  <fieldset><legend>Avec ' . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $LaRef . '">' . $Prenoms . ' ' . $Nom . '</a>' . '</legend>' . "\n";
                 echo '<table width="85%" border="0">' . "\n";
-                echo '<tr><td>R&ocirc;le : ' . $role . '</td>' . "\n";
+                echo '<tr><td>Rôle : ' . $role . '</td>' . "\n";
                 if ($modif == 'O') {
                     $lib = 'Modification du lien';
                     echo '<td rowspan="2" align="center" valign="middle"><a href="' . $root . '/edition_lier_pers.php?ref1=' . $enreg['Personne_1'] .
@@ -1935,7 +1934,7 @@ function Get_Nom($idNom, &$Nom)
 }
 
 
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Affiche la balise Img pour une icone avec le lien
 /**
@@ -2128,11 +2127,11 @@ function aff_lien_pers($refPar, $modif = 'N')
 {
     global $root, $Icones;
     //  ===== Recherche de liens avec des personnes
-    $requete = 'SELECT Reference, Debut, Fin, Nom, Prenoms, r.Code_Role, Libelle_Role as libRole, Diff_Internet ' .
+    $sql = 'SELECT Reference, Debut, Fin, Nom, Prenoms, r.Code_Role, Libelle_Role AS libRole, Diff_Internet ' .
         ' FROM ' . nom_table('participe') . ' AS pa , ' . nom_table('personnes') . ' AS pe , ' .
         nom_table('roles') . ' AS r ' .
         " WHERE Evenement = $refPar AND pa.Personne = pe.Reference AND pa.Code_Role = r.Code_Role";
-    $result = lect_sql($requete);
+    $result = lect_sql($sql);
     if ($result->rowCount() > 0) {
         $icone_mod = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modification lien"/>';
         echo '<br>' . "\n";
@@ -2140,18 +2139,14 @@ function aff_lien_pers($refPar, $modif = 'N')
         while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
             echo '<br>' . "\n";
             if (($_SESSION['estPrivilegie']) || ($enreg['Diff_Internet'] != 'N')) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['Reference'] . '"' . ">" .
-                    my_html($enreg['Prenoms'] . ' ' . $enreg['Nom']) .
-                    '</a>';
+                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['Reference'] . '"' . ">" . my_html($enreg['Prenoms'] . ' ' . $enreg['Nom']) . '</a>';
                 $role = $enreg['libRole'];
                 if (($role != '') and ($enreg['Code_Role'] != ''))
-                    echo ', r&ocirc;le : ' . my_html($role);
-                $deb = $enreg['Debut'];
-                $fin = $enreg['Fin'];
-                if (($deb != '') or ($fin != '')) {
-                    if (($deb != '') and ($fin != '')) echo ', dates';
+                    echo ', rôle : ' . my_html($role);
+                if (($enreg['Debut'] != '') or ($enreg['Fin'] != '')) {
+                    if (($enreg['Debut'] != '') && ($enreg['Fin'] != '')) echo ', dates';
                     else  echo ', date';
-                    echo ' de participation : ' . Etend_2_dates($deb, $fin);
+                    echo ' de participation : ' . Etend_2_dates($enreg['Debut'], $enreg['Fin']);
                 }
                 // En mode modification, on va mettre un lien pour modifier la liaison
                 if ($modif == 'O') {

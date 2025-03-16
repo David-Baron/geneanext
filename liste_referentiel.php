@@ -4,7 +4,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Recup de la variable passée dans l'URL : type de liste
 $Type_Liste = Recup_Variable('Type_Liste', 'C', 'RTDCQOS');

@@ -4,7 +4,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 require(__DIR__ . '/app/ressources/rectif_utf8_commun.php');
 
 $acces = 'M';

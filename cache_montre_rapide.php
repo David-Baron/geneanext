@@ -5,7 +5,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 // On simule le bouton OK pour ne pas écrire l'entête de la page
 $ok = 'OK'; // TODO: lol

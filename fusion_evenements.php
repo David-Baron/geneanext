@@ -6,7 +6,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 function aff_nb_enr($lib1, $accord)
 {

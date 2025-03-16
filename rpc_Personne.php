@@ -3,7 +3,6 @@
 // appelé en ajax pour avoir les personnes correspondant à un nom 
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Etend_les_dates($date1, $date2, $forcage = false)
 {

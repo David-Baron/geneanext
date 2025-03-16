@@ -4,7 +4,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Récupération de la liste des tables dans un tableau
 function recup_liste_tables()

@@ -1,15 +1,14 @@
 <style>
 :root {
-    <?php echo '  --Coul_Impaires: ' .$Coul_Impaires.';' ."\n";
-    echo '  --Coul_Paires: ' .$Coul_Paires.';' ."\n";
-    echo '  --coul_fond_table:' .$coul_fond_table.';' ."\n";
-    echo "  --Chemin_Barre: url('" .$Chemin_Barre."');" ."\n";
-    echo '  --Coul_Bord: ' .$Coul_Bord.';' ."\n";
-    echo '  --Coul_Lib: ' .$Coul_Lib.';' ."\n";
-    echo '  --Coul_Val: ' .$Coul_Val.';' ."\n";
-    echo "  --Chemin_Nav_Bg: url('" .$chemin_images."nav_bg.gif');" ."\n";
-    echo "  --Chemin_Ic_Bullet: url('" .$chemin_images."bullet_green.png');" ."\n";
-    ?>
+    --Coul_Impaires: '<?= $Coul_Impaires; ?>';
+    --Coul_Paires: '<?= $Coul_Paires; ?>';
+    --coul_fond_table:'<?= $coul_fond_table; ?>';
+    --Chemin_Barre: url('<?= $Chemin_Barre; ?>');
+    --Coul_Bord: '<?= $Coul_Bord; ?>';
+    --Coul_Lib: '<?= $Coul_Lib; ?>';
+    --Coul_Val: '<?= $Coul_Val; ?>';
+    --Chemin_Nav_Bg: url('<?= $root; ?>/assets/img/nav_bg.gif');
+    --Chemin_Ic_Bullet: url('<?= $root; ?>/assets/img/bullet_green.png');
 }
 
 html,
@@ -32,7 +31,7 @@ td {
 
 h1 {
     font-size: 18px;
-    margin: 0
+    margin: 0;
 }
 
 h1 a {
@@ -43,7 +42,7 @@ h1 a {
 h1 a:hover,
 h1 a:active {
     color: blue;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 h2 {
@@ -69,7 +68,7 @@ a:hover {
 }
 
 small {
-    font-size: 11px
+    font-size: 11px;
 }
 
 img {
@@ -81,7 +80,7 @@ img {
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    text-align: left
+    text-align: left;
 }
 
 #tabs th {
@@ -91,7 +90,7 @@ img {
 #tabs a {
     color: white;
     text-decoration: none;
-    padding: 0 5px 0 5px
+    padding: 0 5px 0 5px;
 }
 
 #tabs a:hover,
@@ -117,7 +116,7 @@ cite {
     margin: 5px 10px 5px 10px;
     padding: 0px 5px 0px 5px;
     font-size: 12px;
-    border-left: 1px solid #9cb0bb
+    border-left: 1px solid #9cb0bb;
 }
 
 #cols .right blockquote {
@@ -134,7 +133,7 @@ cite {
     list-style: disc outside;
     margin: 0;
     padding: 3px 0 0 15px;
-    text-align: left
+    text-align: left;
 }
 
 #cols .right a {
@@ -142,11 +141,11 @@ cite {
 }
 
 #cols .right a:visited {
-    color: #6A0366
+    color: #6A0366;
 }
 
 #cols .right .meta {
-    font-size: 12px
+    font-size: 12px;
 }
 
 .caption {
@@ -155,7 +154,7 @@ cite {
 }
 
 blockquote p {
-    font-size: 12px
+    font-size: 12px;
 }
 
 .tabs {
@@ -164,7 +163,7 @@ blockquote p {
     margin: 0px;
     padding: 0px;
     background: var(--Chemin_Barre) repeat-x;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .tabs li {
@@ -174,7 +173,7 @@ blockquote p {
 .tabs a:hover,
 .tabs a.tab-active {
     background: #fff;
-    border-right: 1px solid #fff
+    border-right: 1px solid #fff;
 }
 
 .tabs a {
@@ -662,7 +661,7 @@ select {
     padding: 0 0 0 0.33em;
     line-height: 1.1;
     font-size: medium;
-    margin: 2.4em 0
+    margin: 2.4em 0;
 }
 
 #timeline li {
@@ -670,7 +669,7 @@ select {
     padding-left: 0.33em;
     margin-left: 15em;
     border-left: solid orange;
-    text-align: left
+    text-align: left;
 }
 
 #timeline time {
@@ -683,16 +682,16 @@ select {
 
 #timeline time::after {
     content: " _";
-    color: orange
+    color: orange;
 }
 
 .notcss {
     font-style: italic;
-    color: #666
+    color: #666;
 }
 
 .notcss a {
-    color: inherit
+    color: inherit;
 }
 
 em {
@@ -702,35 +701,35 @@ em {
     max-width: 95%;
     display: inline-block;
     text-indent: 0;
-    overflow: hidden
+    overflow: hidden;
 }
 
 em em {
     position: relative;
     max-width: none;
     font-style: normal;
-    animation: marquee 5s linear 1
+    animation: marquee 5s linear 1;
 }
 
 @keyframes marquee {
     0% {
         left: 0%;
-        visibility: visible
+        visibility: visible;
     }
 
     49.9% {
         left: -100%;
-        visibility: hidden
+        visibility: hidden;
     }
 
     50.1% {
         left: 100%;
-        visibility: hidden
+        visibility: hidden;
     }
 
     100% {
         left: 0%;
-        visibility: visible
+        visibility: visible;
     }
 }
 
@@ -783,5 +782,4 @@ em em {
 .img-b {
     vertical-align: middle;
 }
-
 </style>

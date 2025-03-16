@@ -5,7 +5,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 // Initilisation des infirmations de connexion
 function Init_infos_cnx()
@@ -32,11 +31,11 @@ foreach ($tab_variables as $nom_variables) {
 
 $max_tentatives = 5; // Nombre maximum de tentatives de connexions successives
 $util_defaut = 'Anonyme'; // Code utilisateur par défaut
-$is_windows = (substr(php_uname(), 0, 7) == "Windows") ? true : false;
+$is_windows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
 
 // Demande de lancement de GénéGraphe
 if ($geneGraphe == 'exec') {
-    $cmd = 'GeneGraphe.jar';
+    $cmd = 'app/ressources/GeneGraphe.jar';
     if ($is_windows) {
         pclose(popen("start /B " . $cmd, "r"));
     } else {
@@ -200,8 +199,8 @@ Ecrit_Meta($LG_index_title . ' ' . $Nom, $LG_index_desc . ' ' . $Nom, '');
 echo '</head>';
 
 // Affichage de l'image de fond
-if (file_exists(__DIR__ . '/assets/img/fonds/'. $Image_Fond)) {
-    echo '<body background="' . $root . '/assets/img/fonds/'. $Image_Fond . '">'; // TODO: background as nothing to do in body tag
+if (file_exists(__DIR__ . '/assets/img/fonds/' . $Image_Fond)) {
+    echo '<body background="' . $root . '/assets/img/fonds/' . $Image_Fond . '">'; // TODO: background as nothing to do in body tag
 } else {
     echo '<body>';
 }
@@ -221,9 +220,10 @@ if ($SiteGratuit) {
 echo '<table width="100%" cellspacing="0" cellpadding="0">';
 echo '<tr align="center" v-align="middle"><td>';
 
-$lib = $LG_index_welcome;
+
 // Affichage de la lettre B si paramétrée en base
 // @deprecated and no replace.
+$lib = $LG_index_welcome;
 /* if (!$id_cnx) {
     $Lettre_B = '-';
     $Nom = '?';
@@ -242,7 +242,6 @@ echo '<font size="+3">' . my_html($LG_index_welcome) . ' <i>' . my_html($Nom) . 
 if ($_SESSION['estGestionnaire']) {
     if (!$id_cnx)
         echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> <font color="red" size="+2">' . $LG_index_tip_no_param . '</font>';
-    // '';
     echo '<br>';
 }
 
@@ -251,10 +250,6 @@ if ($maintenance) {
 }
 echo '</td></tr>';
 echo '</table>';
-//echo '<br>'."\n";
-
-//echo '<a href="'.$root.'/test_images.php">test_images</a><<br>>';
-//echo '<a href="'.$root.'/demarrage_rapide.php">Demarrage_Rapide</a>';
 
 // Menus...
 if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
@@ -338,7 +333,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
         echo '<table align="center">';
         echo '<tr><td>';
         echo '<fieldset><legend>' . $LG_index_menu_pers . '</legend>';
-        echo '<form method="post" action="Recherche_Personne.php" >';
+        echo '<form method="post" action="' . $root . '/Recherche_Personne.php" >';
         echo '<table>';
         echo '<tr><td>' . LG_PERS_NAME . ' :</td><td><input type="text" size="30" name="NomP"/></td>';
         echo '<td rowspan="2" valign="middle"><input type="submit" name="ok" value="' . $lib_Rechercher . '" style="background:url(' . $root . '/assets/img/' . $Icones['chercher'] . ') no-repeat;padding-left:18px;" /></td></tr>';
@@ -352,7 +347,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
         echo '</td>';
         echo '<td valign="middle">';
         echo '<fieldset><legend>' . $LG_index_menu_towns . '</legend>';
-        echo '<form method="post" action="Recherche_Ville.php" >';
+        echo '<form method="post" action="' . $root . '/Recherche_Ville.php" >';
         echo '<input type="text" size="30" name="NomV"/>';
         echo '<input type="hidden" name="Horigine" value="index.php">';
         echo '<input type="hidden" name="Sortie" value="e">';
@@ -399,7 +394,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
     }
     $date_mod = '';
     if ($Modif_Site != '0000-00-00 00:00:00') {
-        $date_mod = my_html($LG_index_last_update) . ' ' . DateTime_Fr($Modif_Site);
+        $date_mod = $LG_index_last_update . ' ' . DateTime_Fr($Modif_Site);
     }
 
     // Affichage des actualités
@@ -414,8 +409,8 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
     $nb = 0;
     echo '<table width="95%" cellspacing="1" cellpadding="3" align="center" class="tab_bord_bas">';
     echo '<tr>';
-    echo '<td width="50%" class="tab_bord_bas"><font size="+1">' . my_html($LG_index_news) . '...</font></td>';
-    echo '<td width="50%" class="tab_bord_bas"><font size="+1">' . my_html($LG_index_links) . '...</font></td>';
+    echo '<td width="50%" class="tab_bord_bas"><font size="+1">' . $LG_index_news . '...</font></td>';
+    echo '<td width="50%" class="tab_bord_bas"><font size="+1">' . $LG_index_links . '...</font></td>';
     echo '</tr>';
     echo '<tr><td>';
     echo '<div id="liste">';
@@ -460,14 +455,14 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
         }
         $result->closeCursor();
     }
-    echo '<br><a href="https://forum.geneamania.net/" target="_blank">' . my_html($LG_index_forum) . '</a>';
+    echo '<br><a href="https://forum.geneamania.net/" target="_blank">' . $LG_index_forum . '</a>';
     echo '<br><br><img src="' . $root . '/assets/img/' . $Icones['etoile'] . '" alt="' . $LG_star . '" title="' . $LG_star . '"> <a href="https://genealogies.geneamania.net/demande_site.php" target="_blank">' . $LG_index_ask_site . '</a>';
     echo '<br><br><a href="https://genealogies.geneamania.net/" target="_blank"><b>GENEAMANIA</b></a>, ' . $LG_index_version . ' ' . $Version;
     if ($SiteGratuit) {
-        echo '<br><br><a href="http://tech.geneamania.net/Telechargements/Guide_demarrage_rapide_site_heberge_Geneamania.pdf" target="_blank">' . my_html($LG_index_getting_started_hosted) . '</a>';
+        echo '<br><br><a href="http://tech.geneamania.net/Telechargements/Guide_demarrage_rapide_site_heberge_Geneamania.pdf" target="_blank">' . $LG_index_getting_started_hosted . '</a>';
         $lib = $LG_index_hosted_free;
         if ($Premium) $lib = $LG_index_hosted_premium;
-        echo ', ' . my_html($lib);
+        echo ', ' . $lib;
     }
     if ($is_windows) {
         echo '<br><br><a href="' . $root . '/documentation/Guide_demarrage_rapide_Geneamania_Windows.pdf" target="_blank">' . $LG_index_getting_started_Windows . '</a>';
@@ -479,10 +474,10 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
     if ($nbAuj or $nbDemain or ($date_mod != '')) {
         echo '<tr><td>';
         if ($nbAuj or $nbDemain) {
-            echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> <a href="' . $root . '/anniversaires.php">' . my_html($LG_index_birthdays) . '</a>  : ';
-            if ($nbAuj != 0) echo $nbAuj . ' ' . my_html($LG_index_today) . ' ';
-            if (($nbAuj != 0) and ($nbDemain != 0)) echo my_html($LG_and) . ' ';
-            if ($nbDemain != 0) echo $nbDemain . ' ' . my_html($LG_index_tomorrow) . ' ';
+            echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '"> <a href="' . $root . '/anniversaires.php">' . $LG_index_birthdays . '</a>  : ';
+            if ($nbAuj != 0) echo $nbAuj . ' ' . $LG_index_today . ' ';
+            if (($nbAuj != 0) and ($nbDemain != 0)) echo $LG_and . ' ';
+            if ($nbDemain != 0) echo $nbDemain . ' ' . $LG_index_tomorrow . ' ';
         }
         if ($date_mod != '') {
             if ($nbAuj or $nbDemain)
@@ -496,7 +491,7 @@ if (($vers_fic == $Version) && (!$maintenance) && (!$verrou)) {
     if (($vers_fic != $Version) and ($id_cnx)) {
         echo '<br>';
         echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . $LG_index_version_mismatched . ' (' . $vers_fic . ' vs. ' . $Version . '), ' . $LG_index_please_migrate . '<br>';
-        echo '<br><a href="' . $root . '/install.php">' . my_html($LG_index_migrate_here) . '</a>'; // pour migrer votre base.';
+        echo '<br><a href="' . $root . '/install.php">' . $LG_index_migrate_here . '</a>'; // pour migrer votre base.';
     }
 }
 
@@ -520,10 +515,10 @@ if ($vers_fic == $Version) {
     // Affichage du formulaire de saisie de code utilisateur ; uniquement sur internet
     // if (true == true) {
     if ($Environnement == 'I') {
-        echo '<form id="saisie" method="post" action="' . $self . '" >';
+        echo '<form id="saisie" method="post">';
         echo '<input type="hidden" name="motPasse" value=""/>';
         echo '<table class="tab_bord_gauche_droite" align="center">';
-        echo '<tr align="center"><td>' . my_html($LG_index_connexion) . '</td></tr>';
+        echo '<tr align="center"><td>' . $LG_index_connexion . '</td></tr>';
         if (! $verrou) {
             // On propose la connexion si on n'a pas de message d'erreur et si la personne n'est pas connectée
             if ($_SESSION['nomUtilisateur'] == $util_defaut) {
@@ -542,33 +537,26 @@ if ($vers_fic == $Version) {
                     echo '<input type="submit" name="ok" value="' . $lib_Connecter . '" style="background:url(' . $root . '/assets/img/' . $Icones['connecter'] . ') no-repeat;padding-left:18px;"
 					 onclick="return avantEnvoiIndex(this.form);" />';
                     if ($SiteGratuit)
-                        echo ' <a href="' . $root . '/aide_mdp.php" target="_blank">' . my_html($LG_index_psw_forgoten) . ' ?</a> ';
+                        echo ' <a href="' . $root . '/aide_mdp.php" target="_blank">' . $LG_index_psw_forgoten . ' ?</a> ';
                     echo '</td></tr>';
                 }
-            }
-            // L'utilisateur est connecté
-            else {
+            } else { // L'utilisateur est connecté
                 echo '<tr align="center"><td><i>' . $LG_index_connected_user . ' ' . $_SESSION['nomUtilisateur'] . ' ' . $LG_index_connected_level . ' ' . libelleNiveau($_SESSION['niveau']) . '</i></td></tr>';
                 //echo '<tr align="center"><td><input type="submit" name="sortir" value="'.$val_sortir.'"/></td></tr>';
                 echo '<tr align="center"><td>';
                 echo '<input type="submit" name="sortir" value="' . $lib_Deconnecter . '" style="background:url(' . $root . '/assets/img/' . $Icones['deconnecter'] . ') no-repeat;padding-left:18px;" />';
                 echo '</td></tr>';
             }
-        }
-        // Site verrouillé
-        else {
-            echo '<tr align="center"><td colspan="2"><font color="red" size="+2"><br>' . my_html($LG_index_contact_support) . '</font></td></tr>';
+        } else { // Site verrouillé
+            echo '<tr align="center"><td colspan="2"><font color="red" size="+2"><br>' . $LG_index_contact_support . '</font></td></tr>';
         }
         echo '</table>';
         echo '</form>';
-    }
-    // En local, on offre la possibilité d'appeler GénéGraphe si celui-ci est présent sur le poste de travail
-    else {
-        if (file_exists('GeneGraphe.jar')) {
-            echo '<form id="f1" action="' . $self . '" method="post">';
+    } else { // En local, on offre la possibilité d'appeler GénéGraphe si celui-ci est présent sur le poste de travail
+        if (file_exists(__DIR__ . '/app/ressources/GeneGraphe.jar')) {
+            echo '<form id="f1" method="post">';
             echo '<input type="hidden" name="geneGraphe" value="exec"/>';
-            $info = my_html($LG_index_info_genegraphe);
-            echo '<img src="' . $root . '/assets/img/' . $Icones['GeneGraphe'] . '" alt="' . $info . '" title="' . $info . '"' .
+            echo '<img src="' . $root . '/assets/img/' . $Icones['GeneGraphe'] . '" alt="' . $LG_index_info_genegraphe . '" title="' . $LG_index_info_genegraphe . '"' .
                 ' onclick="javascript:document.forms[\'f1\'].submit();"/> ';
             echo ' ' . Affiche_Icone_Lien('href="' . $root . '/documentation/index.php" target="_blank"', 'help', $LG_index_doc_genegraphe);
             echo '</form>';
@@ -576,12 +564,13 @@ if ($vers_fic == $Version) {
     }
 
     echo '</td>';
-    echo '<td align="center" valign="middle">' . my_html($LG_help) . ' G&eacute;n&eacute;amania ';
+    echo '<td align="center" valign="middle">' . $LG_help . ' Généamania ';
     echo Affiche_Icone_Lien('href="' . $root . '/aide_geneamania.php"', 'help', $LG_help . ' Généamania');
     echo '</td></tr>';
 
-    if ($SiteGratuit)
-        echo '<tr><td colspan="3" align="center"><i>' . my_html($LG_index_responsability) . '</i></td></tr>';
+    if ($SiteGratuit) {
+        echo '<tr><td colspan="3" align="center"><i>' . $LG_index_responsability . '</i></td></tr>';
+    }
 
     echo '</table>';
 }
@@ -589,11 +578,6 @@ if ($vers_fic == $Version) {
 // On fait un RAZ de la mémorisation des pages lorsque l'on est sur l'accueil
 if (isset($_SESSION['pages'])) unset($_SESSION['pages']);
 $_SESSION['pages'][] = $_SERVER['REQUEST_URI'];
-
-/*
-echo 'Pages mémo : '.count($_SESSION['pages']).'<br>';
-for ($nb=0;$nb<count($_SESSION['pages']);$nb++) echo 'Page '.$nb.' : '.$_SESSION['pages'][$nb]."<br>\n";
-*/
 
 include(__DIR__ . '/assets/js/ctrlMotPasse.js');
 ?>

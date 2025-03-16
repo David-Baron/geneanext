@@ -3,7 +3,6 @@
 // Génération de l'image pour la carte Appelé par appelle_image_france_dep.php
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 function calc_indice($pour)
 {

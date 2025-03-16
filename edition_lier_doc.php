@@ -10,7 +10,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 function Lire_Nom_Prenoms_Unions($refUnion)
 {

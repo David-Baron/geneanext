@@ -4,7 +4,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 function aff_option_niveau($niv_option)
 {

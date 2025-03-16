@@ -4,9 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];

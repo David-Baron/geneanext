@@ -11,3 +11,5 @@ $session->start();
     header('Location: /install.php');
     exit;
 } */
+
+require(__DIR__ . '/ressources/fonctions.php'); // compatibility only

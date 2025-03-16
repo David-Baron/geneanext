@@ -4,7 +4,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 $acces = 'L';                          // Type d'acc�s de la page : (M)ise � jour, (L)ecture
 $titre = $LG_Menu_Title['Documents_List'];        // Titre pour META

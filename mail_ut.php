@@ -5,7 +5,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 $max_emails = 49;
 // R�duction du nombre d'emails autoris�s sur le site de test

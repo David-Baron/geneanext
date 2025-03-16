@@ -6,7 +6,6 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
 $tab_variables = array('annuler', 'Horigine', 'tri');
 foreach ($tab_variables as $nom_variables) {

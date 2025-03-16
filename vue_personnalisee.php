@@ -5,11 +5,7 @@
 //=====================================================================
 
 require(__DIR__ . '/app/bootstrap.php');
-require(__DIR__ . '/app/ressources/fonctions.php');
 
-$lib_ref = 'Défaut	';
-
-// Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
     'annuler',
@@ -23,6 +19,7 @@ foreach ($tab_variables as $nom_variables) {
     else $$nom_variables = '';
 }
 
+$lib_ref = 'Défaut	';
 $ok      = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 
