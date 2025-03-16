@@ -2,6 +2,9 @@
 
 require(__DIR__ . '/app/ressources/fonctions.php');
 
+// Dev mode only: uncomment the line to display errors
+error_reporting(E_ALL);
+
 $cnx = false;
 $msg_cnx_ok = 'Connexion OK';
 $lib_maj_param = 'Mettre à jour les paramètres';
@@ -36,32 +39,27 @@ function cre_rep($nom_rep)
 {
     if (!file_exists($nom_rep)) {
         mkdir($nom_rep);
-        if (substr(php_uname(), 0, 7) != 'Windows') chmod($nom_rep, 0755);
-        // Création d'un fichier d'index
-        copy('Images/index.html', $nom_rep . '/index.html');
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') chmod($nom_rep, 0755);
     }
     if (!is_writable($nom_rep)) {
         echo 'Le répertoire ' . $nom_rep . 'n\'est pas accessible en écriture, veuillez corriger le problème.';
     }
 }
+
 function Traite_Commentaire($type_objet)
 {
     global     $db,
         $ref_comment,
-        $n_commentaires,
-        $n_personnes,
-        $n_unions,
-        $n_evenements,
         $req;
     switch ($type_objet) {
         case 'P':
-            $n_table = $n_personnes;
+            $n_table = nom_table('personnes');
             break;
         case 'U':
-            $n_table = $n_unions;
+            $n_table = nom_table('unions');
             break;
         case 'E':
-            $n_table = $n_evenements;
+            $n_table = nom_table('evenements');
             break;
     }
     $sql = 'SELECT Reference, Divers, Diff_Internet_Note  FROM ' . $n_table . ' WHERE Divers IS NOT NULL AND Divers <> \'\'';
@@ -81,8 +79,8 @@ function Traite_Commentaire($type_objet)
             }
 
             // Insertion de l'enregistrement en table commentaires
-            $req[] = 'INSERT INTO ' . $n_commentaires .
-                ' (Reference_Objet,Type_Objet,Note,Diff_Internet_Note) values (' .
+            $req[] = 'INSERT INTO ' . nom_table('commentaires') .
+                ' (Reference_Objet,Type_Objet,Note,Diff_Internet_Note) VALUES (' .
                 $Reference . ',\'' . $type_objet . '\',\'' . addslashes($note) . '\',\'' . $enreg[2] . '\');';
         }
     }
@@ -275,7 +273,7 @@ $msg = '';
     <?php // L'utilsateur a cliqué sur Tester les paramètres
     if ($tester == $lib_tst_param) {
         // Essai de connexion à la base avec les paramètres saisis
-        echo '<br>Test de connexion avec les valeurs saisies&nbsp;;&nbsp;';
+        echo '<br>Test de connexion avec les valeurs saisies;';
         $cnx = db_connect($serveurs, $dbs, $utils, $mdps);
         if (!$cnx) {
             $erreur = true;
@@ -325,8 +323,7 @@ $msg = '';
                 $pref_tables = $prefixe;
             }
 
-            //Affiche toutes les erreurs sauf les notices
-            error_reporting(E_ALL & ~E_NOTICE);
+
             // Ouverture du fichier et exécution des ordres
             $fic = fopen($chemin_exports . 'Export_Initialisation.sql', 'r');
             $lig_tot = '';
@@ -359,7 +356,7 @@ $msg = '';
                         if (strpos($lig_tot, 'CREATE TABLE ') === 0) {
                             $lig_tot = substr($lig_tot, 0, 14) . $pref_tables . substr($lig_tot, 14);
                         }
-                        //INSERT INTO arbreparam values ('repertoire','polices','c:/windows/fonts','Répertoire contenant les polices du système','4','1','101');
+                        //INSERT INTO arbreparam VALUES ('repertoire','polices','c:/windows/fonts','Répertoire contenant les polices du système','4','1','101');
                         if (strpos($lig_tot, 'INSERT INTO ') === 0) {
                             $lig_tot = substr($lig_tot, 0, 12) . $pref_tables . substr($lig_tot, 12);
                         }
@@ -384,11 +381,6 @@ $msg = '';
     if ($maj == 'Migration') {
 
         $msg = '';
-
-        $n_commentaires = nom_table('commentaires');
-        $n_personnes    = nom_table('personnes');
-        $n_unions       = nom_table('unions');
-        $n_evenements   = nom_table('evenements');
         $n_images       = nom_table('images');
 
         include_once(__DIR__ . '/connexion_inc.php');
@@ -603,11 +595,11 @@ $msg = '';
                     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
                         $req[] = 'INSERT INTO ' . nom_table('evenements') .
                             ' (Code_Type,Titre,Debut,Fin,Date_Creation,Date_Modification,Statut_Fiche)' .
-                            ' values (' .
+                            ' VALUES (' .
                             '\'BAPM\', \'Baptême\',\'' . $enreg[1] . '\',null, ' .
                             'current_timestamp, current_timestamp,\'N\');';
                         $req[] = 'INSERT INTO ' . nom_table('participe') .
-                            ' values (' .
+                            ' VALUES (' .
                             ++$ref_evt . ',' . $enreg[0] . ',\'\',\'' . $enreg[1] . '\',null,\'O\');';
                     }
                 }
@@ -620,11 +612,11 @@ $msg = '';
                     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
                         $req[] = 'INSERT INTO ' . nom_table('evenements') .
                             ' (Code_Type,Titre,Debut,Fin,Date_Creation,Date_Modification,Statut_Fiche)' .
-                            ' values (' .
+                            ' VALUES (' .
                             '\'OCCU\', \'' . addslashes($enreg[1]) . '\',null,null, ' .
                             'current_timestamp, current_timestamp,\'N\');';
                         $req[] = 'INSERT INTO ' . nom_table('participe') .
-                            ' values (' .
+                            ' VALUES (' .
                             ++$ref_evt . ',' . $enreg[0] . ',\'\',null,null,\'O\');';
                     }
                 }
@@ -659,8 +651,8 @@ $msg = '';
 
             if ($Num_Gen == '2.2') {
                 // Création de la table commentaires
-                $req[] = 'DROP TABLE IF EXISTS ' . $n_commentaires . ';';
-                $req[] = 'CREATE TABLE IF NOT EXISTS ' . $n_commentaires . ' ('
+                $req[] = 'DROP TABLE IF EXISTS ' . nom_table('commentaires') . ';';
+                $req[] = 'CREATE TABLE IF NOT EXISTS ' . nom_table('commentaires') . ' ('
                     . '  `Commentaire` int(11) NOT NULL auto_increment,'
                     . '  `Reference_Objet` int(11) NOT NULL default \'0\','
                     . '  `Type_Objet` char(3) default NULL,'
@@ -676,10 +668,10 @@ $msg = '';
                 $x = Traite_Commentaire('U');
 
                 // Suppression des colonnes dans les tables de départ
-                $req[] = 'alter table ' . $n_personnes . ' drop Divers;';
-                $req[] = 'alter table ' . $n_personnes . ' drop Diff_Internet_Note;';
-                $req[] = 'alter table ' . $n_unions . ' drop Divers;';
-                $req[] = 'alter table ' . $n_unions . ' drop Diff_Internet_Note;';
+                $req[] = 'alter table ' . nom_table('personnes') . ' drop Divers;';
+                $req[] = 'alter table ' . nom_table('personnes') . ' drop Diff_Internet_Note;';
+                $req[] = 'alter table ' . nom_table('unions') . ' drop Divers;';
+                $req[] = 'alter table ' . nom_table('unions') . ' drop Diff_Internet_Note;';
 
                 // Modification du libéllé sur le rôle par défaut
                 $req[] = 'update ' . nom_table('roles') . ' set Libelle_Role = \'<Défaut>\' where Code_Role = \'\'';
@@ -775,7 +767,7 @@ $msg = '';
                     . ') ENGINE=MyISAM  ;';
 
                 $req[] = 'INSERT INTO ' . nom_table('arbremodeleetiq')
-                    . ' values (\'1\',\'P\',\'Modèle par défaut\',\'<html>'
+                    . ' VALUES (\'1\',\'P\',\'Modèle par défaut\',\'<html>'
                     . '<head></head>'
                     . '<body>'
                     . '<p align="center" style="margin-top: 0">'
@@ -794,7 +786,7 @@ $msg = '';
                     . '\'D\',current_timestamp,current_timestamp);';
 
                 $req[] = 'INSERT INTO ' . nom_table('arbremodeleetiq')
-                    . ' values (\'2\',\'U\',\'Modèle par défaut\',\'<html>'
+                    . ' VALUES (\'2\',\'U\',\'Modèle par défaut\',\'<html>'
                     . '<head></head>'
                     . '<body>'
                     . '<p style=\"margin-top: 0\">'
@@ -898,30 +890,30 @@ $msg = '';
                 $req[] = 'ALTER TABLE ' . nom_table('roles') . ' ADD `Libelle_Inv_Role` VARCHAR( 50 )';
                 $req[] = 'ALTER TABLE ' . nom_table('relation_personnes') . ' ADD `Principale` CHAR( 1 ) DEFAULT \'O\' NOT NULL';
                 $req[] = 'ALTER TABLE ' . nom_table('general') . ' ADD `Date_Modification` datetime DEFAULT \'0000-00-00 00:00:00\' NOT NULL';
-                $req[] = 'ALTER TABLE ' . $n_images . ' ADD `Titre` VARCHAR( 80 ) NOT NULL';
+                $req[] = 'ALTER TABLE ' . nom_table('images') . ' ADD `Titre` VARCHAR( 80 ) NOT NULL';
 
                 // Déplacement des commentaires dans les tables origine ; cela avit été oublié sur la table evenements
                 $x = Traite_Commentaire('E');
                 // Suppression des colonnes dans les tables de départ
-                $req[] = 'alter table ' . $n_evenements . ' drop Divers';
-                $req[] = 'alter table ' . $n_evenements . ' drop Diff_Internet_Note';
+                $req[] = 'ALTER TABLE ' . nom_table('evenements') . ' DROP Divers';
+                $req[] = 'ALTER TABLE ' . nom_table('evenements') . ' DROP Diff_Internet_Note';
 
                 // La zone description de la table images est transformée en commentaires et on ajoute un titre
-                $sql = 'SELECT ident_image, description from ' . $n_images;
+                $sql = 'SELECT ident_image, description from ' . nom_table('images');
                 if ($res = lect_sql($sql)) {
                     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
                         $image = $enreg[0];
                         $note = $enreg[1];
                         $titre = substr($note, 0, 80);
                         // Insertion de l'enregistrement en table commentaires
-                        $req[] = 'INSERT INTO ' . $n_commentaires .
-                            ' (Reference_Objet,Type_Objet,Note,Diff_Internet_Note) values (' .
+                        $req[] = 'INSERT INTO ' . nom_table('commentaires') .
+                            ' (Reference_Objet,Type_Objet,Note,Diff_Internet_Note) VALUES (' .
                             $image . ',\'I\',\'' . addslashes($note) . '\',\'O\');';
                         // reprise du commentaire dans le titre
-                        $req[] = 'update ' . $n_images . ' set Titre = \'' . addslashes($titre) . '\' where ident_image = ' . $image;
+                        $req[] = 'update ' . nom_table('images') . ' set Titre = \'' . addslashes($titre) . '\' where ident_image = ' . $image;
                     }
                 }
-                $req[] = 'alter table ' . $n_images . ' drop description;';
+                $req[] = 'ALTER TABLE ' . nom_table('images') . ' DROP description;';
 
                 $req[] = 'ALTER TABLE ' . nom_table('general') . ' CHANGE `Nom` `Nom` VARCHAR( 80 ) NOT NULL DEFAULT \'???\'';
                 $req[] = 'ALTER TABLE ' . nom_table('general') . ' CHANGE `Adresse_Mail` `Adresse_Mail` VARCHAR( 80 ) NOT NULL DEFAULT \'support@geneamania.net\'';
@@ -965,12 +957,12 @@ $msg = '';
                             $code = $codePho->calculer($nom);
                             $idNom++;
                             // Création de l'enregistrement dans la table des noms de famille
-                            $req[] = 'insert into ' . nom_table('noms_famille') . ' values(' . $idNom . ',\'' . addslashes($nom) . '\',\'' . $code . '\')';
+                            $req[] = 'INSERT INTO ' . nom_table('noms_famille') . ' VALUES(' . $idNom . ',\'' . addslashes($nom) . '\',\'' . $code . '\')';
                         }
                         // Modification de la table des personnes
                         $req[] = 'update ' . nom_table('personnes') . ' set idNomFam=' . $idNom . ' where Reference=' . $refPers;
                         // Création de l'enregistrement dans la table des liens personnes / noms
-                        $req[] = 'insert into ' . nom_table('noms_personnes') . ' values(' . $refPers . ',' . $idNom . ',\'O\',null)';
+                        $req[] = 'INSERT INTO ' . nom_table('noms_personnes') . ' VALUES(' . $refPers . ',' . $idNom . ',\'O\',null)';
                     }
                     $res->CloseCursor();
                 }
@@ -982,11 +974,11 @@ $msg = '';
             }
 
             if ($Num_Gen == '4.00 beta 2') {
-                $req[] = 'insert into ' . nom_table('types_evenement') . ' values("AC3U", "Actualités","N","A","M","N");';
+                $req[] = 'INSERT INTO ' . nom_table('types_evenement') . ' VALUES("AC3U", "Actualités","N","A","M","N");';
                 $req[] = 'ALTER TABLE ' . nom_table('evenements') . ' CHANGE `Titre` `Titre` VARCHAR( 80 ) NOT NULL DEFAULT \'-\'';
-                $req[] = 'insert into ' . nom_table('evenements') . ' values(null,0,0,"AC3U","mise en ligne du site personnel sur Multimania","20030113GL","20030113GL",current_timestamp,current_timestamp,"V")';
-                $req[] = 'insert into ' . nom_table('evenements') . ' values(null,0,0,"AC3U","première diffusion du logiciel sous le nom de monSSG","20060228GL","20060228GL",current_timestamp,current_timestamp,"V")';
-                $req[] = 'insert into ' . nom_table('evenements') . ' values(null,0,0,"AC3U","monSSG devient Généamania","20070518GL","20070518GL",current_timestamp,current_timestamp,"V")';
+                $req[] = 'INSERT INTO ' . nom_table('evenements') . ' VALUES(null,0,0,"AC3U","mise en ligne du site personnel sur Multimania","20030113GL","20030113GL",current_timestamp,current_timestamp,"V")';
+                $req[] = 'INSERT INTO ' . nom_table('evenements') . ' VALUES(null,0,0,"AC3U","première diffusion du logiciel sous le nom de monSSG","20060228GL","20060228GL",current_timestamp,current_timestamp,"V")';
+                $req[] = 'INSERT INTO ' . nom_table('evenements') . ' VALUES(null,0,0,"AC3U","monSSG devient Généamania","20070518GL","20070518GL",current_timestamp,current_timestamp,"V")';
                 $Num_Gen = req_maj_vers('4.00 beta 3');
             }
 
@@ -1030,8 +1022,8 @@ $msg = '';
                 $Num_Gen = req_maj_vers('4.1 alpha 1');
             }
             if ($Num_Gen == '4.1 alpha 1') {
-                $req[] = 'INSERT INTO ' . nom_table('regions') . ' values (0,\'\',\'\',current_timestamp,current_timestamp,\'V\',0)';
-                $req[] = 'INSERT INTO ' . nom_table('pays') . ' values (0,\'\',\'\',0,\'\',current_timestamp,current_timestamp,\'V\')';
+                $req[] = 'INSERT INTO ' . nom_table('regions') . ' VALUES (0,\'\',\'\',current_timestamp,current_timestamp,\'V\',0)';
+                $req[] = 'INSERT INTO ' . nom_table('pays') . ' VALUES (0,\'\',\'\',0,\'\',current_timestamp,current_timestamp,\'V\')';
 
                 $Num_Gen = req_maj_vers('4.1 alpha 2');
             }
@@ -1116,13 +1108,13 @@ $msg = '';
                     . 'PRIMARY KEY ( `Identifiant` )'
                     . ') ENGINE = MYISAM ';
                 // Création des catégories
-                $req[] = 'insert into ' . nom_table('categories') . ' values(1,\'bleu\',\'Catégorie bleue\',1)';
-                $req[] = 'insert into ' . nom_table('categories') . ' values(2,\'vert\',\'Catégorie verte\',2)';
-                $req[] = 'insert into ' . nom_table('categories') . ' values(3,\'orange\',\'Catégorie orange\',3)';
-                $req[] = 'insert into ' . nom_table('categories') . ' values(4,\'rose\',\'Catégorie rose\',4)';
-                $req[] = 'insert into ' . nom_table('categories') . ' values(5,\'violet\',\'Catégorie violette\',5)';
-                $req[] = 'insert into ' . nom_table('categories') . ' values(6,\'rouge\',\'Catégorie rouge\',6)';
-                $req[] = 'insert into ' . nom_table('categories') . ' values(7,\'jaune\',\'Catégorie jaune\',7)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(1,\'bleu\',\'Catégorie bleue\',1)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(2,\'vert\',\'Catégorie verte\',2)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(3,\'orange\',\'Catégorie orange\',3)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(4,\'rose\',\'Catégorie rose\',4)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(5,\'violet\',\'Catégorie violette\',5)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(6,\'rouge\',\'Catégorie rouge\',6)';
+                $req[] = 'INSERT INTO ' . nom_table('categories') . ' VALUES(7,\'jaune\',\'Catégorie jaune\',7)';
 
                 $Num_Gen = req_maj_vers('4.2 alpha 1');
             }
@@ -1192,7 +1184,7 @@ $msg = '';
             }
 
             if ($Num_Gen == '4.3') {
-                $req[] = 'UPDATE ' . $n_personnes . ' SET Diff_Internet = \'N\' WHERE Diff_Internet = \'\'';
+                $req[] = 'UPDATE ' . nom_table('personnes') . ' SET Diff_Internet = \'N\' WHERE Diff_Internet = \'\'';
                 $Num_Gen = req_maj_vers('4.4 beta 1');
             }
 
@@ -1543,7 +1535,7 @@ $msg = '';
                 if ($vide) $valeur = 'true';
                 $req[] = 'ALTER TABLE ' . nom_table('general') . ' ADD `Base_Vide` BOOLEAN NOT NULL DEFAULT ' . $valeur;
                 $req[] = 'ALTER TABLE ' . nom_table('sources') . ' ADD Fiabilite_Source CHAR(1) NULL AFTER Adresse_Web';
-                $req[] = 'ALTER TABLE ' . $n_personnes . ' CHANGE Categorie Categorie INT(2) NOT NULL DEFAULT "0"';
+                $req[] = 'ALTER TABLE ' . nom_table('personnes') . ' CHANGE Categorie Categorie INT(2) NOT NULL DEFAULT "0"';
                 $Num_Gen = req_maj_vers('2019.09 beta 1');
             }
 
@@ -1828,26 +1820,41 @@ $msg = '';
             // Lancement des requêtes
             Ex_Req();
 
-            // Création du répertoire de stockage des contributions si inexistant
-            cre_rep('contributions');
+            /** 
+             * Création du répertoire de stockage des contributions
+             * @deprecated Created by application in local storage when contribution is created
+             */
+            # cre_rep('contributions');
 
-            // Création du répertoire de stockage des exports
-            cre_rep('exports');
+            /** 
+             * Création du répertoire de stockage des exports
+             * @deprecated Created by application in local storage when backup is created
+             */
+            # cre_rep('exports');
 
-            // Création des répertoires pour GénéGraphe
-            cre_rep('fichiers');
-            cre_rep('fichiers/images');
-            cre_rep('fichiers/pdf');
+            /** 
+             * Création des répertoires pour GénéGraphe
+             * @deprecated GeneGraph not anymore on application
+             */
+            # cre_rep('fichiers');
+            # cre_rep('fichiers/images');
+            # cre_rep('fichiers/pdf');
 
-            // Création des répertoires pour la gestion des documents
-            cre_rep('documents');
-            cre_rep('documents/HTM');
-            cre_rep('documents/IMG');
-            cre_rep('documents/PDF');
-            cre_rep('documents/TXT');
+            /** 
+             * Création des répertoires pour la gestion des documents
+             * @deprecated Created by application in local storage when new genealogy is created
+             */
+            # cre_rep('documents');
+            # cre_rep('documents/HTM');
+            # cre_rep('documents/IMG');
+            # cre_rep('documents/PDF');
+            # cre_rep('documents/TXT');
 
-            // création des répertoires de langues
-            cre_rep('languages');
+            /** 
+             * Création des répertoires de langues
+             * @deprecated This folder is on application
+             */
+            // cre_rep('languages');
         }
 
         if ($msg == '') $msg = 'OKMod';
@@ -1878,30 +1885,22 @@ $msg = '';
             $utils    = $nutil;
             $mdps     = $nmdp;
         }
-        echo '<b>Constitution du fichier de connexion à la base de données :<br></b>' . "\n";
-
-        echo '<form id="saisie" method="post" ENCTYPE="multipart/form-data" action="' . my_self() . '">' . "\n";
-
+        echo '<b>Constitution du fichier de connexion à la base de données :<br></b>';
+        echo '<form id="saisie" method="post" ENCTYPE="multipart/form-data">';
         echo '<div class="form-style-6">';
         echo '<h1>Saisissez vos paramètres de connexion</h1>';
-
         echo 'Nom du serveur (défaut : "localhost")<br>';
         echo '<input type="text" name="serveurs" value="' . $serveurs . '"/>';
-
         echo 'Nom de la base de données (défaut : "geneamania")<br>';
         echo '<input type="text" name="dbs" value="' . $dbs . '"/>';
-
         echo 'Code utilisateur (défaut : "root")<br>';
         echo '<input type="text" name="utils" value="' . $utils . '"/>';
-
         echo 'Mot de passe (défaut : "root", ou vide si Wampserver ")<br>';
         echo '<input type="text" name="mdps" value="' . $mdps . '"/>';
-
         echo '<input type="submit" name="tester" value="' . $lib_tst_param . '" /><br><br>';
         echo '<input type="submit" name="majparam" value="' . $lib_maj_param . '" />';
         echo '</form>';
         echo '</div>';
-
         echo "</form>";
 
         if ($msgMaj == "OKMaj") echo '<br><font color="green">Création du fichier des paramètres de connexion OK</font><br>';
@@ -1919,38 +1918,38 @@ $msg = '';
         echo '<fieldset><legend>Récupération de la dernière version de référence du logiciel</legend>';
         if ($is_windows)
             echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information">' .
-                'Si vous utilisez le lanceur Windows, vous pouvez mettre à jour  Généamania en 1 clic à partir de l\'onglet "Versions" du lanceur.<br>Sinon,&nbsp;';
+                'Si vous utilisez le lanceur Windows, vous pouvez mettre à jour  Généamania en 1 clic à partir de l\'onglet "Versions" du lanceur.<br>Sinon, ';
         echo '<a href="' . $root . '/recup_sources.php">Cliquez ici</a>';
         echo '</fieldset>';
 
         // Recherche de la version éventuelle locale de Généamania
         $Version = '';
-        if ($res = lect_sql('select Version from ' . nom_table('general'))) {
+        if ($res = lect_sql('SELECT Version FROM ' . nom_table('general'))) {
             if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
                 $Version = $enreg['Version'];
             }
         }
 
         if ((!isset($envir)) or ($envir == '')) $envir = 'L';
-        $chLoc = ($envir == 'L') ? 'checked="checked"' : '';
-        $chInt = ($envir == 'I') ? 'checked="checked"' : '';
+        $chLoc = ($envir == 'L') ? ' checked' : '';
+        $chInt = ($envir == 'I') ? ' checked' : '';
 
         echo '<br>';
         echo '<fieldset><legend>Initialisation de la base de données</legend>';
-        echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> Uniquement pour une première installation de Généamania :<br>' . "\n";
-        echo '<form id="form_modI" method="post">' . "\n";
-        echo '<table width="25%"><tr align="center"><td>' . "\n";
-        echo '  <fieldset>' . "\n";
-        echo '    <legend>Environnement</legend>' . "\n";
-        echo '      <input type="radio" name="envir" value="L"' . $chLoc . '/>Local&nbsp;&nbsp;&nbsp;' . "\n";
-        echo '      <input type="radio" name="envir" value="I"' . $chInt . '/>Internet<br>' . "\n";
-        echo '  </fieldset>' . "\n";
+        echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Information" title="Information"> Uniquement pour une première installation de Généamania :<br>';
+        echo '<form id="form_modI" method="post">';
+        echo '<table width="25%"><tr align="center"><td>';
+        echo '  <fieldset>';
+        echo '    <legend>Environnement</legend>';
+        echo '      <input type="radio" name="envir" value="L"' . $chLoc . '/>Local';
+        echo '      <input type="radio" name="envir" value="I"' . $chInt . '/>Internet<br>';
+        echo '  </fieldset>';
         echo '</td></tr>';
-        echo '<tr><td>&nbsp;</td></tr>';
-        echo '<tr><td>Préfixe des tables : <input type="text" name="prefixe" value="' . $pref_tables . '"/></td></tr>' . "\n";
-        echo '</table>' . "\n";
-        echo '<br><input type="submit" name="maj" value="Initialisation"/>' . "\n";
-        echo '</form>' . "\n";
+        echo '<tr><td> </td></tr>';
+        echo '<tr><td>Préfixe des tables : <input type="text" name="prefixe" value="' . $pref_tables . '"/></td></tr>';
+        echo '</table>';
+        echo '<br><input type="submit" name="maj" value="Initialisation"/>';
+        echo '</form>';
         if ($msgIni != '') {
             if ($msgIni == "OKIni") {
                 echo '<br><font color="green">Initialisation de la base effectuée en environnement ';
@@ -1965,12 +1964,12 @@ $msg = '';
         echo '<fieldset><legend>Migration de la base de données</legend>';
         if ($Version != '') {
             if ($Version != $LaVersion) {
-                echo 'Version ' . $Version . ' vers ' . $LaVersion . ' : <br></b>' . "\n";
-                echo '<i>NB : un <a href="' . $root . '/export.php">export</a> complet de la base est conseillé avant de demander la migration.</i>' . "\n";
-                echo '<form id="form_modM" method="post" action="' . my_self() . '">' . "\n";
-                echo '<input type="submit" name="maj" value="Migration"/>' . "\n";
+                echo 'Version ' . $Version . ' vers ' . $LaVersion . ' : <br></b>';
+                echo '<i>NB : un <a href="' . $root . '/export.php">export</a> complet de la base est conseillé avant de demander la migration.</i>';
+                echo '<form id="form_modM" method="post">';
+                echo '<input type="submit" name="maj" value="Migration"/>';
                 echo "</form>";
-            } else echo 'Pas de migration nécessaire.' . "\n";
+            } else echo 'Pas de migration nécessaire.';
         }
         if ($msgMod != '') {
             if ($msgMod == 'OKMod') echo '<br><font color="green">Migration de la base effectuée</font><br>';
@@ -1980,7 +1979,7 @@ $msg = '';
 
         echo '<br>';
         echo '<fieldset><legend>Liens</legend>';
-        echo '<a href="https://forum.geneamania.net/" target="_blank">Forum Généamania</a><br>' . "\n";
+        echo '<a href="https://forum.geneamania.net/" target="_blank">Forum Généamania</a><br>';
         if ($Version != '') {
             echo '<a href="' . $root . '/">Accueil de votre généalogie</a>';
         }

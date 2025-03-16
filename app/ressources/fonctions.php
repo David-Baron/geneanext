@@ -605,7 +605,7 @@ function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
         echo '<meta name="robots" content="' . $p1 . 'INDEX, ' . $p2 . 'FOLLOW">';
     }
     echo '<meta name="REVISIT-AFTER" content="7 days">';
-
+    echo '<link rel="shortcut icon" href="'.$root.'assets/favicon.ico" type="image/x-icon">';
     // echo '<link rel="stylesheet" href="divers_styles.css">'."\n";
     include(__DIR__ . '/../../assets/css/divers_styles.css');
     if (file_exists(__DIR__ . '/../../assets/css/divers_styles_part.css')) {
