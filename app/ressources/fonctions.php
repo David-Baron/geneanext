@@ -2450,7 +2450,7 @@ function aff_menu($type_menu, $droits, $formu = true)
     $menu[] = '1^^^' . $root . '/anniversaires.php^^^Anniversaires^^^I^^^';
 
     $menu[] = '0^^^ ^^^Gestion du site^^^G^^^';
-    $menu[] = '1^^^' . $root . '/edition_parametres_Site.php^^^Site_parameters^^^G^^^';
+    $menu[] = '1^^^' . $root . '/edition_parametres_site.php^^^Site_parameters^^^G^^^';
     $menu[] = '1^^^' . $root . '/edition_parametres_Graphiques.php^^^Design^^^G^^^';
     $menu[] = '1^^^' . $root . '/liste_utilisateurs.php^^^Users_List^^^G^^^';
     $menu[] = '1^^^' . $root . '/liste_connexions.php^^^Connections^^^G^^^';

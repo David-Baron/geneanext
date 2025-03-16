@@ -24,4 +24,5 @@ function dd(mixed $variable)
     echo '</pre>';
     exit;
 }
+
 require(__DIR__ . '/ressources/fonctions.php'); // compatibility only

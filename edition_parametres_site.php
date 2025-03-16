@@ -91,7 +91,7 @@ if ($bt_OK) {
             $_SESSION['message'] = $erreur;
             $image = 'exclamation.png';
             echo '<img src="' . $root . '/assets/img/' . $image . '" BORDER=0 alt="' . $image . '" title="' . $image . '">';
-            echo ' ' . $LG_Site_Param_Error . LG_SEMIC . $erreur . '<br />';
+            echo ' ' . $LG_Site_Param_Error . ' ' . $erreur . '<br />';
         }
         // Sinon on peut télécharger
         else {
@@ -224,8 +224,8 @@ if ((!$bt_OK) && (!$bt_An)) {
         $ancien = $coul_pdf;
         echo '<tr><td class="label" width="35%"> ' . ucfirst($LG_Site_Param_PDF_Font_Color) . ' </td>';
         echo '<td class="value">';
-        echo my_html($LG_Site_Param_PDF_Font_Color_Current) . LG_SEMIC . '<input readonly="readonly" type="text" id="Anc_coul" name="Anc_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
-        echo ' ' . my_html($LG_Site_Param_PDF_Font_Color_New) . LG_SEMIC . '<input class="color" readonly="readonly" type="text" id="Nouv_coul" name="Nouv_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
+        echo my_html($LG_Site_Param_PDF_Font_Color_Current) . ' ' . '<input readonly="readonly" type="text" id="Anc_coul" name="Anc_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
+        echo ' ' . my_html($LG_Site_Param_PDF_Font_Color_New) . ' ' . '<input class="color" readonly="readonly" type="text" id="Nouv_coul" name="Nouv_coul" size="7" maxlength="7" value="' . $ancien . '" style="background-color:' . $ancien . '"/>' . "\n";
         $texte_im = $LG_Site_Param_PDF_Font_Color_Back;
         echo ' <img id="im_dernier_coul" src="' . $root . '/assets/img/' . $Icones['conversion'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="remet_code_coul(\'' . 'coul' . '\');"/>';
         echo '</td></tr>' . "\n";
