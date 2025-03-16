@@ -95,26 +95,17 @@ $objetCodePho = new Phonetique();
 function celBouton($lettre, $numAide)
 {
     echo '<td class="value">';
-    if ($lettre != '')
+    if ($lettre != '') {
         echo '<div align="center"><input type="button" name="bt' . $lettre . '" value="' . $lettre .
             '" style="width: 40px" onmouseover="afficheAide(' . $numAide .
             ')" onmouseout="afficheAide(-1)" onclick="ajoute(this.value)"/></div>';
-    else
-        echo '&nbsp;';
-    echo '</td>' . "\n";
+    }
+    echo '</td>';
 }
 
 //	Mise à jour
 if ($bt_OK) {
 
-    if ($debug) {
-        echo 'code phonétique : ';
-        var_dump($codePho);
-        echo 'ancien code phonétique : ';
-        var_dump($AcodePho);
-    }
-
-    // Valeur par défaut
     if ($diffNote == '') $diffNote = 'N';
 
     $req_comment = '';
@@ -232,7 +223,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 400);
     if ($idNomFam != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_nomfam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_nomfam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . ' ';
 
     Insere_Haut($titre, $compl, 'Edition_NomFam', $idNomFam);
 
@@ -255,32 +246,29 @@ if ((!$bt_OK) && (!$bt_An)) {
         $resN->closeCursor();
     }
 
-    $larg_titre = '20';
-    $ent_table = '<table width="60%" class="table_form" align="center">' . "\n";
-
-    echo '<form id="saisie" method="post" onsubmit="return verification_form_nomFam(this,\'nomFam\')" action="' . my_self() . '?idNom=' . $idNomFam . '" >' . "\n";
-    echo '<input type="' . $hidden . '" name="ident_courant" id="ident_courant" value="' . $idNomFam . '"/>' . "\n";
-    echo $ent_table;
+    echo '<form id="saisie" method="post" onsubmit="return verification_form_nomFam(this,\'nomFam\')" action="' . my_self() . '?idNom=' . $idNomFam . '" >';
+    echo '<input type="hidden" name="ident_courant" id="ident_courant" value="' . $idNomFam . '"/>';
+    echo '<table width="60%" align="center">';
 
     //	Zone de saisie du nom
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_NAME . '&nbsp;</td><td class="value">';
-    echo '<input type="text" size="50" name="nomFam" id="nomFam" value="' . $nomFam . '" class="oblig"/>&nbsp;' . "\n";
+    echo '<tr><td class="label" width="20%"> ' . LG_NAME . ' </td><td class="value">';
+    echo '<input type="text" size="50" name="nomFam" id="nomFam" value="' . $nomFam . '" class="oblig"/> ';
     echo '<img src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="Zone obligatoire" title="Zone obligatoire"/>';
-    echo '&nbsp;<img id="majuscule" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
-        ' onclick="NomMaj();document.getElementById(\'nomFam\').focus();"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="AnomFam" value="' . $nomFam . '"/></td></tr>' . "\n";
+    echo ' <img id="majuscule" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
+        ' onclick="NomMaj();document.getElementById(\'nomFam\').focus();"/>';
+    echo '<input type="hidden" name="AnomFam" value="' . $nomFam . '"/></td></tr>';
     //	Code phonétique
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_NAME_PRONUNCIATION . '&nbsp;</td><td class="value">';
-    echo '<span id="code" style="border-width: 1px; font-size: 15pt; border-style: solid; border-color: #000000;padding: 1pt 4pt;">&nbsp;</span>&nbsp;' . "\n";
-    echo '<input type="' . $hidden . '" name="codePho" id="codePho" value="' . $codePho . '"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="AcodePho" value="' . $codePho . '"/>' . "\n";
-    echo '</td></tr>' . "\n";
-    echo '</table>' . "\n";
+    echo '<tr><td class="label" width="20%"> ' . LG_NAME_PRONUNCIATION . ' </td><td class="value">';
+    echo '<span id="code" style="border-width: 1px; font-size: 15pt; border-style: solid; border-color: #000000;padding: 1pt 4pt;"> </span> ';
+    echo '<input type="hidden" name="codePho" id="codePho" value="' . $codePho . '"/>';
+    echo '<input type="hidden" name="AcodePho" value="' . $codePho . '"/>';
+    echo '</td></tr>';
+    echo '</table>';
 
-    echo $ent_table;
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-    //echo '<p><table border="1" cellpadding="3" cellspacing="0">' . "\n";
-    echo '<tr><td rowspan="2" valign="middle" width="' . $larg_titre . '" class="label">' . my_html(LG_NAME_VOWELS) . '</td>' . "\n";
+    echo '<table width="60%" class="table_form" align="center">';
+    echo '<tr><td colspan="2"> </td></tr>';
+    //echo '<p><table border="1" cellpadding="3" cellspacing="0">';
+    echo '<tr><td rowspan="2" valign="middle" width="20" class="label">' . my_html(LG_NAME_VOWELS) . '</td>';
     celBouton('a', 0);
     celBouton('&acirc;', 1);
     celBouton('e', 2);
@@ -290,7 +278,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     celBouton('o', 6);
     celBouton('&ocirc;', 7);
     celBouton('u', 8);
-    echo '</tr><tr>' . "\n";
+    echo '</tr><tr>';
     celBouton('eu', 9);
     celBouton('en', 10);
     celBouton('on', 11);
@@ -300,7 +288,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     celBouton('', -1);
     celBouton('', -1);
     celBouton('', -1);
-    echo '</tr> <tr>' . "\n" . '<td rowspan="2" valign="middle" class="label">' . my_html(LG_NAME_CONSONANTS) . '</td>' . "\n";
+    echo '</tr> <tr>' . '<td rowspan="2" valign="middle" class="label">' . my_html(LG_NAME_CONSONANTS) . '</td>';
     celBouton('b', 15);
     celBouton('d', 16);
     celBouton('f', 17);
@@ -310,7 +298,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     celBouton('l', 21);
     celBouton('m', 22);
     celBouton('n', 23);
-    echo '</tr><tr>' . "\n";
+    echo '</tr><tr>';
     celBouton('p', 24);
     celBouton('r', 25);
     celBouton('s', 26);
@@ -321,62 +309,62 @@ if ((!$bt_OK) && (!$bt_An)) {
     celBouton('ch', 30);
     celBouton('gn', 31);
     echo '</tr>';
-    echo '<tr><td class="label" width="20%">&nbsp;' . ucfirst(LG_NAME_SAMPLE) . '&nbsp;</td>';
-    echo '<td colspan="10" align="center" class="value"><div id="aide"></div></td></tr>' . "\n";
-    echo '<tr class="value"><td colspan="10" align="center">' . "\n";
-    echo '<input type="button" name="proposer" value="' . my_html(LG_NAME_PRONUNCIATION_CALC) . '" onclick="javascript:calculer();"/>' . "\n";
-    echo '&nbsp; &nbsp; &nbsp;' . "\n";
-    echo '<input type="button" name="espace" value="' . my_html(LG_NAME_SPACE) . '" onclick="javascript:ajoute(\' \');"/>' . "\n";
-    echo '&nbsp; &nbsp; &nbsp;' . "\n";
-    echo '<input type="button" name="effacer" value="' . my_html(LG_NAME_BACKSPACE) . '" onclick="efface()"/>' . "\n";
-    echo '&nbsp; &nbsp; &nbsp;' . "\n";
-    echo '<input type="button" name="effacer" value="<--" onclick="cursGauche()"/>' . "\n";
-    echo '&nbsp; &nbsp; &nbsp;' . "\n";
-    echo '<input type="button" name="effacer" value="-->" onclick="cursDroite()"/>' . "\n";
-    //echo '</td></tr></table>' . "\n";
-    echo '</td></tr>' . "\n";
-    echo '</table>' . "\n";
+    echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_NAME_SAMPLE) . ' </td>';
+    echo '<td colspan="10" align="center" class="value"><div id="aide"></div></td></tr>';
+    echo '<tr class="value"><td colspan="10" align="center">';
+    echo '<input type="button" name="proposer" value="' . LG_NAME_PRONUNCIATION_CALC . '" onclick="javascript:calculer();"/>';
+    echo '     ';
+    echo '<input type="button" name="espace" value="' . LG_NAME_SPACE . '" onclick="javascript:ajoute(\' \');"/>';
+    echo '     ';
+    echo '<input type="button" name="effacer" value="' . LG_NAME_BACKSPACE . '" onclick="efface()"/>';
+    echo '     ';
+    echo '<input type="button" name="effacer" value="<--" onclick="cursGauche()"/>';
+    echo '     ';
+    echo '<input type="button" name="effacer" value="-->" onclick="cursDroite()"/>';
+    //echo '</td></tr></table>';
+    echo '</td></tr>';
+    echo '</table>';
     //	Mise en place du code correspondant au nom
     if (!$Creation) {
         if ($res->RowCount() > 0) {
-            echo '<script type = "text/javascript">' . "\n";
-            echo 'traiteCodeRecu(\'' . $codePho . '\');' . "\n";
-            echo '</script>' . "\n";
+            echo '<script type = "text/javascript">';
+            echo 'traiteCodeRecu(\'' . $codePho . '\');';
+            echo '</script>';
         }
     }
-    echo '<input type="' . $hidden . '" name="Horigine" value="' . $Horigine . '"/>' . "\n";
+    echo '<input type="hidden" name="Horigine" value="' . $Horigine . '"/>';
     // La zone suivante sera valorisée à 'O' en cas de demande de fusion ; la zone suivante contiendra l'identifiant du nom
-    echo '<input type="' . $hidden . '" name="fusion" id= "fusion" value="N"/>' . "\n";
-    echo '<input type="' . $hidden . '" name="anc_ident" id="anc_ident" value="0"/>' . "\n";
+    echo '<input type="hidden" name="fusion" id= "fusion" value="N"/>';
+    echo '<input type="hidden" name="anc_ident" id="anc_ident" value="0"/>';
 
     // === Commentaires
-    echo $ent_table;
-    echo '<tr><td colspan="2">&nbsp;</td></tr>';
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT . '&nbsp;</td><td class="value">';
+    echo '<table width="60%" class="table_form" align="center">';
+    echo '<tr><td colspan="2"> </td></tr>';
+    echo '<tr><td class="label" width="20%"> ' . LG_CH_COMMENT . ' </td><td class="value">';
     // Accès au commentaire
     $Existe_Commentaire = Rech_Commentaire($idNomFam, $Type_Ref);
-    echo '<textarea cols="50" rows="4" name="divers">' . $Commentaire . '</textarea>' . "\n";
-    echo '<input type="' . $hidden . '" name="Adivers" value="' . my_html($Commentaire) . '"/>';
+    echo '<textarea cols="50" rows="4" name="divers">' . $Commentaire . '</textarea>';
+    echo '<input type="hidden" name="Adivers" value="' . my_html($Commentaire) . '"/>';
     echo '</td></tr>';
     // Diffusion Internet commentaire
-    echo '<tr><td class="label" width="' . $larg_titre . '%">&nbsp;' . LG_CH_COMMENT_VISIBILITY . '&nbsp;</td><td class="value">';
+    echo '<tr><td class="label" width="20%"> ' . LG_CH_COMMENT_VISIBILITY . ' </td><td class="value">';
     echo '<input type="checkbox" name="diffNote" value="O"';
     if ($Diffusion_Commentaire_Internet == 'O') echo ' checked="checked"';
     echo "/>\n";
-    echo '<input type="' . $hidden . '" name="AdiffNote" value="' . $Diffusion_Commentaire_Internet . '"/>' . "\n";
-    echo '</td></tr>' . "\n";
-    echo '</table>' . "\n";
+    echo '<input type="hidden" name="AdiffNote" value="' . $Diffusion_Commentaire_Internet . '"/>';
+    echo '</td></tr>';
+    echo '</table>';
 
-    echo $ent_table;
+    echo '<table width="60%" class="table_form" align="center">';
     //ligne_vide_tab_form(1);
     echo '<tr align="center"><td>';
     $lib_sup = '';
     if ((!$Creation) and (! $utilise)) $lib_sup = $lib_Supprimer;
     bt_ok_an_sup($lib_Okay, $lib_Annuler, $lib_sup, 'ce nom de famille', false);
     echo '</td></tr>';
-    echo '</table>' . "\n";
+    echo '</table>';
 
-    echo '</form>' . "\n";
+    echo '</form>';
 
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';

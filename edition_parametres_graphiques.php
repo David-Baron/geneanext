@@ -12,15 +12,15 @@ require(__DIR__ . '/app/bootstrap.php');
 function Liste_Noms_Images($chemin)
 {
     global $ext_poss;
-    $dir = $chemin;
+    $dir = __DIR__ . '/' . $chemin;
     $dossier = opendir($dir);
     $premier = true;
     while ($fichier = readdir($dossier)) {
         $extension = strtolower(substr(strrchr($fichier, "."), 1));
         if ((is_file($dir . '/' . $fichier)) and (strpos($ext_poss, $extension) != false)) {
-            if (!$premier) echo ',';
+            if (!$premier) echo ', ';
             else $premier = false;
-            echo '"' . $fichier . '"';
+            echo "'$fichier'";
         }
     }
 }
@@ -28,7 +28,7 @@ function Liste_Noms_Images($chemin)
 function affiche_images($extension, $nb_cases, $cancel = false)
 {
     global $root, $chemin_images_arbres, $Icones, $aff_infos, $LG_Graphics_First, $LG_Graphics_Stop, $LG_Graphics_Next, $LG_Graphics_Last, $w_fonds, $h_fonds, $w_barres, $h_barres, $w_lettres, $h_lettres, $w_arbres, $h_arbres, $Chemin_Lettre, $Chemin_Barre, $Image_Fond, $Lettre_B, $Image_Barre, $Image_Arbre_Asc;
-    echo '<table cellpadding="1" width="100%" border="0">';
+    echo '<table cellpadding="1" width="100%">';
     echo '<tr>';
     for ($nb = 1; $nb <= $nb_cases; $nb++)
         echo '<td id="case_' . $nb . '_' . $extension . '" align="center"></td>';
@@ -36,7 +36,7 @@ function affiche_images($extension, $nb_cases, $cancel = false)
     if ($cancel) {
         $texte_im = 'Pas de ' . $extension;
         $texte_im = rtrim($texte_im, 's');
-        echo '&nbsp;&nbsp;<img id="im_cancel_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['cancel'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="efface(\'' . $extension . '\')"/>';
+        echo '  <img id="im_cancel_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['cancel'] . '" alt="' . $texte_im . '" title="' . $texte_im . '" onclick="efface(\'' . $extension . '\')"/>';
     }
     echo '</td>';
     $src = '';
@@ -65,25 +65,25 @@ function affiche_images($extension, $nb_cases, $cancel = false)
     }
     // Si le nom de fichier est '-', on init la source
     if ($src[strlen($src) - 1] == '-') $src = '';
-    echo '<td align="center" valign="middle">S&eacute;lection :<br>';
+    echo '<td align="center" valign="middle">Sélection :<br>';
     echo '<img id="image_copie_' . $extension . '" width="' . $larg . '" height="' . $haut . '" src="' . $src . '" alt="' . $texte_im . '" title="' . $texte_im . '"/>';
-    echo '&nbsp;<input type="' . $aff_infos . '" id="src_case_copie_' . $extension . '" name="src_case_copie_' . $extension . '" value="-"/>';
-    echo '</td></tr>' . "\n";
+    echo ' <input type="' . $aff_infos . '" id="src_case_copie_' . $extension . '" name="src_case_copie_' . $extension . '" value="-"/>';
+    echo '</td></tr>';
 
     echo '<tr align="center"><td colspan="' . $nb_cases . '">';
     echo '<img id ="im_premier_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['first']
-        . '" alt="' . $LG_Graphics_First . '" title="' . $LG_Graphics_First . '" onclick="premier(\'' . $extension . '\')"/>&nbsp;';
+        . '" alt="' . $LG_Graphics_First . '" title="' . $LG_Graphics_First . '" onclick="premier(\'' . $extension . '\')"/> ';
     echo '<img id="im_precedent_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['stop']
         . '" alt="' . $LG_Graphics_Stop . '" title="' . $LG_Graphics_Stop . '" onclick="recule(\'' . $extension . '\',nb_cases_' . $extension . ')"/>';
-    echo '&nbsp;&nbsp;<input type="text" style="text-align:center;" readonly="readonly" name="page_' . $extension . '" id="page_' . $extension . '" size="3" />&nbsp;&nbsp;';
+    echo '  <input type="text" style="text-align:center;" readonly="readonly" name="page_' . $extension . '" id="page_' . $extension . '" size="3" />  ';
     echo '<img id="im_suivant_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['next']
-        . '" alt="' . $LG_Graphics_Next . '" title="' . $LG_Graphics_Next . '" onclick="avance(\'' . $extension . '\',nb_cases_' . $extension . ')"/>&nbsp;';
+        . '" alt="' . $LG_Graphics_Next . '" title="' . $LG_Graphics_Next . '" onclick="avance(\'' . $extension . '\',nb_cases_' . $extension . ')"/> ';
     echo '<img id="im_dernier_' . $extension . '" src="' . $root . '/assets/img/' . $Icones['last']
         . '" alt="' . $LG_Graphics_Last . '" title="' . $LG_Graphics_Last . '" onclick="dernier(\'' . $extension . '\',nb_cases_' . $extension . ',nb_images_' . $extension . ')"/>';
-    echo '</td>' . "\n";
-    echo '<td>&nbsp;</td></tr>' . "\n";
+    echo '</td>';
+    echo '<td> </td></tr>';
 
-    echo '</table>' . "\n";
+    echo '</table>';
     echo '<input type="' . $aff_infos . '" id="indice' . '_' . $extension . '" value="1"/>';
     for ($nb = 1; $nb <= $nb_cases; $nb++)
         echo '<input type="' . $aff_infos . '"  id="src_case_' . $nb . '_' . $extension . '" value="-"/>';
@@ -93,30 +93,30 @@ function affiche_images($extension, $nb_cases, $cancel = false)
 function ligne_couleurs($libelle, $nom, $anc_val)
 {
     global $root, $Icones, $LG_Graphics_Init_Color;
-    echo '<tr><td>' . my_html($libelle) . ' :</td>' . "\n";
-    echo '<td><input readonly="readonly" type="text" id="Anc_' . $nom . '" name="Anc_' . $nom . '" size="7" maxlength="7" value="' . $anc_val . '" style="background-color:' . $anc_val . '"/></td>' . "\n";
-    echo '<td><input class="color" type="text" id="Nouv_' . $nom . '" name="Nouv_' . $nom . '" size="7" maxlength="6" value="' . $anc_val . '" style="background-color:' . $anc_val . '"/></td>' . "\n";
+    echo '<tr><td>' . my_html($libelle) . ' :</td>';
+    echo '<td><input readonly="readonly" type="text" id="Anc_' . $nom . '" name="Anc_' . $nom . '" size="7" maxlength="7" value="' . $anc_val . '" style="background-color:' . $anc_val . '"/></td>';
+    echo '<td><input class="color" type="text" id="Nouv_' . $nom . '" name="Nouv_' . $nom . '" size="7" maxlength="6" value="' . $anc_val . '" style="background-color:' . $anc_val . '"/></td>';
     echo '<td valign="middle">'
-        . '&nbsp;<img id="im_dernier_' . $nom . '" src="' . $root . '/assets/img/' . $Icones['conversion']
+        . ' <img id="im_dernier_' . $nom . '" src="' . $root . '/assets/img/' . $Icones['conversion']
         . '" alt="' . $LG_Graphics_Init_Color . '" title="' . $LG_Graphics_Init_Color
         . '" onclick="remet_code_coul(\'' . $nom . '\');"/>';
-    echo '</td></tr>' . "\n";
+    echo '</td></tr>';
 }
 
 function aff_degrade($couleur, $val_degrade, $lib_couleur)
 {
     global $Degrade;
-    echo '<tr>' . "\n";
+    echo '<tr>';
     echo '<td width="15%"><input type="radio" id ="SelDegrade_' . $val_degrade . '" name="SelDegrade" value="' . $val_degrade . '"';
     if ($Degrade == $val_degrade) echo ' checked="checked"';
     echo '/><label for="SelDegrade_' . $val_degrade . '">' . $lib_couleur . '</label></td>';
     $nb_cols = count($couleur);
     for ($r = 0; $r < $nb_cols; $r++) {
         $rvb = strtoupper($couleur[$r]);
-        echo '<td bgcolor="' . $rvb . '">&nbsp;</td>' . "\n";
+        echo '<td bgcolor="' . $rvb . '"> </td>';
     }
-    echo '<td>&nbsp;</td>';
-    echo '</tr>' . "\n";
+    echo '<td> </td>';
+    echo '</tr>';
 }
 
 // Affichage des boutons radio pour les propositions de graphisme
@@ -148,7 +148,7 @@ function affiche_radio_prop($dominante)
 		copie_code_coul(\'Nouv_Bord_Onglets\',\'' . $gra_coul_bord[$dominante] . '\');
 		copie_code_coul(\'Nouv_Impaires\',\'' . $gra_coul_val[$dominante] . '\');
 		copie_code_coul(\'Nouv_Val\',\'' . $gra_coul_val[$dominante] . '\');
-	"/><label for="choix_' . $dominante . '">' . $gra_description[$dominante] . '</label>&nbsp;';
+	"/><label for="choix_' . $dominante . '">' . $gra_description[$dominante] . '</label> ';
 }
 
 // Affiche une personne example
@@ -353,35 +353,35 @@ if ((!$bt_OK) && (!$bt_An)) {
     $w_arbres = 144;
     $h_arbres = 180;
 
-    echo '<br>' . "\n";
-    echo '<div class="tab-container" id="container1">' . "\n";
+    echo '<br>';
+    echo '<div class="tab-container" id="container1">';
 
     // Onglets
-    echo '<ul class="tabs">' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'gra_pre_def\', this)" id="tab_gra_pre_def">' . $LG_Graphics_Pred . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'gra_dem_images\', this)" id="tab_gra_dem_images">' . $LG_Graphics_Req_Img . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'gra_dem_couleurs\', this)" id="tab_gra_dem_couleurs">' . $LG_Graphics_Req_Cols . '</a></li>' . "\n";
-    echo '<li><a href="#" onclick="return showPane(\'arbres_asc\', this)" id="tab_arbres_asc">' . $LG_Graphics_Tree . '</a></li>' . "\n";
-    echo '</ul>' . "\n";
+    echo '<ul class="tabs">';
+    echo '<li><a href="#" onclick="return showPane(\'gra_pre_def\', this)" id="tab_gra_pre_def">' . $LG_Graphics_Pred . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'gra_dem_images\', this)" id="tab_gra_dem_images">' . $LG_Graphics_Req_Img . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'gra_dem_couleurs\', this)" id="tab_gra_dem_couleurs">' . $LG_Graphics_Req_Cols . '</a></li>';
+    echo '<li><a href="#" onclick="return showPane(\'arbres_asc\', this)" id="tab_arbres_asc">' . $LG_Graphics_Tree . '</a></li>';
+    echo '</ul>';
 
-    echo '<form id="saisie" method="post" enctype="multipart/form-data" >' . "\n";
+    echo '<form id="saisie" method="post" enctype="multipart/form-data" >';
 
-    echo '<div class="tab-panes">' . "\n";
+    echo '<div class="tab-panes">';
 
-    echo '<div id="gra_pre_def">' . "\n";
+    echo '<div id="gra_pre_def">';
     // Graphisme
     $dominante = 'marron';
 
-    echo '<table width="85%" class="table_form">' . "\n";
+    echo '<table width="85%" class="table_form">';
     echo '<tr align="center">';
     echo '<td width="30%">';
     echo $LG_Graphics_BG . '<br>';
-    echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';
+    echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center">';
     echo '<tr align="center">';
     echo '<td id="fond" style="background-color:white; background-image:url(\'' . $root . '/assets/img/' . $Image_Fond . '\'); background-repeat:repeat;">';
     echo '<img id="lettre" src="' . $Chemin_Lettre . '" alt="B" title="B" />' . $LG_Graphics_Welcome . ' ...';
     echo '</td></tr>';
-    echo '</table>' . "\n";
+    echo '</table>';
     echo '</td>';
     echo '<td width="33%">';
     echo $LG_Graphics_Form . '<br>';
@@ -394,7 +394,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td>';
     echo '<td width="37%">';
     echo $LG_Graphics_Bar_List . '<br>';
-    echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';
+    echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center">';
     echo '<tr align="center">';
     $posi = strrpos($Image_Barre, '/');
     $ch_barre = $chemin_images_barres . substr($Image_Barre, $posi + 1);
@@ -402,55 +402,55 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo $LG_Graphics_3Gen . ' <img src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . my_html($LG_show_noshow) . '" title="' . my_html($LG_show_noshow) . '">';
     echo '</td></tr></table>';
     // Affichage des personnes exemples
-    echo '<table width="95%" border="0" class="classic" cellspacing="1" cellpadding="3" align="center">';
-    $x = affiche_pers_exemple(1, '4', $Coul_Impaires, '1_1');
-    $x = affiche_pers_exemple(2, '5', $Coul_Paires,   '2_1');
-    $x = affiche_pers_exemple(3, '6', $Coul_Impaires, '1_2');
-    $x = affiche_pers_exemple(4, '7', $Coul_Paires,   '2_2');
+    echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center">';
+    affiche_pers_exemple(1, '4', $Coul_Impaires, '1_1');
+    affiche_pers_exemple(2, '5', $Coul_Paires,   '2_1');
+    affiche_pers_exemple(3, '6', $Coul_Impaires, '1_2');
+    affiche_pers_exemple(4, '7', $Coul_Paires,   '2_2');
     echo '</table>';
     echo '</td>';
     echo '</tr>';
-    echo '</table>' . "\n";
+    echo '</table>';
 
     foreach ($dominantes as $dominante) {
         affiche_radio_prop($dominante);
     }
-    echo '</div>' . "\n";
+    echo '</div>';
 
-    echo '<div id="gra_dem_images">' . "\n";
-    echo '<br>Fonds de page' . "\n";
+    echo '<div id="gra_dem_images">';
+    echo '<br>Fonds de page';
     affiche_images('fonds', $nb_cases_fonds, true);
     // Possibilité de charger une image de fond personnelle
     if ((!$SiteGratuit) or ($SiteGratuit and $Premium)) {
-        echo '<br>Fond personnalis&eacute; : <input type="file" name="nom_du_fichier" id="nom_du_fichier" onchange="readURL(this,\'image_copie_fonds\');"/>' . "\n";
+        echo '<br>Fond personnalisé : <input type="file" name="nom_du_fichier" id="nom_du_fichier" onchange="readURL(this,\'image_copie_fonds\');"/>';
     }
 
-    echo '<hr />Lettres' . "\n";
+    echo '<hr />Lettres';
     affiche_images('lettres', $nb_cases_lettres, true);
-    echo '<hr />Barres' . "\n";
+    echo '<hr />Barres';
     affiche_images('barres', $nb_cases_barres);
-    echo '</div>' . "\n";
+    echo '</div>';
 
-    echo '<div id="gra_dem_couleurs">' . "\n";
+    echo '<div id="gra_dem_couleurs">';
     // Couleurs
-    echo '<table>' . "\n";
-    echo '<tr align="center"><td>&nbsp;</td><td>' . $LG_Graphics_Color_Current . '</td><td>' . $LG_Graphics_Color_New . '</td><td>&nbsp;</td></tr>' . "\n";
+    echo '<table>';
+    echo '<tr align="center"><td> </td><td>' . $LG_Graphics_Color_Current . '</td><td>' . $LG_Graphics_Color_New . '</td><td> </td></tr>';
     ligne_couleurs($LG_Graphics_Table_Border, 'Bord_Onglets', $coul_fond_table);
-    echo '<tr><td colspan="4">&nbsp;</td></tr>' . "\n";
-    echo '<tr><td colspan="4">' . $LG_Graphics_Form_Without_Tab . '</td></tr>' . "\n";
+    echo '<tr><td colspan="4"> </td></tr>';
+    echo '<tr><td colspan="4">' . $LG_Graphics_Form_Without_Tab . '</td></tr>';
     ligne_couleurs($LG_Graphics_Borders, 'Bord', $Coul_Bord);
     ligne_couleurs($LG_Graphics_BG_Label, 'Lib', $Coul_Lib);
     ligne_couleurs($LG_Graphics_BG_Value, 'Val', $Coul_Val);
 
-    echo '<tr><td colspan="4">&nbsp;</td></tr>' . "\n";
-    echo '<tr><td colspan="4">' . $LG_Graphics_Lists . '</td></tr>' . "\n";
+    echo '<tr><td colspan="4"> </td></tr>';
+    echo '<tr><td colspan="4">' . $LG_Graphics_Lists . '</td></tr>';
     ligne_couleurs($LG_Graphics_Odd, 'Paires', $Coul_Paires);
     ligne_couleurs($LG_Graphics_Even, 'Impaires', $Coul_Impaires);
-    echo '</table>' . "\n";
+    echo '</table>';
 
     // Couleur des dégradés
-    echo '<br>D&eacute;grad&eacute;' . "\n";
-    echo '<table border="0" width="95%">' . "\n";
+    echo '<br>Dégradé';
+    echo '<table width="95%">';
     aff_degrade($Rouge, 'R', 'Rouge');
     aff_degrade($Vert, 'V', 'Vert');
     aff_degrade($Bleu, 'B', 'Bleu');
@@ -461,45 +461,42 @@ if ((!$bt_OK) && (!$bt_An)) {
     aff_degrade($Orange, 'O', 'Orange');
     aff_degrade($Rose, 'r', 'Rose');
     aff_degrade($Lavande, 'L', 'Lavande');
-    echo '</table>' . "\n";
-    echo '</div>' . "\n";
+    echo '</table>';
+    echo '</div>';
 
-    echo '<div id="arbres_asc">' . "\n";
-    echo '<hr />Fond de page' . "\n";
+    echo '<div id="arbres_asc">';
+    echo '<hr />Fond de page';
     affiche_images('arbres_asc', $nb_cases_arbres_asc);
-    echo my_html($LG_Graphics_Show_Year) . '&nbsp;' . "\n";
+    echo my_html($LG_Graphics_Show_Year) . ' ';
     echo '<input type="checkbox" name="Affiche_Mar_Arbre" value="O"';
-    if ($Affiche_Mar_Arbre_Asc == 'O') echo 'checked="checked"';
+    if ($Affiche_Mar_Arbre_Asc == 'O') echo ' checked';
     echo "/>\n";
 
-    echo '</div>' . "\n";
+    echo '</div>';
 
-    echo '</div>' . "\n";        //echo '<!--  fin panes -->';
+    echo '</div>';        //echo '<!--  fin panes -->';
 
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
     if ($debug) echo 'Zones réceptrices des saisies : ';
     // Zones réceptrices des saisies
-    echo '<input type="' . $aff_infos . '" name="Sel_fonds" id="Sel_fonds" value="' . $Image_Fond . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="Sel_lettres" id="Sel_lettres" value="' . $Lettre_B . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="Sel_barres" id="Sel_barres" value="' . $Image_Barre . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="Sel_arbres_asc" id="Sel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>' . "\n";
+    echo '<input type="' . $aff_infos . '" name="Sel_fonds" id="Sel_fonds" value="' . $Image_Fond . '"/>';
+    echo '<input type="' . $aff_infos . '" name="Sel_lettres" id="Sel_lettres" value="' . $Lettre_B . '"/>';
+    echo '<input type="' . $aff_infos . '" name="Sel_barres" id="Sel_barres" value="' . $Image_Barre . '"/>';
+    echo '<input type="' . $aff_infos . '" name="Sel_arbres_asc" id="Sel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>';
     // Mémoristion des valeurs initiales
     if ($debug) echo '<br>Zones initiales : ';
-    echo '<input type="' . $aff_infos . '" name="ASel_fonds" value="' . $Image_Fond . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="ASel_lettres" value="' . $Lettre_B . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="ASel_barres" id="ASel_barres" value="' . $Image_Barre . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="ASel_arbres_asc" id="ASel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="ACouleur" value="' . $coul_fond_table . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="ADegrade" value="' . $Degrade . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="AImageBarre" value="' . $Image_Barre . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="ASelFond_Arbre" value="' . $Image_Arbre_Asc . '"/>' . "\n";
-    echo '<input type="' . $aff_infos . '" name="AAffiche_Mar_Arbre" value="' . $Affiche_Mar_Arbre_Asc . '"/>' . "\n";
-
+    echo '<input type="' . $aff_infos . '" name="ASel_fonds" value="' . $Image_Fond . '"/>';
+    echo '<input type="' . $aff_infos . '" name="ASel_lettres" value="' . $Lettre_B . '"/>';
+    echo '<input type="' . $aff_infos . '" name="ASel_barres" id="ASel_barres" value="' . $Image_Barre . '"/>';
+    echo '<input type="' . $aff_infos . '" name="ASel_arbres_asc" id="ASel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>';
+    echo '<input type="' . $aff_infos . '" name="ACouleur" value="' . $coul_fond_table . '"/>';
+    echo '<input type="' . $aff_infos . '" name="ADegrade" value="' . $Degrade . '"/>';
+    echo '<input type="' . $aff_infos . '" name="AImageBarre" value="' . $Image_Barre . '"/>';
+    echo '<input type="' . $aff_infos . '" name="ASelFond_Arbre" value="' . $Image_Arbre_Asc . '"/>';
+    echo '<input type="' . $aff_infos . '" name="AAffiche_Mar_Arbre" value="' . $Affiche_Mar_Arbre_Asc . '"/>';
     echo '</form>';
-
-    echo '</div>' . "\n";        //echo '<!-- fin tab-container -->';
-
+    echo '</div>';        //echo '<!-- fin tab-container -->';
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
@@ -512,7 +509,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     include(__DIR__ . '/assets/js/gest_onglets.js');
     include(__DIR__ . '/assets/js/Edition_Parametres_Graphiques.js');
     # include(__DIR__ . '/assets/js/jscolor.js');
-    echo '<script type="text/javascript" src="assets/js/jscolor.js"></script>';
+    echo '<script type="text/javascript" src="' . $root . '/assets/js/jscolor.js"></script>';
 }
 
 $ext_poss = '/gif/jpg/png/';
@@ -521,27 +518,27 @@ $ext_poss = '/gif/jpg/png/';
 
 <script type="text/javascript">
     <?php
-    echo 'var im_stop = "' . $root . '/assets/img/' . $Icones['stop'] . '";' . "\n";
-    echo 'var im_next = "' . $root . '/assets/img/' . $Icones['next'] . '";' . "\n";
-    echo 'var im_prev = "' . $root . '/assets/img/' . $Icones['previous'] . '";' . "\n";
-    echo 'var im_clear = "' . $root . '/assets/img/' . $Images['clear'] . '";' . "\n";
+    echo 'var im_stop = "assets/img/' . $Icones['stop'] . '";';
+    echo 'var im_next = "assets/img/' . $Icones['next'] . '";';
+    echo 'var im_prev = "assets/img/' . $Icones['previous'] . '";';
+    echo 'var im_clear = "assets/img/' . $Icones['clear'] . '";';
 
-    echo 'var nb_cases_fonds = ' . $nb_cases_fonds . ';' . "\n";
-    echo 'var chemin_images_fonds = "' . $root . '/assets/img/fonds/";' . "\n";
+    echo 'var nb_cases_fonds = ' . $nb_cases_fonds . ';';
+    echo 'var chemin_images_fonds = "assets/img/fonds/";';
 
-    echo 'var nb_cases_lettres = ' . $nb_cases_lettres . ';' . "\n";
-    echo 'var chemin_images_lettres = "' . $chemin_images_lettres . '";' . "\n";
+    echo 'var nb_cases_lettres = ' . $nb_cases_lettres . ';';
+    echo 'var chemin_images_lettres = "' . $chemin_images_lettres . '";';
 
-    echo 'var nb_cases_barres = ' . $nb_cases_barres . ';' . "\n";
-    echo 'var chemin_images_barres = "' . $chemin_images_barres . '";' . "\n";
+    echo 'var nb_cases_barres = ' . $nb_cases_barres . ';';
+    echo 'var chemin_images_barres = "' . $chemin_images_barres . '";';
 
-    echo 'var chemin_images_arbres = "' . $chemin_images_a_asc . '";' . "\n";
-    echo 'var nb_cases_arbres_asc = ' . $nb_cases_arbres_asc . ';' . "\n";
+    echo 'var chemin_images_arbres = "' . $chemin_images_a_asc . '";';
+    echo 'var nb_cases_arbres_asc = ' . $nb_cases_arbres_asc . ';';
 
     echo 'var w_fonds = ' . $w_fonds . '; var h_fonds = ' . $h_fonds . ';';
     echo 'var w_barres = ' . $w_barres . '; var h_barres = ' . $h_barres . ';';
-    echo 'var w_lettres = ' . $w_lettres . '; var h_lettres = ' . $h_lettres . ';' . "\n";
-    echo 'var w_arbres_asc = ' . $w_arbres . '; var h_arbres_asc = ' . $h_arbres . ';' . "\n";
+    echo 'var w_lettres = ' . $w_lettres . '; var h_lettres = ' . $h_lettres . ';';
+    echo 'var w_arbres_asc = ' . $w_arbres . '; var h_arbres_asc = ' . $h_arbres . ';';
 
     ?>
 
@@ -551,7 +548,7 @@ $ext_poss = '/gif/jpg/png/';
     var lextension = '';
 
     // Liste des fonds d'écran possibles
-    var images_fonds = [<?php Liste_Noms_Images($root . '/assets/img/fonds'); ?>];
+    var images_fonds = [<?php Liste_Noms_Images('assets/img/fonds'); ?>];
     var nb_images_fonds = images_fonds.length;
 
     // Liste des barres possibles

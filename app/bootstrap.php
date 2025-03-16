@@ -4,6 +4,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 require(__DIR__ . '/../vendor/autoload.php');
 
+
+
+header('content-type: text/html; charset=utf-8');
+
 $root = '';
 $session = new Session();
 $session->start();

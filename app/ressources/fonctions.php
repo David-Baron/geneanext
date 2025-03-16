@@ -607,10 +607,12 @@ function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
     echo '<meta name="REVISIT-AFTER" content="7 days">';
     echo '<link rel="shortcut icon" href="'.$root.'assets/favicon.ico" type="image/x-icon">';
     // echo '<link rel="stylesheet" href="divers_styles.css">'."\n";
+    
     include(__DIR__ . '/../../assets/css/divers_styles.css');
-    if (file_exists(__DIR__ . '/../../assets/css/divers_styles_part.css')) {
+    /** @deprecated */
+    /* if (file_exists(__DIR__ . '/../../assets/css/divers_styles_part.css')) {
         echo '<link rel="stylesheet" href="' . $root . '/assets/css/divers_styles_part.css">';
-    }
+    } */
 
     /** @deprecated */
     if (isset($_SERVER['HTTP_REFERER'])) $HTTP_REFERER = $_SERVER['HTTP_REFERER'];
@@ -987,42 +989,42 @@ function Affiche_Fiche($enreg, $fs = 0)
 {
     $Statut_Fiche = $enreg['Statut_Fiche'];
     if ($fs == 0) {
-        echo '<table width="85%" border="1">' . "\n";
-        echo '<tr>' . "\n";
+        echo '<table width="85%" border="1">';
+        echo '<tr>';
         // Validation fiche
         echo '<td colspan="2">Statut fiche';
-        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O"' . ($Statut_Fiche == 'O') ? ' checked' : '' . '/>'
+        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($Statut_Fiche == 'O' ? 'checked' : '') . '/>'
             . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N"' . ($Statut_Fiche == 'N') ? ' checked' : '' . '/>'
+        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($Statut_Fiche == 'N' ? 'checked' : '') . '/>'
             . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I"' . ($Statut_Fiche == 'I') ? ' checked' : '' . '/>'
+        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($Statut_Fiche == 'I' ? 'checked' : '') . '/>'
             . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
         echo '<input type="hidden" name="AStatut_Fiche" value="' . $Statut_Fiche . '">';
         echo '</td>';
-        echo '<td>Création : ' . DateTime_Fr($enreg['Date_Creation']) . '</td>' . "\n";
-        echo '<td>Modification : ' . DateTime_Fr($enreg['Date_Modification']) . '</td>' . "\n";
+        echo '<td>Création : ' . DateTime_Fr($enreg['Date_Creation']) . '</td>';
+        echo '<td>Modification : ' . DateTime_Fr($enreg['Date_Modification']) . '</td>';
         if ($Statut_Fiche == 'O') echo ' checked';
-        echo '/>Validée ' . "\n";
+        echo '/>Validée ';
         echo '<input type="radio" name="Statut_Fiche" value="N"';
         if ($Statut_Fiche == 'N') echo ' checked';
-        echo '</tr>' . "\n";
-        echo '</table>' . "\n";
+        echo '</tr>';
+        echo '</table>';
     } else {
-        echo '<fieldset>' . "\n";
-        echo '<legend>Statut</legend>' . "\n";
-        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O"' . ($Statut_Fiche == 'O') ? ' checked' : '' . '/>'
+        echo '<fieldset>';
+        echo '<legend>Statut</legend>';
+        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($Statut_Fiche == 'O' ? 'checked' : '') . '/>'
             . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N"' . ($Statut_Fiche == 'N') ? ' checked' : '' . '/>'
+        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($Statut_Fiche == 'N' ? 'checked' : '') . '/>'
             . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I"' . ($Statut_Fiche == 'I') ? ' checked' : '' . '/>'
+        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($Statut_Fiche == 'I' ? 'checked' : '') . '/>'
             . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
         echo '<input type="hidden" name="AStatut_Fiche" value="' . $Statut_Fiche . '"/>';
-        echo '</fieldset>' . "\n";
-        echo '<fieldset>' . "\n";
-        echo '<legend>Tra&ccedil;abilité</legend>' . "\n";
-        echo 'Création : ' . DateTime_Fr($enreg['Date_Creation']) . '<br>' . "\n";
-        echo 'Modification : ' . DateTime_Fr($enreg['Date_Modification']) . "\n";
-        echo '</fieldset>' . "\n";
+        echo '</fieldset>';
+        echo '<fieldset>';
+        echo '<legend>Traçabilité</legend>';
+        echo 'Création : ' . DateTime_Fr($enreg['Date_Creation']) . '<br>';
+        echo 'Modification : ' . DateTime_Fr($enreg['Date_Modification']);
+        echo '</fieldset>';
     }
 }
 
@@ -1126,7 +1128,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
         else $tab = '';
 
         $sur = $enreg2['Surnom'];
-        if (($Texte != 'T') and ($sur != '')) echo my_html(LG_PERS_SURNAME) . ' : ' . $sur . '<br>';
+        if (($Texte != 'T') and ($sur != '')) echo LG_PERS_SURNAME . ' : ' . $sur . '<br>';
         // Affichage du commentaire associé à la personne
         if ($Texte != 'T') {
             $Existe_Commentaire = Rech_Commentaire($ref_pers, 'P');
@@ -3166,6 +3168,3 @@ function rectif_null_pers(&$enreg)
     if (is_null($enreg['Decede_Le']))
         $enreg['Decede_Le'] = '';
 }
-
-
-header('content-type: text/html; charset=' . $def_enc);

@@ -236,7 +236,7 @@ if ($nom_page == 'liste_documents.php') {
 }
 
 if (($nom_page == 'edition_lier_doc.php')
-    or ($nom_page == 'Edition_Lier_Source.php')
+    or ($nom_page == 'edition_lier_source.php')
 ) {
     $LG_Link_Doc_Role = 'Rôle';
     $LG_Link_Doc_Beg = 'Début du lien';

@@ -60,20 +60,20 @@ function Controle_Charg_Image($nb_fic = -1)
     }
 
     if ($nom_fic == '') {
-        $erreur = "veuillez sp&eacute;cifiez un fichier &agrave; envoyer.";
+        $erreur = "veuillez spécifiez un fichier à envoyer.";
     } elseif (
         $type_fic != "image/png" && $type_fic != "image/jpeg"
         && $type_fic != "image/pjpeg" && $type_fic != "image/x-png"
         && $type_fic != "image/gif"
     ) {
-        $erreur = "le fichier doit &ecirc;tre un JPEG, un GIF ou un PNG.";
+        $erreur = "le fichier doit être un JPEG, un GIF ou un PNG.";
     } elseif ($size_fic > $taille_maxi_images['s']) {
         $erreur = "le fichier doit peser moins de " . ($taille_maxi_images['s'] / 1024) . " Ko.";
     }
     if ($erreur == '') {
         $size_img = getimagesize($tmp_name_fic);
         if (!OK_taille_img_2plans($size_img[1], $size_img[0])) {
-            $erreur = 'dimensions maximum autoris&eacute;es : ' . $taille_maxi_images['w'] . 'x' . $taille_maxi_images['h'] . 'pixels';
+            $erreur = 'dimensions maximum autorisées : ' . $taille_maxi_images['w'] . 'x' . $taille_maxi_images['h'] . 'pixels';
         }
     }
     return $erreur;
@@ -90,14 +90,14 @@ function Controle_Image($nom_fichier)
     if ($erreur == '') {
         $type_fic = $caract[2];
         if ($type_fic == '') {
-            $erreur = 'Le fichier doit &ecirc;tre une image';
+            $erreur = 'Le fichier doit être une image';
         }
     }
     // Contrôle des dimensions de fichier
     if ($erreur == '') {
         if (!OK_taille_img_2plans($caract['h'], $caract['w'])) {
             //if($caract['w'] > $taille_maxi_images['w'] || $caract['h'] > $taille_maxi_images['h']) {
-            $erreur = 'Dimensions maximum autoris&eacute;es : ' . $taille_maxi_images['w'] . 'x' . $taille_maxi_images['h'] . ' pixels';
+            $erreur = 'Dimensions maximum autorisées : ' . $taille_maxi_images['w'] . 'x' . $taille_maxi_images['h'] . ' pixels';
         }
     }
     // Contrôle du poids
@@ -150,7 +150,7 @@ function Controle_Charg_Doc($nb_fic = -1)
     }
 
     if ($nom_fic == '') {
-        $erreur = "veuillez sp&eacute;cifiez un fichier &agrave; envoyer.";
+        $erreur = "veuillez spécifiez un fichier à envoyer.";
     }
 
     // Taille maxi limité à 33% de la taille des images
@@ -387,7 +387,7 @@ function libelle_lien_evt($refEvt, $type_objet, $ref_Objet)
             $lib_evt = $titre . $per;
             // Libellé spécifique pour évènement connu et un objet connu
             if ($ref_Objet == -1) {
-                echo 'Lier une ' . lib_pfu($type_objet) . ' avec l\'&eacute;v&egrave;nement "' . $lib_evt . '"<br />' . "\n";
+                echo 'Lier une ' . lib_pfu($type_objet) . ' avec l\'év&egrave;nement "' . $lib_evt . '"<br />' . "\n";
             }
         }
     }
