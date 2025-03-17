@@ -96,7 +96,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '<table id="cols" cellpadding="0" cellspacing="0" >';
     echo '<tr>';
     echo '<td style="border-right:0px solid #9cb0bb">';
-    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="850" height="1" alt="clear"/>';
+    echo '  <img src="' . $root . '/assets/img/' . $Icones['clear'] . '" width="850" height="1" alt="clear"/>';
     echo '</td></tr>';
 
     echo '<tr>';

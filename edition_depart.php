@@ -171,7 +171,7 @@ if (($ok == '') && ($annuler == '')) {
         echo '<table id="cols" cellpadding="0" cellspacing="0" align="center">' . "\n";
         echo '<tr>' . "\n";
         echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-        echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="600" height="1" alt="clear"/>' . "\n";
+        echo '  <img src="' . $chemin_images . $Icones['clear'] . '" width="600" height="1" alt="clear"/>' . "\n";
         echo '</td></tr>' . "\n";
         echo '<tr>' . "\n";
         echo '<td class="left">' . "\n";

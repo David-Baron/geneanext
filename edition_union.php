@@ -160,7 +160,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     echo '<table id="cols" cellpadding="0" cellspacing="0" >' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">';
-    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="1000" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Icones['clear'] . '" width="1000" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";

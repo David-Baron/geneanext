@@ -1364,7 +1364,7 @@ if ((!$bt_OK) && (!$bt_An)) {
                 echo '<table id="cols"  border="0" cellpadding="0" cellspacing="0" >' . "\n";
                 echo '<tr>' . "\n";
                 echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-                echo '  <img src="' . $chemin_images . $Images['clear'] . '" width="790" height="1" alt="clear"/>' . "\n";
+                echo '  <img src="' . $chemin_images . $Icones['clear'] . '" width="790" height="1" alt="clear"/>' . "\n";
                 echo '</td>' . "\n";
                 echo '</tr>' . "\n";
 

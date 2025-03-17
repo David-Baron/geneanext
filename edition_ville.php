@@ -131,7 +131,7 @@ function Aff_Ville($enreg2)
     echo '<table id="cols" border="0" cellpadding="0" cellspacing="0" align="center">' . "\n";
     echo '<tr>' . "\n";
     echo '<td style="border-right:0px solid #9cb0bb">' . "\n";
-    echo '  <img src="' . $root . '/assets/img/' . $Images['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
+    echo '  <img src="' . $root . '/assets/img/' . $Icones['clear'] . '" width="700" height="1" alt="clear"/>' . "\n";
     echo '</td></tr>' . "\n";
 
     echo '<tr>' . "\n";
