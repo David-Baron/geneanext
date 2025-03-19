@@ -4,16 +4,8 @@ $salt1 = ';$€°d';
 $salt2 = '#\'_^';
 $salt3 = '@")[&ù';
 
-//echo $_SERVER['PHP_SELF'].'.';
-//$nom_page = $_SERVER['PHP_SELF'];
-$nom_page = my_self();
-$pos = strrpos($nom_page, '/');
-if ($pos !== false) $nom_page = substr($nom_page, $pos + 1);
-//echo $nom_page.'.';
-
 // Spécifique index
 if ($nom_page == 'index.php') {
-    //if (strpos($_SERVER['PHP_SELF'],'index.php') !== false) {
     $LG_index_welcome = 'Bienvenue sur le site de généalogie de';
     $LG_index_responsability = 'Les données sont publiées sous la responsabilité du titulaire du site';
     $LG_index_connexion_error = 'Erreur de code utilisateur et/ou mot de passe';

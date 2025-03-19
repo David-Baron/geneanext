@@ -13,12 +13,6 @@ function Ecrit_Entete_Page($titre, $contenu, $mots, $index_follow = 'IF')
 }
 
 
-// L'accès est-il le fait d'un robot ?
-$is_bot =  (
-    isset($_SERVER['HTTP_USER_AGENT'])
-    && preg_match('/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])
-);
-
 // Initialisations
 if (!isset($titre)) $titre = '';
 if (!isset($contenu)) $contenu = $titre;
@@ -105,7 +99,7 @@ if (isset($Environnement)) {
         else {
             $avec_js = true;
             Ecrit_Entete_Page($titre, $contenu, $mots, $index_follow);
-            include(__DIR__ . '/../../assets/js/edition_geneamania.js');
+            include(__DIR__ . '/../../public/assets/js/edition_geneamania.js');
         }
     }
 
@@ -136,17 +130,17 @@ if (isset($Environnement)) {
         if ($courante != $precedente) $_SESSION['pages'][] = $courante;
     }
 
-    if ($debug) {
-        fputs($f_log, $dh . ' ===== après');
-        fputs($f_log, ' Pages mémorisées');
-        for ($nb = 0; $nb < count($_SESSION['pages']); $nb++) {
-            fputs($f_log, '   ' . $_SESSION['pages'][$nb]);
-        }
-        fputs($f_log, ' Self ' . my_self());
-        fputs($f_log, ' Page courante ' . $courante);
-        fputs($f_log, ' Page précédente ' . $precedente);
-        fclose($f_log);
-    }
+    // if ($debug) {
+    //     fputs($f_log, $dh . ' ===== après');
+    //     fputs($f_log, ' Pages mémorisées');
+    //     for ($nb = 0; $nb < count($_SESSION['pages']); $nb++) {
+    //         fputs($f_log, '   ' . $_SESSION['pages'][$nb]);
+    //     }
+    //     fputs($f_log, ' Self ' . my_self());
+    //     fputs($f_log, ' Page courante ' . $courante);
+    //     fputs($f_log, ' Page précédente ' . $precedente);
+    //     fclose($f_log);
+    // }
 }
 // Valeurs par défaut si non définies
 if (!isset($_SESSION['estInvite'])) $_SESSION['estInvite'] = false;

@@ -506,6 +506,12 @@ function Insere_Haut($titre, $compl_entete, $page, $param)
  */
 function libelleNiveau($niveau)
 {
+    /* $user_levels = [
+        'I' => ['code' => 'I', 'libele' => 'Invité', 'level' => 1],
+        'P' => ['code' => 'P', 'libele' => 'Privilégié', 'level' => 3],
+        'C' => ['code' => 'C', 'libele' => 'Contributeur', 'level' => 5],
+        'G' => ['code' => 'G', 'libele' => 'Gestionnaire', 'level' => 9],
+    ]; */
     switch ($niveau) {
         case 'I':
             $libelle = 'Invité';
@@ -605,10 +611,10 @@ function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
         echo '<meta name="robots" content="' . $p1 . 'INDEX, ' . $p2 . 'FOLLOW">';
     }
     echo '<meta name="REVISIT-AFTER" content="7 days">';
-    echo '<link rel="shortcut icon" href="'.$root.'assets/favicon.ico" type="image/x-icon">';
+    echo '<link rel="shortcut icon" href="' . $root . 'assets/favicon.ico" type="image/x-icon">';
     // echo '<link rel="stylesheet" href="divers_styles.css">'."\n";
-    
-    include(__DIR__ . '/../../assets/css/divers_styles.css');
+
+    include(__DIR__ . '/../../public/assets/css/divers_styles.css');
     /** @deprecated */
     /* if (file_exists(__DIR__ . '/../../assets/css/divers_styles_part.css')) {
         echo '<link rel="stylesheet" href="' . $root . '/assets/css/divers_styles_part.css">';
@@ -631,7 +637,7 @@ function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
         $avec_js = false;
     } */
     /** @deprecated */
-    if ($avec_js) include(__DIR__ . '/../../assets/js/monSSG.js');
+    if ($avec_js) include(__DIR__ . '/../../public/assets/js/monSSG.js');
 }
 
 /* Etend une date */
@@ -2325,140 +2331,140 @@ function aff_menu($type_menu, $droits, $formu = true)
 	*/
 
     $menu[] = '0^^^ ^^^Accès rapide^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_personne.php?Refer=-1^^^Person_Add^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_ville.php?Ident=-1^^^Town_Add^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_evenement.php?refPar=-1^^^Event_Add^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_nomfam.php?idNom=-1^^^Ajouter un nom de famille ^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_personne?Refer=-1^^^Person_Add^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_ville?Ident=-1^^^Town_Add^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_evenement?refPar=-1^^^Event_Add^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_nomfam?idNom=-1^^^Ajouter un nom de famille ^^^C^^^';
     if ($droits == 'G') {
-        $menu[] = '1^^^' . $root . '/edition_parametres_graphiques.php^^^Graphisme du site^^^G^^^';
+        $menu[] = '1^^^' . $root . '/edition_parametres_graphiques^^^Graphisme du site^^^G^^^';
         if ($Base_Vide)
-            $menu[] = '1^^^' . $root . '/noyau_pers.php^^^' . $LG_Menu_Title['Decujus_And_Family'] . '^^^G^^^';
+            $menu[] = '1^^^' . $root . '/noyau_pers^^^' . $LG_Menu_Title['Decujus_And_Family'] . '^^^G^^^';
     }
 
     if (!$Base_Vide) {
         $menu[] = '0^^^ ^^^Listes des personnes^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers.php?Type_Liste=P^^^Par nom^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers_gen.php^^^Par génération^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers.php?Type_Liste=N^^^Par ville de naissance^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers.php?Type_Liste=M^^^Par ville de mariage^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers.php?Type_Liste=K^^^Par ville de contrat de mariage^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers.php?Type_Liste=D^^^Par ville de décès^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers.php?Type_Liste=C^^^Par catégorie^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_patro.php^^^Liste patronymique^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_eclair.php^^^County_List^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_nom_vivants.php^^^Living_Pers^^^I';
-        $menu[] = '1^^^' . $root . '/liste_nomfam.php^^^Liste des noms de famille^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=P^^^Par nom^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers_gen^^^Par génération^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=N^^^Par ville de naissance^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=M^^^Par ville de mariage^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=K^^^Par ville de contrat de mariage^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=D^^^Par ville de décès^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=C^^^Par catégorie^^^C^^^';
+        $menu[] = '1^^^' . $root . '/liste_patro^^^Liste patronymique^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_eclair^^^County_List^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_nom_vivants^^^Living_Pers^^^I';
+        $menu[] = '1^^^' . $root . '/liste_nomfam^^^Liste des noms de famille^^^I^^^';
     }
     $menu[] = '0^^^ ^^^Listes des zones géographiques^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes.php?Type_Liste=S^^^Subdivisions^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes.php?Type_Liste=V^^^Villes^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes.php?Type_Liste=D^^^Départements^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes.php?Type_Liste=R^^^Régions^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes.php?Type_Liste=P^^^Pays^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=S^^^Subdivisions^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=V^^^Villes^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=D^^^Départements^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=R^^^Régions^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=P^^^Pays^^^I^^^';
 
     $menu[] = '0^^^ ^^^Recherche^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_personne.php^^^De personnes^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_personne_cp.php^^^De personnes par les conjoints ou parents^^^P^^^';
+    $menu[] = '1^^^' . $root . '/recherche_personne^^^De personnes^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_personne_cp^^^De personnes par les conjoints ou parents^^^P^^^';
     if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/liste_referentiel.php?Type_Liste=Q^^^Liste des requêtes sur les personnes^^^P^^^';
+        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=Q^^^Liste des requêtes sur les personnes^^^P^^^';
     }
     $menu[] = '1^^^' . $adr_rech_gratuits . '^^^Recherche sur les sites gratuits^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_cousinage.php^^^Search_Related^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_personne_archive.php^^^Aux archives^^^C^^^';
-    $menu[] = '1^^^' . $root . '/recherche_ville.php^^^Town_Search^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_commentaire.php^^^Search_Comment^^^C^^^';
+    $menu[] = '1^^^' . $root . '/recherche_cousinage^^^Search_Related^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_personne_archive^^^Aux archives^^^C^^^';
+    $menu[] = '1^^^' . $root . '/recherche_ville^^^Town_Search^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_commentaire^^^Search_Comment^^^C^^^';
 
     if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/recherche_document.php^^^Dans les documents^^^C^^^';
+        $menu[] = '1^^^' . $root . '/recherche_document^^^Dans les documents^^^C^^^';
     }
     $menu[] = '0^^^ ^^^Gestion des contributions^^^C^^^';
-    $menu[] = '1^^^' . $root . '/liste_contributions.php^^^Contribs_List^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_contributions^^^Contribs_List^^^C^^^';
 
     $menu[] = '0^^^ ^^^Gestion des catégories^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_referentiel.php?Type_Liste=C^^^Liste des catégories^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=C^^^Liste des catégories^^^P^^^';
 
     $menu[] = '0^^^ ^^^Gestion des évènements et des relations^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_referentiel.php?Type_Liste=R^^^Liste des rôles^^^C^^^';
-    $menu[] = '1^^^' . $root . '/liste_referentiel.php?Type_Liste=T^^^Event_Type_List^^^C^^^';
-    $menu[] = '1^^^' . $root . '/liste_evenements.php^^^Event_List^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_evenements.php?actu=o^^^News_List^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_evenements.php?prof=o^^^Jobs_List^^^P';
-    $menu[] = '1^^^' . $root . '/fusion_evenements.php^^^Event_Merging^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=R^^^Liste des rôles^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=T^^^Event_Type_List^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_evenements^^^Event_List^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_evenements?actu=o^^^News_List^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_evenements?prof=o^^^Jobs_List^^^P';
+    $menu[] = '1^^^' . $root . '/fusion_evenements^^^Event_Merging^^^C^^^';
 
 
     // La gestion des sources et documents n'est pas autorisée sur les sites gratuits non Premium
     if ((!$SiteGratuit) or ($Premium)) {
         $menu[] = '0^^^ ^^^Gestion des dépôts et des sources^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_referentiel.php?Type_Liste=O^^^Liste des dépôts de sources^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_sources.php^^^Source_List^^^C^^^';
+        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=O^^^Liste des dépôts de sources^^^C^^^';
+        $menu[] = '1^^^' . $root . '/liste_sources^^^Source_List^^^C^^^';
         $menu[] = '0^^^ ^^^Documents^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_referentiel.php?Type_Liste=D^^^Liste des types de documents^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_documents.php^^^Documents_List^^^I^^^';
-        $menu[] = '1^^^' . $root . '/galerie_images.php^^^Galery^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=D^^^Liste des types de documents^^^C^^^';
+        $menu[] = '1^^^' . $root . '/liste_documents^^^Documents_List^^^I^^^';
+        $menu[] = '1^^^' . $root . '/galerie_images^^^Galery^^^I^^^';
         if ((!$SiteGratuit) or ($Premium))
-            $menu[] = '1^^^' . $root . '/liste_docs_branche.php^^^Galery_Branch^^^I^^^';
-        $menu[] = '1^^^' . $root . '/create_multiple_docs.php^^^Document_Multiple_Add^^^C^^^';
+            $menu[] = '1^^^' . $root . '/liste_docs_branche^^^Galery_Branch^^^I^^^';
+        $menu[] = '1^^^' . $root . '/create_multiple_docs^^^Document_Multiple_Add^^^C^^^';
     }
 
     $menu[] = '0^^^ ^^^Imports - exports^^^G^^^';
-    $menu[] = '1^^^' . $root . '/export.php^^^Export de la base^^^G^^^';
-    $menu[] = '1^^^' . $root . '/exp_genweb.php^^^Export GenWeb^^^G^^^';
-    $menu[] = '1^^^' . $root . '/exp_gedcom.php^^^Exp_Ged^^^G^^^';
-    $menu[] = '1^^^' . $root . '/exp_gedcom.php?leger=o^^^Exp_Ged_Light^^^G^^^';
-    $menu[] = '1^^^' . $root . '/export_pour_deces.php^^^Export_Death^^^G^^^';
-    $menu[] = '1^^^' . $root . '/import_gedcom.php^^^Import Gedcom^^^G^^^';
-    $menu[] = '1^^^' . $root . '/import_sauvegarde.php^^^Import_Backup^^^G^^^';
+    $menu[] = '1^^^' . $root . '/export^^^Export de la base^^^G^^^';
+    $menu[] = '1^^^' . $root . '/exp_genweb^^^Export GenWeb^^^G^^^';
+    $menu[] = '1^^^' . $root . '/exp_gedcom^^^Exp_Ged^^^G^^^';
+    $menu[] = '1^^^' . $root . '/exp_gedcom?leger=o^^^Exp_Ged_Light^^^G^^^';
+    $menu[] = '1^^^' . $root . '/export_pour_deces^^^Export_Death^^^G^^^';
+    $menu[] = '1^^^' . $root . '/import_gedcom^^^Import Gedcom^^^G^^^';
+    $menu[] = '1^^^' . $root . '/import_sauvegarde^^^Import_Backup^^^G^^^';
     if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/import_csv.php^^^Import CSV (tableur)^^^G^^^';
-        $menu[] = '1^^^' . $root . '/import_csv_liens.php^^^Imp_CSV_Links^^^G^^^';
-        $menu[] = '1^^^' . $root . '/import_csv_evenements.php^^^Imp_CSV_Events^^^G^^^';
-        $menu[] = '1^^^' . $root . '/import_csv_villes.php^^^Imp_CSV_Towns^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv^^^Import CSV (tableur)^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv_liens^^^Imp_CSV_Links^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv_evenements^^^Imp_CSV_Events^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv_villes^^^Imp_CSV_Towns^^^G^^^';
     }
-    $menu[] = '1^^^' . $root . '/Import_Docs.php^^^Import_Docs^^^G^^^';
+    $menu[] = '1^^^' . $root . '/import_docs^^^Import_Docs^^^G^^^';
 
     $menu[] = '0^^^ ^^^Vérifications^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_sosa.php^^^Check_Sosa^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_internet.php^^^Internet_Cheking^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_internet_absente.php^^^Internet_Hidding_Cheking^^^C^^^';
-    $menu[] = '1^^^' . $root . '/pers_isolees.php^^^Non_Linked_Pers^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_homonymes.php^^^Namesake_Cheking^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_sosa^^^Check_Sosa^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_internet^^^Internet_Cheking^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_internet_absente^^^Internet_Hidding_Cheking^^^C^^^';
+    $menu[] = '1^^^' . $root . '/pers_isolees^^^Non_Linked_Pers^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_homonymes^^^Namesake_Cheking^^^C^^^';
     if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/controle_personnes.php^^^Check_Persons^^^C^^^';
+        $menu[] = '1^^^' . $root . '/controle_personnes^^^Check_Persons^^^C^^^';
     }
 
     $menu[] = '0^^^ ^^^Vue personnalisée^^^I^^^';
-    $menu[] = '1^^^' . $root . '/vue_personnalisee.php^^^Custom_View^^^I^^^';
+    $menu[] = '1^^^' . $root . '/vue_personnalisee^^^Custom_View^^^I^^^';
 
     $menu[] = '0^^^ ^^^Utilitaires^^^I^^^';
-    $menu[] = '1^^^' . $root . '/calendriers.php^^^Les calendriers^^^I^^^';
-    $menu[] = '1^^^' . $root . '/calc_so.php^^^Calc_Sosa^^^I^^^';
-    $menu[] = '1^^^' . $root . '/conv_romain.php^^^Convertisseur de nombres romains^^^I^^^';
-    $menu[] = '1^^^' . $root . '/init_sosa.php^^^Delete_Sosa^^^G^^^';
-    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/init_noms.php^^^Init_Names^^^G^^^';
+    $menu[] = '1^^^' . $root . '/calendriers^^^Les calendriers^^^I^^^';
+    $menu[] = '1^^^' . $root . '/calc_so^^^Calc_Sosa^^^I^^^';
+    $menu[] = '1^^^' . $root . '/conv_romain^^^Convertisseur de nombres romains^^^I^^^';
+    $menu[] = '1^^^' . $root . '/init_sosa^^^Delete_Sosa^^^G^^^';
+    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/init_noms^^^Init_Names^^^G^^^';
     if ($def_enc != 'UTF-8')
-        $menu[] = '1^^^' . $root . '/rectif_utf8.php^^^' . $LG_Menu_Title['Rect_Utf'] . '^^^G^^^';
+        $menu[] = '1^^^' . $root . '/rectif_utf8^^^' . $LG_Menu_Title['Rect_Utf'] . '^^^G^^^';
     if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/calcul_distance.php^^^Calculate_Distance^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_noms_non_ut.php^^^Name_Not_Used^^^C^^^';
+        $menu[] = '1^^^' . $root . '/calcul_distance^^^Calculate_Distance^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_noms_non_ut^^^Name_Not_Used^^^C^^^';
     }
-    $menu[] = '1^^^' . $root . '/vide_base.php^^^Reset_DB^^^G^^^';
-    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/infos_tech.php^^^Tech_Info^^^G^^^';
+    $menu[] = '1^^^' . $root . '/vide_base^^^Reset_DB^^^G^^^';
+    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/infos_tech^^^Tech_Info^^^G^^^';
 
     $menu[] = '0^^^ ^^^Informations^^^I^^^';
-    $menu[] = '1^^^' . $root . '/premiers_pas_genealogie.php^^^Start^^^I^^^';
-    $menu[] = '1^^^' . $root . '/glossaire_gen.php^^^Glossary^^^I^^^';
-    $menu[] = '1^^^' . $root . '/stat_base.php^^^Statistics^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_liens.php^^^Links^^^I^^^';
-    $menu[] = '1^^^' . $root . '/anniversaires.php^^^Anniversaires^^^I^^^';
+    $menu[] = '1^^^' . $root . '/premiers_pas_genealogie^^^Start^^^I^^^';
+    $menu[] = '1^^^' . $root . '/glossaire_gen^^^Glossary^^^I^^^';
+    $menu[] = '1^^^' . $root . '/stat_base^^^Statistics^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_liens^^^Links^^^I^^^';
+    $menu[] = '1^^^' . $root . '/anniversaires^^^Anniversaires^^^I^^^';
 
     $menu[] = '0^^^ ^^^Gestion du site^^^G^^^';
-    $menu[] = '1^^^' . $root . '/edition_parametres_site.php^^^Site_parameters^^^G^^^';
-    $menu[] = '1^^^' . $root . '/edition_parametres_graphiques.php^^^Design^^^G^^^';
-    $menu[] = '1^^^' . $root . '/liste_utilisateurs.php^^^Users_List^^^G^^^';
-    $menu[] = '1^^^' . $root . '/liste_connexions.php^^^Connections^^^G^^^';
+    $menu[] = '1^^^' . $root . '/edition_parametres_site^^^Site_parameters^^^G^^^';
+    $menu[] = '1^^^' . $root . '/edition_parametres_graphiques^^^Design^^^G^^^';
+    $menu[] = '1^^^' . $root . '/liste_utilisateurs^^^Users_List^^^G^^^';
+    $menu[] = '1^^^' . $root . '/liste_connexions^^^Connections^^^G^^^';
     if (!$SiteGratuit) {
         // $menu[] = '1^^^https://tech.geneamania.net/Verif_Version.php?Version=' . $Version . '^^^Vérification de la version de Généamania^^^G^^^';
-        $menu[] = '1^^^' . $root . '/admin_tables.php^^^Tables_Admin^^^G^^^';
+        $menu[] = '1^^^' . $root . '/admin_tables^^^Tables_Admin^^^G^^^';
         // $menu[] = '1^^^https://genealogies.geneamania.net/Gratuits_Premiums.php^^^Différences gratuit / Premium^^^G^^^';
     }
 
@@ -2603,8 +2609,8 @@ function lib_pfu($TypeObjet, $dem_article = false)
 function lit_fonc_fichier()
 {
     $nom_fic = 'version.txt';
-    if (file_exists($nom_fic)) {
-        $fic = fopen($nom_fic, 'r');
+    if (file_exists(__DIR__ . '/../../' . $nom_fic)) {
+        $fic = fopen(__DIR__ . '/../../' . $nom_fic, 'r');
         if ($fic) {
             $vers_fic = trim(fgets($fic));
             fclose($fic);

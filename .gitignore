@@ -3,3 +3,5 @@
 /TODO
 /app/AppComponent.php
 /app/AppUserAuthenticator.php
+/app/DatabaseConnection.php
+/app/EnvironementFileParser.php
