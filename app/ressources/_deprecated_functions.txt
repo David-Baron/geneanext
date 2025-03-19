@@ -1,0 +1,611 @@
+
+function Affiche_Icones_Standard()
+{
+    global $root, $Icones;
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+}
+
+function Get_Adr_Base_Ref()
+{
+    global $Environnement, $RepGenSiteLoc, $RepGenSiteInt;
+    if ($Environnement == 'I') return $RepGenSiteInt;
+    else return $RepGenSiteLoc;
+}
+
+// Appelle l'édition d'une union
+function Ins_Edt_Union($Reference, $Personne = 0, $us = 'n')
+{
+    global $root;
+    return 'href="' . $root . '/edition_union.php?Reference=' . $Reference . '&amp;Personne=' . $Personne . '&amp;us=' . $us . '"';
+}
+
+// Appelle l'édition d'une filiation
+function Ins_Edt_Filiation($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/edition_filiation.php?Refer=' . $Reference . '"';
+}
+
+function Ins_Ref_Arbre($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/arbre_asc_pers.php?Refer=' . $Reference . '"';
+}
+
+function Ins_Ref_Arbre_Desc($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/arbre_desc_pers.php?Refer=' . $Reference . '"';
+}
+
+function Ins_Ref_Images($Reference, $Type_Ref)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=' . $Type_Ref . '"';
+}
+
+// Référence des images pour un évènement
+function Ins_Ref_ImagesE($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=E"';
+}
+
+// Référence des images pour une personne
+function Ins_Ref_ImagesP($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=P"';
+}
+
+// Référence des images pour une ville
+function Ins_Ref_ImagesV($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=V"';
+}
+
+// Référence des images pour une union
+function Ins_Ref_ImagesU($Reference)
+{
+    global $root;
+    return 'href="' . $root . '/liste_images.php?Refer=' . $Reference . '&amp;Type_Ref=U"';
+}
+
+// Affiche la balise Img pour une icone
+function Affiche_Icone($nom_image, $texte_image = '')
+{
+    return Affiche_Icone_Clic($nom_image, '', $texte_image);
+}
+
+function Lien_Icone_Brut($lien, $nom_image, $id_image, $Action_Clic, $texte_image = '')
+{
+    global $root, $Icones;
+    return '<a ' . $lien . '>'
+        . '<img id="' . $id_image . '" '
+        . 'src="' . $root . '/assets/img/' . $Icones[$nom_image] . '" '
+        . 'alt="' . $texte_image . '" '
+        . 'title="' . $texte_image . '" '
+        . ''
+        . 'onclick="' . $Action_Clic . '"/>'
+        . '</a>';
+}
+
+function Affiche_Icone_Clic($nom_image, $Action_Clic, $texte_image = '')
+{
+    global $root, $Icones, $offset_info, $id_image;
+    $texte_image = my_html($texte_image);
+    $the_id = ' ';
+    if ((isset($id_image)) && ($id_image != '')) {
+        $the_id = 'id="' . $id_image . '" ';
+    }
+    $id_image = '';
+    $nom_icone = $Icones[$nom_image];
+    $chemin = $root . '/assets/img/' . $nom_icone;
+    $oc = '';
+    if ($Action_Clic != '') $oc = 'onclick="' . $Action_Clic . ';"';
+    return '<img ' . $the_id . 'src="' . $chemin . '" alt="' . $texte_image . '" title="' . $texte_image . '" ' . $oc . '>';
+}
+
+// Affiche icone d'appel des textes et pdf ; lien en nofollow...
+function Affiche_Icone_Lien_TXT_PDF($lien, $texte_image, $le_type)
+{
+    global $root, $Icones;
+    $texte_image = my_html($texte_image);
+    switch ($le_type) {
+        case 'T':
+            $image = 'text';
+            break;
+        case 'P':
+            $image = 'PDF';
+            break;
+    }
+    return '<a ' . $lien . ' rel="nofollow"><img src="' . $root . '/assets/img/' . $Icones[$image] . '" alt="' . $texte_image . '" title="' . $texte_image . '" /></a>';
+}
+
+function Img_Zone_Oblig($nom_image)
+{
+    global $root, $Icones;
+    $texte = 'Zone obligatoire';
+    echo '<img id="' . $nom_image . '" src="' . $root . '/assets/img/' . $Icones['obligatoire'] . '" alt="' . $texte . '" title="' . $texte . '"/>';
+}
+
+function Affiche_Calendrier($nom_image, $fonc_click)
+{
+    global $root, $Icones;
+    $texte = 'Calendrier';
+    echo '<img id="' . $nom_image . '" src="' . $root . '/assets/img/' . $Icones['calendrier'] . '" alt="' . $texte . '" title="' . $texte . '" onclick="' . $fonc_click . '"/>' . "\n";
+}
+
+// Affiche les notes pour une fiche
+function Aff_Comment_Fiche($divers, $diff)
+{
+    global $est_privilegie, $def_enc;
+    if (($divers != '') and (($est_privilegie) or ($diff == 'O'))) {
+        echo '<fieldset><legend>Note</legend>' . html_entity_decode(my_html($divers), ENT_QUOTES, $def_enc) . '</fieldset><br>' . "\n";
+    }
+}
+
+function Retire_sr($nom_script)
+{
+    $position = strrpos($nom_script, '/');
+    if ($position) $nom_script = substr($nom_script, $position + 1, strlen($nom_script));
+    return $nom_script;
+}
+
+function Oeil_Div($nom_img, $alt_img, $div)
+{
+    Image_Div('oeil', $nom_img, $alt_img, $div);
+}
+
+// Positionnement d'une fin de div avec masquage
+function fin_div_cache($nom_div)
+{
+    echo '</div>' . "\n";
+    echo '<script type="text/javascript">' . "\n";
+    echo '<!--' . "\n";
+    echo 'cache_div(\'' . $nom_div . '\');' . "\n";
+    echo '//-->' . "\n";
+    echo '</script>' . "\n";
+}
+
+function Note_Div($nom_img, $alt_img, $div)
+{
+    Image_Div('note', $nom_img, $alt_img, $div);
+}
+
+function oeil_div_simple($image, $nom_img, $alt_img, $div)
+{
+    global $root, $Icones;
+    echo ' <img id="' . $image . '" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . $alt_img . '" title="' . $alt_img . '" ' . Survole_Clic_Div($div) . '/>';
+}
+
+// Affiche une image avec son comportement associé et le début d'un div
+// Paramètre : nom de l'image, alt sur image, nom du div
+function Image_Div($image, $nom_img, $alt_img, $div)
+{
+    global $root, $Icones;
+    echo '<img id="' . $nom_img . '" src="' . $root . '/assets/img/' . $Icones[$image] . '" alt="' . my_html($alt_img) . '" ' . Survole_Clic_Div($div) . '/>' . "\n";
+    echo '<div id="' . $div . '">' . "\n";
+}
+
+function form_status()
+{
+    global $LG_Default_Status;
+    colonne_titre_tab($LG_Default_Status);
+    bouton_radio('val_statut', 'O', LG_CHECKED_RECORD_SHORT, true);
+    bouton_radio('val_statut', 'N', LG_NOCHECKED_RECORD_SHORT);
+    bouton_radio('val_statut', 'I', LG_FROM_INTERNET);
+    echo '</td></tr>';
+}
+
+function form_header()
+{
+    global $LG_csv_header;
+    ligne_vide_tab_form(1);
+    colonne_titre_tab($LG_csv_header);
+    $deb_radio = '<input type="radio" name="entete" ';
+    echo $deb_radio . 'id="entete_A" value="A" onclick="montre_div(\'corresp\');" checked="checked"/><label for="entete_A">' . LG_IMP_CSV_HEADER_NO . '</label>&nbsp;';
+    echo $deb_radio . 'id="entete_I" value="I" onclick="montre_div(\'corresp\');"/><label for="entete_I">' . LG_IMP_CSV_HEADER_YES_IGNORE . '</label>&nbsp;';
+    echo $deb_radio . 'id="entete_P" value="P" onclick="cache_div(\'corresp\');"/><label for="entete_P">' . LG_IMP_CSV_HEADER_YES_CONSIDER . '</label>';
+    echo '</td></tr>';
+}
+
+
+function form_match()
+{
+    global $champ_lib, $radical_variable_champ, $radical_variable_csv;
+    echo '<tr><td class="label" width="35%">' . LG_IMP_CSV_COLS_MATCH . '</td><td class="value">';
+    echo '<div id="corresp">';
+    echo '<table>';
+    echo '<tr align="center">';
+    echo '<td>' . LG_IMP_CSV_COLS_CSV . '</td>';
+    echo '<td>' . LG_IMP_CSV_COLS_GEN . '</td></tr>';
+    // Les 3 zones suivantes sont fixes
+    echo '<tr>';
+    aff_corr_csv2(0);
+    echo '<td><input type="text" name="' . $radical_variable_champ . '0" readonly="readonly" value="' . $champ_lib[0] . '"/></td>';
+    echo '</tr><tr>';
+    aff_corr_csv2(1);
+    echo '<td><input type="text" name="' . $radical_variable_champ . '1" readonly="readonly" value="' . $champ_lib[1] . '"/></td>';
+    echo '</tr><tr>';
+    aff_corr_csv2(2);
+    echo '<td><input type="text" name="' . $radical_variable_champ . '2" readonly="readonly" value="' . $champ_lib[2] . '"/></td>';
+    echo '</tr>';
+    echo '</table>';
+    echo '</div>';
+    echo '</td></tr>';
+}
+
+function aff_origine()
+{
+    global $Horigine;
+    echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
+}
+
+// Affiche des lignes vides dans un formaulaire de saisie
+function ligne_vide_tab_form($nb_lig)
+{
+    for ($nb = 1; $nb <= $nb_lig; $nb++) {
+        echo '<tr><td colspan="2">&nbsp;</td></tr>';
+    }
+}
+
+// Renvoye un nombre paddé à gauche avec des zéros (2 car) ==> jour, mois
+function zerofill2($zInitiale)
+{
+    return sprintf('%02s', $zInitiale);
+}
+
+// Renvoye un nombre paddé à gauche avec des zéros  (4 car) ==> année
+function zerofill4($zInitiale)
+{
+    return sprintf('%04s', $zInitiale);
+}
+
+function open_log()
+{
+    $f_log = ouvre_fic('log.txt', 'a+');
+    // $f_log = fopen('log.txt', 'a+');
+    return $f_log;
+}
+
+// Ecrit une ligne dans un fichier texte
+function ecrire($fic, $texte)
+{
+    global $cr;
+    fputs($fic, $texte . $cr);
+}
+
+// Appelle l'édition d'une personne
+function Ins_Edt_Pers($Reference, $new_window = false)
+{
+    global $root;
+    $target = '';
+    if ($new_window) $target = ' target="_blank"';
+    return 'href="' . $root . '/edition_personne.php?Refer=' . $Reference . '"' . $target;
+}
+
+// Appel de la page fiche couple de type texte
+function Ins_Ref_Fam($Reference, $sortie = "H")
+{
+    global $root;
+    if ($sortie == 'H') return 'href="' . $root . '/fiche_couple_txt.php?Reference=' . $Reference . '"';
+    else return 'href="' . $root . '/fiche_couple_txt.php?Reference=' . $Reference . '&amp;pdf=O"';
+}
+
+// Appel de la page fiche individuelle de type texte
+function Ins_Ref_Indiv($Reference, $sortie = "H")
+{
+    global $root;
+    if ($sortie == 'H') return 'href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Reference . '"';
+    else return 'href="' . $root . '/fiche_indiv_txt.php?Reference=' . $Reference . '&amp;pdf=O"';
+}
+
+function Ins_Ref_Pers($Reference, $new_window = false)
+{
+    global $root;
+    $target = '';
+    if ($new_window) $target = ' target="_blank"';
+    return 'href="' . $root . '/fiche_fam_pers.php?Refer=' . $Reference . '"' . $target;
+}
+
+// Présence d'images pour une personne
+function Presence_ImagesP($Reference)
+{
+    return Presence_Images($Reference, 'P');
+}
+
+// Présence d'images pour une ville
+function Presence_ImagesV($Reference)
+{
+    return Presence_Images($Reference, 'V');
+}
+
+// Présence d'images pour une union
+function Presence_ImagesU($Reference)
+{
+    return Presence_Images($Reference, 'U');
+}
+
+// Affiche l'icone vers la chronologie d'une personne
+function Lien_Chrono_Pers($Reference)
+{
+    global $root;
+    return Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne.php?Refer=' . $Reference . '"', 'time_line', LG_FFAM_CHRONOLOGIE) . "\n";
+}
+
+function aff_legend($lib)
+{
+    echo '<legend>' . my_html(ucfirst($lib)) . '</legend>' . "\n";
+}
+
+// Affiche le conseil OpenStreetmap
+function aff_tip_carte()
+{
+    global $root, $Icones;
+    echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '"><a href="http://www.OpenStreetMap.com" target="_blank">OpenStreetMap</a></td></tr>' . "\n";
+}
+
+// Demande l'affichage d'une carte OpenStreetMap si les coordonnées sont renseignées
+function appelle_carte_osm()
+{
+    global $Lat_V, $Long_V, $LG_Show_On_Map;
+    if (($Lat_V != 0) or ($Long_V != 0)) {
+        echo '&nbsp;' .
+            Affiche_Icone_Lien(
+                'href="http://www.openstreetmap.org/' . '?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"',
+                'map_go',
+                $LG_Show_On_Map
+            );
+    }
+}
+
+// Codage des champs de type caractère
+function Champs_car($res, $enreg)
+{
+    $enreg2 = $enreg;
+
+    foreach ($enreg as $key => $value)
+        echo $key . ' ==> ' . $value . '<br>';
+
+    while ($finfo = $res->fetch_field()) {
+        $type = $finfo->type;
+        $name = $finfo->name;
+        if ($type == 'string')
+            $enreg2[$name] = my_html($enreg2[$name]);
+    }
+    return $enreg2;
+}
+
+function Ligne_Body($aff_manuel = true)
+{
+    global $chemin_images, $Image_Fond, $Icones, $offset_info;
+
+    if (is_info()) {
+        $chemin = $offset_info . $chemin_images . $Image_Fond;
+    } else {
+        $chemin = $chemin_images . $Image_Fond;
+    }
+    if ($aff_manuel) {
+        echo Affiche_Icone_Lien('href="/documentation/Geneamania.pdf" target="_blank"', 'manuel', 'Manuel Généamania') . '<br>';
+    }
+}
+
+function Insere_Haut_texte($titre)
+{
+    echo '</head>' . "\n";
+    echo '<body vlink="#0000ff" link="#0000ff">' . "\n";
+    echo '<table cellpadding="0" width="100%">' . "\n";
+    echo '<tr>' . "\n";
+    echo '<td align="center"><b>' . StripSlashes($titre) . '</b></td>' . "\n";
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+}
+
+// Insère le bas de page
+function Insere_Bas($compl_entete)
+{
+    global $root, $Icones;
+    echo '<table cellpadding="0" width="100%">';
+    echo '<tr>';
+    echo '<td align="right">';
+    if ($compl_entete != '') {
+        echo $compl_entete;
+    }
+    echo '<a href="' . $root . '/"><img src="' . $root . '/assets/img/' . $Icones['home'] . '" alt="Accueil" title="Accueil" /></a>';
+    echo "</td>";
+    echo '</tr>';
+    echo '</table>';
+    // Fichiers de session des bots : pool!
+    kill_sess_bot();
+}
+
+// Détruit toute la session, y compris le fichier de session pour les robots
+function kill_sess_bot()
+{
+    global $is_bot;
+    // Vérifie si l'agent utilisateur est un robot
+    if ($is_bot) {
+        // Détruit toutes les variables de session
+        $_SESSION = array();
+
+        // Obtenir l'identifiant de la session
+        $session_id = session_id();
+
+        // Construire le chemin vers le fichier de session
+        $session_file = session_save_path() . '/sess_' . $session_id;
+        // var_dump($session_file);
+
+        // Vérifier si le fichier de session existe et le supprimer
+        if (file_exists($session_file)) {
+            unlink($session_file);
+            // echo "Le fichier de session a été supprimé.";
+        } else {
+            echo "Le fichier de session n'existe pas.";
+        }
+
+        // Finalement, on détruit la session
+        session_destroy();
+    }
+    // else echo 'pas un robot';
+}
+
+// // Connexion à la base de données
+// function xconnexion($plantage="oui") {
+// global $db,$util,$mdp,$serveur,$ndb,$nutil,$nmdp,$nserveur;
+// $db      = $ndb;
+// $util    = $nutil;
+// $mdp     = $nmdp;
+// $serveur = $nserveur;
+// $mysqli = new mysqli($serveur, $util, $mdp, $db);
+// $linkid = true;
+// if ($plantage == "oui") {
+// if ($mysqli->connect_errno) {
+// $linkid = false;
+// echo "Echec de la connexion à MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+// }
+// }
+// return $linkid;
+// }
+
+// Entete de paragraphe
+function paragraphe($texte)
+{
+    global $def_enc;
+    echo '<br>' . "\n";
+    echo '<table width="100%" align="left" cellspacing="1" cellpadding="3">' . "\n";
+    echo '<tr class="rupt_table">';
+    echo '<td><b>' . my_html($texte) . '</b></td>';
+    echo '</tr>' . "\n";
+    echo '</table>' . "\n";
+    echo '<br><br>' . "\n";
+    return 0;
+}
+
+function Erreur_DeCujus()
+{
+    global $root;
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement">&nbsp;';
+    echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ;&nbsp;';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+    return 1;
+}
+
+function Affiche_Warning($Message)
+{
+    global $root;
+    echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"/>' . $Message . '<br>';
+}
+
+function Affiche_Stop($Message)
+{
+    global $root;
+    echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . my_html($Message) . '<br>';
+}
+
+// Affiche un message d'erreur
+function aff_erreur($message)
+{
+    echo '<center><font color="red"><br><br><br><h2>' . my_html($message) . '</h2></font></center>';
+}
+
+// Affiche une entrée de sous-menu
+function sous_menu($url, $libelle, $niveau)
+{
+    global $LG_Menu_Title;
+    $sep = '^^^';
+    return '1' . $sep . $url . $sep . $LG_Menu_Title[$libelle] . $sep . $niveau . $sep;
+}
+
+function dd($date)
+{
+    return date("d/m/Y H:i:s", $date);
+}
+
+function aff_var($nom)
+{
+    global $$nom;
+    echo '$' . $nom . ' = ' . $$nom . '<br />';
+}
+
+// Colonne de titre dans un tableau
+function col_titre_tab($lib, $larg)
+{
+    echo '<tr><td class="label" width="' . $larg . '%"> ' . ucfirst($lib) . ' </td>';
+}
+
+function col_titre_tab_noClass($lib, $larg)
+{
+    echo '<tr><td width="' . $larg . '%">' . my_html($lib) . '</td>';
+}
+
+function colonne_titre_tab($lib)
+{
+    global $larg_titre;
+    echo col_titre_tab($lib, $larg_titre) . '<td class="value">';
+}
+
+function bouton_radio($nom, $valeur, $lib, $chk = false)
+{
+    if ($chk) $chk = 'checked';
+    else $chk = '';
+    echo '<input type="radio" id="' . $nom . $valeur . '" name="' . $nom . '" value="' . $valeur . '" ' . $chk . '/>'
+        . '<label for="' . $nom . $valeur . '">' . $lib . '</label> ';
+}
+
+function affiche_var($nom)
+{
+    global $$nom;
+    //echo ' variable $'.$nom.' = '.$$nom.'<br>';
+    echo '$' . $nom . ' = ';
+    var_dump($$nom);
+    echo '<br>';
+}
+
+// Affiche le label d'un bouton radio
+function lb_radio($id_for, $lib)
+{
+    return '<label for="' . $id_for . '">' . $lib . '</label>';
+}
+
+// Affiche le choix de la sortie : écran, texte ou csv (facultatif)
+function affiche_sortie($csv)
+{
+    global $LG_Ch_Output_Screen, $LG_Ch_Output_Text, $LG_Ch_Output_CSV, $est_privilegie;
+    echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
+    echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
+    if ($csv) {
+        // L'export CSV n'est disponible qu'à partir du profil privilégié
+        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+    }
+}
+
+// Affiche le temps d'exécution d'une fonction
+function affiche_temps($quoi)
+{
+    global $debut;
+    $fin = microtime_float();
+    $totaltime = ($fin - $debut);
+    $exec_time = number_format($totaltime, 3);
+    echo "Debut : " . date("H:i:s", $debut);
+    echo "<br>Fin : " . date("H:i:s", $fin);
+    echo "<br> $quoi exécuté en " . $exec_time . " sec<br>";
+}
+
+function affiche_heure_precise($quoi)
+{
+    $ladate = DateTime::createFromFormat('U.u', microtime(TRUE));
+    echo $quoi . ' ' . $ladate->format('d-m-Y H:i:s.u') . '<br>';
+}
+
+// Ouvre un fichier avec le BOM éventuel pour l'UTF-8
+function ouvre_fic($nom_fic, $mode)
+{
+    global $def_enc;
+    $fp = fopen($nom_fic, $mode);
+    // Byte Order mark (BOM) for UTF-8
+    if ($def_enc == 'UTF-8') fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
+    return $fp;
+}
