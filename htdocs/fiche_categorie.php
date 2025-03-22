@@ -6,7 +6,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Category'];    // Titre pour META
 
 $tab_variables = array('annuler');
@@ -34,7 +33,7 @@ if ($res = lect_sql($sql)) {
     if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
         $TitreF = my_html($enreg['Titre']);
         $OrdreF = $enreg['Ordre_Tri'];
-        $compl .= '<a href="' . $root . '/edition_categorie.php?categ=' . $Categ . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
+        $compl .= '<a href="' . $root . '/edition_categorie?categ=' . $Categ . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
 
         Insere_Haut(my_html($titre), $compl, 'Fiche_Categorie', $Categ);
 
@@ -52,10 +51,8 @@ if ($res = lect_sql($sql)) {
 
         // Appel de la liste des personnes présentes dans cette catégorie
         $_SESSION['NomP'] = $enreg['Titre']; // Pour le pdf histoire d'avoir les bons caractères...
-        echo '<br /><a href="' . $root . '/liste_pers2.php?Type_Liste=C&amp;idNom=' . $enreg['Identifiant'] . '&amp;Nom=' . $TitreF . '">Personnes de cette cat&eacute;gorie</a>' . "\n";
+        echo '<br /><a href="' . $root . '/liste_pers2?Type_Liste=C&amp;idNom=' . $enreg['Identifiant'] . '&amp;Nom=' . $TitreF . '">Personnes de cette cat&eacute;gorie</a>' . "\n";
 
-        // Formulaire pour le bouton retour
-        Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
     } else {
         // 2 solutions en cas d'absence :
         // - l'utilisateur a saisi un code absent dans l'URL ; le code ne doit pas être saisi dans l'URL, donc tant pis pour lui...

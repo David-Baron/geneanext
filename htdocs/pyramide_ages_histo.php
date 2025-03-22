@@ -52,7 +52,7 @@ function calcul_precedent()
     echo '<td align="center">';
     if ($ref_annee_anc != 'ensemble') {
         $fin_annee = $ref_annee_anc + 19;
-        echo '<a href="' . $root . '/histo_ages_deces.php?Debut=' . $ref_annee_anc . '&amp;Fin=' . $fin_annee . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $ref_annee_anc . '-' . $fin_annee . '</a>';
+        echo '<a href="' . $root . '/histo_ages_deces?Debut=' . $ref_annee_anc . '&amp;Fin=' . $fin_annee . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $ref_annee_anc . '-' . $fin_annee . '</a>';
     } else echo '<b>' . ucfirst($ref_annee_anc) . '</b>';
     echo '</td>';
     $larg = intval($moy_F / 5);
@@ -84,7 +84,7 @@ $ref_max_f = 0;
 $sql = 'SELECT Sexe, Ne_le, Decede_Le, Reference FROM ' . nom_table('personnes') .
     " WHERE Ne_le LIKE '_________L'" .
     " AND Decede_Le LIKE '_________L' ";
-if (!$est_privilegie) {
+if (!IS_GRANTED('P')) {
     $sql = $sql . "and Diff_Internet = 'O' ";
 }
 $sql = $sql . 'order by Ne_Le';
@@ -172,14 +172,12 @@ echo '</table>';
 $Nom = '';
 $Prenoms = '';
 if (Get_Nom_Prenoms($ref_max_h, $Nom, $Prenoms)) {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_max_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_h) . ')';
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_max_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_h) . ')';
 }
 if (Get_Nom_Prenoms($ref_max_f, $Nom, $Prenoms)) {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_max_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_f) . ')';
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_max_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_f) . ')';
 }
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour);
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

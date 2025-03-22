@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -115,7 +120,7 @@ function est_utilisee($aff)
 // Affiche une ville
 function Aff_Ville($enreg2)
 {
-    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_ville = $enreg['Nom_Ville'];
     $n_ville_html = $enreg2['Nom_Ville'];
@@ -243,12 +248,12 @@ function Aff_Ville($enreg2)
 
         echo '<br>';
         echo $deb_lien_visu . 'N' . $fin_lien . '>' . LG_LPERS_OBJ_N . ' ' . $n_ville_html . '</a>';
-        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien($deb_lien_crea . 'N' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_BORN_CREATE . $n_ville_aff);
+        if (IS_GRANTED('G')) echo ' ' . Affiche_Icone_Lien($deb_lien_crea . 'N' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_BORN_CREATE . $n_ville_aff);
         echo '<br>';
         echo $deb_lien_visu . 'M' . $fin_lien . '>' . LG_LPERS_OBJ_M . ' ' . $n_ville_html . '</a><br>';
         echo $deb_lien_visu . 'K' . $fin_lien . '>' . LG_LPERS_OBJ_K . ' ' . $n_ville_html . '</a><br>';
         echo $deb_lien_visu . 'D' . $fin_lien . '>' . LG_LPERS_OBJ_D . ' ' . $n_ville_html . '</a>';
-        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien($deb_lien_crea . 'D' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_DEAD_CREATE . $n_ville_aff);
+        if (IS_GRANTED('G')) echo ' ' . Affiche_Icone_Lien($deb_lien_crea . 'D' . $fin_lien, 'ajouter', LG_ICSV_TOWN_PERS_DEAD_CREATE . $n_ville_aff);
 
         echo '</div>' . "\n";
 

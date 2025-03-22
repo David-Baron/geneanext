@@ -151,14 +151,14 @@ if ($bt_OK) {
             $ref = $row[0];
             switch ($Sortie) {
                 case 'e':
-                    echo '<a href="' . $root . '/fiche_ville.php?Ident=' . $ref . '"' . $target . '>' . my_html($row[1]) . '</a>';
+                    echo '<a href="' . $root . '/fiche_ville?Ident=' . $ref . '"' . $target . '>' . my_html($row[1]) . '</a>';
                     $Lat_V = $row[2];
                     $Long_V = $row[3];
                     if (($Lat_V != 0) or ($Long_V != 0)) {
                         echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                     }
-                    if ($est_gestionnaire) {
-                        echo ' <a href="' . $root . '/edition_ville.php?Ident=' . $ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    if (IS_GRANTED('G')) {
+                        echo ' <a href="' . $root . '/edition_ville?Ident=' . $ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     echo '<br>' . "\n";
                     break;
@@ -242,7 +242,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</select>' . "\n";
     echo '</td></tr>' . "\n";
 
-    if ($est_gestionnaire) {
+    if (IS_GRANTED('G')) {
         echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_SCH_STATUS) . ' </td>';
         echo '<td class="value">' . "\n";
         echo '<input type="radio" id="Statut_Fiche_o" name="Statut_Fiche" value="O"';
@@ -268,7 +268,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<td class="value">';
     echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
-    if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+    if (IS_GRANTED('P')) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="20%"> ' . ucfirst(LG_TOWN_NEW_TAB) . ' </td>';
     echo '<td class="value">';

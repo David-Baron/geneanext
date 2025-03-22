@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -76,8 +80,6 @@ function traite_rup_table($nom_table)
     }
 }
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $init_base      = Secur_Variable_Post($init_base, 2, 'S');
 $nom_du_fichier = Secur_Variable_Post($nom_du_fichier, 80, 'S');
@@ -502,8 +504,6 @@ if ($bt_OK) {
     }
 }
 
-if ($_SESSION['estGestionnaire']) {
-
     // Première entrée : affichage pour saisie
     if (($ok == '') && ($annuler == '')) {
         // Recherche des paramètres de connexion distante
@@ -532,7 +532,9 @@ if ($_SESSION['estGestionnaire']) {
         echo '<tr><td colspan="2"></td></tr>';
         echo '<tr><td class="label" width="25%"> ' . ucfirst(LG_IMP_BACKUP_FILE) . ' </td>';
         echo '<td class="value"><input type="file" name="nom_du_fichier" size="80"/>';
-        $dir = $chemin_exports;
+        $genename = ($settings['Nom'] != '???' ? $settings['Nom'] : 'test');
+        $storage_path = '__storage/' . $genename . '/';
+        $dir = __DIR__ . '/../' . $storage_path;
         // Extensions autorisées
         $dossier = opendir($dir);
         $col = 0;
@@ -647,9 +649,7 @@ if ($_SESSION['estGestionnaire']) {
         echo '  cache_div(\'p_int\');' . "\n";
         echo '</script>' . "\n";
     }
-} else {
-    echo $LG_function_noavailable_profile;
-}
+
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

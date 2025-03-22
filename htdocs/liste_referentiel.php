@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Recup de la variable passée dans l'URL : type de liste
 $Type_Liste = Recup_Variable('Type_Liste', 'C', 'RTDCQOS');
 
@@ -32,16 +37,13 @@ switch ($Type_Liste) {
         break;
 }
 
-// Gestion standard des pages
-$acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $entete;                    // Titre pour META
-$niv_requis = 'P';                    // Page réservée au profil privilégié
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents et des sources sur les gratuits non Premium
-if (($SiteGratuit) and (!$Premium) and ($Type_Liste == 'D')) Retour_Ar();
-if (($SiteGratuit) and (!$Premium) and ($Type_Liste == 'O')) Retour_Ar();
+if (($SiteGratuit && !$Premium) && ($Type_Liste == 'D' || $Type_Liste == 'O')) Retour_Ar();
 
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut(my_html($entete), $compl, 'Liste_Referentiel', $Type_Liste);
@@ -87,23 +89,23 @@ $res = lect_sql($sql);
 
 // Possibilité d'insérer un code
 // NB : pas d'insertion possible pour les catégories ou les requêtes sur les personnes
-if ($est_contributeur) {
+if (IS_GRANTED('C')) {
     switch ($Type_Liste) {
         case 'R':
             $txt = $LG_Menu_Title['Role_Add'];
-            echo $txt . ' : ' . affiche_Icone_Lien('href="' . $root . '/edition_role.php?code=-----"', 'ajouter', $txt);
+            echo $txt . ' : ' . affiche_Icone_Lien('href="' . $root . '/edition_role?code=-----"', 'ajouter', $txt);
             break;
         case 'T':
             $txt = $LG_Menu_Title['Event_Type_Add'];
-            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_type_evenement.php?code=-----"', 'ajouter', $txt);
+            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_type_evenement?code=-----"', 'ajouter', $txt);
             break;
         case 'D':
             $txt = $LG_Menu_Title['Doc_Type_Add'];
-            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_type_document.php?code=-----"', 'ajouter', $txt);
+            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_type_document?code=-----"', 'ajouter', $txt);
             break;
         case 'O':
             $txt = $LG_Menu_Title['Repo_Sources_Add'];
-            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_depot.php?ident=-1"', 'ajouter', $txt);
+            echo $txt . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_depot?ident=-1"', 'ajouter', $txt);
             break;
     }
 }
@@ -115,41 +117,41 @@ if ($res->rowCount() > 0) {
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         switch ($Type_Liste) {
             case 'R':
-                echo '<a href="' . $root . '/fiche_role.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
-                if ($est_contributeur) {
-                    echo ' <a href="' . $root . '/edition_role.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+                echo '<a href="' . $root . '/fiche_role?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
+                if (IS_GRANTED('C')) {
+                    echo ' <a href="' . $root . '/edition_role?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'T':
-                echo '<a href="' . $root . '/fiche_type_evenement.php?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
-                if (($est_contributeur) and ($row[2] == 'O')) {
-                    echo ' <a href="' . $root . '/edition_type_evenement.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+                echo '<a href="' . $root . '/fiche_type_evenement?code=' . $row[0] . '">' . my_html($row[1]) . ' (' . $row[0] . ')</a>';
+                if (IS_GRANTED('C') and ($row[2] == 'O')) {
+                    echo ' <a href="' . $root . '/edition_type_evenement?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'D':
-                echo '<a href="' . $root . '/fiche_type_document.php?code=' . $row[0] . '">' . my_html($row[1]) . '</a>';
-                if (($est_contributeur)) {
-                    echo ' <a href="' . $root . '/edition_type_document.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+                echo '<a href="' . $root . '/fiche_type_document?code=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                if (IS_GRANTED('C')) {
+                    echo ' <a href="' . $root . '/edition_type_document?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'C':
                 $lib = my_html($row[1]);
                 echo '<img src="' . $root . '/assets/img/' . $Icones['tag_' . $row[2]] . '" border="0" alt="' . $lib . '" title="' . $lib . '"/>' . ' ';
-                echo '<a href="' . $root . '/fiche_categorie.php?categ=' . $row[0] . '">' . $lib . '</a>';
-                if (($est_gestionnaire)) {
-                    echo ' <a href="' . $root . '/edition_categorie.php?categ=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+                echo '<a href="' . $root . '/fiche_categorie?categ=' . $row[0] . '">' . $lib . '</a>';
+                if (IS_GRANTED('G')) {
+                    echo ' <a href="' . $root . '/edition_categorie?categ=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'Q':
-                echo '<a href="' . $root . '/fiche_requete.php?reference=' . $row[0] . '">' . my_html($row[1]) . '</a>';
-                if ($est_gestionnaire) {
-                    echo ' <a href="' . $root . '/edition_requete.php?reference=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+                echo '<a href="' . $root . '/fiche_requete?reference=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                if (IS_GRANTED('G')) {
+                    echo ' <a href="' . $root . '/edition_requete?reference=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             case 'O':
-                echo '<a href="' . $root . '/fiche_depot.php?ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
-                if ($est_contributeur) {
-                    echo ' <a href="' . $root . '/edition_depot.php?ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+                echo '<a href="' . $root . '/fiche_depot?ident=' . $row[0] . '">' . my_html($row[1]) . '</a>';
+                if (IS_GRANTED('C')) {
+                    echo ' <a href="' . $root . '/edition_depot?ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
                 }
                 break;
             default:

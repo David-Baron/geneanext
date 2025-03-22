@@ -5,8 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
-$niv_requis = 'P';
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Source'];        // Titre pour META
 
 $tab_variables = array('annuler');
@@ -39,8 +42,8 @@ else {
     $Adresse_Web = $enreg_sel['Adresse_Web'];
     $Fiabilite_Source = $enreg_sel['Fiabilite_Source'];
     $compl = Ajoute_Page_Info(600, 150);
-    if ($est_contributeur) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_source.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Source_Edit']) . '&nbsp;';
+    if (IS_GRANTED('C')) {
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_source?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Source_Edit']) . '&nbsp;';
     }
 
     Insere_Haut($titre, $compl, 'Fiche_Source', $Ident);
@@ -50,7 +53,7 @@ else {
     echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_TITLE) . '</td><td class="value">' . $enreg_sel['Titre'] . '</td></tr>';
     echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_AUTHOR) . '</td><td class="value">' . $enreg_sel['Auteur'] . '</td></tr>';
     echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_CLASS) . '</td><td class="value">' . $enreg_sel['Classement'] . '</td></tr>';
-    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REPO) . '</td><td class="value"><a href="' . $root . '/fiche_depot.php?ident=' . $enreg_sel['Ident_Depot'] . '">' . $enreg_sel['Nom'] . '</a></td></tr>';
+    echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REPO) . '</td><td class="value"><a href="' . $root . '/fiche_depot?ident=' . $enreg_sel['Ident_Depot'] . '">' . $enreg_sel['Nom'] . '</a></td></tr>';
     echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_REFER) . '</td><td class="value">' . $enreg_sel['Cote'] . '</td></tr>';
     echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_WEB) . '</td><td class="value">' . '</td></tr>';
     echo '<tr><td class="label" width="25%">' . ucfirst(LG_SRC_TRUST) . '</td><td class="value">';
@@ -70,12 +73,11 @@ else {
     echo '</td></tr>';
     echo '</table>';
     if (Rech_Commentaire($Ident, 'S')) {
-        if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+        if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
             echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
         }
     }
 
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

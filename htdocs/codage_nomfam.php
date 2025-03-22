@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__ . '/../app/Phonetique.php');
+require(__DIR__ . '/../app/Util/Phonetique.php');
 
 //	Récupération du nom
 $nom = '';

@@ -39,8 +39,8 @@ $enreg = $enreg_sel;
 $enreg2 = $enreg;
 
 $compl = Ajoute_Page_Info(600, 150);
-if ($est_gestionnaire) {
-    $compl = Affiche_Icone_Lien('href="' . $root . '/edition_ville.php?Ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Town_Edit']) . '&nbsp;';
+if (IS_GRANTED('G')) {
+    $compl = Affiche_Icone_Lien('href="' . $root . '/edition_ville?Ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Town_Edit']) . '&nbsp;';
 }
 Insere_Haut($titre, $compl, 'Fiche_Ville', '');
 
@@ -89,7 +89,7 @@ if (($cp == '?') or (($Lat_V == 0) and ($Long_V == 0))) {
 // Affichage du commentaire
 if (Rech_Commentaire($Ident, $Type_Ref)) {
     echo '<br>';
-    if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+    if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
         echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
     }
 }
@@ -102,24 +102,24 @@ $interdits = array("-", "'", " ");
 
 echo '<br>' . "\n";
 echo '<br>';
-echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=N&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_N . ' ' . my_html($enreg['Nom_Ville']) . '</a>';
-if ($est_contributeur) {
-    echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_personnes_ville.php?evt=N&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '"', 'ajouter', LG_ICSV_TOWN_PERS_BORN_CREATE . my_html($enreg['Nom_Ville']));
+echo '<a href="' . $root . '/liste_pers2?Type_Liste=N&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_N . ' ' . my_html($enreg['Nom_Ville']) . '</a>';
+if (IS_GRANTED('C')) {
+    echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_personnes_ville?evt=N&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '"', 'ajouter', LG_ICSV_TOWN_PERS_BORN_CREATE . my_html($enreg['Nom_Ville']));
 }
 echo '<br>';
-echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=M&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_M . ' ' . my_html($enreg['Nom_Ville']) . '</a><br>';
-echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=K&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_K . ' ' . my_html($enreg['Nom_Ville']) . '</a><br>';
-echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=D&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_D . ' ' . my_html($enreg['Nom_Ville']) . '</a>';
-if ($est_contributeur) {
-    echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_personnes_ville.php?evt=D&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '"', 'ajouter', LG_ICSV_TOWN_PERS_DEAD_CREATE . my_html($enreg['Nom_Ville']));
+echo '<a href="' . $root . '/liste_pers2?Type_Liste=M&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_M . ' ' . my_html($enreg['Nom_Ville']) . '</a><br>';
+echo '<a href="' . $root . '/liste_pers2?Type_Liste=K&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_K . ' ' . my_html($enreg['Nom_Ville']) . '</a><br>';
+echo '<a href="' . $root . '/liste_pers2?Type_Liste=D&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_LPERS_OBJ_D . ' ' . my_html($enreg['Nom_Ville']) . '</a>';
+if (IS_GRANTED('C')) {
+    echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_personnes_ville?evt=D&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '"', 'ajouter', LG_ICSV_TOWN_PERS_DEAD_CREATE . my_html($enreg['Nom_Ville']));
 }
-echo '<br><br><a href="' . $root . '/liste_pers2.php?Type_Liste=E&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_ICSV_TOWN_PERS_EVENT . my_html($enreg['Nom_Ville']) . '</a><br>';
+echo '<br><br><a href="' . $root . '/liste_pers2?Type_Liste=E&amp;idNom=' . $Ident . '&amp;Nom=' . my_html($enreg['Nom_Ville']) . '">' . LG_ICSV_TOWN_PERS_EVENT . my_html($enreg['Nom_Ville']) . '</a><br>';
 
 $n_ville2 = str_replace($interdits, '', my_html($enreg['Nom_Ville']));
-echo '<br><a href="' . $root . '/liste_villes.php?Type_Liste=S#' . $n_ville2 . '">' . LG_ICSV_TOWN_SUBDIV . "</a><br><br>";
-if ($est_contributeur) {
-    echo '<a href="' . $root . '/fusion_villes.php?Ident=' . $Ident . '">' . $LG_Menu_Title['Town_Merging'] . "</a><br>";
-    echo '<br><a href="' . $root . '/liste_evenements_zone.php?zone=' . $Ident . '&niveau=4">' . $LG_Menu_Title['Event_List_Area'] . '</a><br>';
+echo '<br><a href="' . $root . '/liste_villes?Type_Liste=S#' . $n_ville2 . '">' . LG_ICSV_TOWN_SUBDIV . "</a><br><br>";
+if (IS_GRANTED('C')) {
+    echo '<a href="' . $root . '/fusion_villes?Ident=' . $Ident . '">' . $LG_Menu_Title['Town_Merging'] . "</a><br>";
+    echo '<br><a href="' . $root . '/liste_evenements_zone?zone=' . $Ident . '&niveau=4">' . $LG_Menu_Title['Event_List_Area'] . '</a><br>';
     if ((!$SiteGratuit) or ($Premium)) { // Recherche de la ville dans les sites gratuits
         echo '<br><a href="' . $adr_rech_gratuits_ville . '?ok=ok&amp;NomV=' . $enreg['Nom_Ville'] . '" target="_blank">' . LG_ICSV_TOWN_SEARCH_CLOUD . '</a>' . "\n";
     }
@@ -139,7 +139,6 @@ if ((!$SiteGratuit) or ($Premium)) {
     echo '<br><a href="' . $adr_rech_ville_ref . '?Ville=' . $n_ville_uc . '&CP=' . $cp . '" target="_blank">' . LG_ICSV_TOWN_SEARCH . '</a>';
 }
 
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

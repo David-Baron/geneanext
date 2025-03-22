@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -109,7 +114,7 @@ function est_utilisee($aff)
 // Affiche une subdivision
 function Aff_Subdiv($enreg2)
 {
-    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $est_gestionnaire, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_subdiv = $enreg['Nom_Subdivision'];
     $n_subdiv_html = $enreg2['Nom_Subdivision'];

@@ -6,9 +6,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Event_Type'];       // Titre pour META
-$niv_requis = 'P';
 
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
@@ -37,7 +40,7 @@ Champ_car($enreg2, 'Libelle_Type');
 $compl = Ajoute_Page_Info(600, 150);
 
 if ($enreg2['Code_Modifiable'] == 'O') {
-    $compl .= '<a href="' . $root . '/edition_type_evenement.php?code=' . $Code . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+    $compl .= '<a href="' . $root . '/edition_type_evenement?code=' . $Code . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
 }
 
 Insere_Haut($titre, $compl, 'Fiche_Type_Evenement', $Code);
@@ -90,8 +93,7 @@ switch ($enreg2['Type_Gedcom']) {
 }
 echo '</td></tr>' . "\n";
 echo '</table>' . "\n";
-echo '<br><a href="' . $root . '/liste_evenements.php?tev=' . $Code . '">' . LG_EVENT_TYPE_EVENTS . '</a>';
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
+echo '<br><a href="' . $root . '/liste_evenements?tev=' . $Code . '">' . LG_EVENT_TYPE_EVENTS . '</a>';
 echo '<br />' . "\n";
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

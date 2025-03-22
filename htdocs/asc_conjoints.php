@@ -5,26 +5,16 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
-$tab_variables = array('annuler');
-foreach ($tab_variables as $nom_variables) {
-    if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
-    else $$nom_variables = '';
+
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
 }
-// Sécurisation des variables postées
-$annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 
-// On retravaille le libellé du bouton pour effectuer le retour...
-if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
-
-$acces = 'L';                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Partners_Ancestors'];    // Titre pour META
 $x = Lit_Env();                // Lecture de l'indicateur d'environnement
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup de la variable passée dans l'URL : référence de l'union
 $Reference = Recup_Variable('Reference', 'N');
@@ -193,9 +183,6 @@ echo "  couple(x1b, x2b, ordonnee, Info_Pere_Mere_B, Info_Mere_Mere_B);\n";
 
 // echo '	deux_couples();'."\n";
 echo '</script>' . "\n";
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
 function getDetail($LaRef)
 {

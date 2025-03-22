@@ -35,12 +35,8 @@ $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Ecran interdit sur les gratuits non Premium
-if (($SiteGratuit) and (!$Premium)) $bt_An = true;
+if (($SiteGratuit) and (!$Premium)) Retour_Ar();
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
-
-else {
     $compl = Ajoute_Page_Info(600, 150);
 
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -51,8 +47,8 @@ else {
         // var_dump($_SESSION['estPrivilegie']);
 
         // Affichage du formulaire de choix sur le 1er affichage
-        include(__DIR__ . '/assets/js/edition_geneamania.js');
-        include(__DIR__ . '/assets/js/Liste_Pers.js');
+        include(__DIR__ . '/../public/assets/js/edition_geneamania.js');
+        include(__DIR__ . '/../public/assets/js/Liste_Pers.js');
 
         echo '<form id="saisie" method="post">' . "\n";
         echo '<input type="text" id="num_ref" name ="num_ref" value = "0" />';
@@ -61,7 +57,7 @@ else {
         echo '<tr><td colspan="2"> </td></tr>';
         echo '<tr><td class="label" width="30%">' . ucfirst(LG_DOC_BRANCH_ORIGINE) . '</td><td class="value">';
         $sql_noms = 'SELECT DISTINCT idNomFam, Nom FROM ' . nom_table('personnes') . ' WHERE Reference <> 0';
-        if (!$est_privilegie) {
+        if (!IS_GRANTED('P')) {
             $sql_noms .= " AND Diff_Internet = 'O'";
         }
         $sql_noms .= ' ORDER by Nom';
@@ -142,7 +138,7 @@ else {
 
         $crit_diff_doc = '';
         $crit_diff_pers = '';
-        if (!$est_privilegie) {
+        if (!IS_GRANTED('P')) {
             $crit_diff_doc = ' and d.Diff_Internet = "O"';
             $crit_diff_pers = ' and p.Diff_Internet = "O"';
         }
@@ -178,7 +174,7 @@ else {
                 $num_image++;
                 echo '<td>';
                 Aff_Img_Redim_Lien($rep . $row['Nom_Fichier'], 200, 200);
-                echo '<br /><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_pers . '">' . $row['Prenoms'] . ' ' . $row['Nom'] . '</a>';
+                echo '<br /><a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_pers . '">' . $row['Prenoms'] . ' ' . $row['Nom'] . '</a>';
                 echo '</td>' . "\n";
                 if ($num_image == $nb_img_ligne) {
                     $num_image = 0;
@@ -191,9 +187,7 @@ else {
             for ($nb = $num_image; $nb < $nb_img_ligne; $nb++) echo '<td> </td>';
         echo '</tr>';
         echo '</table>' . "\n";
-        Bouton_Retour($lib_Retour, '');
     }
-}
 
 function ajoute($personne)
 {

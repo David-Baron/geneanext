@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function affiche_image($ref)
 {
     global $pdf, $image, $chemin_images_util, $sortie_pdf;
@@ -31,9 +36,7 @@ function aff_cadre_union()
     }
 }
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_COUPLE_REPORT_TITLE;
-$niv_requis = 'P';                        // Page accessible uniquement aux privilégiés
 
 // Sortie en pdf ?
 $sortie_pdf = false;
@@ -79,7 +82,7 @@ if ($res = lect_sql($sql)) {
 
         // Sortie dans un PDF
         if ($sortie_pdf) {
-            require('html2pdfb.php');
+            require(__DIR__ . '/html2pdfb.php');
             $sortie = 'P';
             $pdf = new PDF_HTML();
             PDF_AddPolice($pdf);

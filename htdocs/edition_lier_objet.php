@@ -10,7 +10,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'Horigine',
@@ -36,8 +40,6 @@ $titre = LG_LINK_EVT_TITLE;      // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $refEvtF    = Secur_Variable_Post($refEvtF, 1, 'N');
 $refObjF    = Secur_Variable_Post($refObjF, 1, 'N');

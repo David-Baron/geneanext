@@ -103,7 +103,7 @@ $nb_H = 0;
 // Récupération des personnes pour lesquelles la date de naissance est certaine
 $sql = 'SELECT Sexe, Ne_le, Prenoms FROM ' . nom_table('personnes') .
     " WHERE Ne_le LIKE '_________L' and Sexe in ('m','f') ";
-if (!$est_privilegie) {
+if (!IS_GRANTED('P')) {
     $sql = $sql . "and Diff_Internet = 'O' ";
 }
 $sql = $sql . 'order by Ne_Le';
@@ -179,9 +179,6 @@ if ($res = lect_sql($sql)) {
     if ($num_lig > 0) calcul_precedent();
     echo '</table>';
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '');
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

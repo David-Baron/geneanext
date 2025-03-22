@@ -97,7 +97,7 @@ $n_personnes = nom_table('personnes');
 $n_villes = nom_table('villes');
 $n_unions = nom_table('unions');
 
-$lien = 'href="' . $root . '/liste_pers2.php?Type_Liste=' . $Type_Liste .
+$lien = 'href="' . $root . '/liste_pers2?Type_Liste=' . $Type_Liste .
     '&amp;texte=O&amp;idNom=' . $idNom . '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 if ($Type_Liste != 'P') $lien .= '&amp;Ville=' . $Ville . '&amp;Tri=' . $Tri;
 
@@ -170,7 +170,7 @@ if (($Type_Liste != 'M') and ($Type_Liste != 'K')) {
         ' from ' . $n_personnes .
         ' where Reference <> 0 ' .
         ' and ' . $cond;
-    if (!$est_privilegie) $sql = $sql . "and Diff_Internet = 'O' ";
+    if (!IS_GRANTED('P')) $sql = $sql . "and Diff_Internet = 'O' ";
     $sql = $sql . 'order by Nom, Prenoms';
 } else {
     if ($Type_Liste == 'M') {
@@ -194,7 +194,7 @@ if (($Type_Liste != 'M') and ($Type_Liste != 'K')) {
         }
     }
     // Les non privilégiés ne peuvent pas voir tout le monde
-    if (!$est_privilegie) {
+    if (!IS_GRANTED('P')) {
         $sql = $sql . " m.Diff_Internet = 'O' and ";
         $sql = $sql . " f.Diff_Internet = 'O' and ";
     }
@@ -225,7 +225,7 @@ if (!$texte) {
     if (isset($_SESSION['mem_pers'])) {
         for ($nb = 0; $nb < 3; $nb++) {
             if ($_SESSION['mem_pers'][$nb] != 0) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $_SESSION['mem_pers'][$nb] . '">' .
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $_SESSION['mem_pers'][$nb] . '">' .
                     my_html($_SESSION['mem_prenoms'][$nb] . ' ' . $_SESSION['mem_nom'][$nb]) . '</a>&nbsp;' . "\n";
             }
         }
@@ -234,7 +234,7 @@ if (!$texte) {
 }
 
 // Lien direct sur la dernière personne saisie et possibilité d'insérer une personne
-if ((!$texte) and ($est_contributeur)) {
+if ((!$texte) and IS_GRANTED('G')) {
     $MaxRef = 0;
     if (isset($_SESSION['dern_pers'])) {
         $compl_req = $_SESSION['dern_pers'];
@@ -249,18 +249,18 @@ if ((!$texte) and ($est_contributeur)) {
     // Lien direct sur la dernière personne saisie
     if ($MaxRef > 0) {
         $aff_nom = UnPrenom($enrmax[2]) . ' ' . $enrmax[1];
-        echo my_html($LG_last_pers) . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $MaxRef . '">' . my_html($aff_nom) . '</a>&nbsp;';
-        echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
+        echo my_html($LG_last_pers) . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $MaxRef . '">' . my_html($aff_nom) . '</a>&nbsp;';
+        echo ' <a href="' . $root . '/edition_personne?Refer=' . $MaxRef . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br>' . "\n";
     }
     $resmax->closeCursor();
     // Possibilité d'insérer une personne
-    echo my_html($LG_add_pers) . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=-1"', 'ajouter', my_html($LG_add)) . '<br><br>' . "\n";
+    echo my_html($LG_add_pers) . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne?Refer=-1"', 'ajouter', my_html($LG_add)) . '<br><br>' . "\n";
 
     if ($Type_Liste == 'P') {
-        if ($est_contributeur)
-            echo '<a href="' . $root . '/completude_nom.php?idNom=' . $idNom . '&amp;Nom=' . $NomL . '">' . $LG_Menu_Title['Name_Is_Complete'] . $LG_name_pers . '</a><br>' . "\n";
+        if (IS_GRANTED('C'))
+            echo '<a href="' . $root . '/completude_nom?idNom=' . $idNom . '&amp;Nom=' . $NomL . '">' . $LG_Menu_Title['Name_Is_Complete'] . $LG_name_pers . '</a><br>' . "\n";
         if ((!$SiteGratuit) or ($Premium)) {
-            echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=p'
+            echo '<a href="' . $root . '/liste_pers2?Type_Liste=p'
                 . '&amp;idNom=' . $idNom . '&amp;Nom=' . $NomL . '">'
                 . LG_LPERS_OBJ_PC . ' ' . stripslashes($NomL) . '</a><br>';
         }
@@ -329,7 +329,7 @@ if ($nb_lig > 0) {
                         }
                     }
 
-                    if ($est_contributeur) {
+                    if (IS_GRANTED('C')) {
                         if ($row['Diff_Internet'] == 'O') echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '">';
                         else                              echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
                     }
@@ -352,7 +352,7 @@ if ($nb_lig > 0) {
                 // Recherche des conjoints pour la liste avec conjoints					
                 if ($Type_Liste == 'p') {
                     $ajout_priv = '';
-                    if (!$est_privilegie) {
+                    if (!IS_GRANTED('P')) {
                         $ajout_priv = "and  p1.Diff_Internet = 'O' and  p2.Diff_Internet = 'O' ";
                     }
                     $sql_conj = 'select p1.Reference as Ref1, p1.Nom as Nom1, p1.Prenoms as Prenoms1, p2.Reference as Ref2, p2.Nom as Nom2, p2.Prenoms as Prenoms2 '
@@ -382,7 +382,7 @@ if ($nb_lig > 0) {
                     //var_dump($nb_conj);
                     if ($nb_conj) $conj_ajout = ' [' . $conj_ajout . ']';
                 }
-                if (! $texte) echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($row['Prenoms'] . ' ' . $row['Nom']) . '</a>' . $conj_ajout . "\n";
+                if (! $texte) echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref . '">' . my_html($row['Prenoms'] . ' ' . $row['Nom']) . '</a>' . $conj_ajout . "\n";
                 else echo HTML_ou_PDF($row['Prenoms'] . ' ' . $row['Nom'] . $conj_ajout . "\n", $sortie);
                 // else echo HTML_ou_PDF(my_html($row['Prenoms'].' '.$row['Nom'].$conj_ajout)."\n",$sortie);
                 $Ne = $row['Ne_le'];
@@ -396,14 +396,14 @@ if ($nb_lig > 0) {
                     }
                     HTML_ou_PDF(')', $sortie);
                 }
-                if (($est_gestionnaire) and (! $texte)) {
-                    echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
-                    echo '&nbsp;<a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . $LG_LPers_Check_Pers . '" title="' . $LG_LPers_Check_Pers . '">';
+                if ((IS_GRANTED('G')) and (! $texte)) {
+                    echo '&nbsp;<a href="' . $root . '/edition_personne?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
+                    echo '&nbsp;<a href="' . $root . '/verif_personne?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . $LG_LPers_Check_Pers . '" title="' . $LG_LPers_Check_Pers . '">';
                 }
                 break;
             case 'M':
             case 'K':
-                if (($est_gestionnaire) and (! $texte)) {
+                if ((IS_GRANTED('G')) and (! $texte)) {
                     switch ($row['Statut_Fiche']) {
                         case 'O':
                             echo '<img src="' . $root . '/assets/img/' . $Icones['fiche_validee'] . '" alt="' . $LG_checked_record . '" title="' . $LG_checked_record . '">';
@@ -433,15 +433,15 @@ if ($nb_lig > 0) {
                     $Prenoms2 = $row['Prenomsf'];
                 }
                 if (!$texte) {
-                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref1 . '">' . my_html($Nom1 . ' ' . $Prenoms1) . '</a>';
-                    echo '&nbsp;x&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref2 . '">' . my_html($Nom2 . ' ' . $Prenoms2) . '</a>' . "\n";
+                    echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref1 . '">' . my_html($Nom1 . ' ' . $Prenoms1) . '</a>';
+                    echo '&nbsp;x&nbsp;<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref2 . '">' . my_html($Nom2 . ' ' . $Prenoms2) . '</a>' . "\n";
                 } else {
                     HTML_ou_PDF(my_html($Nom1 . ' ' . $Prenoms1), $sortie);
                     HTML_ou_PDF('&nbsp;x&nbsp;' . my_html($Nom2 . ' ' . $Prenoms2) . "\n", $sortie);
                 }
                 if ($row[$critere_date] != '') HTML_ou_PDF('&nbsp;(x ' . Etend_date($row[$critere_date]) . ')', $sortie);
-                if (($est_gestionnaire) and (!$texte)) {
-                    echo '&nbsp;<a href="' . $root . '/edition_union.php?Reference=' . $row['ReferenceU'] . '&amp;Personne=0&amp;us=x"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
+                if (IS_GRANTED('G') and (!$texte)) {
+                    echo '&nbsp;<a href="' . $root . '/edition_union?Reference=' . $row['ReferenceU'] . '&amp;Personne=0&amp;us=x"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '">';
                 }
                 break;
             default:
@@ -460,8 +460,6 @@ if ($res)
     $res->closeCursor();
 
 if (! $texte) {
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

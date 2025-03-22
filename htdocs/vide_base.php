@@ -7,6 +7,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
+dd('Don\'t use that anymore!!!');
 function suppression($lib, $n_table, $genre, $where, $affichage = true)
 {
     global $debug;
@@ -39,10 +45,9 @@ $ok        = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $init_base = Secur_Variable_Post($init_base, 2, 'S');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Reset_DB'];   // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-$niv_requis = 'G';                        // Page accessible au gestionnaire
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 if ($bt_OK) Ecrit_Entete_Page($titre, '', '');
@@ -108,11 +113,8 @@ if ($bt_OK) {
     } else {
         echo LG_RESET_NOT_CONFIRMED . '<br>';
     }
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour);
 }
 
-if ($_SESSION['estGestionnaire']) {
     // Première entrée : affichage pour saisie
     if (($ok == '') && ($annuler == '')) {
 
@@ -135,9 +137,6 @@ if ($_SESSION['estGestionnaire']) {
         echo '</table>';
         echo '</form>';
     }
-} else {
-    echo '<center><font color="red"><br><br><br><h2>' . $LG_function_noavailable_profile . '</h2></font></center>';
-}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

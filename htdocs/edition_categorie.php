@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
@@ -24,14 +29,11 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Gestion standard des pages
-$acces = 'M';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Category_Edit'];    // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
+
 
 // Recup de la variable passée dans l'URL : catégorie
 $Categ = Recup_Variable('categ', 'N');
@@ -59,7 +61,7 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 150) .
-        Affiche_Icone_Lien('href="' . $root . '/fiche_categorie.php?categ=' . $Categ . '"', 'page', 'Fiche lien') . '';
+        Affiche_Icone_Lien('href="' . $root . '/fiche_categorie?categ=' . $Categ . '"', 'page', 'Fiche lien') . '';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Categorie', $Categ);
 

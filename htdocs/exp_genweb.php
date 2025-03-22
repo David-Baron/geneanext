@@ -5,9 +5,13 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['exp_GenWeb'];    // Titre pour META
-$niv_requis = 'G';                        // Page réservée au gestionnaire
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 

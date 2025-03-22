@@ -1,22 +1,9 @@
 <?php
 
-// Valeurs par défaut pour les accès directs
-if (!isset($_SESSION['estGestionnaire'])) $_SESSION['estGestionnaire'] = false;
-if (!isset($_SESSION['estContributeur'])) $_SESSION['estContributeur'] = false;
-if (!isset($_SESSION['estPrivilegie'])) $_SESSION['estPrivilegie'] = false;
-if (!isset($_SESSION['estInvite'])) $_SESSION['estInvite'] = true;
-if (!isset($_SESSION['estCnx'])) $_SESSION['estCnx'] = false;
-if (!isset($_SESSION['niveau'])) $_SESSION['niveau'] = 'I';
-if (!isset($est_privilegie)) $est_privilegie = false;
-
 include_once(__DIR__ . '/parametres.php');
 include_once(__DIR__ . '/icones.php');
 
-$suffixe_info = '_info.php';
-
-$langue = 'FR';
-$langue_min = 'fr';
-
+/** @todo need refacto for multilangue */
 if (file_exists(__DIR__ . '/../../languages/lang_' . $langue . '.php')) {
     include(__DIR__ . '/../../languages/lang_' . $langue . '.php');
 }
@@ -25,9 +12,7 @@ if (file_exists(__DIR__ . '/../../languages/lang_' . $langue . '_part.php')) {
     include(__DIR__ . '/../../languages/lang_' . $langue . '_part.php');
 }
 
-$is_windows = substr(php_uname(), 0, 7) == "Windows" ? true : false;
-
-$ListeMoisRev = array(
+$ListeMoisRev = [
     "vendémiaire",     //1
     "brumaire",
     "frimaire",
@@ -40,25 +25,10 @@ $ListeMoisRev = array(
     "messidor",
     "thermidor",
     "fructidor",
-    "sanculottides"
-);         //13
-$Mois_Lib_rev_h = array(
-    "vendémiaire",
-    "brumaire",
-    "frimaire",
-    "nivôse",
-    "pluviôse",
-    "ventôse",
-    "germinal",
-    "floréal",
-    "prairial",
-    "messidor",
-    "thermidor",
-    "fructidor",
-    "sanculottides"
-);
+    "sanculottides" //13
+];
 
-$ListeAnneesRev = array('I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV');
+$ListeAnneesRev = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV'];
 
 // Mois révolutionnaires abrégés sous la forme de 3 lettres
 $MoisRevAbr = "-BRUFLOFRIFRUGERMESNIVPLUPRATHEVNDVNTCOM";
@@ -74,19 +44,6 @@ $Natures_Docs = array(
     "AUD" => $LG_audio_file,
     "VID" => $LG_video_file
 );
-
-/** 
- * S'agit-il dune page d'information ?
- * @deprecated will be removed
- */
-function is_info()
-{
-    global $suffixe_info;
-    if (strpos(my_self(), $suffixe_info) !== false) {
-        return true;
-    }
-    return false;
-}
 
 function nom_table($table)
 {
@@ -208,7 +165,7 @@ function lect_sql($sql)
         echo 'Requête en erreur : ' . $sql . '<br>';
         echo $err . '<br>';
         if (strpos($err, 'exist') !== false) {
-            echo 'Avez-vous bien suivi la procédure <a href="' . $root . '/install.php">d\'installation</a>, <a href="' . $root . '/lisezmoi.html">Cf. lisezmoi.html</a> ?';
+            echo 'Avez-vous bien suivi la procédure <a href="' . $root . '/install">d\'installation</a>, <a href="' . $root . '/lisezmoi.html">Cf. lisezmoi.html</a> ?';
         }
     }
     return $res;
@@ -235,8 +192,8 @@ function maj_sql($sql, $plantage = true)
     return $res;
 }
 
-/* Retourne le contenu d'un champ caractères avec interprétation */
-/**
+/** 
+ * Retourne le contenu d'un champ caractères avec interprétation 
  * @deprecated will be removed
  */
 function Champ_car(&$enreg, $champ)
@@ -244,9 +201,8 @@ function Champ_car(&$enreg, $champ)
     $enreg[$champ] = my_html($enreg[$champ]);
 }
 
-
-/* Retourne un libellé en fonction du sexe */
-/**
+/** 
+ * Retourne un libellé en fonction du sexe 
  * @todo will be refacto
  */
 function Lib_sexe($libelle, $Sexe)
@@ -266,34 +222,33 @@ function Lib_sexe($libelle, $Sexe)
 }
 
 /**
- * @todo will be refacto
+ * @todo will be refacto french only...
  */
-function pluriel($nb)
+function pluriel(int $nb): string
 {
-    $plu = '';
-    if ($nb > 1) $plu = 's';
-    return $plu;
+    if ($nb > 1) return 's';
+    return '';
 }
 
-// Le nombre en paramètre demande-t-il le pluriel ?
-/**
+/** 
+ * Le nombre en paramètre demande-t-il le pluriel ?
  * @todo will be refacto
  */
-function is_pluriel($nb)
+function is_pluriel(int $nb): bool
 {
-    $ret = false;
-    if ($nb > 1) $ret = true;
-    return $ret;
+    if ($nb > 1) return true;
+    return false;
 }
+
 // Retourne la précision d'une date, stockée en position 9
 /**
  * @todo will be refacto
  */
 function Etent_Precision($LaDate)
 {
-    global $Affiche_Annee, $Environnement, $est_cnx, $LG_year, $LG_day;
+    global $Affiche_Annee, $Environnement, $LG_year, $LG_day;
     $ret = '';
-    if (($Affiche_Annee == 'O') and ($Environnement == 'I') and (!$est_cnx)) {
+    if (($Affiche_Annee == 'O') and ($Environnement == 'I') and IS_AUTHENTICATED()) {
         switch ($LaDate[9]) {
             case 'E':
                 $ret = $LG_year['ca'];
@@ -376,7 +331,7 @@ function Lit_Env()
         $Coul_Lib, $Coul_Val, $Coul_Bord, $Coul_Paires, $Coul_Impaires,
         $Pivot_Masquage,
         $Image_Index, $font_pdf, $coul_pdf,
-        $Base_Vide, $est_privilegie,
+        $Base_Vide,
         $connexion, $def_enc, $bk;
     $Acces = 0;
     include(__DIR__ . '/../../connexion_inc.php');
@@ -389,14 +344,9 @@ function Lit_Env()
         if ($def_enc == 'UTF-8')
             $aj_charset = ';charset=utf8';
         try {
-            // affiche_heure_precise('1 env');
             $connexion = new PDO("mysql:host=$serveur;dbname=$db$aj_charset", $util, $mdp);
-            // affiche_heure_precise('2 env');
             $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //$pdo = new PDO('mysql:host=localhost;dbname=encoding_test;charset=utf8', 'user', 'pass');
-            // or, before PHP 5.3.6:
-            //$pdo = new PDO('mysql:host=localhost;dbname=encoding_test', 'user', 'pass',
-            //        array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+
             if ($res = lect_sql('SELECT * FROM ' . nom_table('general'))) {
                 if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
                     $Acces = 1;
@@ -434,17 +384,17 @@ function Lit_Env()
                     if (isset($enreg['Font_Pdf'])) $font_pdf = $enreg['Font_Pdf'];
                     if (isset($enreg['Coul_PDF'])) $coul_pdf = $enreg['Coul_PDF'];
                     if (isset($enreg['Base_Vide'])) $Base_Vide = $enreg['Base_Vide'];
-                    if ($Environnement == 'L') {
+                    /*                     if ($Environnement == 'L') {
                         $_SESSION['estGestionnaire'] = true;
                         $_SESSION['niveau'] = 'G';
                         $_SESSION['estPrivilegie'] = true;
                         $est_privilegie = true;
-                    }
+                    } */
                 }
             }
         } catch (PDOException $ex) {
             echo 'Echec de la connexion !' . $ex->getMessage();
-            echo '<br><br>Vérifiez votre connexion via la page <a href="' . $root . '/install.php">d\'installation</a>.<br><br>';
+            echo '<br><br>Vérifiez votre connexion via la page <a href="' . $root . '/install">d\'installation</a>.<br><br>';
         }
     } else {
         echo 'Fichier de connexion non trouvé<br>';
@@ -461,18 +411,14 @@ function Lit_Env()
 function Insere_Haut($titre, $compl_entete, $page, $param)
 {
     global $root, $Icones, $Image_Fond, $Insert_Compteur, $Environnement, $connexion;
+    global $adr_rech_gratuits, $SiteGratuit, $Premium, $Base_Vide, $def_enc, $LG_Menu_Title;
     echo '</head>';
-    /* 
-    if (file_exists(__DIR__ . '/../../assets/img/fonds/' . $Image_Fond)) {
-        echo '<body background="' . $root . '/assets/img/fonds/' . $Image_Fond . '">'; // TODO: background as nothing to do in body tag
-    } else {
-        echo '<body>';
-    } */
     echo '<body>';
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td width="15%">';
-    aff_menu('D', $_SESSION['niveau']);
+    // aff_menu('D', $_SESSION['niveau']);
+    require(__DIR__ . '/../../htdocs/_menu.php');
     echo '</td>';
     echo '<td align="center">';
     echo '<h1>' . StripSlashes($titre) . '</h1>';
@@ -507,10 +453,10 @@ function Insere_Haut($titre, $compl_entete, $page, $param)
 function libelleNiveau($niveau)
 {
     /* $user_levels = [
-        'I' => ['code' => 'I', 'libele' => 'Invité', 'level' => 1],
-        'P' => ['code' => 'P', 'libele' => 'Privilégié', 'level' => 3],
-        'C' => ['code' => 'C', 'libele' => 'Contributeur', 'level' => 5],
-        'G' => ['code' => 'G', 'libele' => 'Gestionnaire', 'level' => 9],
+        'I' => 'Invité',
+        'P' => 'Privilégié',
+        'C' => 'Contributeur',
+        'G' => 'Gestionnaire',
     ]; */
     switch ($niveau) {
         case 'I':
@@ -531,58 +477,6 @@ function libelleNiveau($niveau)
     return $libelle;
 }
 
-//	----- Contrôle du niveau de l'utilisateur
-//			Il faut avoir le niveau requis pour accéder à ce script
-//			Le paramètre niveauRequis doit contenir G (gestionnaire), C (contributeur), P (privilégié) ou I (invité)
-/**
- * @deprecated will be removed
- */
-function controle_utilisateur($niveauRequis)
-{
-    //	C"est le premier appel au contrôle => droits d'invité anonyme
-    if (!isset($_SESSION['niveau'])) {
-        $_SESSION['nomUtilisateur']  = 'Anonyme';
-        $_SESSION['utilisateur']     = 'Anonyme';
-        $_SESSION['motPasse']        = '';
-        $_SESSION['niveau']          = 'I';
-        $_SESSION['estInvite']       = true;
-        $_SESSION['estPrivilegie']   = false;
-        $_SESSION['estContributeur'] = false;
-        $_SESSION['estGestionnaire'] = false;
-    }
-    //	vérification que les droits de l'utilisateur permettent d'accéder à la page demandée
-    $num_niveau = 0;
-    $val_ret = false;
-    switch ($_SESSION['niveau']) {
-        case 'I':
-            $num_niveau = 1;
-            break;
-        case 'P':
-            $num_niveau = 3;
-            break;
-        case 'C':
-            $num_niveau = 5;
-            break;
-        case 'G':
-            $num_niveau = 9;
-            break;
-    }
-    switch ($niveauRequis) {
-        case 'I':
-            if ($num_niveau >= 1) $val_ret = true;
-            break;
-        case 'P':
-            if ($num_niveau >= 3) $val_ret = true;
-            break;
-        case 'C':
-            if ($num_niveau >= 5) $val_ret = true;
-            break;
-        case 'G':
-            if ($num_niveau >= 9) $val_ret = true;
-            break;
-    }
-    return $val_ret;
-}
 
 // Ecrit les balises meta de l'entête
 /**
@@ -646,7 +540,7 @@ function Ecrit_meta($titre, $cont, $mots = '', $index_follow = 'IF')
  */
 function Etend_date($LaDate, $forcage = false)
 {
-    global $Mois_Lib, $ListeMoisRev, $ListeAnneesRev, $Affiche_Annee, $Environnement, $est_cnx,
+    global $Mois_Lib, $ListeMoisRev, $ListeAnneesRev, $Affiche_Annee, $Environnement,
         $Premium, $Pivot_Masquage, $SiteGratuit, $langue, $LG_first;
     if (is_null($LaDate))
         $LaDate = '';
@@ -658,7 +552,7 @@ function Etend_date($LaDate, $forcage = false)
         if ($LaDate[8] == 'G') {
             $precision = Etent_Precision($LaDate);
             $annee = substr($LaDate, 0, 4);
-            if (($Affiche_Annee == 'O') and ($Environnement == 'I') and (!$est_cnx)) {
+            if (($Affiche_Annee == 'O') and ($Environnement == 'I') and IS_AUTHENTICATED()) {
                 $date_retour = $precision . ' ' . $annee;
             } else {
                 $LeJour = substr($LaDate, 6, 2);
@@ -700,7 +594,7 @@ function Etend_date($LaDate, $forcage = false)
             $LAnnee = substr($resu, $S2 + 1, 2);
             // On repasse en chiffres romains
             $LAnnee = Ret_Romain($LAnnee);
-            if (($Affiche_Annee == 'O') and ($Environnement == 'I') and (!$est_cnx))
+            if (($Affiche_Annee == 'O') and ($Environnement == 'I') and (!IS_AUTHENTICATED()))
                 $date_retour = Etent_Precision($LaDate) . " l'an " . $LAnnee;
             else {
                 if ($LeMois != 0) $date_retour = Etent_Precision($LaDate) . $LeJour . ' ' . $ListeMoisRev[$LeMois - 1] . " de l'an " . $LAnnee;
@@ -710,7 +604,7 @@ function Etend_date($LaDate, $forcage = false)
         // Masquage des dates récentes en option
         if (!$forcage) {
             if ($Environnement == 'I') {
-                if (!$est_cnx) {
+                if (!IS_AUTHENTICATED()) {
                     if ((($SiteGratuit) and ($Premium)) or (!$SiteGratuit)) {
                         if (($LaDate[9] == 'L') or ($LaDate[9] == 'P')) {
                             if ($annee >= $Pivot_Masquage) $date_retour = '';
@@ -844,7 +738,7 @@ function Get_Font()
 function Presence_Images($Reference, $Type_Ref)
 {
     $cond_sup = '';
-    if ($_SESSION['niveau'] == 'I') $cond_sup = ' and Diff_Internet_Img = "O"';
+    if (IS_GRANTED('I')) $cond_sup = ' and Diff_Internet_Img = "O"';
     $sql = 'select ident_image from ' . nom_table('images') .
         ' where Reference = ' . $Reference .
         ' and Type_Ref = "' . $Type_Ref . '"' .
@@ -1051,7 +945,7 @@ function Rech_Image_Defaut($Reference, $Type_Ref)
 {
     global $titre_img;
     $cond_sup = '';
-    if ($_SESSION['niveau'] == 'I') $cond_sup = ' and Diff_Internet_Img = "O"';
+    if (IS_GRANTED('I')) $cond_sup = ' AND Diff_Internet_Img = "O"';
     $Image = '';
     $sqlI = 'select nom, Titre  from ' . nom_table('images') .
         ' where Defaut = "O" and Type_Ref = "' . $Type_Ref . '" and Reference = ' . $Reference . $cond_sup . ' limit 1';
@@ -1119,7 +1013,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
     $modalite_ville_comment = false;
     if ((!$sortie_pdf) and ($Texte != 'T')) $modalite_ville_comment = true;
 
-    if (($_SESSION['estPrivilegie']) or ($enreg2['Diff_Internet'] == 'O')) {
+    if ((IS_GRANTED('P')) or ($enreg2['Diff_Internet'] == 'O')) {
         if ($Texte != 'T') {
             // Recherche de l présence d'une image par défaut
             $image = Rech_Image_Defaut($ref_pers, 'P');
@@ -1138,7 +1032,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
         // Affichage du commentaire associé à la personne
         if ($Texte != 'T') {
             $Existe_Commentaire = Rech_Commentaire($ref_pers, 'P');
-            if (($Existe_Commentaire) and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+            if (($Existe_Commentaire) and ((IS_GRANTED('P')) or ($Diffusion_Commentaire_Internet == 'O'))) {
                 if ($aff_note_old) Div_Note_Old('ajout' . $ref_pers, 'id_div_ajout' . $ref_pers, $Commentaire);
                 else echo Div_Note($Commentaire);
             }
@@ -1166,7 +1060,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
                     echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                 }
                 if ($modalite_ville_comment) {
-                    if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                    if (($Commentaire != '') and ((IS_GRANTED('P')) or ($Diffusion_Commentaire_Internet == 'O'))) {
                         echo Div_Note($Commentaire);
                     }
                 }
@@ -1190,7 +1084,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
                         echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                     }
                     if ($modalite_ville_comment) {
-                        if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                        if (($Commentaire != '') and ((IS_GRANTED('P')) or ($Diffusion_Commentaire_Internet == 'O'))) {
                             echo Div_Note($Commentaire);
                         }
                     }
@@ -1218,7 +1112,7 @@ function Aff_Personne($enreg2, $Personne, $Decalage, $Texte, $sortie_pdf = false
                 $cmt  = '';
                 if (($modalite_ville_comment) and (!$sortie_pdf) and ((!$SiteGratuit) or ($Premium))) {
                     if (Rech_Commentaire($enregP[3], 'E')) {
-                        if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                        if (($Commentaire != '') and ((IS_GRANTED('P')) or ($Diffusion_Commentaire_Internet == 'O'))) {
                             $cmt = div_note($Commentaire);
                             //' <a href="#" class="info2">'.Affiche_Icone('note').'<span>'.$Commentaire.'</span></a>';
                         }
@@ -1330,7 +1224,7 @@ function bissextile($annee)
 // utilisé dans les arbres ascendants et descendants et dans les listes de personnes
 function affiche_date($ladate)
 {
-    global $Environnement, $est_cnx, $Premium, $Pivot_Masquage, $SiteGratuit;
+    global $Environnement, $Premium, $Pivot_Masquage, $SiteGratuit;
     $retour = '?';
     if (($ladate != '') and (strlen($ladate) == 10)) {
         $annee = substr($ladate, 0, 4);
@@ -1353,7 +1247,7 @@ function affiche_date($ladate)
         }
         // Masquage des dates récentes en option
         if ($Environnement == 'I') {
-            if (!$est_cnx) {
+            if (!IS_AUTHENTICATED()) {
                 if (($preci == 'L') or ($preci == 'P')) {
                     if ($annee >= $Pivot_Masquage) $retour = '';
                 }
@@ -1547,11 +1441,11 @@ function Aff_Evenements_Pers($numPers, $modif)
                 echo '<table width="95%" border="0">' . "\n";
             }
             echo '<tr>' . "\n";
-            echo '<td width="90%"><a href="' . $root . '/fiche_evenement.php?refPar=' . $ref_evt . '">' . my_html($enreg['Titre']) . '</a>';
+            echo '<td width="90%"><a href="' . $root . '/fiche_evenement?refPar=' . $ref_evt . '">' . my_html($enreg['Titre']) . '</a>';
             // Ajout des commentaires des évènements
             if ($Texte != 'T') {
                 $Existe_Commentaire = Rech_Commentaire($ref_evt, 'E');
-                if (($Existe_Commentaire) and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                if (($Existe_Commentaire) and ((IS_GRANTED('P')) or ($Diffusion_Commentaire_Internet == 'O'))) {
                     if ($aff_note_old) Div_Note_Old('ajout' . $ref_evt, 'id_div_ajout' . $ref_evt, $Commentaire);
                     else echo Div_Note($Commentaire);
                 }
@@ -1559,7 +1453,7 @@ function Aff_Evenements_Pers($numPers, $modif)
             echo '</td>' . "\n";
             if ($modif == 'O') {
                 echo '<td align="center">' .
-                    Affiche_Icone_Lien('href="' . $root . '/edition_lier_eve.php?refPar=' . $numPers . '&amp;refEvt=' .
+                    Affiche_Icone_Lien('href="' . $root . '/edition_lier_eve?refPar=' . $numPers . '&amp;refEvt=' .
                         $ref_evt . '&amp;refPers=' . $numPers . '&amp;refRolePar=' .
                         $enreg['Code_Role'] . '"', 'fiche_edition', 'Modification du lien') .
                     '</td>' . "\n";
@@ -1624,7 +1518,7 @@ function Aff_Evenements_Pers($numPers, $modif)
     if ($modif == 'O') {
         $lib = $LG_Add_Existing_Event;
         // $lib = 'Ajouter un évènement existant';
-        echo '<br>' . $lib . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_eve.php?refPers=' . $numPers . '&amp;refEvt=-1"', 'ajout', $lib) . "\n";
+        echo '<br>' . $lib . ' : ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_eve?refPers=' . $numPers . '&amp;refEvt=-1"', 'ajout', $lib) . "\n";
     }
 }
 
@@ -1666,12 +1560,12 @@ function Aff_Liens_Pers($numPers, $modif)
             //echo 'sym/princ : '.$Symetrie.'/'.$Principale.'<br>';
 
             if (Get_Nom_Prenoms($LaRef, $Nom, $Prenoms)) {
-                echo '  <fieldset><legend>Avec ' . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $LaRef . '">' . $Prenoms . ' ' . $Nom . '</a>' . '</legend>' . "\n";
+                echo '  <fieldset><legend>Avec ' . '<a href="' . $root . '/fiche_fam_pers?Refer=' . $LaRef . '">' . $Prenoms . ' ' . $Nom . '</a>' . '</legend>' . "\n";
                 echo '<table width="85%" border="0">' . "\n";
                 echo '<tr><td>Rôle : ' . $role . '</td>' . "\n";
                 if ($modif == 'O') {
                     $lib = 'Modification du lien';
-                    echo '<td rowspan="2" align="center" valign="middle"><a href="' . $root . '/edition_lier_pers.php?ref1=' . $enreg['Personne_1'] .
+                    echo '<td rowspan="2" align="center" valign="middle"><a href="' . $root . '/edition_lier_pers?ref1=' . $enreg['Personne_1'] .
                         '&amp;ref2=' . $enreg['Personne_2'] . '&amp;orig=';
                     // De quelle personne vient-on ?
                     if ($numPers == $enreg['Personne_1']) echo '1';
@@ -1701,7 +1595,7 @@ function Aff_Liens_Pers($numPers, $modif)
     if ($modif == 'O') {
         $lib = 'Ajouter un lien vers une personne';
         echo '<br>' . $lib . ' : ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_lier_pers.php?ref1=' . $numPers . '&amp;ref2=-1"', 'ajout', $lib) . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_pers?ref1=' . $numPers . '&amp;ref2=-1"', 'ajout', $lib) . "\n";
     }
 }
 
@@ -1744,9 +1638,9 @@ function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
             }
 
             echo '<tr>' . "\n";
-            echo '<td> <a href="' . $root . '/fiche_evenement.php?refPar=' . $enreg['refEve'] . '">' . $enreg['Titre'] . '</a></td>' . "\n";
+            echo '<td> <a href="' . $root . '/fiche_evenement?refPar=' . $enreg['refEve'] . '">' . $enreg['Titre'] . '</a></td>' . "\n";
             if ($modif == 'O') {
-                echo '<td align="center"><a href="' . $root . '/edition_lier_objet.php?refEvt=' . $enreg['refEve'] .
+                echo '<td align="center"><a href="' . $root . '/edition_lier_objet?refEvt=' . $enreg['refEve'] .
                     '&amp;refObjet=' . $RefObjet .
                     '&amp;TypeObjet=' . $TypeObjet . '">' .
                     '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modification lien"/></a></td>' . "\n";
@@ -1785,7 +1679,7 @@ function Aff_Evenements_Objet($RefObjet, $TypeObjet, $modif)
     // Sur la modification on montre toujours l'entête de div et on peut ajouter un évènement
     if ($modif == 'O') {
         echo my_html($LG_Add_Existing_Event) . ' : ' .
-            '<a href="' . $root . '/edition_lier_objet.php?refEvt=-1' .
+            '<a href="' . $root . '/edition_lier_objet?refEvt=-1' .
             '&amp;refObjet=' . $RefObjet .
             '&amp;TypeObjet=' . $TypeObjet . '">' .
             '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="' . $LG_Add_Existing_Event . '"/></a>' . "\n";
@@ -1805,7 +1699,7 @@ function Aff_Documents_Objet($refObjet, $typeObjet, $masquer)
 
     $req_doc = 'SELECT Titre,d.id_document,nature_document,Nom_Fichier FROM ' . nom_table('documents') . ' d, ' . nom_table('concerne_doc') . ' c' .
         ' WHERE d.id_document = c.id_document AND reference_objet = ' . $refObjet;
-    if (!$_SESSION['estPrivilegie']) $req_doc = $req_doc . ' AND Diff_Internet = "O"';
+    if (!IS_GRANTED('P')) $req_doc = $req_doc . ' AND Diff_Internet = "O"';
     $req_doc = $req_doc . ' AND type_objet = "' . $typeObjet . '" order by Nature_Document,titre';
     $res_doc = lect_sql($req_doc);
     // Affichage
@@ -1825,11 +1719,11 @@ function Aff_Documents_Objet($refObjet, $typeObjet, $masquer)
                 echo '  <fieldset><legend>' . $Natures_Docs[$natureCourante] . '</legend>' . "\n";
                 echo '<table width="95%" border="0">' . "\n";
             }
-            echo '<tr><td>' . '<a href="' . $root . '/fiche_document.php?Reference=' . $enr_doc[1] . '">' . $enr_doc[0] . '</a>' . "\n";
+            echo '<tr><td>' . '<a href="' . $root . '/fiche_document?Reference=' . $enr_doc[1] . '">' . $enr_doc[0] . '</a>' . "\n";
             $chemin_docu = get_chemin_docu($natureCourante);
             $le_type = Get_Type_Mime($natureCourante);
-            if ($_SESSION['estGestionnaire']) {
-                echo '  ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $refObjet .
+            if (IS_GRANTED('G')) {
+                echo '  ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc?refObjet=' . $refObjet .
                     '&amp;typeObjet=' . $typeObjet . '&amp;refDoc=' . $enr_doc[1] . '"', 'fiche_edition', $LG_update_link) .
                     '  ';
             }
@@ -1861,7 +1755,7 @@ function Aff_Documents_Objet($refObjet, $typeObjet, $masquer)
 function Aff_Sources_Objet($refObjet, $typeObjet, $masquer)
 {
     global $root, $Icones, $Environnement;
-    if ($_SESSION['estContributeur']) {
+    if (IS_GRANTED('C')) {
         $req_src = 'SELECT s.Titre, s.Ident FROM ' . nom_table('sources') . ' s, ' . nom_table('concerne_source') . ' c' .
             ' WHERE s.Ident = c.Id_Source AND reference_objet = ' . $refObjet .
             ' AND type_objet = "' . $typeObjet . '" order by titre';
@@ -1877,8 +1771,8 @@ function Aff_Sources_Objet($refObjet, $typeObjet, $masquer)
                     echo '<table width="95%" border="0">' . "\n";
                     $premier = false;
                 }
-                echo '<tr><td>' . '<a href="' . $root . '/fiche_source.php?ident=' . $enr_src[1] . '">' . my_html($enr_src[0]) . '</a>' . "\n";
-                echo '  ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $refObjet .
+                echo '<tr><td>' . '<a href="' . $root . '/fiche_source?ident=' . $enr_src[1] . '">' . my_html($enr_src[0]) . '</a>' . "\n";
+                echo '  ' . Affiche_Icone_Lien('href="' . $root . '/edition_lier_source?refObjet=' . $refObjet .
                     '&amp;typeObjet=' . $typeObjet . '&amp;refSrc=' . $enr_src[1] . '"', 'fiche_edition', 'Modification de la liaison');
             }
             echo '</table></fieldset>' . "\n";
@@ -1972,7 +1866,7 @@ function Ajoute_Page_Info($largeur, $hauteur)
     $l_p  = strrpos($nom_script, '.');
     $texte = 'Aide sur la page';
     $nom_script = substr($nom_script, 0, $l_p);
-    return '<a href=\'javascript:PopupCentrer("' . $root . '/appel_info.php?aide=' . $nom_script . '",' . $largeur . ',' . $hauteur . ',"menubar=no,scrollbars=yes,statusbar=no")\'>' .
+    return '<a href=\'javascript:PopupCentrer("' . $root . '/appel_info?aide=' . $nom_script . '",' . $largeur . ',' . $hauteur . ',"menubar=no,scrollbars=yes,statusbar=no")\'>' .
         '<img src="' . $root . '/assets/img/' . $Icones['information'] . '" alt="' . $texte . '" title="' . $texte . '" /></a> ';
 }
 
@@ -2070,7 +1964,7 @@ function aff_annees_pers($Ne, $Decede)
  */
 function aff_liste_pers($nom_select, $premier, $dernier, $cle_sel, $crit, $order, $oblig, $oc = '')
 {
-    global $res, $_SESSION;
+    global $res;
     if (!$oblig) $style_z_oblig = '';
     echo '<select name="' . $nom_select . '" class="oblig" ' . $oc . '>' . "\n";
     if ($premier) {
@@ -2078,7 +1972,7 @@ function aff_liste_pers($nom_select, $premier, $dernier, $cle_sel, $crit, $order
         // clause where
         $crit_sel = '';
         if ($crit != '') $crit_sel = $crit;
-        if (!$_SESSION['estPrivilegie']) {
+        if (!IS_GRANTED('P')) {
             if ($crit_sel != '') $crit_sel .= ' and ';
             $crit_sel .= ' Diff_Internet = \'O\' ';
         }
@@ -2146,8 +2040,8 @@ function aff_lien_pers($refPar, $modif = 'N')
         if ($modif == 'N') echo '<fieldset><legend>Lien avec des personnes</legend>' . "\n";
         while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
             echo '<br>' . "\n";
-            if (($_SESSION['estPrivilegie']) || ($enreg['Diff_Internet'] != 'N')) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['Reference'] . '"' . ">" . my_html($enreg['Prenoms'] . ' ' . $enreg['Nom']) . '</a>';
+            if ((IS_GRANTED('P')) || ($enreg['Diff_Internet'] != 'N')) {
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg['Reference'] . '"' . ">" . my_html($enreg['Prenoms'] . ' ' . $enreg['Nom']) . '</a>';
                 $role = $enreg['libRole'];
                 if (($role != '') and ($enreg['Code_Role'] != ''))
                     echo ', rôle : ' . my_html($role);
@@ -2158,7 +2052,7 @@ function aff_lien_pers($refPar, $modif = 'N')
                 }
                 // En mode modification, on va mettre un lien pour modifier la liaison
                 if ($modif == 'O') {
-                    echo ' <a href="' . $root . '/edition_lier_eve.php?typeLienPar=P&amp;refPers=' . $enreg['Reference'] .
+                    echo ' <a href="' . $root . '/edition_lier_eve?typeLienPar=P&amp;refPers=' . $enreg['Reference'] .
                         '&amp;refEvt=' . $refPar .
                         '&amp;refRolePar=' . $enreg['Code_Role'] . '">' .
                         $icone_mod . '</a>';
@@ -2205,22 +2099,22 @@ function aff_lien_filiations($refPar, $modif = 'N')
                 default:
                     $texte = LG_CHILD_OF;
             }
-            if (($_SESSION['estPrivilegie']) || ($enreg['eDiff'] != 'N')) {
-                echo '<br><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['eRef'] . '">' . my_html($enreg['ePrenoms'] . ' ' . $enreg['eNom']) . '</a>';
+            if (IS_GRANTED('P') || ($enreg['eDiff'] != 'N')) {
+                echo '<br><a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg['eRef'] . '">' . my_html($enreg['ePrenoms'] . ' ' . $enreg['eNom']) . '</a>';
             }
 
             //
             echo '<br>  ' . $texte;
-            if (($_SESSION['estPrivilegie']) || ($enreg['pDiff'] != 'N')) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['pRef'] . '">' . my_html($enreg['pPrenoms'] . ' ' . $enreg['pNom']) . '</a>';
+            if (IS_GRANTED('P') || ($enreg['pDiff'] != 'N')) {
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg['pRef'] . '">' . my_html($enreg['pPrenoms'] . ' ' . $enreg['pNom']) . '</a>';
             }
             echo ' et de ';
-            if (($_SESSION['estPrivilegie']) || ($enreg['mDiff'] != 'N')) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['mRef'] . '">' . my_html($enreg['mPrenoms'] . ' ' . $enreg['mNom']) . '</a>';
+            if (IS_GRANTED('P') || ($enreg['mDiff'] != 'N')) {
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg['mRef'] . '">' . my_html($enreg['mPrenoms'] . ' ' . $enreg['mNom']) . '</a>';
             }
             // En mode modification, on va mettre un lien pour modifier la liaison (utile uniquement pour la suppression)
             if ($modif == 'O') {
-                echo ' <a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
+                echo ' <a href="' . $root . '/edition_lier_objet?refEvt=' . $refPar .
                     '&amp;refObjet=' . $enreg['eRef'] .
                     '&amp;TypeObjet=F' .
                     '">' .
@@ -2232,7 +2126,7 @@ function aff_lien_filiations($refPar, $modif = 'N')
 
     if ($modif == 'O') {
         echo '<br><br>Ajouter une filiation : ' .
-            '<a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
+            '<a href="' . $root . '/edition_lier_objet?refEvt=' . $refPar .
             '&amp;refObjet=-1' .
             '&amp;TypeObjet=F' .
             '">' .
@@ -2263,16 +2157,16 @@ function aff_lien_unions($refPar, $modif = 'N')
         if ($modif == 'N') echo '<fieldset><legend>Lien avec des unions</legend>' . "\n";
         while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
             echo '<br>' . "\n";
-            if (($_SESSION['estPrivilegie']) || ($enreg['pDiff'] != 'N')) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['pRef'] . '">' . my_html($enreg['pPrenoms'] . ' ' . $enreg['pNom']) . '</a>';
+            if (IS_GRANTED('P') || ($enreg['pDiff'] != 'N')) {
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg['pRef'] . '">' . my_html($enreg['pPrenoms'] . ' ' . $enreg['pNom']) . '</a>';
             }
             echo ' et ';
-            if (($_SESSION['estPrivilegie']) || ($enreg['mDiff'] != 'N')) {
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg['mRef'] . '">' . my_html($enreg['mPrenoms'] . ' ' . $enreg['mNom']) . '</a>';
+            if (IS_GRANTED('P') || ($enreg['mDiff'] != 'N')) {
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg['mRef'] . '">' . my_html($enreg['mPrenoms'] . ' ' . $enreg['mNom']) . '</a>';
             }
             // En mode modification, on va mettre un lien pour modifier la liaison (utile uniquement pour la suppression)
             if ($modif == 'O') {
-                echo ' <a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
+                echo ' <a href="' . $root . '/edition_lier_objet?refEvt=' . $refPar .
                     '&amp;refObjet=' . $enreg['uRef'] .
                     '&amp;TypeObjet=U' .
                     '">' .
@@ -2283,7 +2177,7 @@ function aff_lien_unions($refPar, $modif = 'N')
     }
     if ($modif == 'O') {
         echo '<br><br>Ajouter une union : ' .
-            '<a href="' . $root . '/edition_lier_objet.php?refEvt=' . $refPar .
+            '<a href="' . $root . '/edition_lier_objet?refEvt=' . $refPar .
             '&amp;refObjet=-1' .
             '&amp;TypeObjet=U' .
             '">' .
@@ -2317,216 +2211,7 @@ function get_decujus()
 }
 
 /**
- * @todo will be refacto and removed
- */
-function aff_menu($type_menu, $droits, $formu = true)
-{
-    global $root, $RepGenSite, $Version, $adr_rech_gratuits, $gestionnaire, $SiteGratuit, $Premium, $Icones, $Base_Vide, $def_enc, $LG_Menu_Title;
-
-    /* 4 niveaux d'autorisation
-	Invité       : I
-	Privilégié   : P
-	Contributeur : C
-	Gestionnaire : G
-	*/
-
-    $menu[] = '0^^^ ^^^Accès rapide^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_personne?Refer=-1^^^Person_Add^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_ville?Ident=-1^^^Town_Add^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_evenement?refPar=-1^^^Event_Add^^^C^^^';
-    $menu[] = '1^^^' . $root . '/edition_nomfam?idNom=-1^^^Ajouter un nom de famille ^^^C^^^';
-    if ($droits == 'G') {
-        $menu[] = '1^^^' . $root . '/edition_parametres_graphiques^^^Graphisme du site^^^G^^^';
-        if ($Base_Vide)
-            $menu[] = '1^^^' . $root . '/noyau_pers^^^' . $LG_Menu_Title['Decujus_And_Family'] . '^^^G^^^';
-    }
-
-    if (!$Base_Vide) {
-        $menu[] = '0^^^ ^^^Listes des personnes^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=P^^^Par nom^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers_gen^^^Par génération^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=N^^^Par ville de naissance^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=M^^^Par ville de mariage^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=K^^^Par ville de contrat de mariage^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=D^^^Par ville de décès^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=C^^^Par catégorie^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_patro^^^Liste patronymique^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_eclair^^^County_List^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_nom_vivants^^^Living_Pers^^^I';
-        $menu[] = '1^^^' . $root . '/liste_nomfam^^^Liste des noms de famille^^^I^^^';
-    }
-    $menu[] = '0^^^ ^^^Listes des zones géographiques^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=S^^^Subdivisions^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=V^^^Villes^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=D^^^Départements^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=R^^^Régions^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=P^^^Pays^^^I^^^';
-
-    $menu[] = '0^^^ ^^^Recherche^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_personne^^^De personnes^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_personne_cp^^^De personnes par les conjoints ou parents^^^P^^^';
-    if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=Q^^^Liste des requêtes sur les personnes^^^P^^^';
-    }
-    $menu[] = '1^^^' . $adr_rech_gratuits . '^^^Recherche sur les sites gratuits^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_cousinage^^^Search_Related^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_personne_archive^^^Aux archives^^^C^^^';
-    $menu[] = '1^^^' . $root . '/recherche_ville^^^Town_Search^^^I^^^';
-    $menu[] = '1^^^' . $root . '/recherche_commentaire^^^Search_Comment^^^C^^^';
-
-    if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/recherche_document^^^Dans les documents^^^C^^^';
-    }
-    $menu[] = '0^^^ ^^^Gestion des contributions^^^C^^^';
-    $menu[] = '1^^^' . $root . '/liste_contributions^^^Contribs_List^^^C^^^';
-
-    $menu[] = '0^^^ ^^^Gestion des catégories^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=C^^^Liste des catégories^^^P^^^';
-
-    $menu[] = '0^^^ ^^^Gestion des évènements et des relations^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=R^^^Liste des rôles^^^C^^^';
-    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=T^^^Event_Type_List^^^C^^^';
-    $menu[] = '1^^^' . $root . '/liste_evenements^^^Event_List^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_evenements?actu=o^^^News_List^^^P^^^';
-    $menu[] = '1^^^' . $root . '/liste_evenements?prof=o^^^Jobs_List^^^P';
-    $menu[] = '1^^^' . $root . '/fusion_evenements^^^Event_Merging^^^C^^^';
-
-
-    // La gestion des sources et documents n'est pas autorisée sur les sites gratuits non Premium
-    if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '0^^^ ^^^Gestion des dépôts et des sources^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=O^^^Liste des dépôts de sources^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_sources^^^Source_List^^^C^^^';
-        $menu[] = '0^^^ ^^^Documents^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=D^^^Liste des types de documents^^^C^^^';
-        $menu[] = '1^^^' . $root . '/liste_documents^^^Documents_List^^^I^^^';
-        $menu[] = '1^^^' . $root . '/galerie_images^^^Galery^^^I^^^';
-        if ((!$SiteGratuit) or ($Premium))
-            $menu[] = '1^^^' . $root . '/liste_docs_branche^^^Galery_Branch^^^I^^^';
-        $menu[] = '1^^^' . $root . '/create_multiple_docs^^^Document_Multiple_Add^^^C^^^';
-    }
-
-    $menu[] = '0^^^ ^^^Imports - exports^^^G^^^';
-    $menu[] = '1^^^' . $root . '/export^^^Export de la base^^^G^^^';
-    $menu[] = '1^^^' . $root . '/exp_genweb^^^Export GenWeb^^^G^^^';
-    $menu[] = '1^^^' . $root . '/exp_gedcom^^^Exp_Ged^^^G^^^';
-    $menu[] = '1^^^' . $root . '/exp_gedcom?leger=o^^^Exp_Ged_Light^^^G^^^';
-    $menu[] = '1^^^' . $root . '/export_pour_deces^^^Export_Death^^^G^^^';
-    $menu[] = '1^^^' . $root . '/import_gedcom^^^Import Gedcom^^^G^^^';
-    $menu[] = '1^^^' . $root . '/import_sauvegarde^^^Import_Backup^^^G^^^';
-    if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/import_csv^^^Import CSV (tableur)^^^G^^^';
-        $menu[] = '1^^^' . $root . '/import_csv_liens^^^Imp_CSV_Links^^^G^^^';
-        $menu[] = '1^^^' . $root . '/import_csv_evenements^^^Imp_CSV_Events^^^G^^^';
-        $menu[] = '1^^^' . $root . '/import_csv_villes^^^Imp_CSV_Towns^^^G^^^';
-    }
-    $menu[] = '1^^^' . $root . '/import_docs^^^Import_Docs^^^G^^^';
-
-    $menu[] = '0^^^ ^^^Vérifications^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_sosa^^^Check_Sosa^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_internet^^^Internet_Cheking^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_internet_absente^^^Internet_Hidding_Cheking^^^C^^^';
-    $menu[] = '1^^^' . $root . '/pers_isolees^^^Non_Linked_Pers^^^C^^^';
-    $menu[] = '1^^^' . $root . '/verif_homonymes^^^Namesake_Cheking^^^C^^^';
-    if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/controle_personnes^^^Check_Persons^^^C^^^';
-    }
-
-    $menu[] = '0^^^ ^^^Vue personnalisée^^^I^^^';
-    $menu[] = '1^^^' . $root . '/vue_personnalisee^^^Custom_View^^^I^^^';
-
-    $menu[] = '0^^^ ^^^Utilitaires^^^I^^^';
-    $menu[] = '1^^^' . $root . '/calendriers^^^Les calendriers^^^I^^^';
-    $menu[] = '1^^^' . $root . '/calc_so^^^Calc_Sosa^^^I^^^';
-    $menu[] = '1^^^' . $root . '/conv_romain^^^Convertisseur de nombres romains^^^I^^^';
-    $menu[] = '1^^^' . $root . '/init_sosa^^^Delete_Sosa^^^G^^^';
-    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/init_noms^^^Init_Names^^^G^^^';
-    if ($def_enc != 'UTF-8')
-        $menu[] = '1^^^' . $root . '/rectif_utf8^^^' . $LG_Menu_Title['Rect_Utf'] . '^^^G^^^';
-    if ((!$SiteGratuit) or ($Premium)) {
-        $menu[] = '1^^^' . $root . '/calcul_distance^^^Calculate_Distance^^^I^^^';
-        $menu[] = '1^^^' . $root . '/liste_noms_non_ut^^^Name_Not_Used^^^C^^^';
-    }
-    $menu[] = '1^^^' . $root . '/vide_base^^^Reset_DB^^^G^^^';
-    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/infos_tech^^^Tech_Info^^^G^^^';
-
-    $menu[] = '0^^^ ^^^Informations^^^I^^^';
-    $menu[] = '1^^^' . $root . '/premiers_pas_genealogie^^^Start^^^I^^^';
-    $menu[] = '1^^^' . $root . '/glossaire_gen^^^Glossary^^^I^^^';
-    $menu[] = '1^^^' . $root . '/stat_base^^^Statistics^^^I^^^';
-    $menu[] = '1^^^' . $root . '/liste_liens^^^Links^^^I^^^';
-    $menu[] = '1^^^' . $root . '/anniversaires^^^Anniversaires^^^I^^^';
-
-    $menu[] = '0^^^ ^^^Gestion du site^^^G^^^';
-    $menu[] = '1^^^' . $root . '/edition_parametres_site^^^Site_parameters^^^G^^^';
-    $menu[] = '1^^^' . $root . '/edition_parametres_graphiques^^^Design^^^G^^^';
-    $menu[] = '1^^^' . $root . '/liste_utilisateurs^^^Users_List^^^G^^^';
-    $menu[] = '1^^^' . $root . '/liste_connexions^^^Connections^^^G^^^';
-    if (!$SiteGratuit) {
-        // $menu[] = '1^^^https://tech.geneamania.net/Verif_Version.php?Version=' . $Version . '^^^Vérification de la version de Généamania^^^G^^^';
-        $menu[] = '1^^^' . $root . '/admin_tables^^^Tables_Admin^^^G^^^';
-        // $menu[] = '1^^^https://genealogies.geneamania.net/Gratuits_Premiums.php^^^Différences gratuit / Premium^^^G^^^';
-    }
-
-    $num_div = 0;
-    $num_puce = 0;
-
-    if ($type_menu == 'D') {
-        if ($formu) echo '<form method="post">';
-        echo '<select name="example" size="1" onchange="document.location = this.options[this.selectedIndex].value;">';
-        echo '<option value="' . $root . '/">Menu rapide...</option>';
-        if ($formu)
-            echo '<option value="' . $root . '/">Accueil</option>';
-    }
-    $deb_opt  = 0;
-    $count = count($menu);
-    for ($nb = 0; $nb < $count; $nb++) {
-        $elements = explode('^^^', $menu[$nb]);
-        $rep = '';
-        // On affiche les lignes publiques
-        // ou les autres si on a les droits
-        if (($elements[3] == 'I') or ($droits == $elements[3]) or ($droits == 'G')) {
-            if ($elements[0] == 0) {
-                if ($type_menu == 'D') {
-                    if ($deb_opt) echo '</optgroup>';
-                    echo '<optgroup label="' . my_html($elements[2]) . '">';
-                } else {
-                    if ($deb_opt) echo '</div>';
-                    echo '<br>' . my_html($elements[2]) . ' ';
-                    ++$num_div;
-                    echo '<img src="' . $root . '/assets/img/' . $Icones['menu_open'] . '" alt="Flèche" ' . Survole_Clic_Div('id_div' . $num_div) . '/>';
-                    echo '<div id="id_div' . $num_div . '">';
-                }
-                $deb_opt = 1;
-            } else {
-                if ($type_menu == 'D') {
-                    echo '<option value="';
-                    echo $rep . $elements[1] . '">' . my_html($elements[2]) . '</option>';
-                } else {
-                    echo '   <img id="puce' . ++$num_puce . '" src="' . $root . '/assets/img/' . $Icones['menu_option'] . '" alt="Puce"/>';
-                    echo '<a href="' . $rep . $rep . $elements[1] . '">' . my_html($elements[2]) . '</a><br>';
-                }
-            }
-        }
-    }
-    if ($type_menu == 'D') {
-        if ($deb_opt) echo '</optgroup>';
-        echo '</select>';
-        if ($formu) echo '</form>';
-    } else {
-        if ($deb_opt) echo '</div>';
-
-        // Masquage des div créés
-        echo '<script type="text/javascript">';
-        for ($x = 1; $x <= $num_div; $x++) {
-            echo 'cache_div(\'id_div' . $x . '\');';
-        }
-        echo '</script>';
-    }
-}
-
-// Libellé personne / filiation / union ...
-/**
+ * Libellé personne / filiation / union ...
  * @todo will be refacto
  */
 function lib_pfu($TypeObjet, $dem_article = false)
@@ -2877,20 +2562,8 @@ function Affiche_Icone_Lien_Bt($lien, $icone, $lib)
     return $a;
 }
 
-// Ajout d'un bouton retour
 /**
- * @deprecated will be removed
- */
-function Bouton_Retour($lib_Retour, $compl = '')
-{
-    echo '<form id="saisie" method="post" action="' . my_self() . $compl . '">' . "\n";
-    bt_ok_an_sup('', $lib_Retour, '', '', false);
-    echo '</form>';
-}
-
-// Positionne la couleur par défaut pour les PDF
-
-/**
+ * Positionne la couleur par défaut pour les PDF
  * @deprecated will be removed
  */
 function PDF_Set_Def_Color($PDF)
@@ -2947,14 +2620,6 @@ function PDF_AddPolice($PDF)
     }
 }
 
-// Renvoye un Query String compatible W3C ??? lol nothing to do with it
-/**
- * @deprecated will be removed
- */
-function Query_Str()
-{
-    return str_replace('&', '&amp;', $_SERVER['QUERY_STRING']);
-}
 
 // Appel de my_html// Appel de htmlentities
 function my_html($chaine)
@@ -3173,4 +2838,17 @@ function rectif_null_pers(&$enreg)
         $enreg['Ne_le'] = '';
     if (is_null($enreg['Decede_Le']))
         $enreg['Decede_Le'] = '';
+}
+
+
+/** @deprecated */
+function cryptmail($addmail)
+{
+    $addmailcode = '';
+    $longueur = strlen($addmail);
+    for ($x = 0; $x < $longueur; $x++) {
+        $ord = ord(substr($addmail, $x, 1));
+        $addmailcode .= "&#$ord;";
+    }
+    return $addmailcode;
 }

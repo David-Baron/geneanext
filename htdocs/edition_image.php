@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -40,9 +44,6 @@ $acces = 'M';                            // Type d'accès de la page : (M)ise à
 $titre = $LG_Ch_Image_Script_Title;        // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup des variables passées dans l'URL : identifiant, référence et type de référence
 $Type_Ref    = Recup_Variable('Type_Ref', 'C', 'PVULE');
@@ -203,7 +204,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(650, 250);
     Insere_Haut($titre, $compl, 'Edition_Image', $ident_image);
 
-    echo '<form id="saisie" enctype="multipart/form-data" method="post" onsubmit="return verification_form_image(this);" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" enctype="multipart/form-data" method="post" onsubmit="return verification_form_image(this);">' . "\n";
 
     if ($Modif) {
         $sql = 'select * from ' . nom_table('images') . ' where ident_image = ' . $ident_image . ' limit 1';

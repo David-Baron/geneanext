@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -119,7 +124,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_evenement.php?code=' . $Code . '"', 'page', 'Fiche type évènement') . ' ';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_evenement?code=' . $Code . '"', 'page', 'Fiche type évènement') . ' ';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Type_Evenement', $Code);
 
@@ -157,7 +162,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     // Type d'évènement inconnu, supprimé entre temps, retour...
     if ((!$Creation) and (!$enreg)) {
         echo '<center><font color="red"><br><br><br><h2>' . LG_EVENT_TYPE_DELETED . '</h2></font></center>';
-        echo '<a href="' . $root . '/liste_referentiel.php?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
+        echo '<a href="' . $root . '/liste_referentiel?Type_Liste=T">' . $LG_Menu_Title['Event_Type_List'] . '</a>';
     } else {
 
         // Zone technique de la table non modifiable et non affichée

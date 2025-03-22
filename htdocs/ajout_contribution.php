@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
@@ -100,17 +105,11 @@ $mail          = Secur_Variable_Post($mail, 80, 'S');
 $message       = Secur_Variable_Post($message, 200, 'S');
 $Horigine      = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Gestion standard des pages
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+
 $titre = 'Contribution';               // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-$niv_requis = 'I';                        // Les contributions sont ouvertes à tout le monde
 $index_follow = 'NN';                    // NOINDEX NOFOLLOW demandé pour les moteurs
 require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
-
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');
@@ -268,8 +267,7 @@ function Aff_Donnees($Refer)
     echo '<tr>';
     echo '<td valign="middle"><input name="captcha" type="text" id="captcha" size="6"';
     echo ' onchange="if (this.value != \'\') document.getElementById(\'bouton_ok\').style.visibility = \'visible\';"/> </td>';
-    echo '<td valign="top" align="center"><img style="border: 1px dashed #0064A4;" src="captcha_image_gen.php" alt="captcha"/>';
-    echo '<br /><i><a href="http://software.patrick-b.fr/fr/scripts/php/spam-captcha.php" target="blank">' . LG_CONTRIBS_TRIBUTE . '</a></i></td>';
+    echo '<td valign="top" align="center"><img style="border: 1px dashed #0064A4;" src="'.$root.'/captcha_image_gen" alt="captcha"/>';
     echo '</tr>';
     echo '</table>';
     echo '</td>';
@@ -442,8 +440,6 @@ if ($bt_OK) {
                 $destinataire = $Adresse_Mail;
                 $sujet = 'Ajout de contribution Geneamania';
 
-                // Inspiré de http://www.toutestfacile.com/php/cours/mail_2.php5
-
                 //----------------------------------
                 // Construction de l'entête
                 //----------------------------------
@@ -544,7 +540,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     // include(__DIR__ . '/assets/js/Ajout_Contribution.js');
     $compl = '';
     if (Get_Nom_Prenoms($Refer, $Nom, $Prenoms)) {
-        if (!$est_privilegie and $Diff_Internet_P != 'O') {
+        if (!IS_GRANTED('P') and $Diff_Internet_P != 'O') {
             Insere_Haut($entetePage . ' pour ?', $compl, 'Ajout_Contribution', $Refer);
             echo '<center><font color="red"><br><br><br><h2>Données non disponibles pour votre profil</h2></font></center><br />';
             echo '</body></html>';
@@ -553,7 +549,7 @@ if ((!$bt_OK) && (!$bt_An)) {
             $compl = Ajoute_Page_Info(600, 200);
             Insere_Haut($entetePage . ' pour ' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Contribution', $Refer);
             echo '<br>';
-            echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . $root . '/ajout_contribution.php?Refer=' . $Refer . '" >';
+            echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'mail\')" action="' . $root . '/ajout_contribution?Refer=' . $Refer . '" >';
             echo '<input type="hidden" name="Refer" value="' . $Refer . '"/>';
             echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
             Aff_Donnees($Refer); // Affichage des données
@@ -605,7 +601,7 @@ if ((!$bt_OK) && (!$bt_An)) {
         var h = 200;
         var w = 430;
         var chParam = "resizable=no, location=no, menubar=no, directories=no, scrollbars=no, status=no, ";
-        PopupCentrer('sel_zone_geo.php?zoneLib=' + zoneLib + '&zoneValue=' + zoneValue + '&valZone=' + valZone + '&valNiveau=' + valNiveau, w, h, chParam);
+        PopupCentrer($root + '/sel_zone_geo?zoneLib=' + zoneLib + '&zoneValue=' + zoneValue + '&valZone=' + valZone + '&valNiveau=' + valNiveau, w, h, chParam);
     }
 </script>
 </body>

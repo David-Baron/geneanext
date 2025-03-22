@@ -185,7 +185,7 @@ if ($bt_OK) {
     if ($maj_site) maj_date_site();
 }
 
-echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+echo '<form id="saisie" method="post">' . "\n";
 
 $csp = ' colspan="3"';
 $num_ligne = 0;
@@ -194,14 +194,14 @@ echo '<br />';
 echo '<table width="85%" align="center" border="0"  >' . "\n";
 
 echo '<tr class="rupt_table"><th> </th>';
-echo '<th width="45%" ><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref1 . '">' . my_html(LG_CH_FUSION_PERS1) . '</a>';
+echo '<th width="45%" ><a href="' . $root . '/fiche_fam_pers?Refer=' . $ref1 . '">' . my_html(LG_CH_FUSION_PERS1) . '</a>';
 if ($_SESSION['estGestionnaire']) {
-    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $ref1 . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+    echo ' <a href="' . $root . '/edition_personne?Refer=' . $ref1 . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
 }
 echo '</th>';
-echo '<th width="45%"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref2 . '">' . my_html(LG_CH_FUSION_PERS2) . '</a>';
+echo '<th width="45%"><a href="' . $root . '/fiche_fam_pers?Refer=' . $ref2 . '">' . my_html(LG_CH_FUSION_PERS2) . '</a>';
 if ($_SESSION['estGestionnaire']) {
-    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $ref2 . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+    echo ' <a href="' . $root . '/edition_personne?Refer=' . $ref2 . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
 }
 echo '</th>';
 
@@ -373,13 +373,13 @@ function case_parents($reference)
     if (Get_Parents($reference, $Pere, $Mere, $Rang)) {
         if ($Pere != 0) {
             if (Get_Nom_Prenoms($Pere, $Nom, $Prenoms)) {
-                $lib_parents .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Pere . '">' . $Prenoms . ' ' . $Nom . '</a>';
+                $lib_parents .= '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Pere . '">' . $Prenoms . ' ' . $Nom . '</a>';
             }
         }
         if ($Mere != 0) {
             if (Get_Nom_Prenoms($Mere, $Nom, $Prenoms)) {
                 if ($lib_parents != '') $lib_parents .= ' et ';
-                $lib_parents .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Mere . '">' . $Prenoms . ' ' . $Nom . '</a>';
+                $lib_parents .= '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Mere . '">' . $Prenoms . ' ' . $Nom . '</a>';
             }
         }
         if ($lib_parents != '') $lib_parents .= "\n";
@@ -440,8 +440,8 @@ function case_conjoints($reference, $sexe)
             $arr_unions .= $Ref_Union;
             //
             if (Get_Nom_Prenoms($Conj, $Nom, $Prenoms)) {
-                $lib_conjoints .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Conj . '">' . $Prenoms . ' ' . $Nom . '</a> '
-                    . Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt.php?Reference=' . $Ref_Union . '"', 'text', my_html(LG_CH_COUPLE));
+                $lib_conjoints .= '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Conj . '">' . $Prenoms . ' ' . $Nom . '</a> '
+                    . Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt?Reference=' . $Ref_Union . '"', 'text', my_html(LG_CH_COUPLE));
             }
             //
             if (($Date_Mar != '') or ($Ville_Mar)) {
@@ -474,7 +474,7 @@ function Aff_Enfants2($Mari, $Femme)
                 $resEnf = lect_sql($sqlEnf);
                 $enrEnf = $resEnf->fetch(PDO::FETCH_ASSOC);
                 $sexe = $enrEnf['Sexe'];
-                $lib_enfants .= '  <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Enfant . '">' . my_html($enrEnf['Prenoms'] . ' ' . $enrEnf['Nom']) . '</a> ';
+                $lib_enfants .= '  <a href="' . $root . '/fiche_fam_pers?Refer=' . $Enfant . '">' . my_html($enrEnf['Prenoms'] . ' ' . $enrEnf['Nom']) . '</a> ';
                 $Ne = $enrEnf['Ne_le'];
                 $Date_Nai = Etend_date($Ne);
                 if ($Date_Nai != '') {

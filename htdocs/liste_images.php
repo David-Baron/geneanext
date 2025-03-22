@@ -49,7 +49,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         echo '<th>' . $LG_Ch_Image_Title . '</th>';
         echo '<th>' . $LG_Ch_Image . '</th>';
         echo '<th>' . ucfirst(LG_CH_COMMENT) . '</th>';
-        if ($est_contributeur) echo "<th>&nbsp;</th>\n";
+        if (IS_GRANTED('C')) echo "<th>&nbsp;</th>\n";
         echo "  </tr>\n";
         $presence = true;
     }
@@ -72,8 +72,8 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         echo $Commentaire;
     echo '</td>';
 
-    if ($est_contributeur) {
-        echo '<td valign="middle">' . Affiche_Icone_Lien('href="' . $root . '/edition_image.php?ident_image=' . $row['ident_image'] . '&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'fiche_edition', 'Modifier l\'image') . '</td>';
+    if (IS_GRANTED('C')) {
+        echo '<td valign="middle">' . Affiche_Icone_Lien('href="' . $root . '/edition_image?ident_image=' . $row['ident_image'] . '&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'fiche_edition', 'Modifier l\'image') . '</td>';
     }
     echo "</tr>\n";
 }
@@ -85,14 +85,12 @@ if ($presence) {
 }
 
 // Possibilité de lier une image
-if ($est_contributeur) {
+if (IS_GRANTED('C')) {
     echo '<br />' . $LG_add . '&nbsp;' .
-        Affiche_Icone_Lien('href="' . $root . '/edition_image.php?ident_image=-1&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'ajouter', $LG_add) .
+        Affiche_Icone_Lien('href="' . $root . '/edition_image?ident_image=-1&amp;Reference=' . $Refer . '&amp;Type_Ref=' . $Type_Ref . '"', 'ajouter', $LG_add) .
         '<br />';
 }
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 
 if ((isset($_SESSION['message'])) and ($_SESSION['message'] != '')) {
     $texte_im = 'Erreur';

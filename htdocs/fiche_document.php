@@ -38,8 +38,8 @@ if ((!$enreg_sel) or ($Reference == 0)) Retour_Ar();
 $enreg = $enreg_sel;
 
 $compl = Ajoute_Page_Info(600, 150);
-if ($est_gestionnaire) {
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
+if (IS_GRANTED('G')) {
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_document?Reference=' . $Reference . '"', 'fiche_edition', my_html($LG_Menu_Title['Document_Edit'])) . '&nbsp;';
 }
 
 if ($enreg_sel) {
@@ -47,7 +47,7 @@ if ($enreg_sel) {
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Document', '');
 
-    if (($enreg['Diff_Internet'] == 'O') or ($est_gestionnaire)) {
+    if (($enreg['Diff_Internet'] == 'O') or IS_GRANTED('G')) {
 
         echo '<br />';
         echo '<table width="70%" class="table_form">' . "\n";
@@ -58,7 +58,7 @@ if ($enreg_sel) {
         echo '<tr><td class="label" width="25%">' . ucfirst($LG_Docs_File) . '</td><td class="value">';
         echo $nomFic . '</td></tr>' . "\n";
         echo '<tr><td class="label" width="25%">' . ucfirst($LG_Docs_Doc_Type) . '</td><td class="value">';
-        echo '<a href="' . $root . '/fiche_type_document.php?code=' . $enreg['Id_Type_Document'] . '">'
+        echo '<a href="' . $root . '/fiche_type_document?code=' . $enreg['Id_Type_Document'] . '">'
             . my_html($enreg['Libelle_Type'])
             . '</a></td></tr>' . "\n";
         echo '<tr><td class="label" width="25%">' . ucfirst($LG_show_on_internet) . '</td><td class="value">';
@@ -78,11 +78,11 @@ if ($enreg_sel) {
             echo '<br />' . my_html($LG_Docs_Doc_Show) . ' :&nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $enreg['Nom_Fichier'] . '" type="' . $le_type . '"', 'oeil', $LG_Docs_Doc_Show, 'n');
 
         // Lien vers les utilisations du document s'il en existe
-        if ($est_gestionnaire) {
+        if (IS_GRANTED('G')) {
             $req = 'SELECT 1 FROM ' . nom_table('concerne_doc') . ' WHERE id_document = ' . $Reference . ' limit 1';
             $result = lect_sql($req);
             if ($result->rowCount() > 0) {
-                echo '<br /><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . $LG_Menu_Title['Document_Utils'] . '</a>';
+                echo '<br /><a href="' . $root . '/utilisations_document?Doc=' . $Reference . '">' . $LG_Menu_Title['Document_Utils'] . '</a>';
             }
         }
     } else {
@@ -90,7 +90,6 @@ if ($enreg_sel) {
     }
 
     echo '<br />' . "\n";
-    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

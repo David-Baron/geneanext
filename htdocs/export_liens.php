@@ -5,7 +5,10 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -24,7 +27,7 @@ $Categ = Recup_Variable('Categ', 'S');               // Catégorie des liens à 
 
 $titre = LG_LINKS_EXTRACT . ' ' . stripcslashes($Categ);     // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'G';
+
 
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
@@ -81,7 +84,6 @@ if ($nb_enr > 0) {
     }
 }
 
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

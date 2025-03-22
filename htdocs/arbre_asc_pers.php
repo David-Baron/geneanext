@@ -5,7 +5,7 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
+
 $titre = $LG_assc_tree;
 $x = Lit_Env();
 $index_follow = 'IN';                // NOFOLLOW demandé pour les moteurs
@@ -72,8 +72,8 @@ $Refer = Recup_Variable('Refer', 'N');
 $compl = Ajoute_Page_Info(600, 150);
 if (!$is_bot) {
     $compl .=
-        Affiche_Icone_Lien('href="' . $root . '/appelle_image_arbre_asc.php?Refer=' . $Refer . '"', 'text', $LG_printable_format) . '&nbsp;' .
-        Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pdf.php?Refer=' . $Refer . '"', 'PDF', $LG_Tree_Pdf_7Gen) . '&nbsp;';
+        Affiche_Icone_Lien('href="' . $root . '/appelle_image_arbre_asc?Refer=' . $Refer . '"', 'text', $LG_printable_format) . '&nbsp;' .
+        Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pdf?Refer=' . $Refer . '"', 'PDF', $LG_Tree_Pdf_7Gen) . '&nbsp;';
 }
 Insere_Haut('Arbre ascendant', $compl, 'nouv_arbre_asc', $Refer);
 
@@ -163,12 +163,12 @@ for ($nb_enr = 0; $nb_enr < $c_ens; ++$nb_enr) {
                 $res_FS = lect_sql($sql_FS);
                 if ($res_FS->RowCount() > 0) {
                     while ($row = $res_FS->fetch(PDO::FETCH_NUM)) {
-                        if (($est_privilegie) or ($row[3] == 'O')) {
+                        if (IS_GRANTED('P') or ($row[3] == 'O')) {
                             $Enfant = $row[0];
                             $P_N = ret_Nom_prenom($row[1], $row[2]);
-                            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Enfant . '">' . $P_N . '</a>' . "\n";
-                            echo '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Enfant . '">' . $img_asc . '</a>';
-                            echo '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Enfant . '">' . $img_desc . '</a>';
+                            echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Enfant . '">' . $P_N . '</a>' . "\n";
+                            echo '<a href="' . $root . '/arbre_asc_pers?Refer=' . $Enfant . '">' . $img_asc . '</a>';
+                            echo '<a href="' . $root . '/arbre_desc_pers?Refer=' . $Enfant . '">' . $img_desc . '</a>';
                         } else {
                             echo my_html($LG_Data_noavailable_profile);
                         }

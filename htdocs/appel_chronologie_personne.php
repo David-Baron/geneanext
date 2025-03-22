@@ -11,8 +11,8 @@ function Lien_vers_Pers()
     global $root, $Icones, $composants, $texte, $sortie;
     if (count($composants) >= 5) {
         if (! $texte) {
-            return '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $composants[5] . '" target="_blank">' . my_html($composants[3] . ' ' . $composants[2]) . '</a>&nbsp;'
-                . '<a href="' . $root . '/appelle_chronologie_personne.php?Refer=' . $composants[5] . '"><img src="' . $root . '/assets/img/' . $Icones['time_line'] . '" alt="' . LG_FFAM_CHRONOLOGIE . '" title="' . LG_FFAM_CHRONOLOGIE . '"></a>';
+            return '<a href="' . $root . '/fiche_fam_pers?Refer=' . $composants[5] . '" target="_blank">' . my_html($composants[3] . ' ' . $composants[2]) . '</a>&nbsp;'
+                . '<a href="' . $root . '/appelle_chronologie_personne?Refer=' . $composants[5] . '"><img src="' . $root . '/assets/img/' . $Icones['time_line'] . '" alt="' . LG_FFAM_CHRONOLOGIE . '" title="' . LG_FFAM_CHRONOLOGIE . '"></a>';
         } else
             return $composants[3] . ' ' . $composants[2];
     }
@@ -34,19 +34,7 @@ function lib_sexe_enfant($sexe)
     return $lib_sexe;
 }
 
-// Récupération des variables de l'affichage précédent
-$tab_variables = array('annuler');
-foreach ($tab_variables as $nom_variables) {
-    if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
-    else $$nom_variables = '';
-}
-// Sécurisation des variables postées
-$annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 
-// On retravaille le libellé du bouton pour effectuer le retour...
-if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
-
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Chronology;
 $x = Lit_Env();
 $index_follow = 'ON';                    // NOFOLLOW demandé pour les moteurs
@@ -63,9 +51,6 @@ if ((!$SiteGratuit) or ($Premium)) {
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
-
 // Recup de la variable passée dans l'URL : texte ou non
 $texte = Dem_Texte();
 
@@ -75,11 +60,11 @@ $Refer = Recup_Variable('Refer', 'N');
 $m_self = my_self();
 
 $compl = Ajoute_Page_Info(600, 150) .
-    '<a href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;Refer=' . $Refer . '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="Format imprimable" title="Format imprimable"></a>' . "\n";
+    '<a href="' . $root . '/appelle_chronologie_personne?texte=O&amp;Refer=' . $Refer . '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="Format imprimable" title="Format imprimable"></a>' . "\n";
 
 
 if ((!$SiteGratuit) or ($Premium))
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne.php?texte=O&amp;pdf=O&amp;Refer=' . $Refer . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/appelle_chronologie_personne?texte=O&amp;pdf=O&amp;Refer=' . $Refer . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
 
 $sortie = 'H';
 
@@ -136,7 +121,7 @@ $sql = 'select Nom, Prenoms, Ne_Le, Decede_Le, Diff_Internet, Sexe, Ville_Naissa
 if ($res = lect_sql($sql)) {
     if ($infos = $res->fetch(PDO::FETCH_NUM)) {
         // Protection des données sur Internet
-        if (($est_privilegie) or ($infos[4] == 'O')) {
+        if ((IS_GRANTED('P')) or ($infos[4] == 'O')) {
 
             $lib_Ne     = '';
             $lib_Decede = '';
@@ -502,7 +487,7 @@ if ($dates_OK) {
                         break;
                     case 'M':
                         $p_droite = $LG_wedding;
-                        if (($est_privilegie) or ($composants[4] == 'O')) {
+                        if (IS_GRANTED('P') or ($composants[4] == 'O')) {
                             $p_droite .= ' ' . $LG_with . ' ';
                             $app_lien = true;
                         }
@@ -515,14 +500,14 @@ if ($dates_OK) {
                         break;
                     case 'ENN':
                         $p_droite = $LG_birth . ' ' . lib_sexe_enfant($composants[6]);
-                        if (($est_privilegie) or ($composants[4] == 'O')) {
+                        if (IS_GRANTED('P') or ($composants[4] == 'O')) {
                             $p_droite .= ' : ';
                             $app_lien = true;
                         }
                         break;
                     case 'END':
                         $p_droite = $LG_death . ' ' . lib_sexe_enfant($composants[6]);
-                        if (($est_privilegie) or ($composants[4] == 'O')) {
+                        if (IS_GRANTED('P') or ($composants[4] == 'O')) {
                             $p_droite .= ' : ';
                             $app_lien = true;
                         }
@@ -561,12 +546,6 @@ if ($dates_OK) {
     echo HTML_ou_PDF('</ul>', $sortie);
 }
 
-// Formulaire pour le bouton retour
-if (!$texte) {
-    echo '<br />';
-    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-}
-
 if (! $texte) {
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
@@ -583,10 +562,6 @@ if (! $texte) {
 if ($dates_OK and $sortie_pdf) {
     $pdf->Output();
     exit;
-}
-
-if (!$dates_OK and $sortie_pdf) {
-    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 }
 
 ?>

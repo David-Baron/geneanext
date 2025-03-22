@@ -31,7 +31,7 @@ Insere_Haut($titre, $compl, 'Liste_Pers_Mod', '');
 
 // Préparation sur la clause de diffusabilité
 $p_diff_int = '';
-if (!$est_privilegie) $p_diff_int = " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $p_diff_int = " and Diff_Internet = 'O' ";
 
 $sql = 'SELECT Reference, Nom, Prenoms, Date_Modification FROM ' . nom_table('personnes') .
     ' WHERE Reference <> 0' .
@@ -54,10 +54,10 @@ if ($nb_lignes > 0) {
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 
         echo '<tr>';
-        echo '<td> <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enr[0] . '">' . my_html($enr[2] . ' ' . $enr[1]) . '</a>';
+        echo '<td> <a href="' . $root . '/fiche_fam_pers?Refer=' . $enr[0] . '">' . my_html($enr[2] . ' ' . $enr[1]) . '</a>';
 
         // Lien vers la modification
-        if ($est_gestionnaire) echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $enr[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+        if (IS_GRANTED('G')) echo ' <a href="' . $root . '/edition_personne?Refer=' . $enr[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
 
         echo '</td>';
         echo '<td align="center">' . DateTime_Fr($enr[3]) . '</td>';
@@ -69,9 +69,6 @@ if ($nb_lignes > 0) {
     echo '</table>' . "\n";
     echo '<br />' . "\n";
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '');
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

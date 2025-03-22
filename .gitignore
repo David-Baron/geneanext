@@ -5,3 +5,7 @@
 /app/AppUserAuthenticator.php
 /app/DatabaseConnection.php
 /app/EnvironementFileParser.php
+/.env.local.php
+/app/UserPermission.php
+/__storage
+/htdocs/install copy.php

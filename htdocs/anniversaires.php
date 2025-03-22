@@ -6,7 +6,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Anniversaires';              // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -72,7 +71,7 @@ function aff_nai_dec($type, $req)
             if (($JDate == $Auj) and ($Mois == $cMois)) echo $aff_icone;
             echo '</td>' . "\n";
             $Ref_Pers = $row[2];
-            echo '<td>&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . my_html(UnPrenom($row[1]) . ' ' . $row[0]) . '</a>';
+            echo '<td>&nbsp;<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref_Pers . '">' . my_html(UnPrenom($row[1]) . ' ' . $row[0]) . '</a>';
 
             // Affichage de l'image par défaut
             $image = Rech_Image_Defaut($Ref_Pers, 'P');
@@ -122,7 +121,7 @@ echo '<table width="100%" border="0" class="classic" cellspacing="1" align="cent
 $sql = 'SELECT Nom, Prenoms, Reference, Ne_le FROM ' . $n_personnes . " where Ne_le like '____" . $xMois . "___L'";
 // L'utilisateur a demandé à ignorer les personnes avec
 if ($ignorer_dec) $sql .= ' and Decede_Le = \'\' ';
-if (!$est_privilegie) $sql = $sql . " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql = $sql . " and Diff_Internet = 'O' ";
 $sql = $sql . " order by substr(Ne_le,7,2)";
 // Affichage du résultat
 aff_nai_dec('N', $sql);
@@ -138,7 +137,7 @@ $sql = 'SELECT m.Nom as NomM, m.Prenoms as PrenomsM, m.Reference as RefM,'
     . ' FROM ' . $n_personnes . ' m, ' . $n_personnes . ' f, ' . nom_table('unions') . " u where Maries_Le like '____" . $xMois . "___L' "
     . " and m.Reference = u.Conjoint_1 and f.Reference = u.Conjoint_2 ";
 if ($ignorer_dec) $sql .= ' and m.Decede_Le = \'\'  and f.Decede_Le = \'\' ';
-if (!$est_privilegie) $sql = $sql . " and m.Diff_Internet = 'O' and f.Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql = $sql . " and m.Diff_Internet = 'O' and f.Diff_Internet = 'O' ";
 $sql = $sql . " order by substr(Maries_Le,7,2)";
 echo '<tr><th colspan="2">' . $LG_wedding_many . ' du mois ' . du_mois($Mois) . '</th></tr>';
 $res = lect_sql($sql);
@@ -158,10 +157,10 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         echo Etend_date($mar);
         if (($JDate == $Auj) and ($Mois == $cMois)) echo $aff_icone;
         echo '</td>' . "\n";
-        echo '<td>&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['RefM'] . '">'
+        echo '<td>&nbsp;<a href="' . $root . '/fiche_fam_pers?Refer=' . $row['RefM'] . '">'
             . my_html(UnPrenom($row['PrenomsM'])) . '&nbsp;'
             . my_html($row['NomM']) . '</a>';
-        echo '<br />&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['RefF'] . '">'
+        echo '<br />&nbsp;<a href="' . $root . '/fiche_fam_pers?Refer=' . $row['RefF'] . '">'
             . my_html(UnPrenom($row['PrenomsF'])) . '&nbsp;'
             . my_html($row['NomF']) . '</a>';
 
@@ -185,7 +184,7 @@ echo "</td>";
 echo "<td>";
 echo '<table width="100%" border="0" class="classic" cellspacing="1" align="center" >' . "\n";
 $sql = "SELECT Nom, Prenoms, Reference, Decede_Le FROM " . nom_table('personnes') . " where Decede_Le like '____" . $xMois . "___L'";
-if (!$est_privilegie) $sql = $sql . " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql = $sql . " and Diff_Internet = 'O' ";
 $sql = $sql . " order by substr(Decede_Le,7,2)";
 // Affichage du résultat
 aff_nai_dec('D', $sql);

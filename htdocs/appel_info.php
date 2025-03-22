@@ -9,7 +9,7 @@ require(__DIR__ . '/../app/ressources/fonctions.php');
 <html lang="fr">
 
 <head>
-    <?php include(__DIR__ . '/languages/pages_info_FR.php'); ?>
+    <?php include(__DIR__ . '/../languages/pages_info_FR.php'); ?>
     </body>
 
 </html>

@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -60,8 +64,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 $Type_Ref = 'L';                        // Type de référence pour les commentaires
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $Type_Lien            = Secur_Variable_Post($Type_Lien, 30, 'S');
 $AType_Lien           = Secur_Variable_Post($AType_Lien, 30, 'S');
@@ -361,7 +363,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
     // Lien vers la fiche uniquement en modification
     if ($Ref != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_lien.php?Ref=' . $Ref . '"', 'page', 'Fiche lien') . ' ';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_lien?Ref=' . $Ref . '"', 'page', 'Fiche lien') . ' ';
 
     Insere_Haut($titre, $compl, 'Edition_Lien', $Ref);
 

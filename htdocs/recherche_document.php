@@ -10,6 +10,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -35,7 +40,6 @@ if ($ok == $lib_Rechercher) $ok = 'OK';
 // Gestion standard des pages
 $acces = 'L';
 $titre = $LG_Menu_Title['Find_Doc'];        // Titre pour META
-$niv_requis = 'C';                            // Page pour contributeur minimum
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
@@ -43,8 +47,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
 
 $compl = '';
-
-if ($est_gestionnaire) {
 
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
@@ -109,9 +111,9 @@ if ($est_gestionnaire) {
 
             switch ($Sortie) {
                 case 'e':
-                    echo '<a href="' . $root . '/fiche_document.php?Reference=' . $refDoc . '">' . my_html($Titre) . '</a>';
+                    echo '<a href="' . $root . '/fiche_document?Reference=' . $refDoc . '">' . my_html($Titre) . '</a>';
                     echo ' (' . $Natures_Docs[$enreg['Nature_Document']] . ")\n";
-                    echo ' <a href="' . $root . '/edition_document.php?Reference=' . $refDoc . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    echo ' <a href="' . $root . '/edition_document?Reference=' . $refDoc . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     $le_type = Get_Type_Mime($enreg['Nature_Document']);
                     $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
                     echo '   ' . Affiche_Icone_Lien('href="' . $chemin_docu . $Nom_Fichier . '" type="' . $le_type . '"', 'oeil', LG_DOC_SCH_SEE, 'n');
@@ -191,7 +193,7 @@ if ($est_gestionnaire) {
         echo '<tr><td class="label" width="30%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
         echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
         echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
-        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+        echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
         echo '</td></tr>' . "\n";
 
         echo '<tr><td colspan="2">&nbsp;</td></tr>';
@@ -212,7 +214,6 @@ if ($est_gestionnaire) {
         echo '</tr>';
         echo '</table>';
     }
-} else echo $LG_function_noavailable_profile . "\n";
 
 ?>
 </body>

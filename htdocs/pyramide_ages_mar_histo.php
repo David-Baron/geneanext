@@ -77,7 +77,7 @@ switch ($Type_Histo) {
             "AND Sexe in ('f','m') " .
             'AND (p.Reference = u.Conjoint_1 or p.Reference = u.Conjoint_2) ' .
             "AND Maries_Le LIKE '_________L' ";
-        if (!$est_privilegie) {
+        if (!IS_GRANTED('P')) {
             $sql = $sql . "and Diff_Internet = 'O' ";
         }
         $sql = $sql . 'order by Ne_Le, p.Reference, Maries_Le';
@@ -90,10 +90,10 @@ switch ($Type_Histo) {
             'AND (p.Reference = f.Pere or p.Reference = f.Mere) ' .
             'AND e.Reference = f.Enfant ' .
             "AND e.Ne_le LIKE '_________L' ";
-        if (!$est_privilegie) {
-            $sql = $sql . "and p.Diff_Internet = 'O' ";
+        if (!IS_GRANTED('P')) {
+            $sql .= "and p.Diff_Internet = 'O' ";
         }
-        $sql = $sql . 'order by p.Ne_Le, p.Reference, e.Ne_Le';
+        $sql .= 'order by p.Ne_Le, p.Reference, e.Ne_Le';
         break;
 }
 
@@ -139,10 +139,6 @@ if ($res = lect_sql($sql)) {
             }
         }
     }
-}
-if ($debug) {
-    echo 'nb_femmes, mois_femmes, nb_hommes, mois_hommes : ';
-    var_dump($nb_femmes, $mois_femmes, $nb_hommes, $mois_hommes);
 }
 
 if (!$vide) {
@@ -209,16 +205,14 @@ if (!$vide) {
             $larg = intval($moyenne / $max_moy * $larg_maxi);
             echo '<td>' . $age . '</td>';
             echo '<td align="right">';
-            if ($debug) echo $nb_hommes[$nb] . ' H ';
             echo $deb_barre_h . $larg . '" alt="Moyenne" title="' . $nb_hommes[$nb] . ' ' . LG_CH_HISTO_AGE_PERS . '"/>';
-            if ($debug) echo $moyenne . '/' . $moyennes_hommes[$nb];
             echo '</td>';
         } else {
             echo '<td>-</td><td>-</td>';
         }
 
         echo '<td align="center">';
-        echo '<a href="' . $root . '/histo_ages_mariage.php?Type=' . $Type_Histo . '&amp;Debut=' . $nb . '&amp;Fin=' . $borne_max . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $nb . '-' . $borne_max . '</a>';
+        echo '<a href="' . $root . '/histo_ages_mariage?Type=' . $Type_Histo . '&amp;Debut=' . $nb . '&amp;Fin=' . $borne_max . '" title="' . LG_CH_HISTO_REPARTITION . '">' . $nb . '-' . $borne_max . '</a>';
         echo '</td>';
 
         // Femme : moyenne en barre et moyenne en nombre
@@ -227,9 +221,7 @@ if (!$vide) {
             $age = Decompose_Mois($moyenne);
             $larg = intval($moyenne / $max_moy * $larg_maxi);
             echo '<td>';
-            if ($debug) echo $nb_femmes[$nb] . ' F ';
             echo $deb_barre_f . $larg . '" alt="Moyenne" title="' . $nb_femmes[$nb] . ' ' . LG_CH_HISTO_AGE_PERS . '"/>';
-            if ($debug) echo $moyenne . '/' . $moyennes_femmes[$nb];
             echo '</td><td>' . $age;
             echo '</td>';
         } else {
@@ -243,7 +235,6 @@ if (!$vide) {
     $moyenne = $tot_mois_hommes / $tot_nb_hommes;
     $age = Decompose_Mois($moyenne);
     $larg = intval($moyenne / $max_moy * $larg_maxi);
-    if ($debug) echo $tot_nb_hommes . ' F ';
     echo $deb_barre_h . $larg . '" alt="Moyenne" title="' . $tot_nb_hommes . ' ' . LG_CH_HISTO_AGE_PERS . '"/>';
     echo '</td>';
     echo '<td align="center"><b>' . LG_CH_HISTO_AGE_ALL . '</b></td>';
@@ -251,7 +242,6 @@ if (!$vide) {
     $moyenne = $tot_mois_femmes / $tot_nb_femmes;
     $age = Decompose_Mois($moyenne);
     $larg = intval($moyenne / $max_moy * $larg_maxi);
-    if ($debug) echo $tot_nb_femmes . ' H ';
     echo $deb_barre_f . $larg . '" alt="Moyenne" title="' . $tot_nb_femmes . ' ' . LG_CH_HISTO_AGE_PERS . '"/>';
     echo '</td>';
     echo '<td><b>' . $age . '</b></td>';
@@ -263,15 +253,12 @@ if (!$vide) {
     $Nom = '';
     $Prenoms = '';
     if (Get_Nom_Prenoms($ref_min_h, $Nom, $Prenoms)) {
-        echo '<br />' . $Ch_Histo_Age_Youngest_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_min_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_h) . ')';
+        echo '<br />' . $Ch_Histo_Age_Youngest_M . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_min_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_h) . ')';
     }
     if (Get_Nom_Prenoms($ref_min_f, $Nom, $Prenoms)) {
-        echo '<br />' . $Ch_Histo_Age_Youngest_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_min_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_f) . ')';
+        echo '<br />' . $Ch_Histo_Age_Youngest_W . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_min_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_f) . ')';
     }
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

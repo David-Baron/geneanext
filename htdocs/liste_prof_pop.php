@@ -31,7 +31,7 @@ Insere_Haut(my_html($titre), $compl, 'Liste_Prof_Pop', '');
 
 // Préparation sur la clause de diffusabilité
 $p_diff_int = '';
-if (!$est_privilegie) $p_diff_int = " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $p_diff_int = " and Diff_Internet = 'O' ";
 
 $sql = 'SELECT count(*) , evt.Titre, evt.Reference' .
     '  FROM ' . nom_table('participe') . ' part, ' . nom_table('evenements') . ' evt, ' . nom_table('personnes') . ' pers' .
@@ -56,8 +56,8 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = ' <a href="' . $root . '/fiche_evenement.php?refPar=';
-    $deb_modif = 'href="' . $root . '/edition_evenement.php?refPar=';
+    $deb_visu  = ' <a href="' . $root . '/fiche_evenement?refPar=';
+    $deb_modif = 'href="' . $root . '/edition_evenement?refPar=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 
@@ -67,7 +67,7 @@ if ($nb_lignes > 0) {
         $evt = $enr[1];
         echo '<td>' . $deb_visu . $enr[2] . '&amp;Nom=' . $evt . '">' . my_html($evt) . '</a>';
 
-        if ($est_contributeur)
+        if (IS_GRANTED('C'))
             echo ' ' . Affiche_Icone_Lien($deb_modif . $enr[2] . '"', 'fiche_edition', my_html($LG_modify));
 
         echo '</td>';
@@ -80,15 +80,12 @@ if ($nb_lignes > 0) {
     echo '</table>' . "\n";
     echo '<br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '"> ' . LG_MOST_JOBS_TIP1;
 
-    if ($est_contributeur)
-        echo '<a href="' . $root . '/fusion_evenements.php">' . LG_MOST_JOBS_TIP2 . '</a>';
+    if (IS_GRANTED('C'))
+        echo '<a href="' . $root . '/fusion_evenements">' . LG_MOST_JOBS_TIP2 . '</a>';
     else
         echo LG_MOST_JOBS_TIP2;
     echo '<br>' . "\n";
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '');
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

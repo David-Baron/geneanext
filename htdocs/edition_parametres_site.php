@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -50,8 +54,6 @@ $titre = $LG_Menu_Title['Site_parameters'];    // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $NomS             = Secur_Variable_Post($NomS, 80, 'S');
 $ANomS            = Secur_Variable_Post($ANomS, 80, 'S');
@@ -150,7 +152,7 @@ if ($bt_OK) {
 if ((!$bt_OK) && (!$bt_An)) {
 
     # include(__DIR__ . '/assets/js/Edition_Parametres_Graphiques.js');
-    include(__DIR__ . '/assets/js/Insert_Tiny.js');
+    include(__DIR__ . '/../public/assets/js/Insert_Tiny.js');
 
     $compl = Ajoute_Page_Info(600, 150);
     Insere_Haut(my_html($titre), $compl, 'Edition_Parametres_Site', '');
@@ -183,9 +185,9 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<input type="hidden" name="APivot_MasquageS" value="' . $Pivot_Masquage . '"/></td></tr>' . "\n";
 
     echo '<tr><td class="label" width="35%"> ' . $LG_Site_Param_Hover_Clic . ' </td><td class="value">';
-    echo '<input type="radio" id="ComportementGS" name="ComportementG" value="S"' . ($Comportement == 'S') ? ' checked' : '' . '/>'
+    echo '<input type="radio" id="ComportementGS" name="ComportementG" value="S"' . ($Comportement == 'S' ? ' checked' : '') . '/>'
         . '<label for="ComportementGS">' . $LG_Site_Param_Hover . '</label> ';
-    echo '<input type="radio" id="ComportementGC" name="ComportementG" value="C"' . ($Comportement == 'C') ? ' checked' : '' . '/>'
+    echo '<input type="radio" id="ComportementGC" name="ComportementG" value="C"' . ($Comportement == 'C' ? ' checked' : '') . '/>'
         . '<label for="ComportementGC">' . $LG_Site_Param_Click . '</label> ';
     echo '<input type="hidden" name="AComportementG" value="' . $Comportement . '"/></td></tr>' . "\n";
 

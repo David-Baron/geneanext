@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -316,7 +321,7 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
         echo '<hr/>';
         $x = Aff_Sources_Objet($Ref_Union, 'U', 'N');
         echo '<br /> Lier une nouvelle source &agrave; l\'union : ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source?refObjet=' . $Ref_Union . '&amp;typeObjet=U&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 
@@ -336,8 +341,8 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
             while ($row = $resE->fetch(PDO::FETCH_NUM)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
-                    echo '<a href="' . $root . '/edition_personne.php?Refer=' . $Enfant . '">' . $Prenoms . ' ' . $Nom . '</a> ';
-                    echo '<a href="' . $root . '/edition_filiation.php?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . LG_UNION_UPDATE_PARENTS . '" title="' . LG_UNION_UPDATE_PARENTS . '"></a><br />';
+                    echo '<a href="' . $root . '/edition_personne?Refer=' . $Enfant . '">' . $Prenoms . ' ' . $Nom . '</a> ';
+                    echo '<a href="' . $root . '/edition_filiation?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . LG_UNION_UPDATE_PARENTS . '" title="' . LG_UNION_UPDATE_PARENTS . '"></a><br />';
                 }
             }
         }
@@ -396,10 +401,10 @@ function Aff_Union($enreg2, $Ref_Union, $Decalage)
     Aff_Documents_Objet($Ref_Union, 'U', 'N');
     // Possibilité de lier un document à l'union
     echo '<br /> ' . LG_UNION_ADD_DOC . ' '
-        . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $Ref_Union .
+        . Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc?refObjet=' . $Ref_Union .
             '&amp;typeObjet=U&amp;refDoc=-1"', 'ajout', $LG_add) . "\n";
     echo '<br /> ' . LG_UNION_ADD_DOC_NEW . ' '
-        . Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1&amp;refObjet=' . $Ref_Union .
+        . Affiche_Icone_Lien('href="' . $root . '/edition_document?Reference=-1&amp;refObjet=' . $Ref_Union .
             '&amp;typeObjet=U"', 'ajout', $LG_add) . "\n";
     echo '</div>' . "\n";
 
@@ -657,13 +662,13 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 150);
     if ($Ref_Union != -1) {
-        $compl = Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Ref_Union . '&amp;Type_Ref=U"', 'images', 'Images') . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt.php?Reference=' . $Ref_Union . '"', 'fiche_fam', 'Fiche couple') . "\n";
+        $compl = Affiche_Icone_Lien('href="' . $root . '/liste_images?Refer=' . $Ref_Union . '&amp;Type_Ref=U"', 'images', 'Images') . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/fiche_couple_txt?Reference=' . $Ref_Union . '"', 'fiche_fam', 'Fiche couple') . "\n";
     }
     Insere_Haut($titre, $compl, 'Edition_Union', $Conjoint_1 . "/" . $Conjoint_2);
 
     //echo '<form id="saisie" method="post" onsubmit="return verification_form_union(this,\'Conjoint_1U,Conjoint_2U\')" action="'.my_self().'?'.Query_Str().'">'."\n";
-    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Conjoint_1U,Conjoint_2U\')" action="' . my_self() . '?' . Query_Str() . '" >' . "\n";
+    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'Conjoint_1U,Conjoint_2U\')">' . "\n";
 
     echo '<input type="hidden" name="MConjoint_1" value="' . $Conjoint_1 . '"/>' . "\n";
     echo '<input type="hidden" name="MConjoint_2" value="' . $Conjoint_2 . '"/>' . "\n";

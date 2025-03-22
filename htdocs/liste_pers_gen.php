@@ -53,13 +53,6 @@ if (($texte) or ($CSV)) {
     if ($aff_lieux) $lieux = true;
 }
 
-$simu_invit = false;
-if (isset($_POST['simu_invit'])) $simu_invit = true;
-if (($texte) or ($CSV)) {
-    $simu_invit = Recup_Variable('simu_invit', 'C', 1);
-    if ($simu_invit) $simu_invit = true;
-}
-if ($simu_invit) $est_privilegie = false;
 
 // Affiche le libbellé xème génération sur une ligne
 function Affiche_Generation($Gener)
@@ -97,7 +90,7 @@ function Affiche_Generation($Gener)
 // Affiche une personne sur une ligne
 function Affiche_Personne($Personne, $nb, $nb_gen)
 {
-    global $root, $Icones, $LG_Show_On_Map, $texte, $num_lig, $Vil_Prec, $Ville, $lieux, $_SESSION, $sortie, $pdf, $CSV, $fp, $LG_Data_noavailable_profile, $LG_LPersG_Implex_or_error, $LG_at, $est_privilegie, $omanquant;
+    global $root, $Icones, $LG_Show_On_Map, $texte, $num_lig, $Vil_Prec, $Ville, $lieux, $_SESSION, $sortie, $pdf, $CSV, $fp, $LG_Data_noavailable_profile, $LG_LPersG_Implex_or_error, $LG_at, $omanquant;
     if (!$omanquant) {
         // Ordre des champs : Reference, Nom, Prenoms, Numero, Ne_le, Decede_Le, Diff_Internet, Ville_Naissance, Ville_Deces
         //                    0          1    2        3       4      5          6              7                8
@@ -117,10 +110,10 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
             }
 
             HTML_ou_PDF('<td width="12%">' . $Personne[3] . $Implex . '</td>' . "\n", $sortie);
-            if (($est_privilegie) or ($Personne[6] == 'O')) {
+            if (IS_GRANTED('P') or ($Personne[6] == 'O')) {
                 HTML_ou_PDF('<td width="48%">', $sortie);
                 if (! $texte)
-                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Personne[0] . '">' . $Personne[1] . ' ' . $Personne[2] . '</a>';
+                    echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Personne[0] . '">' . $Personne[1] . ' ' . $Personne[2] . '</a>';
                 else
                     HTML_ou_PDF($Personne[1] . ' ' . $Personne[2], $sortie);
                 HTML_ou_PDF('</td>' . "\n", $sortie);
@@ -168,7 +161,7 @@ function Affiche_Personne($Personne, $nb, $nb_gen)
         }
         // Sortie CSV
         else {
-            if (($est_privilegie) or ($Personne[6] == 'O')) {
+            if (IS_GRANTED('P') or ($Personne[6] == 'O')) {
                 $ligne = '';
                 $ligne .= $nb_gen . ';';                    // Génération
                 $ligne .= $Personne[0] . ';';                // Référence
@@ -190,15 +183,14 @@ function Affiche_Personne_Absente($Personne, $nb, $nb_gen)
 {
     global $root, $texte, $num_lig, $sortie, $CSV, $fp, $lieux,
         $LG_Data_noavailable_profile, $LG_LPersG_missing,
-        $LG_LPersG_father_of, $LG_LPersG_mother_of,
-        $est_privilegie;
+        $LG_LPersG_father_of, $LG_LPersG_mother_of;
     if (!$CSV) {
         if (! $texte) {
             echo '<tr>' . "\n";
         } else HTML_ou_PDF('<tr>' . "\n", $sortie);
         // Numéro
         HTML_ou_PDF('<td width="12%">' . $nb . '</td>' . "\n", $sortie);
-        if (($est_privilegie) or ($Personne[6] == 'O')) {
+        if (IS_GRANTED('P') or ($Personne[6] == 'O')) {
             HTML_ou_PDF('<td width="48%">', $sortie);
             $texte2 = $LG_LPersG_missing;
             if (pair($nb)) {
@@ -208,7 +200,7 @@ function Affiche_Personne_Absente($Personne, $nb, $nb_gen)
             }
             $texte2 = $texte2 . ' ';
             if (! $texte)
-                echo $texte2 . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Personne[0] . '">' . $Personne[1] . ' ' . $Personne[2] . '</a>';
+                echo $texte2 . '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Personne[0] . '">' . $Personne[1] . ' ' . $Personne[2] . '</a>';
             else
                 HTML_ou_PDF($texte2 . $Personne[1] . ' ' . $Personne[2], $sortie);
             HTML_ou_PDF('</td>' . "\n", $sortie);
@@ -219,7 +211,7 @@ function Affiche_Personne_Absente($Personne, $nb, $nb_gen)
         }
         HTML_ou_PDF('</tr>' . "\n", $sortie);
     } else {
-        if (($est_privilegie) or ($Personne[6] == 'O')) {
+        if (IS_GRANTED('P') or ($Personne[6] == 'O')) {
             $ligne = '';
             $ligne .= $nb_gen . ';';        // Génération
             $ligne .= ';';                // Référence
@@ -268,15 +260,14 @@ $comp_texte = '';
 if ($manquant) $comp_texte .= '&amp;absents=O';
 if ($omanquant) $comp_texte .= '&amp;oabsents=O';
 if ($lieux)    $comp_texte .= '&amp;aff_lieux=O';
-if ($simu_invit)    $comp_texte .= '&amp;simu_invit=O';
 
 $m_self = my_self();
 $compl = Ajoute_Page_Info(600, 250) .
-    Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen.php?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
 if ((!$SiteGratuit) or ($Premium)) {
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
-    if ($_SESSION['estCnx'])
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen.php?csv=c' . $comp_texte . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
+    if (IS_AUTHENTICATED())
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_pers_gen?csv=c' . $comp_texte . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
 }
 
 $Ind_Ref = 0;
@@ -327,7 +318,7 @@ if (! $texte) {
     echo ' id="lieux" name="lieux" value="1"/><label for="lieux">' . $LG_LPersG_display_places . '</label>';
     echo '</td>' . "\n";
 
-    if ($est_gestionnaire) {
+    if (IS_GRANTED('G')) {
         echo '<td class="rupt_table">';
         echo my_html($LG_LPersG_missing_pers) . '&nbsp;:&nbsp;';
         echo '<input type="checkbox"';
@@ -340,14 +331,6 @@ if (! $texte) {
         echo ' name="omanquant" id="omanquant" value="1"'
             . ' onclick="if (document.getElementById(\'omanquant\').checked==true) {document.getElementById(\'manquant\').checked=false;}"'
             . '  value="1"/><label for="omanquant">' . $LG_LPersG_display_only_missing . '</label>&nbsp;';
-        echo '</td>' . "\n";
-    }
-
-    if ($est_contributeur) {
-        echo '<td class="rupt_table">';
-        echo '<input type="checkbox"';
-        if ($simu_invit) echo ' checked="checked"';
-        echo ' name="simu_invit" id="simu_invit" value="1"/><label for="simu_invit">' . $LG_Simu_No_Granted . '</label>';
         echo '</td>' . "\n";
     }
 
@@ -494,17 +477,17 @@ if($sortie_pdf) {
             if ($nb_gen > $max_gen_AD) {
                 echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . $LG_tip . '" title="' . $LG_tip . '">' .
                     my_html($LG_LPersG_limited_max_gen_1 . $max_gen_AD . $LG_LPersG_limited_max_gen_2) .
-                    '<a href="' . $root . '/vue_personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' .
+                    '<a href="' . $root . '/vue_personnalisee">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>' .
                     my_html($LG_LPersG_limited_max_gen_4) . "\n";
             }
             include(__DIR__ . '/assets/js/Liste_Patro.js');        // Même javascript que la liste patronymique
         }
     }
 } else {
-    if (! $CSV) include(__DIR__ . '/assets/js/Liste_Patro.js');
+    if (! $CSV) include(__DIR__ . '/../public/assets/js/Liste_Patro.js');
     echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"> ';
     echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ; ';
-    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers?Type_Liste=P">liste par noms</a>.';
 }
 
 if ($CSV) {

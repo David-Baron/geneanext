@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array('ok', 'annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
@@ -149,7 +154,7 @@ if (($ok == '') && ($annuler == '')) {
         else           $style = 'liste2';
         echo '<tr class="' . $style . '">' . "\n";
 
-        echo '<td> <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Enfants[$nb] . '">' . $Prenoms[$nb] . '</a></td>' . "\n";
+        echo '<td> <a href="' . $root . '/fiche_fam_pers?Refer=' . $Enfants[$nb] . '">' . $Prenoms[$nb] . '</a></td>' . "\n";
         $Date_Nai = Etend_date($Nes[$nb]);
         $R_Cal = 0;
         $Ne = '----------';

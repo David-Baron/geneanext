@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -91,7 +96,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
     $compl = Ajoute_Page_Info(600, 300);
     if ($Code != $code_crea)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_document.php?code=' . $Code . '"', 'page', 'Fiche évènement') . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_type_document?code=' . $Code . '"', 'page', 'Fiche évènement') . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Type_Document', $Code);
 

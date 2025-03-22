@@ -54,21 +54,21 @@ if (isset($Environnement)) {
     }
     $_SESSION['deb_site'] = $deb_self;
 
-    // Appel du contrôle générique
+    /* // Appel du contrôle générique
     if (!isset($niv_requis)) {
         // Par défaut : Invité
         $niv_requis = 'I';
         // Par défaut pour les pages en mise à jour : contributeur
         if ($maj) $niv_requis = 'C';
-    }
-
+    } */
+/* 
     if (controle_utilisateur($niv_requis) == 0) {
         header('Location: Erreur_Profil.php');
         // RAZ boutons pour interdire les mises à jours dans certains contextes
         $ok = '';
         $supprimer = '';
         exit;
-    }
+    } */
 
     // Intégration des fonctions spécifiques de mise à jour
     if ($maj) require(__DIR__ . '/fonctions_maj.php');
@@ -142,7 +142,7 @@ if (isset($Environnement)) {
     //     fclose($f_log);
     // }
 }
-// Valeurs par défaut si non définies
+/* // Valeurs par défaut si non définies
 if (!isset($_SESSION['estInvite'])) $_SESSION['estInvite'] = false;
 if (!isset($_SESSION['estPrivilegie'])) $_SESSION['estPrivilegie'] = false;
 if (!isset($_SESSION['estContributeur'])) $_SESSION['estContributeur'] = false;
@@ -153,4 +153,4 @@ $est_invite       = ($_SESSION['estInvite'] === true ? true : false);
 $est_privilegie   = ($_SESSION['estPrivilegie'] === true ? true : false);
 $est_contributeur = ($_SESSION['estContributeur'] === true ? true : false);
 $est_gestionnaire = ($_SESSION['estGestionnaire'] === true ? true : false);
-$est_cnx          = ($_SESSION['estCnx'] === true ? true : false);
+$est_cnx          = ($_SESSION['estCnx'] === true ? true : false); */

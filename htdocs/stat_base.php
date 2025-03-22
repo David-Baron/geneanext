@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Statistics'];    // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -13,11 +17,11 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut($titre, $compl, 'Stat_Base', '');
 $largeur = '25%';
-if ($_SESSION['estGestionnaire']) $largeur = '35%';
+if (IS_GRANTED('G')) $largeur = '35%';
 
 // Restriction aux personnes diffusibles pour les profils non privilégiés
 $crit_diff = '';
-if (!$_SESSION['estPrivilegie']) $crit_diff = " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $crit_diff = " and Diff_Internet = 'O' ";
 
 $sql = '';
 $sql .= ' select "PER", count(*) from ' . nom_table('personnes') . ' where Reference <> 0' . $crit_diff;
@@ -46,7 +50,7 @@ while ($row = $res->fetch(PDO::FETCH_NUM)) {
         case 'PER':
             $nb_pers = $row[1];
             entete_ligne(LG_STAT_ALL_PERSONS, $nb_pers);
-            if (($_SESSION['estGestionnaire']) and ($nb_pers > 0)) get_pourcentage($nb_pers);
+            if (IS_GRANTED('G') and ($nb_pers > 0)) get_pourcentage($nb_pers);
             echo "</td></tr>\n";
             break;
         case 'SOS':
@@ -85,7 +89,7 @@ echo '<div id="liste">';
 echo '<ul class="puces">' . LG_STAT_ALL_BY_AGE;
 echo '<li><a href="' . $root . '/pyramide_ages">' . $LG_Menu_Title['Death_Age'] . '</a></li>';
 echo '<li><a href="' . $root . '/pyramide_ages_histo">' . $LG_Menu_Title['Histo_Death'] . '</a></li>';
-echo '<li><a href="' . $root . '/pyramide_ages_mar_histo">' . $LG_Menu_Title['Histo_First_Wedding'] . '</a></li>';
+echo '<li><a href="' . $root . '/pyramide_ages_mar_histo?Type=U">' . $LG_Menu_Title['Histo_First_Wedding'] . '</a></li>';
 echo '<li><a href="' . $root . '/pyramide_ages_mar_histo?Type=F">' . $LG_Menu_Title['Histo_First_Child'] . '</a></li>';
 echo '</ul>';
 
@@ -104,7 +108,7 @@ echo '</ul>';
 echo '<ul class="puces">Divers';
 echo '<li><a href="' . $root . '/enfants_femme_histo">' . $LG_Menu_Title['Children_Per_Mother'] . '</a></li>';
 echo '<li><a href="' . $root . '/naissances_mariages_deces_mois">' . $LG_Menu_Title['BDM_Per_Month'] . '</a></li>';
-if ($est_privilegie)
+if (IS_GRANTED('P'))
     echo '<li><a href="' . $root . '/stat_base_generations">' . $LG_Menu_Title['Gen_Is_Complete'] . '</a></li>';
 echo '<li><a href="' . $root . '/liste_pers_mod">' . $LG_Menu_Title['Last_Mod_Pers'] . '</a></li>';
 echo '</ul>';

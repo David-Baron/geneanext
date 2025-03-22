@@ -5,8 +5,10 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
-$niv_requis = 'C';
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
@@ -90,14 +92,11 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de 
             $ref_evt = $enreg['Reference'];
             $page = 'fiche_evenement';
             if ($enreg['Code_Type'] == 'AC3U') $page = 'fiche_actualite';
-            echo '<a href="' . $root . '/' . $page . '.php?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
+            echo '<a href="' . $root . '/' . $page . '?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
             echo Etend_2_dates($enreg['Debut'], $enreg['Fin'], true) . '&nbsp';
             echo '<br>';
         }
     }
-
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
 
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';

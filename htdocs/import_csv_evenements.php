@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -29,15 +34,14 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
 require(__DIR__ . '/../app/ressources/fonctions_maj.php');
-$acces = 'L';
+
 $titre = $LG_Menu_Title['Imp_CSV_Events'];
 $x = Lit_Env();
-$niv_requis = 'G';
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
-if ($bt_An) Retour_Ar();
 
 // $champ_table  : champ dans la table à charger
 // $champ_lib    : libellé du champ
@@ -166,10 +170,9 @@ if ($ok == 'OK') {
     }
 }
 
-if ($est_gestionnaire) {
     if (($ok == '') && ($annuler == '')) {
 
-        include(__DIR__ . '/assets/js/Edition_Evenement.js');
+        include(__DIR__ . '/../public/assets/js/Edition_Evenement.js');
 
         echo '<br />';
         echo '<form id="saisie" method="post" enctype="multipart/form-data">' . "\n";
@@ -250,9 +253,6 @@ if ($est_gestionnaire) {
         echo '</table>';
         echo '</form>';
     }
-} else {
-    echo $LG_function_noavailable_profile;
-}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

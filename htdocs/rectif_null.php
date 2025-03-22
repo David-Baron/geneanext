@@ -6,10 +6,14 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'M';
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = 'Rectification de zones nulles en base';
 $x = Lit_Env();
-$niv_requis = 'G';                // Page reservee au profil gestionnaire
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 $compl = Ajoute_Page_Info(600, 250);

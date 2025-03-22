@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -35,9 +40,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // $champ_table  : champ dans la table à charger
 // $champ_lib    : libellé du champ
@@ -156,7 +158,7 @@ if ($ok == 'OK') {
                     maj_date_site();
                     $plu = pluriel($nb_enr_crees);
                     echo $nb_enr_crees . ' ' . LG_IMP_CSV_LINKS_CREATED . '<br />';
-                    echo '<br /><a href="' . $root . '/liste_liens.php">' . $LG_Menu_Title['Links'] . '</a><br />';
+                    echo '<br /><a href="' . $root . '/liste_liens">' . $LG_Menu_Title['Links'] . '</a><br />';
                 }
             } else {
                 echo LG_IMP_CSV_ERR_OPEN_FILE . '<br />';
@@ -165,8 +167,6 @@ if ($ok == 'OK') {
     }
 }
 
-if ($est_gestionnaire) {
-    // Première entrée : affichage pour saisie
     if (($ok == '') && ($annuler == '')) {
 
         echo '<br />';
@@ -230,7 +230,6 @@ if ($est_gestionnaire) {
         echo '</table>';
         echo '</form>';
     }
-} else echo my_html($LG_function_noavailable_profile);
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

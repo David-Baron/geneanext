@@ -5,8 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
-$niv_requis = 'P';
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Role'];        // Titre pour META
 
 $tab_variables = array('annuler');
@@ -38,8 +41,8 @@ if ($enreg_sel) {
     Champ_car($enreg2, 'Libelle_Inv_Role');
 
     $compl = Ajoute_Page_Info(600, 150);
-    if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_role.php?code=' . $Code . '"', 'fiche_edition', 'Edition rôle') . '&nbsp;';
+    if (IS_GRANTED('G')) {
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_role?code=' . $Code . '"', 'fiche_edition', 'Edition rôle') . '&nbsp;';
     }
 
     Insere_Haut($titre, $compl, 'Fiche_Role', $Code);
@@ -61,11 +64,7 @@ if ($enreg_sel) {
     echo '</table>';
 
     // Appel de la liste des personnes pour ce rôle
-    echo '<br /><a href="' . $root . '/liste_pers_role.php?Role=' . $c_role . '">' . LG_ROLE_PERSONS . '</a>' . "\n";
-
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
-
+    echo '<br /><a href="' . $root . '/liste_pers_role?Role=' . $c_role . '">' . LG_ROLE_PERSONS . '</a>' . "\n";
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

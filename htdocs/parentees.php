@@ -17,8 +17,8 @@ function add_pers($enreg)
 function affiche_pers($nb)
 {
     global $root, $Icones, $LG_modify, $refs, $noms, $prenoms;
-    echo ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $refs[$nb] . '">' . my_html($noms[$nb] . ' ' . $prenoms[$nb]) . '</a>' . "\n";
-    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $refs[$nb] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />';
+    echo ' <a href="' . $root . '/fiche_fam_pers?Refer=' . $refs[$nb] . '">' . my_html($noms[$nb] . ' ' . $prenoms[$nb]) . '</a>' . "\n";
+    echo ' <a href="' . $root . '/edition_personne?Refer=' . $refs[$nb] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a><br />';
 }
 
 $acces = 'L';
@@ -82,7 +82,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
     Insere_Haut(my_html($titre), $compl, 'Parentees', $Refer);
 
     // Message d'erreur si pas de droits d'accès
-    if (!$est_privilegie and $enr_pers['Diff_Internet'] != 'O') {
+    if (!IS_GRANTED('P') and $enr_pers['Diff_Internet'] != 'O') {
         echo '<center><font color="red"><br><br><br><h2>' . $LG_Data_noavailable_profile . '</h2></font></center><br><a href="' . $root . '/">' . $LG_back_to_home . '</a><br>';
     } else {
         echo '<h3 align="center">' . $PrenomsP . ' ' . $NomP . '</h3>';
@@ -104,7 +104,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
 
         // Les non-privilégiés ne peuvent voir que les personnes diffusables
         $crit_restriction = '';
-        if (!$est_privilegie)
+        if (!IS_GRANTED('P'))
             $crit_restriction = 'and Diff_Internet = "O"';
 
 
@@ -212,15 +212,12 @@ if ((!$enreg_sel) or ($Refer == 0)) {
 
 switch ($T_Parente) {
     case 'OT':
-        echo '<br /><a href="' . $root . '/parentees.php?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
+        echo '<br /><a href="' . $root . '/parentees?TP=CG&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Cousins']) . '</a>';
         break;
     case 'CG':
-        echo '<br /><a href="' . $root . '/parentees.php?TP=OT&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Uncles']) . '</a>';
+        echo '<br /><a href="' . $root . '/parentees?TP=OT&amp;Refer=' . $Refer . '"> ' . my_html($LG_Menu_Title['Pers_Uncles']) . '</a>';
         break;
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

@@ -5,10 +5,14 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Source_List'];            // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'C';                        // Page réservée au profil contributeur
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Verrouillage sur les gratuits non Premium
@@ -70,11 +74,11 @@ if ($enreg = $result->fetch(PDO::FETCH_NUM)) {
     $MaxRef = $enreg[0];
 }
 if ($MaxRef > 0) {
-    echo '<a href="' . $root . '/edition_source.php?ident=' . $MaxRef . '">' . my_html(LG_SRC_LAST) . '</a><br />';
+    echo '<a href="' . $root . '/edition_source?ident=' . $MaxRef . '">' . my_html(LG_SRC_LAST) . '</a><br />';
 }
 
 // Possibilité d'insérer une source
-echo my_html(LG_SRC_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_source.php?ident=-1"', 'ajouter', $LG_add) . '<br /><br />';
+echo my_html(LG_SRC_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_source?ident=-1"', 'ajouter', $LG_add) . '<br /><br />';
 
 //  Affichage des sources
 $crit_depot = '';
@@ -86,8 +90,8 @@ $result = lect_sql($requete);
 
 while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
     $ident = $enreg[0];
-    echo '<a href="' . $root . '/fiche_source.php?ident=' . $ident . '">' . my_html($enreg[1]) . '</a> ';
-    echo ' <a href="' . $root . '/edition_source.php?ident=' . $ident . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' .$LG_modify . '" title="' . $LG_modify . '"></a>';
+    echo '<a href="' . $root . '/fiche_source?ident=' . $ident . '">' . my_html($enreg[1]) . '</a> ';
+    echo ' <a href="' . $root . '/edition_source?ident=' . $ident . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' .$LG_modify . '" title="' . $LG_modify . '"></a>';
     // '';
     echo '<br />' . "\n";
 }

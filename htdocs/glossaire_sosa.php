@@ -36,7 +36,7 @@ Insere_Haut($titre, $compl, 'Glossaire_Sosa', '');
 ?>
 R&egrave;gles de base :
 <ul>
-    <li>La personne dont on part est le num&eacute;ro 1 (Cf. <a href="<?= $root; ?>/glossaire_gen.php#CUJUS">De cujus</a>).</li>
+    <li>La personne dont on part est le num&eacute;ro 1 (Cf. <a href="<?= $root; ?>/glossaire_gen#CUJUS">De cujus</a>).</li>
     <li>Pour obtenir le num&eacute;ro d'un p&egrave;re, on multiplie par 2 le num&eacute;ro de la personne.</li>
     <li>Pour obtenir le num&eacute;ro d'un m&egrave;re, on multiplie par 2 le num&eacute;ro de la personne et on ajoute 1.</li>
     <li>Seuls les ascendants directs font l'objet d'une num&eacute;rotation.</li>
@@ -71,7 +71,7 @@ Ce qui nous donne :
         <td class="femme">Grand-m&egrave;re maternelle<br />Sosa : 7<br />(=3*2+1)</td>
     </tr>
 </table>
-<br /><a href="<?= $root; ?>/calc_so.php">Calculette Sosa</a><br />
+<br /><a href="<?= $root; ?>/calc_so">Calculette Sosa</a><br />
 
 <table cellpadding="0" width="100%">
     <tr>

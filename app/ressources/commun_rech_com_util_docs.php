@@ -126,55 +126,55 @@ function affiche_donnees($Objet_Cible, $Ref_Objet, $fonction)
 
     switch ($Objet_Cible) {
         case 'P':
-            echo $action . ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' <a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref_Objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_personne?Refer=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'U':
-            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Mari . '">' . $Prenoms_M . ' ' . $Nom_M . '</a>' .
-                ' et <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Femme . '">' . $Prenoms_F . ' ' . $Nom_F . '</a>';
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_fam_pers?Refer=' . $Mari . '">' . $Prenoms_M . ' ' . $Nom_M . '</a>' .
+                ' et <a href="' . $root . '/fiche_fam_pers?Refer=' . $Femme . '">' . $Prenoms_F . ' ' . $Nom_F . '</a>';
             $us = 'n';
             if ($Sexe_M == $Sexe_F) $us = 'o';
-            echo '&nbsp;<a href="' . $root . '/edition_union.php?Reference=' . $Ref_Objet . '&amp;us=' . $us . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_union?Reference=' . $Ref_Objet . '&amp;us=' . $us . '">' . $echo_modif;
             break;
         case 'F':
-            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_filiation.php?Refer=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref_Objet . '">' . $Prenoms . ' ' . $Nom . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_filiation?Refer=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'E':
-            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_evenement.php?refPar=' . $Ref_Objet . '">' . $Titre . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_evenement.php?refPar=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_evenement?refPar=' . $Ref_Objet . '">' . $Titre . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_evenement?refPar=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'V':
-            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_ville.php?Ident=' . $Ref_Objet . '">' . $Nom_Zone . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_ville.php?Ident=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_ville?Ident=' . $Ref_Objet . '">' . $Nom_Zone . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_ville?Ident=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 's':
-            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_subdivision.php?Ident=' . $Ref_Objet . '">' . $Nom_Zone . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_subdivision.php?Ident=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' de <a href="' . $root . '/fiche_subdivision?Ident=' . $Ref_Objet . '">' . $Nom_Zone . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_subdivision?Ident=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'D':
             echo $action . ' ' . $cible . ' de ' . $Nom_Zone;
-            echo '&nbsp;<a href="' . $root . '/edition_depart.php?Ident=' . $Ref_Objet . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_depart?Ident=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'R':
             echo $action . ' ' . $cible . ' de ' . $Nom_Zone;
-            echo '&nbsp;<a href="' . $root . '/edition_region.php?Ident=' . $Ref_Objet . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_region?Ident=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'I':
             echo $action . ' ' . $cible . ' ' . $Titre;
-            echo '&nbsp;<a href="' . $root . '/edition_image.php?ident_image=' . $Ref_Objet . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_image?ident_image=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'O':
-            echo $action . ' ' . $cible . ' <a href="' . $root . '/fiche_nomfam.php?idNom=' . $Ref_Objet . '">' . $Titre . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_nomfam.php?idNom=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' <a href="' . $root . '/fiche_nomfam?idNom=' . $Ref_Objet . '">' . $Titre . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_nomfam?idNom=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'L':
-            echo $action . ' ' . $cible . ' <a href="' . $root . '/fiche_lien.php?Ref=' . $Ref_Objet . '">' . $Titre . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_lien.php?Ref=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' <a href="' . $root . '/fiche_lien?Ref=' . $Ref_Objet . '">' . $Titre . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_lien?Ref=' . $Ref_Objet . '">' . $echo_modif;
             break;
         case 'S':
-            echo $action . ' ' . $cible . ' <a href="' . $root . '/fiche_source.php?ident=' . $Ref_Objet . '">' . $Titre . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_source.php?ident=' . $Ref_Objet . '">' . $echo_modif;
+            echo $action . ' ' . $cible . ' <a href="' . $root . '/fiche_source?ident=' . $Ref_Objet . '">' . $Titre . '</a>';
+            echo '&nbsp;<a href="' . $root . '/edition_source?ident=' . $Ref_Objet . '">' . $echo_modif;
             break;
     }
 }

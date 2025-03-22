@@ -5,6 +5,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -17,14 +23,10 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Gestion standard des pages
-$acces = 'M';                                  // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Document_Multiple_Add'];     // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $n_images = nom_table('images');
 $n_documents = nom_table('documents');

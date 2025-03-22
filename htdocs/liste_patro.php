@@ -39,14 +39,6 @@ if ($texte) {
     if ($aff_lieux) $lieux = 1;
 }
 
-$simu_invit = false;
-if (isset($_POST['simu_invit'])) $simu_invit = true;
-if ($texte) {
-    $simu_invit = Recup_Variable('simu_invit', 'C', 1);
-    if ($simu_invit) $simu_invit = true;
-}
-if ($simu_invit) $est_privilegie = false;
-
 // Stocke les infos  d'une personne dans la liste
 function Stocke_Personne($Personne)
 {
@@ -61,10 +53,10 @@ function Stocke_Personne($Personne)
 // Affiche une personne sur une ligne
 function Affiche_Personne2($Personne)
 {
-    global $root, $Icones, $Vil_Prec, $Ville, $texte, $lieux, $est_privilegie, $LG_Data_noavailable_profile, $LG_at, $sortie;
-    if (($est_privilegie) or ($Personne['Diff_Internet'] == 'O')) {
+    global $root, $Icones, $Vil_Prec, $Ville, $texte, $lieux, $LG_Data_noavailable_profile, $LG_at, $sortie;
+    if (IS_GRANTED('P') or ($Personne['Diff_Internet'] == 'O')) {
         if (! $texte) {
-            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Personne['Reference'] . '">' . my_html($Personne['Nom'] . ' ' . $Personne['Prenoms']) . '</a>';
+            echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Personne['Reference'] . '">' . my_html($Personne['Nom'] . ' ' . $Personne['Prenoms']) . '</a>';
         } else {
             HTML_ou_PDF($Personne['Nom'] . ' ' . $Personne['Prenoms'], $sortie);
         }
@@ -129,7 +121,7 @@ function Accede_Personne($Reference)
 // Accède à une personne et l'affiche
 function Accede_Personne2($Reference)
 {
-    global $Personne, $Res, $DifU, $n_personnes, $est_privilegie;
+    global $Personne, $Res, $DifU, $n_personnes;
     $Sql = 'select Reference, Nom, Prenoms, Numero, Ne_le, Decede_Le, ' .
         'Diff_Internet, Ville_Naissance, Ville_Deces, Sexe, idNomFam from ' . $n_personnes . ' where Reference = ' . $Reference . ' limit 1';
     $Res = lect_sql($Sql);
@@ -138,7 +130,7 @@ function Accede_Personne2($Reference)
     }
     // Diffusabilité de l'union
     // Si l'1 des 2 personnes n'est pas diffusable, l'union ne le sera pas
-    if ((!$est_privilegie) and ($Personne['Diff_Internet'] != 'O')) {
+    if ((!IS_GRANTED('P')) and ($Personne['Diff_Internet'] != 'O')) {
         ++$DifU;
     }
 }
@@ -148,7 +140,7 @@ if ($limiter) $comp_texte .= '&amp;nom_decujus=O';
 if ($lieux) $comp_texte .= '&amp;aff_lieux=O';
 if ($simu_invit) $comp_texte .= '&amp;simu_invit=O';
 
-$lien = 'href="' . $root . '/liste_patro.php?texte=O' . $comp_texte;
+$lien = 'href="' . $root . '/liste_patro?texte=O' . $comp_texte;
 
 $compl = Ajoute_Page_Info(600, 150) .
     Affiche_Icone_Lien($lien . '"', 'text', $LG_printable_format) . '&nbsp;';
@@ -208,7 +200,7 @@ if ($decujus = get_decujus()) {
     $nom_decujus_base = $Personne['Nom'];
 
     if (! $texte) {
-        echo '<form action="' . my_self() . '" method="post">' . "\n";
+        echo '<form method="post">' . "\n";
         echo '<table border="0" width="80%" align="center">' . "\n";
         echo '<tr align="center">';
 
@@ -223,14 +215,6 @@ if ($decujus = get_decujus()) {
         if ($limiter) echo ' checked="checked"';
         echo ' name="limiter" id="limiter" value="1"/><label for="limiter">' . LG_PATRO_RESTRICT . '</label>&nbsp;(' . my_html($nom_decujus_base) . ')';
         echo '</td>' . "\n";
-
-        if ($est_contributeur) {
-            echo '<td class="rupt_table">';
-            echo '<input type="checkbox"';
-            if ($simu_invit) echo ' checked="checked"';
-            echo ' name="simu_invit" id="simu_invit" value="1"/><label for="simu_invit">' . $LG_Simu_No_Granted . '</label>';
-            echo '</td>' . "\n";
-        }
 
         echo '<td class="rupt_table"><input type="submit" value="' . my_html($LG_modify_list) . '"/>';
         $alt_img = my_html(LG_PATRO_SHOW_NOSHOW_FIL);
@@ -307,7 +291,7 @@ if ($decujus = get_decujus()) {
     $fin = false;
     $deb = false;
     $aff = true;
-    $deb_lien_nom = '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=';
+    $deb_lien_nom = '<a href="' . $root . '/liste_pers2?Type_Liste=P&amp;idNom=';
 
     $h_LG_PATRO_FILIATION = my_html(LG_PATRO_FILIATION);
     $h_LG_show_noshow  = my_html($LG_show_noshow);
@@ -461,7 +445,7 @@ if ($decujus = get_decujus()) {
 } else {
     echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"> ';
     echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ; ';
-    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers?Type_Liste=P">liste par noms</a>.';
 }
 
 if ($sortie_pdf) {

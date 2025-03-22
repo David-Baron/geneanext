@@ -10,7 +10,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'Horigine',
@@ -47,8 +51,6 @@ $titre = $LG_Menu_Title['Link_Pers'];    // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 //$refPers2F   = Secur_Variable_Post($refPers2F,1,'N');
 $personnes   = Secur_Variable_Post($personnes, 1, 'N');
@@ -223,7 +225,7 @@ if ($clic_boutons) {
         }
     }
     //  Debut de la page
-    echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post">' . "\n";
 
     echo '<input type="' . $hidden . '" name="maxi" id="maxi" />';
 
@@ -344,9 +346,9 @@ if ($clic_boutons) {
 ?>
 <script type="text/javascript">
     function updatePersonnes(id) {
-        //window.alert('rpc_Personne.php?idNomFam=' + id);
-        xhr.open('get', 'rpc_Personne.php?idNomFam=' + id);
-        //xhr.open('get', 'rpc.php?type_evt=' + types_evt + '&ref=' + document.getElementById('ref').value);
+        //window.alert('rpc_Personne?idNomFam=' + id);
+        xhr.open('get', 'rpc_Personne?idNomFam=' + id);
+        //xhr.open('get', 'rpc?type_evt=' + types_evt + '&ref=' + document.getElementById('ref').value);
         xhr.onreadystatechange = handleResponse;
         xhr.send(null);
     }

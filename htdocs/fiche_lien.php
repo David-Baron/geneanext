@@ -35,8 +35,8 @@ if ($enreg_sel) {
     Champ_car($enreg_sel, 'description');
 
     $compl = Ajoute_Page_Info(600, 150);
-    if ($est_gestionnaire) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_lien.php?Ref=' . $Ref . '"', 'fiche_edition', 'Edition fiche lien') . '&nbsp;';
+    if (IS_GRANTED('G')) {
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_lien?Ref=' . $Ref . '"', 'fiche_edition', 'Edition fiche lien') . '&nbsp;';
     }
 
     Insere_Haut($titre, $compl, 'Fiche_Lien', '');
@@ -70,13 +70,12 @@ if ($enreg_sel) {
     $Type_Ref = 'L';
     if (Rech_Commentaire($Ref, $Type_Ref)) {
         echo '<br />';
-        if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+        if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
             echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
         }
     }
 
     echo '<br />' . "\n";
-    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

@@ -5,7 +5,10 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 
 $actu = Recup_Variable('actu', 'C', 'xo');
 $actualites = ($actu === 'o' ? true : false);
@@ -17,7 +20,7 @@ if ($actualites) $titre = $LG_Menu_Title['News_List'];
 if ($professions) $titre = $LG_Menu_Title['Jobs_List'];
 
 $x = Lit_Env();
-$niv_requis = 'P';                        // Page réservée au profil privilégié
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
 // Recup de la variable passée dans l'URL : sortie dans un fichier CSV ?
@@ -28,8 +31,8 @@ if (($SiteGratuit) and (!$Premium)) $CSV = false;
 
 $compl = Ajoute_Page_Info(600, 200);
 if ((!$SiteGratuit) or ($Premium)) {
-    if ($_SESSION['estCnx'])
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_evenement.php?csv=c"', 'exp_tab', $LG_csv_export) . '&nbsp;';
+    if (IS_AUTHENTICATED())
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_evenement?csv=c"', 'exp_tab', $LG_csv_export) . '&nbsp;';
 }
 
 Insere_Haut(my_html($titre), $compl, 'Liste_Evenements', '');
@@ -45,7 +48,7 @@ $texte = $LG_add;
 $echo_modif = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $texte . '" title="' . $texte . '"/></a>';
 
 // Lien direct sur le dernier évènement saisi et possibilité d'insérer un évènement
-if ($est_gestionnaire) {
+if (IS_GRANTED('G')) {
     $MaxRef = 0;
 
     $sql = 'SELECT Reference, Titre FROM ' . $n_evenements . ' a ' .
@@ -55,12 +58,12 @@ if ($est_gestionnaire) {
     $MaxRef = $enrmax[0];
     // Lien direct sur le dernièr évènement saisi
     if ($MaxRef > 0) {
-        echo my_html(LG_EVENT_LIST_lAST) . LG_SEMIC . '<a href="' . $root . '/fiche_evenement.php?refPar=' . $MaxRef . '">' .
+        echo my_html(LG_EVENT_LIST_lAST) . LG_SEMIC . '<a href="' . $root . '/fiche_evenement?refPar=' . $MaxRef . '">' .
             my_html($enrmax[1]) . '</a>&nbsp;';
-        echo '&nbsp;<a href="' . $root . '/edition_evenement.php?refPar=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
+        echo '&nbsp;<a href="' . $root . '/edition_evenement?refPar=' . $MaxRef . '">' . $echo_modif . '<br />' . "\n";
     }
     // Possibilité d'insérer un evenement
-    echo my_html($LG_Menu_Title['Event_Add']) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_evenement.php?refPar=-1"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
+    echo my_html($LG_Menu_Title['Event_Add']) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_evenement?refPar=-1"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
 }
 
 // Récupération du type sélectionné sur l'affichage précédent
@@ -160,7 +163,7 @@ if ($result->rowCount() > 0) {
         } else {
             $page = 'fiche_evenement';
             if (($actualites) or ($enreg['Code_Type'] == 'AC3U')) $page = 'fiche_actualite';
-            echo '<a href="' . $root . '/' . $page . '.php?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
+            echo '<a href="' . $root . '/' . $page . '?refPar=' . $ref_evt . '">' . $enreg['Titre'] . "</a>\n";
             echo Etend_2_dates($enreg['Debut'], $enreg['Fin'], true) . '&nbsp';
 
             $cible = $enreg['Objet_Cible'];
@@ -177,7 +180,7 @@ if ($result->rowCount() > 0) {
                     if ($resP->rowCount() > 0) {
                         echo '(';
                         while ($row = $resP->fetch(PDO::FETCH_NUM)) {
-                            if (($row[3] == 'O') or ($est_privilegie)) {
+                            if (($row[3] == 'O') or IS_GRANTED('P')) {
                                 if (!$prems) echo ', ';
                                 else $prems = false;
                                 echo $row[2] . ' ' . $row[1];
@@ -199,7 +202,7 @@ if ($result->rowCount() > 0) {
                         echo '(';
                         $prems = true;
                         while ($row = $resP->fetch(PDO::FETCH_NUM)) {
-                            if (($row[3] == 'O') or ($est_privilegie)) {
+                            if (($row[3] == 'O') or IS_GRANTED('P')) {
                                 if (!$prems) echo ', ';
                                 else $prems = false;
                                 echo my_html($row[2] . ' ' . $row[1]);
@@ -225,11 +228,11 @@ if ($result->rowCount() > 0) {
                     if ($resP->rowCount() > 0) {
                         echo '(';
                         while ($row = $resP->fetch(PDO::FETCH_NUM)) {
-                            if (($row[3] == 'O') or ($est_privilegie)) {
+                            if (($row[3] == 'O') or IS_GRANTED('P')) {
                                 echo my_html($row[2] . ' ' . $row[1]) . ' ';
                             } else echo '- ';
                             echo ' x ';
-                            if (($row[7] == 'O') or ($est_privilegie)) {
+                            if (($row[7] == 'O') or IS_GRANTED('P')) {
                                 echo my_html($row[6] . ' ' . $row[5]) . ' ';
                             } else echo '- ';
                         }
@@ -237,10 +240,10 @@ if ($result->rowCount() > 0) {
                     }
                 }
             }
-            if ($est_gestionnaire) {
+            if (IS_GRANTED('G')) {
                 $ajout = '';
                 if (($actualites) or ($enreg['Code_Type'] == 'AC3U')) $ajout = '&amp;actu=o';
-                echo '&nbsp;<a href="' . $root . '/edition_evenement.php?refPar=' . $ref_evt . $ajout . '">' . $echo_modif . "\n";
+                echo '&nbsp;<a href="' . $root . '/edition_evenement?refPar=' . $ref_evt . $ajout . '">' . $echo_modif . "\n";
             }
             echo '<br />';
         }

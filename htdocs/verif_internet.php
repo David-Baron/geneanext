@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -83,7 +88,7 @@ $plu = pluriel($nbPers);
 echo '<br>' . $nbPers . LG_CHK_INTERNET_PRES_1 . ' ' . $Lim_Diffu . ' ' . LG_CHK_INTERNET_PRES_2 . ' '
     . '<input type="text" size="3" name="limite" value="' . $Lim_Diffu . '"/> ' . LG_CHK_INTERNET_YEARS . "\n";
 echo '<input type="submit" name="re" value="' . $LG_Check_Again . '"/>' . "\n";
-echo '<br><br><a href="' . $root . '/verif_internet_absente.php">' . $LG_Menu_Title['Internet_Hidding_Cheking'] . '</a>';
+echo '<br><br><a href="' . $root . '/verif_internet_absente">' . $LG_Menu_Title['Internet_Hidding_Cheking'] . '</a>';
 echo '<br><br>';
 
 echo '<table border="0" class="classic" cellspacing="1" cellpadding="3" align="center">' . "\n";
@@ -105,8 +110,8 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
     else               $style = 'liste2';
     echo '<tr  class="' . $style . '">';
     echo '<td>';
-    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg[0] . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>' . "\n";
-    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $enreg[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+    echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg[0] . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>' . "\n";
+    echo ' <a href="' . $root . '/edition_personne?Refer=' . $enreg[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
     echo '</td>' . "\n";
     echo '<td align="center">';
     echo  '<input type="checkbox" name="S_Int[' . $numLig . ']"' . $internet . '/>';

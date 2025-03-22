@@ -6,7 +6,11 @@
 require(__DIR__ . '/../app/ressources/fonctions.php');
 require(__DIR__ . '/../app/ressources/commun_gedcom.php');
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Exp_Ged_Pers'];        // Titre pour META
 $x = Lit_Env();
 $niv_requis = 'P';                        // L'export est ouvert à partir du profil privilégié
@@ -183,8 +187,6 @@ if (($_SESSION['estPrivilegie']) or ($EnrPers[8] == 'O')) {
         echo '<center><font color="red"><br><br><br><h2>' . LG_GEDCOM_FILE_ERROR . '</h2></font></center>';
     }
 
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
 }
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

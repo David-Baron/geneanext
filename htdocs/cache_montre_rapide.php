@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // On simule le bouton OK pour ne pas écrire l'entête de la page
 $ok = 'OK'; // TODO: lol
 

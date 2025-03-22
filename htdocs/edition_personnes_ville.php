@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -20,7 +25,6 @@ foreach ($tab_variables as $nom_variables) {
 $ok      = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 
-$acces = 'M';                // Type d'accès de la page : (M)ise à jour, (L)ecture
 
 // Recup des variables passées dans l'URL :
 $Type_Liste = Recup_Variable('evt', 'C', 'ND');    // type d'évènement Naissance / Décès
@@ -131,7 +135,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     $compl = Ajoute_Page_Info(600, 150);
     Insere_Haut(my_html($objet), $compl, 'Edition_Personnes_Ville', $Type_Liste);
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post">' . "\n";
 
     echo '<input type="' . $hidden . '" name="Type_ListeP" id="Type_ListeP" value="' . $Type_Liste . '"/>';
     echo '<input type="' . $hidden . '" name="idNomV" id="idNomV" value="' . $idNom . '"/>';

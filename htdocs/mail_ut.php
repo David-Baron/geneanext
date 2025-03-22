@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $max_emails = 49;
 // R�duction du nombre d'emails autoris�s sur le site de test
 if ($SiteGratuit) {
@@ -31,11 +36,9 @@ $message  = Secur_Variable_Post($message, 250, 'S');
 // On n'autorise que les chiffres et la virgule
 $idents = preg_replace('/([^,0-9]+)/i', '', $idents);
 
-// Gestion standard des pages
-$acces = 'M';                        // Type d'acc�s de la page : (M)ise � jour
 $titre = 'Envoi d\'un mail';        // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
-$niv_requis = 'G';                    // Les contributions sont ouvertes � tout le monde
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Interdit sur les gratuits non Premium
@@ -65,7 +68,6 @@ if (($bt_OK) and ($sujet != '') and ($message != '')) {
         }
     }
 
-    Bouton_Retour($lib_Retour, '');
 }
 
 // Premi�re entr�e : affichage pour saisie

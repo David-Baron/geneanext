@@ -9,7 +9,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'Horigine',
@@ -37,8 +41,6 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $refNomF   = Secur_Variable_Post($refNomF, 1, 'N');
 $Comment   = Secur_Variable_Post($Comment, 50, 'S');

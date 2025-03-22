@@ -5,10 +5,15 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (L)ecture
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
+dd('WTF is that! create db.table.contrib insteed!');
 $titre = $LG_Menu_Title['Contribs_List'];    // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'C';                        // Page accessible aux contributeurs
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Récupération des variables de l'affichage précédent
@@ -28,14 +33,11 @@ Insere_Haut($titre, $compl, 'Liste_Contributions', '');
 if ((!isset($retour)) or ($retour == '')) $ignorer = 'O';
 
 echo '<form method="post">' . "\n";
-
-echo '<input type="hidden" name="retour" value="1"/>' . "\n";
-
-echo '<table border="0" width="60%" align="center">' . "\n";
+echo '<table width="60%" align="center">' . "\n";
 echo '<tr align="center" class="rupt_table">';
 echo '<td><label for="ignorer">' . LG_CONTRIB_LIST_IGNORE . '</label>';
 echo ' <input type="checkbox" id="ignorer" name="ignorer" value="O" ';
-if ($ignorer == 'O') echo 'checked="checked"';
+if ($ignorer == 'O') echo ' checked';
 echo '/></td>' . "\n";
 echo '   <td><input type="submit" value="' . my_html($LG_modify_list) . '"/></td>' . "\n";
 echo "  </tr>\n";
@@ -60,7 +62,7 @@ if (count($ListFiles) != 0) {
     rsort($ListFiles);
 }
 
-echo '<table width="90%" border="0" class="classic" align="center">' . "\n";
+echo '<table width="90%" class="classic" align="center">' . "\n";
 echo '<tr>' . "\n";
 echo '<th>' . LG_CONTRIB_LIST_CONTRIB . '</th>';
 echo '<th>' . LG_CONTRIB_LIST_PERSON . '</th>';
@@ -114,7 +116,7 @@ while ($i < count($ListFiles)) {
         }
 
         if (($Ref_Pers != 0) and (Get_Nom_Prenoms($Ref_Pers, $Nom, $Prenoms)))
-            echo '<td align="left"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . $Nom . ' ' . $Prenoms . '</a></td>';
+            echo '<td align="left"><a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref_Pers . '">' . $Nom . ' ' . $Prenoms . '</a></td>';
         else
             echo '<td>&nbsp;</td>';
 
@@ -124,7 +126,7 @@ while ($i < count($ListFiles)) {
         else            $suffixe = '';
 
         echo '<td align="center">' .
-            '<a href="' . $root . '/edition_contribution.php?Contribution=' . $num_contrib0 . $suffixe . '">' .
+            '<a href="' . $root . '/edition_contribution?Contribution=' . $num_contrib0 . $suffixe . '">' .
             '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' .LG_CONTRIB_LIST_PROCESS . '" title="' . LG_CONTRIB_LIST_PROCESS . '">' .
             '</td>';
 

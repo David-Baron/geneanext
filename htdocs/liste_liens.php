@@ -6,26 +6,29 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array('ok', 'annuler', 'supprimer', 'S_Sup', 'idLien');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
     else $$nom_variables = '';
 }
 
-$acces = 'M';
 $titre = $LG_Menu_Title['Links'];            // Titre pour META
 $x = Lit_Env();
 
 $lib_sup = my_html(LG_LINKS_DEL);
 
-$niv_requis = 'I';
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 $compl = Ajoute_Page_Info(600, 150);
 
 // Le gestionnaire a la colonne de modification en plus
 $nb_Cols = 3;
-if ($est_gestionnaire) $nb_Cols++;
+if (IS_GRANTED('G')) $nb_Cols++;
 
 Insere_Haut($titre, $compl, 'Liste_Liens', '');
 
@@ -58,17 +61,17 @@ if ($bt_Sup) {
 $suf = 0; // Suffixe pour les div
 
 // Possibilité d'insérer un lien
-if ($est_gestionnaire) {
-    echo my_html(LG_LINKS_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_lien.php?Ref=-1"', 'ajouter', $LG_add) . '<br />' . "\n";
-    echo my_html(LG_LINKS_IMPORT) . ' ' . Affiche_Icone_Lien('href="' . $root . '/import_csv_liens.php"', 'ajout_multiple', $LG_csv_import) . '<br /><br />' . "\n";
-    echo '<form action="' . my_self() . '" id="saisie" method="post">';
-    echo '<input name="compteur" type="' . $hidden . '" value="0"/>';
+if (IS_GRANTED('G')) {
+    echo my_html(LG_LINKS_ADD) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_lien?Ref=-1"', 'ajouter', $LG_add) . '<br />' . "\n";
+    echo my_html(LG_LINKS_IMPORT) . ' ' . Affiche_Icone_Lien('href="' . $root . '/import_csv_liens"', 'ajout_multiple', $LG_csv_import) . '<br /><br />' . "\n";
+    echo '<form id="saisie" method="post">';
+    echo '<input name="compteur" type="hidden" value="0"/>';
 }
 
 $num_lig = 0;
 $diff_int = ''; // Préparation sur la clause de diffusabilité
-//$est_privilegie = false;
-if (!$est_privilegie) $diff_int = ' where Diff_Internet = 1 ';
+
+if (!IS_GRANTED('P')) $diff_int = ' where Diff_Internet = 1 ';
 
 $sql = 'select Ref_lien, type_lien, description, URL, image, Diff_Internet '
     . 'from ' . nom_table('liens')
@@ -93,8 +96,8 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         echo '&nbsp;&nbsp;<img id="ajout' . $suf . '" src="' . $root . '/assets/img/' . $Icones['oeil'] . '" alt="' . LG_LINKS_EYE . '" ' .
             Survole_Clic_Div('div' . $suf) . '/>' . "\n";
         // Possibilité d'extraire les liens du type de lien. Page interdite sur les gratuits non Premium
-        if (($est_gestionnaire) and ((!$SiteGratuit) or ($Premium))) {
-            echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/export_liens.php?Categ=' . $row['type_lien'] . '"', 'exp_tab', my_html($LG_csv_export));
+        if (IS_GRANTED('G') and ((!$SiteGratuit) or ($Premium))) {
+            echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/export_liens?Categ=' . $row['type_lien'] . '"', 'exp_tab', my_html($LG_csv_export));
         }
         echo '</td></tr></table>' . "\n";
         echo '<div id="div' . $suf . '">' . "\n";
@@ -106,7 +109,7 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
     $style = 'liste2';
     if (pair($num_lig_coul++)) $style = 'liste';
     echo '<tr class="' . $style . '">' . "\n";
-    echo '<td width="25%"><a href="' . $root . '/fiche_lien.php?Ref=' . $id_lien . '">' . my_html($row['description']) . "</a></td>\n";
+    echo '<td width="25%"><a href="' . $root . '/fiche_lien?Ref=' . $id_lien . '">' . my_html($row['description']) . "</a></td>\n";
     echo "<td";
     if ($image == '') {
         echo " colspan=\"2\"";
@@ -119,13 +122,13 @@ while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
         echo '</td>' . "\n";
     }
     // Icone de modification et checkbox de suppression pour le gestionnaire
-    if ($est_gestionnaire) {
+    if (IS_GRANTED('G')) {
 
-        echo '<td align="center" width="10%"><a href="' . $root . '/edition_lien.php?Ref=' . $row['Ref_lien'] . '"><img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"/></a>' . "\n";
+        echo '<td align="center" width="10%"><a href="' . $root . '/edition_lien?Ref=' . $row['Ref_lien'] . '"><img src="' . $chemin_images_icones . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"/></a>' . "\n";
         echo '&nbsp;<input type="checkbox" name="S_Sup[' . $num_lig . ']" id="S_Sup_' . $num_lig . '" ';
         echo 'onclick="traite(' . $num_lig . ')"';
         echo "/>\n";
-        echo  '<input type="' . $hidden . '" name="idLien[' . $num_lig . ']" value="' . $id_lien . '"/>';
+        echo  '<input type="hidden" name="idLien[' . $num_lig . ']" value="' . $id_lien . '"/>';
         if ($row['Diff_Internet'] == 1) echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '"> ';
         else                            echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '"> ';
         echo '</td>';
@@ -142,7 +145,7 @@ if ($Anc_Type != '') {
 
 echo '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '" title="' . LG_TIP . '">' . LG_CH_IMAGE_MAGNIFY . '.<br />';
 
-if ($est_gestionnaire) {
+if (IS_GRANTED('G')) {
     echo '<div id="boutons">';
     bt_ok_an_sup('', '', $lib_sup, LG_LINKS_THIS, false, false);
     echo '</div>';

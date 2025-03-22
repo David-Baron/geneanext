@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
@@ -19,10 +24,8 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
-// Gestion standard des pages
-$acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Document_Utils'];    // Titre pour META
-$niv_requis = 'G';                            // Page accessible uniquement au gestionnaire
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 require(__DIR__ . '/../app/ressources/commun_rech_com_util_docs.php');
@@ -40,7 +43,7 @@ $sql = 'SELECT Titre, Diff_Internet FROM ' . nom_table('documents') . ' WHERE id
 $res = lect_sql($sql);
 if ($res = lect_sql($sql)) {
     if ($enreg = $res->fetch(PDO::FETCH_NUM)) {
-        if (($enreg[1] == 'O') or ($est_gestionnaire)) {
+        if (($enreg[1] == 'O') or IS_GRANTED('G')) {
             echo '<h3 align="center">' . my_html($enreg[0]) . '</h3><br />' . "\n";
         }
     }
@@ -78,9 +81,6 @@ if ($nb == 0) {
 
     echo '</table>';
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

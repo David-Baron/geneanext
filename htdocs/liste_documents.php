@@ -5,10 +5,14 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'acc�s de la page : (M)ise � jour, (L)ecture
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Documents_List'];        // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'I';                       // Page r�serv�e � partir du profil invit�
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Verrouillage de la gestion des documents sur les gratuits non Premium
@@ -19,7 +23,7 @@ $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut(my_html($titre), $compl, 'Liste_Documents', '');
 
 // Lien direct sur le dernier document saisi
-if ($_SESSION['estGestionnaire']) {
+if (IS_GRANTED('G')) {
     require(__DIR__ . '/../app/ressources/fonctions_maj.php');
     $MaxRef = Nouvel_Identifiant('id_document', 'documents') - 1;
 }
@@ -70,14 +74,14 @@ $requete = 'select id_Document,Titre,Nature_Document,Diff_Internet,Nom_Fichier, 
 $result = lect_sql($requete);
 
 // Lien direct sur le dernier evenement saisi
-if ($_SESSION['estGestionnaire']) {
+if (IS_GRANTED('G')) {
     if ($MaxRef > 0) {
-        echo '<a href="' . $root . '/edition_document.php?Reference=' . $MaxRef .
+        echo '<a href="' . $root . '/edition_document?Reference=' . $MaxRef .
             '">' . my_html(LG_DOC_LIST_LAST) . '</a><br />';
     }
     // Possibilit� d'ins�rer un document
-    echo my_html(LG_DOC_LIST_ADD_1) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1"', 'ajouter', $LG_add) . '&nbsp;;&nbsp;';
-    echo my_html(LG_DOC_LIST_ADD_MANY) . ' ' . Affiche_Icone_Lien('href="' . $root . '/create_multiple_docs.php"', 'ajout_multiple', LG_DOC_LIST_ADD_MANY_TIP) . '<br /><br />' . "\n";
+    echo my_html(LG_DOC_LIST_ADD_1) . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_document?Reference=-1"', 'ajouter', $LG_add) . '&nbsp;;&nbsp;';
+    echo my_html(LG_DOC_LIST_ADD_MANY) . ' ' . Affiche_Icone_Lien('href="' . $root . '/create_multiple_docs"', 'ajout_multiple', LG_DOC_LIST_ADD_MANY_TIP) . '<br /><br />' . "\n";
 }
 //
 //  Affichage des documents
@@ -91,17 +95,17 @@ if ($result->rowCount() > 0) {
         $x_Titre = $enreg['Titre'];
         $typologie = $enreg['Libelle_Type'];
         $affiche = false;
-        if (($enreg['Diff_Internet'] == 'O') or ($_SESSION['estGestionnaire'])) {
+        if (($enreg['Diff_Internet'] == 'O') or IS_GRANTED('G')) {
             $affiche = true;
         }
         if ($affiche) {
-            echo '<a href="' . $root . '/fiche_document.php?Reference=' . $refDoc . '">' . $x_Titre . '</a>';
+            echo '<a href="' . $root . '/fiche_document?Reference=' . $refDoc . '">' . $x_Titre . '</a>';
         } else {
             echo $x_Titre;
         }
         echo ' (' . LG_DOC_LIST_TYPE . ' ' . $typologie . ', ' . $Natures_Docs[$enreg['Nature_Document']] . ")\n";
         if ($affiche) {
-            echo '&nbsp;<a href="' . $root . '/edition_document.php?Reference=' . $refDoc . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_document?Reference=' . $refDoc . '">' . $echo_modif;
             $nature = Get_Type_Mime($enreg['Nature_Document']);
             $chemin_docu = get_chemin_docu($enreg['Nature_Document']);
             echo '&nbsp;&nbsp;' . Affiche_Icone_Lien('href="' . $chemin_docu . $enreg['Nom_Fichier'] . '" type="' . $nature . '"', 'oeil', LG_DOC_LIST_DISPLAY, 'n');

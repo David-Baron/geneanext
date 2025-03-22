@@ -5,11 +5,16 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function aff_option_niveau($niv_option)
 {
     global $niv;
     echo '<option value="' . $niv_option . '"';
-    if ($niv_option == $niv) echo ' selected="selected"';
+    if ($niv_option == $niv) echo ' selected';
     echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
 }
 
@@ -151,12 +156,12 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     $compl = Ajoute_Page_Info(900, 450);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_utilisateur.php?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_utilisateur?code=' . $Code . '"', 'page', $LG_Menu_Title['User']) . '&nbsp;';
 
     Insere_Haut($titre, $compl, 'Edition_Utilisateur', $Code);
-    include(__DIR__ . '/assets/js/ctrlMotPasse.js');
+    include(__DIR__ . '/../public/assets/js/ctrlMotPasse.js');
 
-    echo '<form id="saisie" method="post" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post">' . "\n";
 
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     echo '<input type="hidden" name="motPasse" value=""/>' . "\n";

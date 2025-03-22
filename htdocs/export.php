@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Retourne vrai si le nom de la table correspond
 function est_table($nom_compar, $table_name)
 {
@@ -59,14 +64,10 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_ok), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_an), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-// On retravaille éventuellement les boutons pour avoir un comportement standard
-if ($annuler == $lib_an) $annuler = 'Annuler';
 if ($ok == $lib_ok) $ok = 'OK';
 
-// Gestion standard des pages
-$acces = 'L';                      // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Export';                 // Titre pour META
-$niv_requis = 'G';                // Page réservée au gestionnaire
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
@@ -531,7 +532,7 @@ if ($bt_OK) {
     else fclose($fp);
 
     echo '<br /><br />' . LG_EXPORT_FILE . ' <a href="' . $nom_fic_svg . '" target="_blank">' . $nom_fic_svg . '</a><br />' . "\n";
-    Bouton_Retour($lib_Retour);
+
 } else {
 
     echo '<form id="saisie" method="post">' . "\n";

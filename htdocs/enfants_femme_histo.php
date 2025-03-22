@@ -16,11 +16,6 @@ foreach ($tab_variables as $nom_variables) {
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-// On retravaille le libellé du bouton pour effectuer le retour...
-if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
-
-// Gestion standard des pages
-$acces = 'L';                                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Children_Per_Mother'];        // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -43,7 +38,7 @@ $sql = 'select count(*), f.Mere, p.Ne_le'
     . ' where Mere <> 0'
     . ' and f.Mere = p.Reference'
     . ' and Ne_le LIKE "_________L"';
-if (!$est_privilegie) {
+if (!IS_GRANTED('P')) {
     $sql = $sql . " and Diff_Internet = 'O' ";
 }
 $sql = $sql
@@ -128,9 +123,6 @@ if ($presence) {
         echo ' ; ' . LG_CH_PER_MOTHER_SHE_HAD . ' ' . $max_nb_enfants . ' ' . LG_CHILD . pluriel($max_nb_enfants) . '.';
     }
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour);
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

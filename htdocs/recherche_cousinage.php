@@ -96,9 +96,9 @@ function Affiche_Personne($Reference)
         if (($_SESSION['estPrivilegie']) or ($Personne[3]) == 'O') {
             if ($Sortie == 'e') {
                 $Ref_P = $Personne[0];
-                echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_P . '">' . $Personne[1] . ' ' . $Personne[2] . '</a> ';
-                echo Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref_P . '"', 'arbre_asc', $LG_assc_tree) . ' ' .
-                    Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref_P . '"', 'arbre_desc', $LG_desc_tree) . ' ';
+                echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref_P . '">' . $Personne[1] . ' ' . $Personne[2] . '</a> ';
+                echo Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pers?Refer=' . $Ref_P . '"', 'arbre_asc', $LG_assc_tree) . ' ' .
+                    Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers?Refer=' . $Ref_P . '"', 'arbre_desc', $LG_desc_tree) . ' ';
             } else {
                 echo $Personne[1] . ' ' . $Personne[2];
             }
@@ -139,7 +139,7 @@ if ($Sortie != 't') {
 
     // Constitution de la liste des personnes
     $sql = 'select Reference, Nom, Prenoms, Ne_le, Decede_Le from ' . nom_table('personnes') . ' where Reference <> 0';
-    if (!$_SESSION['estPrivilegie']) $sql .= ' and Diff_Internet = \'O\'';
+    if (!IS_GRANTED('P')) $sql .= ' and Diff_Internet = \'O\'';
     $sql .= ' order by Nom, Prenoms';
     $res = lect_sql($sql);
     

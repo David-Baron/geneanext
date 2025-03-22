@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -30,9 +34,6 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Gestion standard des pages
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
-
 // Recup de la variable passée dans l'URL : identifiant du dépôt
 $Ident = Recup_Variable('ident', 'N');
 
@@ -48,8 +49,6 @@ else
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $NomD       = Secur_Variable_Post($NomD, 100, 'S');
 $ANomD      = Secur_Variable_Post($ANomD, 100, 'S');
@@ -127,7 +126,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_depot.php?ident=' . $Ident . '"', 'page', my_html($LG_Menu_Title['Repo_Sources'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_depot?ident=' . $Ident . '"', 'page', my_html($LG_Menu_Title['Repo_Sources'])) . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Depot', $Ident);
 

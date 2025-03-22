@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -35,9 +40,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 /*
 Identifiant_zone
@@ -179,8 +181,6 @@ if ($ok == 'OK') {
     }
 }
 
-if ($est_gestionnaire) {
-    // Première entrée : affichage pour saisie
     if (($ok == '') && ($annuler == '')) {
 
         echo '<br />';
@@ -247,9 +247,6 @@ if ($est_gestionnaire) {
         echo '</table>';
         echo '</form>';
     }
-} else {
-    echo $LG_function_noavailable_profile;
-}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

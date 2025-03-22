@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array('annuler', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
@@ -60,7 +65,7 @@ $sql = 'SELECT count(*) , nom_ville, ville_naissance, "N"' .
     ' FROM ' . $n_personnes . ' p, ' . $n_villes . ' v' .
     ' WHERE p.ville_naissance = v.identifiant_zone and p.Reference <> 0 ';
 if ($Depart != 0) $sql .= ' and v.Zone_Mere = ' . $Depart . ' ';
-if (!$_SESSION['estPrivilegie']) $sql .= " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql .= " and Diff_Internet = 'O' ";
 $sql .= 'GROUP BY p.ville_naissance union ';
 
 // Partie ville de mariage ==> attention nombre de couples
@@ -69,7 +74,7 @@ $sql .= 'SELECT count(*), v.Nom_Ville, Ville_Mariage, "M" ' .
     ' WHERE u.Ville_Mariage = v.identifiant_zone ' .
     'and u.Conjoint_1 = m.Reference and u.Conjoint_2 = f.Reference ';
 if ($Depart != 0) $sql .= ' and v.Zone_Mere = ' . $Depart . ' ';
-if (!$_SESSION['estPrivilegie']) {
+if (!IS_GRANTED('P')) {
     $sql .= "and m.Diff_Internet = 'O' ";
     $sql .= "and f.Diff_Internet = 'O' ";
 }
@@ -80,7 +85,7 @@ $sql .= 'SELECT count(*) , nom_ville, ville_deces, "D" ' .
     'FROM ' . $n_personnes . ' p, ' . $n_villes . ' v' .
     ' WHERE p.ville_deces = v.identifiant_zone and p.Reference <> 0 ';
 if ($Depart != 0) $sql .= ' and v.Zone_Mere = ' . $Depart . ' ';
-if (!$_SESSION['estPrivilegie']) $sql .= " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql .= " and Diff_Internet = 'O' ";
 $sql = $sql . 'GROUP BY p.ville_deces ORDER BY 2';
 
 $larg = ' width ="20%"';
@@ -121,19 +126,19 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
     $premier = false;
     switch ($enreg[3]) {
         case 'N':
-            $case_N = '<a href="' . $root . '/liste_pers2.php?Type_Liste=N&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
+            $case_N = '<a href="' . $root . '/liste_pers2?Type_Liste=N&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
             if ($Num_Ville != 0) $tot_N += $nb;
             break;
         case 'M':
-            $case_M = '<a href="' . $root . '/liste_pers2.php?Type_Liste=M&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
+            $case_M = '<a href="' . $root . '/liste_pers2?Type_Liste=M&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
             if ($Num_Ville != 0) $tot_M += $nb;
             break;
         case 'D':
-            $case_D = '<a href="' . $root . '/liste_pers2.php?Type_Liste=D&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
+            $case_D = '<a href="' . $root . '/liste_pers2?Type_Liste=D&amp;Nom=' . $Ville . '&amp;idNom=' . $Num_Ville . '">' . $nb . '</a>';
             if ($Num_Ville != 0) $tot_D += $nb;
             break;
     }
-    $case_V = '<a href="' . $root . '/fiche_ville.php?Ident=' . $Num_Ville . '">' . my_html($enreg[1]) . '</a>&nbsp;';
+    $case_V = '<a href="' . $root . '/fiche_ville?Ident=' . $Num_Ville . '">' . my_html($enreg[1]) . '</a>&nbsp;';
 }
 Rupt_Ville();
 
@@ -152,13 +157,6 @@ echo '<td>' . $tot_D . '</td>';
 echo '</tr>' . "\n";
 
 echo '</table>';
-
-// Formulaire pour le bouton retour
-$r_compl = '';
-$qs = $_SERVER['QUERY_STRING'];
-if ($qs != '') $r_compl = '?' . $qs;
-Bouton_Retour($lib_Retour, $r_compl);
-
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

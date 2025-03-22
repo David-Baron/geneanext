@@ -9,6 +9,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
@@ -54,8 +59,6 @@ $titre = $LG_Menu_Title['Link_Ev_Pers'];        // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup des variables passées dans l'URL
 $refPers = Recup_Variable('refPers', 'N');            // Personne associée
@@ -252,7 +255,7 @@ if (($bt_Sup) or ($bt_OK)) {
             $idNiveauLu = $enreg['Identifiant_Niveau'];
             $Dans_Etiq_GG = $enreg['Dans_Etiquette_GeneGraphe'];
             // Libellé spécifique pour évènement connu et personne connue
-            echo 'Lien de ' . $Prenoms . ' ' . $Nom . ' avec <a href="' . $root . '/fiche_evenement.php?refPar=' . $refEvt . '">' . $lib_evt . '</a><br />' . "\n";
+            echo 'Lien de ' . $Prenoms . ' ' . $Nom . ' avec <a href="' . $root . '/fiche_evenement?refPar=' . $refEvt . '">' . $lib_evt . '</a><br />' . "\n";
         }
     }
     // Initialisation des variables d'affichage en création
@@ -272,7 +275,7 @@ if (($bt_Sup) or ($bt_OK)) {
 
     //  Debut de la page
     echo '<br />';
-    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'' . $z_controle . '\');" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'' . $z_controle . '\');">' . "\n";
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
     // Zones actuelles
     echo '<input type="hidden" name="persPrinAnc" value="' . $persPrin . '"/>' . "\n";

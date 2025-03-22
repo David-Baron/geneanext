@@ -38,7 +38,7 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
     Champ_car($enreg2, 'Libelle_Type');
 
     $compl = Ajoute_Page_Info(600, 150);
-    $compl .= '<a href="' . $root . '/edition_type_document.php?code=' . $Code . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
+    $compl .= '<a href="' . $root . '/edition_type_document?code=' . $Code . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>' . "\n";
 
     Insere_Haut($titre, $compl, 'Fiche_Type_Document', $Code);
 
@@ -58,16 +58,13 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
         echo '<fieldset>';
         echo '<legend>' . ucfirst(LG_DOC_DOCS) . '</legend>' . "\n";
         while ($enreg = $result->fetch(PDO::FETCH_NUM)) {
-            echo '<a href="' . $root . '/fiche_document.php?Reference=' . $enreg[0] . '">'
+            echo '<a href="' . $root . '/fiche_document?Reference=' . $enreg[0] . '">'
                 . my_html($enreg[2]) . ' (' . $Natures_Docs[$enreg[1]] . ')</a>'
-                . '&nbsp;<a href="' . $root . '/edition_document.php?Reference=' . $enreg[0] . $icone_mod . '</a><br />'
+                . '&nbsp;<a href="' . $root . '/edition_document?Reference=' . $enreg[0] . $icone_mod . '</a><br />'
                 . "\n";
         }
         echo '</fieldset>' . "\n";
     }
-
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';

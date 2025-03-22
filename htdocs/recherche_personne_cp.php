@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -38,10 +43,8 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 // On retravaille le libellé du bouton pour être standard...
 if ($ok == $lib_Rechercher) $ok = 'OK';
 
-// Gestion standard des pages
-$acces = 'L';                                // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Sch_Pers_CP'];        // Titre pour META
-$niv_requis = 'P';                            // Page accessible à partir du niveau privilégié
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
@@ -245,7 +248,7 @@ if ($bt_OK) {
         // L'utilisateur a demandé une recherche phonétique
         if ($Son != 'o') {
             // Transformation du nom en phonétique
-            require(__DIR__ . '/../app/Phonetique.php');
+            require(__DIR__ . '/../app/Util/Phonetique.php');
             $codePho = new Phonetique();
             $NomP = $codePho->calculer($NomP);
         }
@@ -306,7 +309,7 @@ if ($bt_OK) {
 
         // Surcouche non privilégiés sur les 2 niveaux : personnes et parent / conjoint
         $crit_diffu = '';
-        if (!$est_privilegie) $crit_diffu = " and Diff_Internet = 'O' ";
+        if (!IS_GRANTED('P')) $crit_diffu = " and Diff_Internet = 'O' ";
         $req2 = $req2 . $crit_diffu;
         $req = $req . $crit_diffu;
 
@@ -379,9 +382,9 @@ if ($bt_OK) {
 
                 switch ($Sortie) {
                     case 'e':
-                        echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref . '" target="_blank">' . $nom . ' ' . $prenom . '</a>';
+                        echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $ref . '" target="_blank">' . $nom . ' ' . $prenom . '</a>';
                         aff_n_dec();
-                        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $ref . '"', 'fiche_edition', $LG_modify);
+                        if (IS_GRANTED('G')) echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne?Refer=' . $ref . '"', 'fiche_edition', $LG_modify);
                         echo '<br />' . "\n";
                         break;
                     case 't':
@@ -605,7 +608,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
     // L'export CSV n'est disponible qu'à partir du profil privilégié
-    if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+    if (IS_GRANTED('P')) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>' . "\n";
 
     // Ouverture des fiches dans un nouvel onglet ?

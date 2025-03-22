@@ -5,7 +5,10 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                // Type d'accès de la page
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 
 $tab_variables = array('annuler', 'Horigine', 'Gen_D', 'Gen_F');
 foreach ($tab_variables as $nom_variables) {
@@ -25,7 +28,7 @@ $Gen_F = Secur_Variable_Post($Gen_F, 1, 'N');
 
 $titre = $LG_Menu_Title['Gen_Is_Complete'];    // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'P';                // Page accessible à partir du niveau privilégié
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Positionnement des générations de début et de fin par défaut
@@ -115,10 +118,8 @@ echo "</table>\n";
 
 $res->closeCursor();
 
-echo '<a href="' . $root . '/liste_pers_gen.php?mq=O">' . my_html($LG_Menu_Title['Pers_Gen']) . '</a>';
+echo '<a href="' . $root . '/liste_pers_gen?mq=O">' . my_html($LG_Menu_Title['Pers_Gen']) . '</a>';
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '');
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -70,8 +74,6 @@ if ($actualite) {
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $refPar        = Secur_Variable_Post($refPar, 1, 'N');
 $idZoneAnc     = Secur_Variable_Post($idZoneAnc, 1, 'N');
@@ -216,7 +218,7 @@ if ($bt_OK) {
 if ($retourPreced) Retour_Ar();
 
 //  ========== Programme principal ==========
-if (!$est_contributeur) {
+if (!IS_GRANTED('C')) {
     Insere_Haut(my_html($titre), '', 'Edition_Evenement', "");
     echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>' . $LG_function_noavailable_profile . '<br>';
     echo '<table cellpadding="0" width="100%">';
@@ -303,20 +305,20 @@ if (!$est_contributeur) {
 
     $compl = Ajoute_Page_Info(600, 250);
     if ($refPar != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $refPar . '&amp;Type_Ref=E"', 'images', 'Images') . ' ';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_images?Refer=' . $refPar . '&amp;Type_Ref=E"', 'images', 'Images') . ' ';
     if ($refPar != -1) {
         $ajout = '';
         //if ($actualite) $ajout = '&amp;actu=o';
-        //$compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_evenement.php?refPar=' .$refPar . $ajout. '"','page','Fiche évènement') . ' ';
+        //$compl .= Affiche_Icone_Lien('href="'. $root .'/fiche_evenement?refPar=' .$refPar . $ajout. '"','page','Fiche évènement') . ' ';
         if ($actualite)
-            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_actualite.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['New']) . ' ';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_actualite?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['New']) . ' ';
         else
-            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_evenement.php?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['Event']) . ' ';
+            $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_evenement?refPar=' . $refPar . '"', 'page', $LG_Menu_Title['Event']) . ' ';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Evenement', '');
 
-    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'titreF,codeTypeF\')" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post" onsubmit="return verification_form(this,\'titreF,codeTypeF\')">' . "\n";
     echo '<input type="hidden" name="refPar" value="' . $refPar . '"/>' . "\n";
 
     // Dans le cas de création d'actualité, on ne présentera pas de select avec le type
@@ -523,7 +525,7 @@ if (!$est_contributeur) {
         // Ajout de lien autorisé en mise à jour uniquement
         if ($refPar != -1) {
             echo '<br /><br />Ajouter une personne : ' .
-                '<a href="' . $root . '/edition_lier_eve.php?refPers=-1&amp;refEvt=' . $refPar . '">' .
+                '<a href="' . $root . '/edition_lier_eve?refPers=-1&amp;refEvt=' . $refPar . '">' .
                 '<img src="' . $root . '/assets/img/' . $Icones['ajout'] . '" alt="Ajouter un &eacute;v&egrave;nement"/></a>' . "\n";
         }
     }
@@ -546,7 +548,7 @@ if (!$est_contributeur) {
     Aff_Documents_Objet($refPar, 'E', 'N');
     // Possibilité de lier un document pour l'évènement
     echo '<br /> Lier un document existant &agrave; l\'&eacute;v&egrave;nement : ' .
-        Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $refPar .
+        Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc?refObjet=' . $refPar .
             '&amp;typeObjet=E&amp;refDoc=-1"', 'ajout', 'Ajout d\'un document') . "\n";
     echo '</div>' . "\n";
 
@@ -560,7 +562,7 @@ if (!$est_contributeur) {
         $x = Aff_Sources_Objet($refPar, 'E', 'N');
         // Possibilité de lier un document pour l'évènement
         echo '<br /> Lier une source existante &agrave; l\'&eacute;v&egrave;nement : ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $refPar . '&amp;typeObjet=E&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source?refObjet=' . $refPar . '&amp;typeObjet=E&amp;refSrc=-1"', 'ajout', 'Ajout d\'une source') . "\n";
     }
     echo '</div>' . "\n";
 

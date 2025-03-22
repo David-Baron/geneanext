@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -27,14 +32,9 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 // On retravaille le libellé du bouton pour être standard...
 if ($ok == $lib_Supprimer) $ok = 'OK';
 
-$acces = 'M';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
-$niv_requis = 'G';                            // Niveau gestionnaire requis
 $titre = $LG_Menu_Title['Delete_Sosa'];    // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $Garder = Secur_Variable_Post($Garder, 1, 'S');
 
@@ -62,7 +62,7 @@ bt_ok_an_sup($lib_Supprimer, $lib_Annuler, '', '');
 echo '</table>';
 echo '<br />';
 echo '</form>';
-echo '<br /><a href="' . $root . '/verif_sosa.php">' . $LG_Menu_Title['Check_Sosa'] . '</a>';
+echo '<br /><a href="' . $root . '/verif_sosa">' . $LG_Menu_Title['Check_Sosa'] . '</a>';
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

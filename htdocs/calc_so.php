@@ -6,7 +6,7 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+
 $x = Lit_Env();
 $titre = $LG_Menu_Title['Calc_Sosa'];
 $mots = 'Sosa';

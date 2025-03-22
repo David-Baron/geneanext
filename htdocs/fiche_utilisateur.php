@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['User'];
 
@@ -30,7 +35,7 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 if ((!$enreg_sel) or ($code == 0)) Retour_Ar();
 
 $enreg = $enreg_sel;
-$compl = Affiche_Icone_Lien('href="' . $root . '/edition_utilisateur.php?code=' . $code . '"', 'fiche_edition', 'Edition fiche utilisateur') . '&nbsp;';
+$compl = Affiche_Icone_Lien('href="' . $root . '/edition_utilisateur?code=' . $code . '"', 'fiche_edition', 'Edition fiche utilisateur') . '&nbsp;';
 
 Insere_Haut($titre, $compl, 'Fiche_utilisateur', '');
 
@@ -57,9 +62,9 @@ if ($Environnement == 'I') {
 }
 echo '</table>' . "\n";
 if (($Environnement == 'I') && ($Last_cnx != '')) {
-    echo '<br><a href="' . $root . '/liste_connexions.php?Util=' . $code . '">' . LG_UTIL_CONNEXIONS . '</a>';
+    echo '<br><a href="' . $root . '/liste_connexions?Util=' . $code . '">' . LG_UTIL_CONNEXIONS . '</a>';
 }
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
+
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

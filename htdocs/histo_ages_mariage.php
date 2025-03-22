@@ -69,7 +69,7 @@ if ($Type_Histo == 'U') {
         " AND Ne_le <= '" . $Fin . "1231L'" .
         ' AND (p.Reference = u.Conjoint_1 or p.Reference = u.Conjoint_2) ' .
         " AND Maries_Le LIKE '_________L' ";
-    if (!$est_privilegie) {
+    if (!IS_GRANTED('P')) {
         $deb_sql .= "and Diff_Internet = 'O' ";
     }
     $order = ' order by Ne_Le, p.Reference, Maries_Le';
@@ -84,7 +84,7 @@ if ($Type_Histo == 'F') {
         ' AND (p.Reference = f.Pere or p.Reference = f.Mere) ' .
         ' AND e.Reference = f.Enfant ' .
         " AND e.Ne_le LIKE '_________L' ";
-    if (!$est_privilegie) {
+    if (!IS_GRANTED('P')) {
         $deb_sql .= "and p.Diff_Internet = 'O' ";
     }
     $order = ' order by p.Ne_Le, p.Reference, e.Ne_le';
@@ -118,7 +118,7 @@ if ($res = lect_sql($sql)) {
                 $nb_pers[$rang]++;
             if ($debug) {
                 echo $ref_nouv . ', âge : ' . Decompose_Mois($mois)
-                    . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
+                    . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
                     . '<br />';
             }
         }
@@ -165,7 +165,7 @@ if ($res = lect_sql($sql)) {
                 $nb_pers[$rang]++;
             if ($debug) {
                 echo $ref_nouv . ', âge : ' . Decompose_Mois($mois)
-                    . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
+                    . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
                     . '<br />';
             }
         }
@@ -219,21 +219,19 @@ echo '</table>';
 $Nom = '';
 $Prenoms = '';
 if (Get_Nom_Prenoms($ref_min_h, $Nom, $Prenoms)) {
-    echo '<br />' . $Ch_Histo_Age_Youngest_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_min_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_h) . ')';
+    echo '<br />' . $Ch_Histo_Age_Youngest_M . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_min_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_h) . ')';
 }
 if (Get_Nom_Prenoms($ref_min_f, $Nom, $Prenoms)) {
-    echo '<br />' . $Ch_Histo_Age_Youngest_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_min_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_f) . ')';
+    echo '<br />' . $Ch_Histo_Age_Youngest_W . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_min_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($min_mois_f) . ')';
 }
 
 // Un age d'évènement (naissance enfant, union) est antérieur à la date de naissance
-if ($est_contributeur) {
+if (IS_GRANTED('C')) {
     if ($warning_negatif) {
         echo '<br><br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . $ch_warn_age;
     }
 }
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

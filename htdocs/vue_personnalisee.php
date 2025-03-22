@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -67,7 +72,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if ($Res = lect_sql($sql)) {
         if ($pers = $Res->fetch(PDO::FETCH_NUM)) {
             $ref_decujus = $pers[0];
-            if (($pers[5] == 'O') or ($_SESSION['estPrivilegie']))
+            if (($pers[5] == 'O') or IS_GRANTED('P'))
                 $lib_defaut = my_html($pers[1] . ' ' . $pers[2]) . aff_annees_pers($pers[3], $pers[4]);
             else
                 $lib_defaut = my_html(LG_CUST_VIEW_PRIVATE);
@@ -81,7 +86,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if (!isset($_SESSION['decujus'])) $decujus = -1;
     else $decujus = $_SESSION['decujus'];
 
-    if (!$_SESSION['estPrivilegie']) $where = " Diff_Internet = 'O' ";
+    if (!IS_GRANTED('P')) $where = " Diff_Internet = 'O' ";
     else $where = '';
 
     echo '<br />';

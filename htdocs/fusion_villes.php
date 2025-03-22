@@ -5,6 +5,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -25,9 +31,7 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 // On retravaille le libellé du bouton pour être standard...
 if ($ok == LG_CH_FUSIONNER) $ok = 'OK';
 
-$acces = 'M';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Town_Merging'];
-$niv_requis = 'C';
 
 // Sécurisation des variables postées
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
@@ -116,7 +120,7 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
         if ($maj_site) maj_date_site();
     }
 
-    echo '<form id="saisie" method="post" action="' . $root . '/fusion_villes.php?' . Query_Str() . '">';
+    echo '<form id="saisie" method="post">';
 
     $ref1 = 0;
     $ref2 = 0;

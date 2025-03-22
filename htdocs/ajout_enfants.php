@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Récupération des variables de l'affichage précédent
 $tab_variables = array('ok', 'annuler', 'Nom_Defaut', 'Horigine');
 foreach ($tab_variables as $nom_variables) {
@@ -20,8 +25,6 @@ $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 $Reference = Recup_Variable('Reference', 'N');
 if (!$Reference) $Reference = -1;
 
-// Gestion standard des pages
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = LG_PERS_CHILDREN_ADD;
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -29,8 +32,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $Nom_Defaut = Secur_Variable_Post($Nom_Defaut, 50, 'S');
 
@@ -153,19 +154,19 @@ if ((!$bt_OK) && (!$bt_An)) {
     $nom_pere = '';
     $nom_mere = '';
 
-    echo '<form id="saisie" method="post" action="' . $root . '/ajout_enfants.php?' . Query_Str() . '">';
+    echo '<form id="saisie" method="post">';
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     echo '<br />';
     if ($Conjoint_1 != 0) {
         if (Get_Nom_Prenoms($Conjoint_1, $Nom, $Prenoms)) {
-            echo LG_FATHER . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_1 . '"', 'fiche_edition', 'Modifier') . '<br />';
+            echo LG_FATHER . ' <a href="' . $root . '/edition_personne?Refer=' . $Conjoint_1 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne?Refer=' . $Conjoint_1 . '"', 'fiche_edition', 'Modifier') . '<br />';
             $nom_pere = $Nom;
         }
     }
     if ($Conjoint_2 != 0) {
         if (Get_Nom_Prenoms($Conjoint_2, $Nom, $Prenoms)) {
-            echo LG_MOTHER . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $Conjoint_2 . '"', 'fiche_edition', 'Modifier') . '<br />';
+            echo LG_MOTHER . ' <a href="' . $root . '/edition_personne?Refer=' . $Conjoint_2 . '">' . $Prenoms . ' ' . $Nom . '</a> ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne?Refer=' . $Conjoint_2 . '"', 'fiche_edition', 'Modifier') . '<br />';
             $nom_mere = $Nom;
         }
     }
@@ -181,8 +182,8 @@ if ((!$bt_OK) && (!$bt_An)) {
             while ($row = $resE->fetch(PDO::FETCH_NUM)) {
                 $Enfant = $row[0];
                 if (Get_Nom_Prenoms($Enfant, $Nom, $Prenoms)) {
-                    echo '<a href="' . $root . '/edition_personne.php?Refer=' . $Enfant . '">' . $Prenoms . ' ' . $Nom . '</a> ';
-                    echo '<a href="' . $root . '/edition_filiation.php?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modifier la filiation" title="Modifier la filiation">';
+                    echo '<a href="' . $root . '/edition_personne?Refer=' . $Enfant . '">' . $Prenoms . ' ' . $Nom . '</a> ';
+                    echo '<a href="' . $root . '/edition_filiation?Refer=' . $Enfant . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="Modifier la filiation" title="Modifier la filiation">';
                 }
             }
         }

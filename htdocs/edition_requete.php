@@ -7,6 +7,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -23,7 +28,6 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Request_Edit'];     // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -59,7 +63,7 @@ if ($bt_OK) {
 
 if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
 
-    $compl = Ajoute_Page_Info(600, 150) . Affiche_Icone_Lien('href="' . $root . '/fiche_requete.php?reference=' . $reference . '"', 'page', my_html($LG_Menu_Title['Request'])) . ' ';
+    $compl = Ajoute_Page_Info(600, 150) . Affiche_Icone_Lien('href="' . $root . '/fiche_requete?reference=' . $reference . '"', 'page', my_html($LG_Menu_Title['Request'])) . ' ';
 
     Insere_Haut($titre, $compl, 'Edition_Requete', $reference);
 

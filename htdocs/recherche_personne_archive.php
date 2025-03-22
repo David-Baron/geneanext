@@ -10,6 +10,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -41,16 +46,11 @@ $Horigine    = Secur_Variable_Post($Horigine, 100, 'S');
 // On retravaille le libellé du bouton pour être standard...
 if ($ok == $lib_Rechercher) $ok = 'OK';
 
-// Gestion standard des pages
-$acces = 'L';                                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Archive_Preparation'];        // Titre pour META
-$niv_requis = 'C';
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 $compl = '';
-
-if ($_SESSION['estContributeur']) {
 
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
@@ -245,8 +245,8 @@ if ($_SESSION['estContributeur']) {
             if ($Sortie != 'c') echo '<tr><td>';
             switch ($Sortie) {
                 case 'e':
-                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row[0] . '">' . my_html($row[2] . ' ' . $row[1]) . '</a>';
-                    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $row[0] . '">' . my_html($row[2] . ' ' . $row[1]) . '</a>';
+                    echo ' <a href="' . $root . '/edition_personne?Refer=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     break;
                 case 't':
                     echo my_html($row[2] . ' ' . $row[1]);
@@ -453,9 +453,7 @@ if ($_SESSION['estContributeur']) {
         echo '</tr>';
         echo '</table>';
     }
-} else {
-    echo $LG_function_noavailable_profile . "\n";
-}
+
 ?>
 </body>
 

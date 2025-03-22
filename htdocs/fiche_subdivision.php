@@ -35,14 +35,14 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 if ((!$enreg_sel) or ($Ident == 0)) Retour_Ar();
 
 $compl = Ajoute_Page_Info(600, 150);
-if ($est_gestionnaire) {
-    $compl = Affiche_Icone_Lien('href="' . $root . '/edition_subdivision.php?Ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Subdiv_Edit'])) . '&nbsp;';
+if (IS_GRANTED('G')) {
+    $compl = Affiche_Icone_Lien('href="' . $root . '/edition_subdivision?Ident=' . $Ident . '"', 'fiche_edition', my_html($LG_Menu_Title['Subdiv_Edit'])) . '&nbsp;';
 }
 Insere_Haut($titre, $compl, 'Fiche_Subdivision', '');
 
 $ville = '?';
 if ($enreg['Nom_Ville'] !== '') {
-    $ville = '<a href="' . $root . '/fiche_ville.php?Ident=' . $enreg['id_Ville'] . '">' . my_html($enreg['Nom_Ville']) . '</a>';
+    $ville = '<a href="' . $root . '/fiche_ville?Ident=' . $enreg['id_Ville'] . '">' . my_html($enreg['Nom_Ville']) . '</a>';
 }
 
 // Affichage de l'image par défaut pour la subdivision
@@ -69,14 +69,13 @@ if (($enreg['Latitude'] != 0) or ($enreg['Longitude'] != 0)) {
 echo '</table>';
 if (Rech_Commentaire($Ident, 'S')) {
     echo '<br />';
-    if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+    if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
         echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
     }
 }
 
 echo '<br />' . "\n";
 Aff_Documents_Objet($Ident, 'S', 'O');
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

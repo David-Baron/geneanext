@@ -35,8 +35,8 @@ $ajout = '';
 if ($actualite) $ajout = '&amp;actu=o';
 
 $compl = Ajoute_Page_Info(600, 150);
-if ($est_gestionnaire) {
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_evenement.php?refPar=' . $refPar . $ajout . '"', 'fiche_edition', $LG_modify) . '&nbsp;';
+if (IS_GRANTED('G')) {
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_evenement?refPar=' . $refPar . $ajout . '"', 'fiche_edition', $LG_modify) . '&nbsp;';
 }
 Insere_Haut($titre, $compl, 'Fiche_Evenement', '');
 
@@ -68,7 +68,7 @@ if ($result = lect_sql($requete)) {
         echo '<br />';
         echo '<table width="80%" class="table_form" align="center">' . "\n";
         echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_Title) . '</td><td class="value">' . $titreLu . '</td></tr>';
-        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_Type) . '</td><td class="value">' . '<a href="' . $root . '/fiche_type_evenement.php?code=' . $enreg['Code_Type'] . '">' . $LibelleTypeLu . '</a></td></tr>';
+        echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_Type) . '</td><td class="value">' . '<a href="' . $root . '/fiche_type_evenement?code=' . $enreg['Code_Type'] . '">' . $LibelleTypeLu . '</a></td></tr>';
         if ($nomZone != '')
             echo '<tr><td class="label" width="25%">' . ucfirst($LG_Event_Where) . '</td><td class="value">' . $nomZone . '</td></tr>';
         if (($dDebLu != '') or ($dFinLu != ''))
@@ -77,7 +77,7 @@ if ($result = lect_sql($requete)) {
 
         //  ===== Affichage du commentaire
         if (Rech_Commentaire($refPar, $Type_Ref)) {
-            if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+            if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
                 echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
             }
         }
@@ -88,10 +88,9 @@ if ($result = lect_sql($requete)) {
         aff_lien_unions($refPar, 'N'); // === Affichage des liens avec des unions
         Aff_Documents_Objet($refPar, $Type_Ref, 'O'); //  Documents liés à l'évènement
         if ($objetCibleLu == 'P') { // Affichage de la liste des noms pour l'évenement
-            echo '<br /><a href="' . $root . '/liste_nom_evenement.php?refPar=' . $refPar . '">Liste des noms pour l\'&eacute;v&egrave;nement</a>';
+            echo '<br /><a href="' . $root . '/liste_nom_evenement?refPar=' . $refPar . '">Liste des noms pour l\'&eacute;v&egrave;nement</a>';
         }
         echo '<br />' . "\n";
-        Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
         echo '<table cellpadding="0" width="100%">';
         echo '<tr>';
         echo '<td align="right">';

@@ -6,7 +6,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Pers_Tree'];          // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -104,7 +109,7 @@ if ($nbPagesHor * $nbPagesVer > 1) {
     for ($indV = 0; $indV < $nbPagesVer; $indV++) {
         for ($indH = 0; $indH < $nbPagesHor; $indH++) {
             $Url = rawurlencode($nomArbre . '_' . $indV .  '_' . $indH);
-            echo '<option value="Arbre_Perso.php?nomArbre=' . $Url . '.html&Refer=0">Page ' . $numPage . '</option>' . "\n";
+            echo '<option value="'.$root.'/arbre_perso?nomArbre=' . $Url . '.html&Refer=0">Page ' . $numPage . '</option>' . "\n";
             $numPage++;
         }
     }

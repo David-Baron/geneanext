@@ -33,11 +33,11 @@ if ($texte) $Depart = Recup_Variable('Depart', 'N', 1);
 
 $comp_texte = '&amp;Depart=' . $Depart;
 $compl = Ajoute_Page_Info(600, 150) .
-    '<a href="' . $root . '/liste_eclair.php?texte=O' . $comp_texte .
+    '<a href="' . $root . '/liste_eclair?texte=O' . $comp_texte .
     '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '"></a>' . "\n";
 
 if ((!$SiteGratuit) or ($Premium))
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_eclair.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', $LG_pdf_format) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_eclair?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', $LG_pdf_format) . '&nbsp;';
 
 $sortie = 'H';
 
@@ -158,7 +158,7 @@ if ($Depart != -1) {
     $existe_div = 0;
     $num_div = 0;
 
-    $deb_lien = '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=';
+    $deb_lien = '<a href="' . $root . '/liste_pers2?Type_Liste=P&amp;idNom=';
 
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         $Nouv_Nom = my_html($row[0]);

@@ -5,7 +5,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Name_Is_Complete'];         // Titre pour META
 
 $tab_variables = array('annuler', 'Horigine');
@@ -27,8 +26,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 // Verrouillage de la gestion des documents sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup des variables passées dans l'URL :
 $idNom = Recup_Variable('idNom', 'N');            // Famille, ville ou catégorie
@@ -40,13 +37,13 @@ $titre .= $NomL;
 
 $n_unions = nom_table('unions');
 
-$lien = 'href="' . $root . '/completude_nom.php?texte=O' .
+$lien = 'href="' . $root . '/completude_nom?texte=O' .
     '&amp;idNom=' . $idNom .
     '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 
 $compl = Ajoute_Page_Info(700, 250) .
     Affiche_Icone_Lien($lien . '"', 'text', 'Format imprimable') . '&nbsp;' .
-    Affiche_Icone_Lien('href="' . $root . '/completude_nom.php?idNom=' . $idNom . '&amp;Nom=' . $NomL . '&amp;Sortie=c"', 'exp_tab', 'Export CSV') . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/completude_nom?idNom=' . $idNom . '&amp;Nom=' . $NomL . '&amp;Sortie=c"', 'exp_tab', 'Export CSV') . '&nbsp;';
 
 if (! $texte) {
     Insere_Haut(my_html($titre), $compl, 'Completude_Nom', $NomL);
@@ -66,7 +63,7 @@ $sql = 'select Reference, Prenoms, Ne_le, Ville_Naissance, Decede_Le, Ville_Dece
     ' from ' . nom_table('personnes') .
     ' where Reference <> 0 ' .
     ' and Reference in (select idPers from ' . nom_table('noms_personnes') . ' where idNom = ' . $idNom . ') ';
-if (!$est_privilegie) $sql = $sql . "and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql = $sql . "and Diff_Internet = 'O' ";
 $sql = $sql . 'order by Nom, Prenoms';
 
 $num_lig = 0;
@@ -152,9 +149,9 @@ if ($res = lect_sql($sql)) {
             if (!$CSV) {
                 echo '<td>';
                 if (!$texte) {
-                    echo ' <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($row['Prenoms']) . '</a>' . "\n";
-                    echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
-                    echo ' <a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . LG_PERS_CONTROL . '" title="' . LG_PERS_CONTROL . '"></a>';
+                    echo ' <a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref . '">' . my_html($row['Prenoms']) . '</a>' . "\n";
+                    echo ' <a href="' . $root . '/edition_personne?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>';
+                    echo ' <a href="' . $root . '/verif_personne?Refer=' . $Ref . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . LG_PERS_CONTROL . '" title="' . LG_PERS_CONTROL . '"></a>';
                 } else echo my_html($row['Prenoms']) . "\n";
                 echo '</td>';
             } else {
@@ -295,10 +292,6 @@ if ($res = lect_sql($sql)) {
 }
 
 if (! $texte) {
-
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
-
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

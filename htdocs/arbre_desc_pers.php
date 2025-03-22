@@ -6,7 +6,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                    // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_desc_tree;            // Titre pour META
 $x = Lit_Env();
 $index_follow = 'IN';            // NOFOLLOW demandé pour les moteurs
@@ -63,7 +62,7 @@ function Retourne_Pers($num)
                                             if ($Conjs_Pers != '') $Conjs_Pers .= ', ';
                                             $Conjs_Pers = $Conjs_Pers . $Nom . ' ' . $Prenoms . '&nbsp;';
                                             if (!$texte)
-                                                $Conjs_Pers .= Affiche_Icone_Lien('href="' . $root . '/arbre_noyau.php?Reference=' . $enreg[1] . '"', 'groupe', 'Noyau') . '&nbsp;';
+                                                $Conjs_Pers .= Affiche_Icone_Lien('href="' . $root . '/arbre_noyau?Reference=' . $enreg[1] . '"', 'groupe', 'Noyau') . '&nbsp;';
                                         }
                                     }
                                 }
@@ -130,7 +129,7 @@ if ($conj_demandes) $comp_texte .= '&amp;avec_conjoints=O';
 
 $compl = Ajoute_Page_Info(600, 150);
 if (!$is_bot) {
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers?Refer=' . $Refer . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . '&nbsp;';
 }
 
 if (! $texte) {
@@ -146,7 +145,7 @@ if (! $texte) {
 }
 
 if (! $texte) {
-    echo '<form action="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '" method="post">';
+    echo '<form action="' . $root . '/arbre_desc_pers?Refer=' . $Refer . '" method="post">';
     echo '<table border="0" width="60%" align="center">';
     echo '<tr align="center">';
 
@@ -240,11 +239,11 @@ if (!$x) {
             //echo "pos $pos posb $posb pParO $pParO pParF $pParF Ref $Ref <br />";
             if (! $texte) {
                 echo $num . '&nbsp;' .
-                    '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . substr($Ligne, $posb + 1, $pParO - $posb - 2) . '</a>&nbsp;' .
+                    '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref . '">' . substr($Ligne, $posb + 1, $pParO - $posb - 2) . '</a>&nbsp;' .
                     substr($Ligne, $pParO, $pParF - $pParO + 1) .
                     "\n";
-                echo '&nbsp;&nbsp;<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref . '"' . $fin_arbres_asc;
-                echo '&nbsp;<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref . '"' . $fin_arbres_desc;
+                echo '&nbsp;&nbsp;<a href="' . $root . '/arbre_asc_pers?Refer=' . $Ref . '"' . $fin_arbres_asc;
+                echo '&nbsp;<a href="' . $root . '/arbre_desc_pers?Refer=' . $Ref . '"' . $fin_arbres_desc;
             } else {
                 echo substr($Ligne, 0, $posb) . '&nbsp;' .
                     substr($Ligne, $posb + 1, $pParO - $posb - 2) .
@@ -266,7 +265,7 @@ if (!$x) {
     if (($nb_gen == $max_gen_AD) and ($nb_Ajouts > 0)) {
         echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '">' .
             my_html($LG_LPersG_limited_max_gen_1 . $max_gen_AD . $LG_LPersG_limited_max_gen_2) .
-            '<a href="' . $root . '/vue_personnalisee.php">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>';
+            '<a href="' . $root . '/vue_personnalisee">' . my_html($LG_LPersG_limited_max_gen_3) . '</a>';
     }
 }
 

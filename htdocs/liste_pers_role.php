@@ -65,7 +65,7 @@ $sql = 'SELECT '
     . '  and rel.Personne_2 = pers_2.Reference'
     . "  and rel.Code_Role = '" . $c_Role . "' ";
 
-if (!$est_privilegie) {
+if (!IS_GRANTED('P')) {
     $sql = $sql . " and pers_1.Diff_Internet = 'O' ";
     $sql = $sql . " and pers_2.Diff_Internet = 'O' ";
 }
@@ -123,19 +123,19 @@ if ($nb_lig > 0) {
         // Informations à présenter
         $lien1 = '';
         $lien2 = '';
-        if ($est_contributeur) {
-            $lien1 = '<a href="' . $root . '/edition_personne.php?Refer=' . $row['Ref_1'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
-            $lien2 = '<a href="' . $root . '/edition_personne.php?Refer=' . $row['Ref_2'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+        if (IS_GRANTED('G')) {
+            $lien1 = '<a href="' . $root . '/edition_personne?Refer=' . $row['Ref_1'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+            $lien2 = '<a href="' . $root . '/edition_personne?Refer=' . $row['Ref_2'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
         }
 
         echo '<tr>';
         // Si symétrie = N et Principale = N, on inverse
         if (($symetrie == 'N') && ($row['Principale'] == 'N')) {
-            echo '<td width="50%"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_2'] . '">' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
-            echo '<td><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_1'] . '">' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
+            echo '<td width="50%"><a href="' . $root . '/fiche_fam_pers?Refer=' . $row['Ref_2'] . '">' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
+            echo '<td><a href="' . $root . '/fiche_fam_pers?Refer=' . $row['Ref_1'] . '">' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
         } else {
-            echo '<td width="50%"><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_1'] . '">' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
-            echo '<td><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row['Ref_2'] . '">' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
+            echo '<td width="50%"><a href="' . $root . '/fiche_fam_pers?Refer=' . $row['Ref_1'] . '">' . $row['Prenoms_1'] . ' ' . $row['Nom_1'] . '</a> ' . $dates1 . ' ' . $lien1 . '</td>';
+            echo '<td><a href="' . $root . '/fiche_fam_pers?Refer=' . $row['Ref_2'] . '">' . $row['Prenoms_2'] . ' ' . $row['Nom_2'] . '</a> ' . $dates2 . ' ' . $lien2 . '</td>';
         }
         echo '</tr>';
     }
@@ -145,8 +145,6 @@ if ($nb_lig > 0) {
 if ($res)
     $res->closeCursor();
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

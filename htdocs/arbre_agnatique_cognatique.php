@@ -6,8 +6,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
-
 // Recup de la variable passée dans l'URL : type d'arbre : "A"gnatique / "C"ognatique
 $Type_Arbre = Recup_Variable('Type', 'C', 'AC');
 
@@ -57,10 +55,10 @@ if (!$texte) {
         $Autre = 'A';
         $lib = $LG_Tree_Men_Asc;
     }
-    $compl = '<a href="' . $root . '/arbre_agnatique_cognatique.php?Refer=' . $Refer .  '&amp;Type=' . $Autre . '">' . $lib . '</a>&nbsp;';
+    $compl = '<a href="' . $root . '/arbre_agnatique_cognatique?Refer=' . $Refer .  '&amp;Type=' . $Autre . '">' . $lib . '</a>&nbsp;';
 } else $compl = '';
 $compl .= Ajoute_Page_Info(600, 150) .
-    Affiche_Icone_Lien('href="' . $root . '/arbre_agnatique_cognatique.php?Refer=' . $Refer . '&amp;Type=' . $Type_Arbre . '&amp;texte=O"', 'text', $LG_printable_format) .
+    Affiche_Icone_Lien('href="' . $root . '/arbre_agnatique_cognatique?Refer=' . $Refer . '&amp;Type=' . $Type_Arbre . '&amp;texte=O"', 'text', $LG_printable_format) .
     '&nbsp;';
 
 if (! $texte) {
@@ -138,7 +136,7 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
         if ($res = lect_sql($sql)) {
             if ($infos = $res->fetch(PDO::FETCH_NUM)) {
                 // Protection des données sur Internet
-                if (($est_privilegie) or ($infos[4] == 'O')) {
+                if (IS_GRANTED('P') or ($infos[4] == 'O')) {
                     $P_N = ret_Nom_prenom($infos[0], $infos[1]);
                     // couleur de la case en fonction de la personne
                     $classe = "case_arbre_asc_def";
@@ -154,7 +152,7 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
                     }
                     $cont_cell = '<table width="100%"><tr align="center"><td>';
                     if (!$texte) {
-                        $cont_cell .= '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Refer . '"';
+                        $cont_cell .= '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Refer . '"';
                         // Présence d'une image ? Si oui, celle-ci sera affichée au survol de la case
                         $image = Rech_Image_Defaut($Refer, 'P');
                         if ($image != '') {
@@ -174,8 +172,8 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
                     $Dates = $Ne . ' ' . $Decede;
                     $cont_cell .= $Dates . '<br />' . "\n";
                     if (!$texte) {
-                        $cont_cell .= '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Refer . '">' . $img_asc . '</a>';
-                        $cont_cell .= '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '">' . $img_desc . '</a>';
+                        $cont_cell .= '<a href="' . $root . '/arbre_asc_pers?Refer=' . $Refer . '">' . $img_asc . '</a>';
+                        $cont_cell .= '<a href="' . $root . '/arbre_desc_pers?Refer=' . $Refer . '">' . $img_desc . '</a>';
                         if ($existe_image) {
                             $txt_img = 'Image de ' . $infos[1];
                             $cont_cell .= $img_image . 'title="' . $txt_img . '" alt="' . $txt_img . '" ' . Survole_Clic_Div('div_' . $Refer) . '/>';
@@ -233,7 +231,7 @@ for ($nb = $c_personnes - 1; $nb >= 0; $nb--) {
 
 if ($nb_gen > $max_gen_AD) {
     echo '<br /><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . my_html($LG_tip) . '" title="' . my_html($LG_tip) . '">' .
-        $LG_Tree_Lim_1 . $max_gen_AD . $LG_Tree_Lim_2 . '<a href="' . $root . '/vue_personnalisee.php">' . $LG_Tree_Lim_3 . '</a>' . $LG_Tree_Lim_4 . '.' . "\n";
+        $LG_Tree_Lim_1 . $max_gen_AD . $LG_Tree_Lim_2 . '<a href="' . $root . '/vue_personnalisee">' . $LG_Tree_Lim_3 . '</a>' . $LG_Tree_Lim_4 . '.' . "\n";
 }
 
 if (!$texte) {

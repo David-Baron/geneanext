@@ -9,6 +9,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
+
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
@@ -107,14 +113,11 @@ $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 $Auto_Sosa = Secur_Variable_Post($Auto_Sosa, 2, 'S');
 $NSosa     = Secur_Variable_Post($NSosa, 20, 'S');
 
-// Gestion standard des pages
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+
 $titre = 'Ajout rapide';               // Titre pour META
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup de la variable passée dans l'URL : référence de la personne
 $Refer = Recup_Variable('Refer', 'N');
@@ -595,7 +598,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     if (($Nom != '') or ($Prenoms != '')) {
         $compl = Ajoute_Page_Info(600, 200);
         Insere_Haut(LG_PERS_QUICK_ADD . ' ' . $Prenoms . ' ' . $Nom, $compl, 'Ajout_Rapide', $Refer);
-        echo '<form id="saisie" method="post" action="' . $root . '/ajout_rapide.php?Refer=' . $Refer . '">';
+        echo '<form id="saisie" method="post">';
         echo '<input type="' . $hidden . '" name="Refer" value="' . $Refer . '"/>';
         echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
         if (isset($_SESSION['Nom_Saisi']))
@@ -606,7 +609,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
         echo '</form>';
 
-        include(__DIR__ . '/assets/js/gest_onglets.js');
+        include(__DIR__ . '/../public/assets/js/gest_onglets.js');
         echo '<!-- On positionne l\'onglet par défaut -->';
         echo '<script type="text/javascript">';
         echo '	cache_div("id_div_ajout_nomconj")';

@@ -62,7 +62,7 @@ $npdoyen_H   = '';
 $sql = 'SELECT Sexe, Ne_le, Decede_Le, Reference, Nom, Prenoms FROM ' . nom_table('personnes') .
     " WHERE Ne_le LIKE '_________L'" .
     " AND Decede_Le LIKE '_________L'";
-if (!$_SESSION['estPrivilegie']) $sql = $sql . " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql = $sql . " and Diff_Internet = 'O' ";
 
 // Stockage des cumuls d'âges des hommes et des femmes dans des tableaux
 if ($res = lect_sql($sql)) {
@@ -209,14 +209,12 @@ echo '</table>';
 
 echo '<br />';
 if ($ndoyen_H != '') {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_doyen_H . '">' . $npdoyen_H . '</a> : ' . Age_Annees_Mois($ndoyen_H, $ddoyen_H);
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_doyen_H . '">' . $npdoyen_H . '</a> : ' . Age_Annees_Mois($ndoyen_H, $ddoyen_H);
 }
 if ($ndoyen_F != '') {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_doyen_F . '">' . $npdoyen_F . '</a> : ' . Age_Annees_Mois($ndoyen_F, $ddoyen_F);
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_doyen_F . '">' . $npdoyen_F . '</a> : ' . Age_Annees_Mois($ndoyen_F, $ddoyen_F);
 }
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour);
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

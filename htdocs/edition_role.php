@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -112,7 +117,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 150);
 
     if (!$Creation)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_role.php?code=' . $Code . '"', 'page', 'Fiche rôle') . ' ';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_role?code=' . $Code . '"', 'page', 'Fiche rôle') . ' ';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Role', $Code);
 

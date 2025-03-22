@@ -28,7 +28,7 @@ $refPar = Recup_Variable('refPar', 'N');
 
 $compl = Ajoute_Page_Info(600, 300);
 
-Insere_Haut($LG_Menu_Title['Names_For_Event'], $compl, 'Liste_Nom_Evenement.php', $refPar);
+Insere_Haut($LG_Menu_Title['Names_For_Event'], $compl, 'liste_nom_evenement', $refPar);
 
 $requete = 'SELECT Titre FROM ' . nom_table('evenements') .
     ' WHERE reference = ' . $refPar . ' limit 1';
@@ -38,7 +38,7 @@ echo my_html(LG_NAMES_FOR_EVENT_EVENT) . LG_SEMIC . $enreg[0] . '<br />';
 
 // Préparation sur la clause de diffusabilité
 $p_diff_int = '';
-if (!$est_privilegie) $p_diff_int = " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $p_diff_int = " and Diff_Internet = 'O' ";
 
 $sql = 'SELECT count( * ) , f.nomFamille, f.idNomFam' .
     ' FROM ' . nom_table('noms_personnes') . ' n, ' . nom_table('noms_famille') . ' f, ' . nom_table('personnes') . ' p, ' . nom_table('participe') . ' pa' .
@@ -62,8 +62,8 @@ if ($nb_lignes > 0) {
     echo '<th>' . LG_NAMES_FOR_EVENT_PERS_COUNT . '</th>';
     echo '</tr>' . "\n";
 
-    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam.php?idNom=';
-    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam?idNom=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
         $nom = $enr[1];
@@ -71,7 +71,7 @@ if ($nb_lignes > 0) {
         echo '<tr>' . "\n";
         echo '<td width="' . $lg_col_1 . '%">' . $deb_visu . $enr[2] . '&amp;Nom=' . $nom . '">' . $nom . '</a>';
 
-        if ($est_gestionnaire)
+        if (IS_GRANTED('G'))
             echo '&nbsp;' . Affiche_Icone_Lien($deb_modif . $enr[2] . '"', 'fiche_edition', $LG_modify);
 
         echo '</td>';
@@ -85,8 +85,6 @@ if ($nb_lignes > 0) {
     echo '<br />' . "\n";
 }
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

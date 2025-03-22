@@ -7,9 +7,12 @@
 require(__DIR__ . '/../app/ressources/fonctions.php');
 require(__DIR__ . '/../app/ressources/commun_gedcom.php');
 
-$acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Exp_Ged'];            // Titre pour META
-$niv_requis = 'G';                    // Disponible pour le gestionnaire
 $x = Lit_Env();
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -38,14 +41,17 @@ $n_types_evenement  = nom_table('types_evenement');
 $compl = Ajoute_Page_Info(600, 150);
 Insere_Haut($titre, $compl, 'exp_Gedcom', '');
 
-$nom_fic_exp = construit_fic($chemin_Gedcom, 'Export_gedcom#', 'ged');
-$n_fic = basename($nom_fic_exp);
+// $nom_fic_exp = construit_fic($chemin_Gedcom, 'Export_gedcom#', 'ged');
+// $n_fic = basename($nom_fic_exp);
+$genename = ($settings['Nom'] != '???' ? $settings['Nom'] : 'test');
+$storage_path = '__storage/' . $genename . '/';
+$gedcom_filename = 'export_gedcom_' . date('Y-m-d-H-i-s') . '.ged';
+$path = $storage_path . $gedcom_filename;
 
-// if ($fp=fopen($nom_fic_exp,'w+')) {
-if ($fp = fopen($nom_fic_exp, 'w')) {
+if ($fp = fopen(__DIR__ . '/../' . $path, 'w+')) {
 
     // Données d'entête
-    Entete_Gedcom($fp, $n_fic);
+    Entete_Gedcom($fp, $gedcom_filename);
 
     // Balayage de la liste des personnes
     $sql = Debut_Ext_Pers_Ged() . ' reference <> 0;';
@@ -149,7 +155,7 @@ if ($fp = fopen($nom_fic_exp, 'w')) {
             // Notes pour l'union
             if (!$leger) {
                 if (Rech_Commentaire($Ref_Union, 'U')) {
-                    if ($est_gestionnaire or $Diffusion_Commentaire_Internet == 'O')
+                    if (IS_GRANTED('G') or $Diffusion_Commentaire_Internet == 'O')
                         Ecrit_Note_Gedcom($Commentaire, $fp);
                 }
             }
@@ -235,8 +241,9 @@ if ($fp = fopen($nom_fic_exp, 'w')) {
     fwrite($fp, "0 TRLR$cr");
     fclose($fp);
 
-    $deb_msg = ($leger) ? LG_GEDCOM_FILE_EXPORT_LIGHT : LG_GEDCOM_FILE_EXPORT;
-    echo '<br><br>' . $deb_msg . ' <a href="' . $nom_fic_exp . '" target="_blank">' . $nom_fic_exp . '</a><br>' . "\n";
+    /** @todo need upload file here to replace unsecure and useless href */
+   /*  $deb_msg = ($leger) ? LG_GEDCOM_FILE_EXPORT_LIGHT : LG_GEDCOM_FILE_EXPORT;
+    echo '<br><br>' . $deb_msg . ' <a href="' . $nom_fic_exp . '" target="_blank">' . $nom_fic_exp . '</a><br>' . "\n"; */
 } else
     echo my_html(LG_GEDCOM_FILE_ERROR);
 

@@ -496,7 +496,7 @@ $x = Mot(LG_GLOSS_CENSUS, 'REC', 1); ?>
 $x = Mot(LG_GLOSS_SOSA, 'SOSA', 1); ?>
 <td>
     Num&eacute;ro que l'on attribue &agrave; un anc&ecirc;tre.
-    <?php echo '<a href="' . $root . '/glossaire_sosa.php">'
+    <?php echo '<a href="' . $root . '/glossaire_sosa">'
         . '<img src="' . $root . '/assets/img/' . $Icones['loupe'] . '" alt="' . LG_GLOSS_MORE_INFO . '"/>'; ?>
     </a>
 </td>

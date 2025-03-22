@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function suppression($lib, $n_table, $genre, $where, $affichage = true)
 {
     global $enr_mod;
@@ -60,8 +65,6 @@ $x = Lit_Env();                        // Lecture de l'indicateur d'environnemen
 $niv_requis = 'G';                        // Page accessible au gestionnaire
 require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Sécurisation des variables postées - phase 2
 $nom_du_fichier     = Secur_Variable_Post($nom_du_fichier, 100, 'S');
@@ -1702,14 +1705,14 @@ if ($ok == 'OK') {
                 maj_date_site(true);
                 $ic_conseil = '<img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="' . LG_TIP . '"/> ';
                 echo $ic_conseil . LG_IMP_GED_REMIND_SOSA_1
-                    . '<a href="' . $root . '/liste_pers.php?Type_Liste=P">'
+                    . '<a href="' . $root . '/liste_pers?Type_Liste=P">'
                     . LG_IMP_GED_REMIND_SOSA_2 . '</a>. ' . LG_IMP_GED_REMIND_SOSA_3
-                    . '<a href="' . $root . '/verif_sosa.php">'
+                    . '<a href="' . $root . '/verif_sosa">'
                     . $LG_Menu_Title['Check_Sosa'] . '</a>,<br>';
                 echo $ic_conseil . LG_IMP_GED_REMIND_EVT
-                    . '<a href="' . $root . '/fusion_evenements.php">' . $LG_Menu_Title['Event_Merging'] . '</a>.<br />';
+                    . '<a href="' . $root . '/fusion_evenements">' . $LG_Menu_Title['Event_Merging'] . '</a>.<br />';
                 echo $ic_conseil . LG_IMP_GED_REMIND_INTERNET
-                    . '<a href="' . $root . '/verif_internet.php">' . $LG_Menu_Title['Internet_Cheking'] . '</a>.<br />';
+                    . '<a href="' . $root . '/verif_internet">' . $LG_Menu_Title['Internet_Cheking'] . '</a>.<br />';
             }
         }
     }
@@ -1718,7 +1721,6 @@ if ($ok == 'OK') {
     $req = '';
 }
 
-if ($_SESSION['estGestionnaire']) {
     if (($ok == '') && ($annuler == '')) {
         echo '<br />';
         echo '<form id="saisie" method="post" enctype="multipart/form-data">';
@@ -1791,9 +1793,6 @@ if ($_SESSION['estGestionnaire']) {
         echo '</table>';
         echo '</form>';
     }
-} else {
-    echo '<center><font color="red"><br><br><br><h2>' . $LG_function_noavailable_profile . '</h2></font></center>';
-}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

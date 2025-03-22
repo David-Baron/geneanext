@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
@@ -61,7 +66,7 @@ $sql = 'SELECT count(*) , d.Nom_Depart_Min, d.Identifiant_zone, "N" ' .
     'WHERE p.Reference <> 0 and p.ville_naissance <> 0 ' .
     'AND p.ville_naissance = v.identifiant_zone ' .
     'AND v.Zone_Mere = d.identifiant_zone ';
-if (!$_SESSION['estPrivilegie']) $sql .= " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql .= " and Diff_Internet = 'O' ";
 $sql .= 'GROUP BY d.Nom_Depart_Min UNION ';
 // Nombre de couples dans la base par département
 $sql .= 'select count(*), d.Nom_Depart_Min, d.Identifiant_zone, "M" ' .
@@ -73,7 +78,7 @@ $sql .= 'select count(*), d.Nom_Depart_Min, d.Identifiant_zone, "M" ' .
     'AND u.Ville_Mariage = v.identifiant_zone ' .
     'and u.Conjoint_1 = m.Reference and u.Conjoint_2 = f.Reference ' .
     'AND v.zone_mere = d.identifiant_zone ';
-if (!$_SESSION['estPrivilegie']) {
+if (!IS_GRANTED('P')) {
     $sql .= " and m.Diff_Internet = 'O' ";
     $sql .= " and f.Diff_Internet = 'O' ";
 }
@@ -87,7 +92,7 @@ $sql .= 'SELECT count(*) , d.Nom_Depart_Min, d.Identifiant_zone, "D" ' .
     'WHERE p.Reference <> 0 and p.ville_deces <> 0 ' .
     'AND p.ville_deces = v.identifiant_zone ' .
     'AND v.Zone_Mere = d.identifiant_zone ';
-if (!$_SESSION['estPrivilegie']) $sql .= " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql .= " and Diff_Internet = 'O' ";
 $sql .= 'GROUP BY d.Nom_Depart_Min ORDER BY 2';
 
 $larg = ' width ="20%"';
@@ -110,7 +115,7 @@ $tot_N = 0;
 $tot_M = 0;
 $tot_D = 0;
 
-$deb_visu = '&nbsp;<a href="' . $root . '/stat_base_villes.php?dep=';
+$deb_visu = '&nbsp;<a href="' . $root . '/stat_base_villes?dep=';
 
 // Balayage du résultat
 $res = lect_sql($sql);
@@ -155,7 +160,7 @@ echo '<td>' . $tot_D . '</td>';
 echo '</tr>' . "\n";
 
 $img_carte = '<img src="' . $root . '/assets/img/' . $Icones['carte_france'] . '" alt="' . LG_STAT_COUNTY_MAP . '" title="' . LG_STAT_COUNTY_MAP . '" border="0"/></a>' . "\n";
-$deb_carte = '<a href="' . $root . '/appelle_image_france_dep.php?Type_Liste=';
+$deb_carte = '<a href="' . $root . '/appelle_image_france_dep?Type_Liste=';
 
 echo '<tr  class="' . $style . '" align="center">';
 echo '<td>&nbsp;</td>';
@@ -168,8 +173,6 @@ echo '</table>';
 
 $res->closeCursor();
 
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '');
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

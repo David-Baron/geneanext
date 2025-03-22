@@ -58,9 +58,9 @@ $comp_texte = '';
 $comp_texte .= '&amp;Nom=' . $Nom;
 
 $compl = Ajoute_Page_Info(600, 180) .
-    Affiche_Icone_Lien('href="' . $root . '/liste_nom_vivants.php?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
+    Affiche_Icone_Lien('href="' . $root . '/liste_nom_vivants?texte=O' . $comp_texte . '"', 'text', my_html($LG_printable_format)) . '&nbsp;';
 if ((!$SiteGratuit) or ($Premium)) {
-    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_nom_vivants.php?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
+    $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_nom_vivants?texte=O&amp;pdf=O' . $comp_texte . '"', 'PDF', my_html($LG_pdf_format)) . '&nbsp;';
 }
 
 if (! $texte) {
@@ -201,7 +201,7 @@ if ($Nom != '-1') {
                 if ($debug) echo 'Nouv_Nom : ' . $Nouv_Nom . '<br />';
                 if (! $texte) {
                     echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center"><tr align="center"><td class="rupt_table">';
-                    echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=' . $row[7] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . "</a>\n";
+                    echo '<a href="' . $root . '/liste_pers2?Type_Liste=P&amp;idNom=' . $row[7] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . "</a>\n";
                 } else {
                     if ($debug) echo 'Entête<br />';
                     HTML_ou_PDF('<table width="95%" align="center" class="tableau_imp"><thead><tr><th>' . $Nouv_Nom . '</th></tr></thead>', $sortie);
@@ -228,14 +228,14 @@ if ($Nom != '-1') {
                 if (! $texte) echo '<tr class="' . $style . '"><td>';
                 else HTML_ou_PDF('<tr><td>', $sortie);
                 if (! $texte) {
-                    if ($est_contributeur) {
+                    if (IS_GRANTED('C')) {
                         if ($row[4] == 'O') echo '<img src="' . $root . '/assets/img/' . $Icones['internet_oui'] . '" alt="' . $LG_show_on_internet . '" title="' . $LG_show_on_internet . '">';
                         else echo '<img src="' . $root . '/assets/img/' . $Icones['internet_non'] . '" alt="' . $LG_noshow_on_internet . '" title="' . $LG_noshow_on_internet . '">';
                     }
-                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $row[0] . '">' . my_html($row[2]) . '</a>' . "\n";
+                    echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $row[0] . '">' . my_html($row[2]) . '</a>' . "\n";
                 } else HTML_ou_PDF($row[2], $sortie);
                 if (! $texte) {
-                    if ($est_gestionnaire) echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    if (IS_GRANTED('G')) echo ' <a href="' . $root . '/edition_personne?Refer=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 }
                 if ($naissance != '') HTML_ou_PDF(' ° ' . Etend_date($naissance), $sortie);
                 HTML_ou_PDF('</td></tr>', $sortie);

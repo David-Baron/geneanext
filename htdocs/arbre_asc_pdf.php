@@ -6,17 +6,13 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                // Type d'accès de la page : (M)ise à jour, (L)ecture
-$x = Lit_Env();
 
-// Pour éviter les erreurs en log en cas d'accès direct...
-if ($Environnement == 'L') {
-    if (!isset($_SESSION['estPrivilegie'])) $_SESSION['estPrivilegie'] = true;
-    if (!isset($_SESSION['estCnx'])) $_SESSION['estCnx'] = true;
-} else {
-    if (!isset($_SESSION['estPrivilegie'])) $_SESSION['estPrivilegie'] = false;
-    if (!isset($_SESSION['estCnx'])) $_SESSION['estCnx'] = false;
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
 }
+
+$x = Lit_Env();
 
 $Refer = Recup_Variable('Refer', 'N');
 
@@ -77,13 +73,11 @@ function getDetail($LaRef)
     }
 }
 
-// Récupération de l'état de la connexion
-$est_cnx = ($_SESSION['estCnx'] === true ? true : false);
 
 // Accès aux donnnées de la personne pour vérifier les autorisations
 //$x = Get_Nom_Prenoms($Refer,$Nom,$Prenoms);
 $Diff_Internet_P = 'O';
-if ($Diff_Internet_P == 'O' or $_SESSION['estPrivilegie']) {
+if ($Diff_Internet_P == 'O' or IS_GRANTED('P')) {
     require(__DIR__ . '/../app/ressources/phpToPDF.php');
     $PDF = new phpToPDF();
     $PDF->AddPage('P', 'A4', 0);

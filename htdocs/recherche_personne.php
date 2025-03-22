@@ -262,7 +262,7 @@ if ($bt_OK) {
             // L'utilisateur a demandé une recherche phonétique
             if ($Son != 'o') {
                 // Transformation du nom en phonétique
-                require(__DIR__ . '/../app/Phonetique.php');
+                require(__DIR__ . '/../app/Util/Phonetique.php');
                 $codePho = new Phonetique();
                 $NomP = $codePho->calculer($NomP);
             }
@@ -364,7 +364,7 @@ if ($bt_OK) {
             $req2 = 'select Reference, Nom, Prenoms, Ne_le, Decede_Le from ' . nom_table('personnes') . ' p where Reference <> 0';
         }
         // Surcouche non privilégiés
-        if (!$est_privilegie) $req2 = $req2 . ' and Diff_Internet = \'O\'';
+        if (!IS_GRANTED('P')) $req2 = $req2 . ' and Diff_Internet = \'O\'';
 
         $req = $req2 . ' and ' . $req . ' order by ';
         // Critère de tri par défaut
@@ -420,9 +420,9 @@ if ($bt_OK) {
 
                 switch ($Sortie) {
                     case 'e':
-                        echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref . '" target="_blank">' . $nom . ' ' . $prenom . '</a>';
+                        echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $ref . '" target="_blank">' . $nom . ' ' . $prenom . '</a>';
                         aff_n_dec();
-                        if ($est_gestionnaire) echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne.php?Refer=' . $ref . '"', 'fiche_edition', $LG_modify);
+                        if (IS_GRANTED('G')) echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_personne?Refer=' . $ref . '"', 'fiche_edition', $LG_modify);
                         echo '<br />' . "\n";
                         break;
                     case 't':
@@ -506,14 +506,14 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     if ((!$SiteGratuit) or ($Premium)) {
         // La mémorisation n'est ouverte qu'au gestionnaire
-        if ($est_gestionnaire) {
+        if (IS_GRANTED('G')) {
             echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_REQUEST_SAVE) . '</td><td class="value">';
             $LeMax2 = $LeMax + 1;
             echo '<input type="checkbox" name="Memo_Req" value="O"/> ' . LG_PERS_REQ_REQUEST_TITLE . ' <input type="text" size="80" name="TitreReq" value="Requ&ecirc;te ' . $LeMax2 . '"/>';
             echo '</td></tr>' . "\n";
         }
         // L'utilisation d'une requête est à partir du niveau privilégié
-        if ($est_privilegie) {
+        if (IS_GRANTED('P')) {
             if ($LeMax > 0) {
                 echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_REQUEST_USE) . '</td><td class="value">';
                 $sql_req = 'select Reference, Titre from ' . nom_table('requetes') . ' order by Titre';
@@ -641,7 +641,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '</td></tr>' . "\n";
     $res->closeCursor();
 
-    if ($est_gestionnaire) {
+    if (IS_GRANTED('G')) {
         echo '<tr><td class="label" width="20%">' . ucfirst($LG_show_on_internet) . '</td><td class="value">';
         echo '<input type="radio" id="Diffu_o" name="Diffu" value="O"';
         if ($reprise) {
@@ -711,7 +711,7 @@ if ((!$bt_OK) && (!$bt_An)) {
     echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked="checked"/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
     echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
     // L'export CSV n'est disponible qu'à partir du profil privilégié
-    if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+    if (IS_GRANTED('P')) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="20%">' . ucfirst(LG_PERS_REQ_NEW_TAB) . '</td><td class="value">';
     echo '<input type="checkbox" name="New_Window"';

@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function aff_option_niveau($niv_option)
 {
     global $profil;
@@ -13,16 +18,14 @@ function aff_option_niveau($niv_option)
     echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
 }
 
-$acces = 'L';                            // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Users_List'];        // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'G';                        // réservé aux gestionnaires
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 Insere_Haut($titre, '', 'Liste_utilisateurs', '');
 
 // Possibilité d'insérer un utilisateur
-echo LG_USERS_LIST_ADD . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_utilisateur.php?code=-----"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
+echo LG_USERS_LIST_ADD . ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_utilisateur?code=-----"', 'ajouter', $LG_add) . '<br /><br />' . "\n";
 
 // Récupération du dépôt sélectionné sur l'affichage précédent
 $profil = 'X';
@@ -70,13 +73,13 @@ $res = lect_sql($sql);
 
 if ($res->rowCount() > 0) {
 
-    if ($mails) echo '<form id="saisie" method="post" action="Mail_Ut.php">' . "\n";
+    if ($mails) echo '<form id="saisie" method="post" action="'.$root.'/mail_ut">' . "\n";
 
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         if ($mails)
             echo '<input type="checkbox" name="msg_ut_' . $row[0] . '" value="x" onclick="chkSel(this)"/> ';
-        echo '<a href="' . $root . '/fiche_utilisateur.php?code=' . $row[0] . '">' . my_html($row[1] . ' - ' . $row[2]);
-        echo '</a> <a href="' . $root . '/edition_utilisateur.php?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
+        echo '<a href="' . $root . '/fiche_utilisateur?code=' . $row[0] . '">' . my_html($row[1] . ' - ' . $row[2]);
+        echo '</a> <a href="' . $root . '/edition_utilisateur?code=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>' . "\n";
         echo "<br />\n";
     }
 

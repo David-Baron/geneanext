@@ -143,7 +143,7 @@ Pour certaines mairies, il est possible de faire une demande d'acte via Internet
     </tr>
 </table>
 <br><br>
-Ils recouvrent 3 types d'actes (<a href="<?= $root; ?>/glossaire_gen.php#BMS">BMS</a>) :<br />
+Ils recouvrent 3 types d'actes (<a href="<?= $root; ?>/glossaire_gen#BMS">BMS</a>) :<br />
 <ul>
     <li>acte de Baptême<br />
         Il comporte :
@@ -168,9 +168,9 @@ Ils recouvrent 3 types d'actes (<a href="<?= $root; ?>/glossaire_gen.php#BMS">BM
             <li>Les noms et prénoms des parents avec la mention décédé(e) ou défunt(e) si c'est le cas ;</li>
             <li>Les noms et prénoms des témoins et éventuellement les liens avec les époux ;</li>
             <li>Les signatures, ou les marques des personnes ;</li>
-            <li>Des mentions diverses : <a href="<?= $root; ?>/glossaire_gen.php#dispenseC">dispenses de
+            <li>Des mentions diverses : <a href="<?= $root; ?>/glossaire_gen#dispenseC">dispenses de
                     consanguinité</a>, 
-                <a href="<?= $root; ?>/glossaire_gen.php#dispenseA">d'affinité</a>, reconnaissance d'un enfant né avant le mariage.<br /><br />
+                <a href="<?= $root; ?>/glossaire_gen#dispenseA">d'affinité</a>, reconnaissance d'un enfant né avant le mariage.<br /><br />
             </li>
         </ul>
     </li>
@@ -200,7 +200,7 @@ Plus on remonte dans le temps, plus les actes sont parcellaires...<br />
 <br><br>
 
 Commencez par déterminer de qui partira la généalogie ; il s'agit de votre
-<a href="<?= $root; ?>/glossaire_gen.php#CUJUS">de cujus</a>.
+<a href="<?= $root; ?>/glossaire_gen#CUJUS">de cujus</a>.
 Rassemblez un maximum de documents de famille, pensez à interroger les témoins, utilisez
 les sources d'état civil pour enrichir votre généalogie,
 utilisez Généamania pour organiser vos données et c'est parti...<br />

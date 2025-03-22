@@ -267,7 +267,7 @@ if ($SiteGratuit) {
     if (file_exists(__DIR__ . '/../../param_gratuit.php')) include(__DIR__ . '/../../param_gratuit.php');
 }
 
-$hidden = (!$debug ? 'hidden' : 'text');
+# $hidden = (!$debug ? 'hidden' : 'text');
 
 if (!isset($mod_nom_fic)) $mod_nom_fic = '';
 if (!isset($n_sv_img_gd)) $n_sv_img_gd = '';

@@ -5,8 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
-$niv_requis = 'P';
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Repo_Sources'];        // Titre pour META
 
 $tab_variables = array('annuler');
@@ -28,7 +31,7 @@ $req_sel = 'select * from ' . nom_table('depots') . ' where Ident = ' . $Ident .
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-    // dépôt inconnu, retour...
+    // dépôt inconnu, retour... lol
     if (!$enreg_sel) Retour_Ar();
 
     $enreg2 = $enreg_sel;
@@ -36,8 +39,8 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
     unset($enr_sel);
 
     $compl = Ajoute_Page_Info(600, 150);
-    if ($est_contributeur) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_depot.php?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Repo_Sources_Edit']) . ' ';
+    if (IS_GRANTED('C')) {
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/edition_depot?ident=' . $Ident . '"', 'fiche_edition', $LG_Menu_Title['Repo_Sources_Edit']) . ' ';
     }
 
     Insere_Haut(my_html($titre), $compl, 'Fiche_Depot', $Ident);
@@ -51,16 +54,12 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
     //  ===== Affichage du commentaire
     if (Rech_Commentaire($Ident, 'O')) {
-        if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+        if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
             echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
         }
     }
 
-    echo '<br /><a href="' . $root . '/liste_sources.php?depot=' . $Ident . '">' . LG_CH_REPOSITORY_LIST . '</a>' . "\n";
-
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
-
+    echo '<br /><a href="' . $root . '/liste_sources?depot=' . $Ident . '">' . LG_CH_REPOSITORY_LIST . '</a>' . "\n";
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

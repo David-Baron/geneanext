@@ -34,26 +34,22 @@ switch ($Type_Liste) {
         break;
 }
 
-$acces = 'L';                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $objet;            // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $compl = '';
 
 Insere_Haut(my_html($objet), $compl, 'appelle_image_france_dep', $Type_Liste);
 
 echo '<table width="90%">';
-echo '<tr><td align="center"><img src="image_depart.php?Type_Liste=' . $Type_Liste . '" alt="carte"/></td></tr>';
+echo '<tr><td align="center"><img src="'.$root.'/image_depart?Type_Liste=' . $Type_Liste . '" alt="carte"/></td></tr>';
 echo '</table>';
 
 // Formulaire pour le bouton retour
 echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 echo '<br />';
-Bouton_Retour($lib_Retour, '?' . $_SERVER['QUERY_STRING']);
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

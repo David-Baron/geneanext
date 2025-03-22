@@ -609,3 +609,312 @@ function ouvre_fic($nom_fic, $mode)
     if ($def_enc == 'UTF-8') fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
     return $fp;
 }
+
+/** 
+ * S'agit-il dune page d'information ?
+ * @deprecated will be removed
+ */
+function is_info()
+{
+    global $suffixe_info;
+    if (strpos(my_self(), $suffixe_info) !== false) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @todo will be refacto and removed
+ */
+function aff_menu($type_menu, $droits, $formu = true)
+{
+    global $root, $adr_rech_gratuits, $SiteGratuit, $Premium, $Icones, $Base_Vide, $def_enc, $LG_Menu_Title;
+
+    /* 4 niveaux d'autorisation
+	Invité       : I
+	Privilégié   : P
+	Contributeur : C
+	Gestionnaire : G
+	*/
+
+    $menu[] = '0^^^ ^^^Accès rapide^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_personne?Refer=-1^^^' . $LG_Menu_Title['Person_Add'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_ville?Ident=-1^^^' . $LG_Menu_Title['Town_Add'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_evenement?refPar=-1^^^' . $LG_Menu_Title['Event_Add'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/edition_nomfam?idNom=-1^^^Ajouter un nom de famille ^^^C^^^';
+    if ($droits == 'G') {
+        $menu[] = '1^^^' . $root . '/edition_parametres_graphiques^^^Graphisme du site^^^G^^^';
+        if ($Base_Vide)
+            $menu[] = '1^^^' . $root . '/noyau_pers^^^' . $LG_Menu_Title['Decujus_And_Family'] . '^^^G^^^';
+    }
+
+    if (!$Base_Vide) {
+        $menu[] = '0^^^ ^^^Listes des personnes^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=P^^^Par nom^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers_gen^^^Par génération^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=N^^^Par ville de naissance^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=M^^^Par ville de mariage^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=K^^^Par ville de contrat de mariage^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=D^^^Par ville de décès^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_pers?Type_Liste=C^^^Par catégorie^^^C^^^';
+        $menu[] = '1^^^' . $root . '/liste_patro^^^Liste patronymique^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_eclair^^^' . $LG_Menu_Title['County_List'] . '^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_nom_vivants^^^' . $LG_Menu_Title['Living_Pers'] . '^^^I';
+        $menu[] = '1^^^' . $root . '/liste_nomfam^^^Liste des noms de famille^^^I^^^';
+    }
+    $menu[] = '0^^^ ^^^Listes des zones géographiques^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=S^^^Subdivisions^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=V^^^Villes^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=D^^^Départements^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=R^^^Régions^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_villes?Type_Liste=P^^^Pays^^^I^^^';
+
+    $menu[] = '0^^^ ^^^Recherche^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_personne^^^De personnes^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_personne_cp^^^De personnes par les conjoints ou parents^^^P^^^';
+    if ((!$SiteGratuit) or ($Premium)) {
+        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=Q^^^Liste des requêtes sur les personnes^^^P^^^';
+    }
+    $menu[] = '1^^^' . $adr_rech_gratuits . '^^^Recherche sur les sites gratuits^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_cousinage^^^' . $LG_Menu_Title['Search_Related'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_personne_archive^^^Aux archives^^^C^^^';
+    $menu[] = '1^^^' . $root . '/recherche_ville^^^' . $LG_Menu_Title['Town_Search'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/recherche_commentaire^^^' . $LG_Menu_Title['Search_Comment'] . '^^^C^^^';
+
+    if ((!$SiteGratuit) or ($Premium)) {
+        $menu[] = '1^^^' . $root . '/recherche_document^^^Dans les documents^^^C^^^';
+    }
+    $menu[] = '0^^^ ^^^Gestion des contributions^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_contributions^^^' . $LG_Menu_Title['Contribs_List'] . '^^^C^^^';
+
+    $menu[] = '0^^^ ^^^Gestion des catégories^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=C^^^Liste des catégories^^^P^^^';
+
+    $menu[] = '0^^^ ^^^Gestion des évènements et des relations^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=R^^^Liste des rôles^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=T^^^' . $LG_Menu_Title['Event_Type_List'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/liste_evenements^^^' . $LG_Menu_Title['Event_List'] . '^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_evenements?actu=o^^^' . $LG_Menu_Title['News_List'] . '^^^P^^^';
+    $menu[] = '1^^^' . $root . '/liste_evenements?prof=o^^^' . $LG_Menu_Title['Jobs_List'] . '^^^P';
+    $menu[] = '1^^^' . $root . '/fusion_evenements^^^' . $LG_Menu_Title['Event_Merging'] . '^^^C^^^';
+
+
+    // La gestion des sources et documents n'est pas autorisée sur les sites gratuits non Premium
+    if ((!$SiteGratuit) or ($Premium)) {
+        $menu[] = '0^^^ ^^^Gestion des dépôts et des sources^^^C^^^';
+        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=O^^^Liste des dépôts de sources^^^C^^^';
+
+        $menu[] = '1^^^' . $root . '/liste_sources^^^' . $LG_Menu_Title['Source_List'] . '^^^C^^^';
+        $menu[] = '0^^^ ^^^Documents^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_documents^^^' . $LG_Menu_Title['Documents_List'] . '^^^I^^^';
+        $menu[] = '1^^^' . $root . '/galerie_images^^^' . $LG_Menu_Title['Galery'] . '^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_docs_branche^^^' . $LG_Menu_Title['Galery_Branch'] . '^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_referentiel?Type_Liste=D^^^Liste des types de documents^^^C^^^';
+        $menu[] = '1^^^' . $root . '/create_multiple_docs^^^' . $LG_Menu_Title['Document_Multiple_Add'] . '^^^C^^^';
+    }
+
+    $menu[] = '0^^^ ^^^Imports - exports^^^G^^^';
+    $menu[] = '1^^^' . $root . '/export^^^Export de la base^^^G^^^';
+    $menu[] = '1^^^' . $root . '/exp_genweb^^^Export GenWeb^^^G^^^';
+    $menu[] = '1^^^' . $root . '/exp_gedcom^^^' . $LG_Menu_Title['Exp_Ged'] . '^^^G^^^';
+    $menu[] = '1^^^' . $root . '/exp_gedcom?leger=o^^^' . $LG_Menu_Title['Exp_Ged_Light'] . '^^^G^^^';
+    $menu[] = '1^^^' . $root . '/export_pour_deces^^^' . $LG_Menu_Title['Export_Death'] . '^^^G^^^';
+    $menu[] = '1^^^' . $root . '/import_gedcom^^^Import Gedcom^^^G^^^';
+    $menu[] = '1^^^' . $root . '/import_sauvegarde^^^' . $LG_Menu_Title['Import_Backup'] . '^^^G^^^';
+    if ((!$SiteGratuit) or ($Premium)) {
+        $menu[] = '1^^^' . $root . '/import_csv^^^Import CSV (tableur)^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv_liens^^^' . $LG_Menu_Title['Imp_CSV_Links'] . '^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv_evenements^^^' . $LG_Menu_Title['Imp_CSV_Events'] . '^^^G^^^';
+        $menu[] = '1^^^' . $root . '/import_csv_villes^^^' . $LG_Menu_Title['Imp_CSV_Towns'] . '^^^G^^^';
+    }
+    $menu[] = '1^^^' . $root . '/import_docs^^^' . $LG_Menu_Title['Import_Docs'] . '^^^G^^^';
+
+    $menu[] = '0^^^ ^^^Vérifications^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_sosa^^^' . $LG_Menu_Title['Check_Sosa'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_internet^^^' . $LG_Menu_Title['Internet_Cheking'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_internet_absente^^^' . $LG_Menu_Title['Internet_Hidding_Cheking'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/pers_isolees^^^' . $LG_Menu_Title['Non_Linked_Pers'] . '^^^C^^^';
+    $menu[] = '1^^^' . $root . '/verif_homonymes^^^' . $LG_Menu_Title['Namesake_Cheking'] . '^^^C^^^';
+    if ((!$SiteGratuit) or ($Premium)) {
+        $menu[] = '1^^^' . $root . '/controle_personnes^^^' . $LG_Menu_Title['Check_Persons'] . '^^^C^^^';
+    }
+
+    $menu[] = '0^^^ ^^^Vue personnalisée^^^I^^^';
+    $menu[] = '1^^^' . $root . '/vue_personnalisee^^^' . $LG_Menu_Title['Custom_View'] . '^^^I^^^';
+
+    $menu[] = '0^^^ ^^^Utilitaires^^^I^^^';
+    $menu[] = '1^^^' . $root . '/calendriers^^^Les calendriers^^^I^^^';
+    $menu[] = '1^^^' . $root . '/calc_so^^^' . $LG_Menu_Title['Calc_Sosa'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/conv_romain^^^Convertisseur de nombres romains^^^I^^^';
+    $menu[] = '1^^^' . $root . '/init_sosa^^^' . $LG_Menu_Title['Delete_Sosa'] . '^^^G^^^';
+    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/init_noms^^^' . $LG_Menu_Title['Init_Names'] . '^^^G^^^';
+    if ($def_enc != 'UTF-8')
+        $menu[] = '1^^^' . $root . '/rectif_utf8^^^' . $LG_Menu_Title['Rect_Utf'] . '^^^G^^^';
+    if ((!$SiteGratuit) or ($Premium)) {
+        $menu[] = '1^^^' . $root . '/calcul_distance^^^' . $LG_Menu_Title['Calculate_Distance'] . '^^^I^^^';
+        $menu[] = '1^^^' . $root . '/liste_noms_non_ut^^^' . $LG_Menu_Title['Name_Not_Used'] . '^^^C^^^';
+    }
+    $menu[] = '1^^^' . $root . '/vide_base^^^Reset_DB^^^G^^^';
+    if (!$SiteGratuit) $menu[] = '1^^^' . $root . '/infos_tech^^^' . $LG_Menu_Title['Tech_Info'] . '^^^G^^^';
+
+    $menu[] = '0^^^ ^^^Informations^^^I^^^';
+    $menu[] = '1^^^' . $root . '/premiers_pas_genealogie^^^' . $LG_Menu_Title['Start'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/glossaire_gen^^^' . $LG_Menu_Title['Glossary'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/stat_base^^^' . $LG_Menu_Title['Statistics'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/liste_liens^^^' . $LG_Menu_Title['Links'] . '^^^I^^^';
+    $menu[] = '1^^^' . $root . '/anniversaires^^^Anniversaires^^^I^^^';
+
+    $menu[] = '0^^^ ^^^Gestion du site^^^G^^^';
+    $menu[] = '1^^^' . $root . '/edition_parametres_site^^^' . $LG_Menu_Title['Site_parameters'] . '^^^G^^^';
+    $menu[] = '1^^^' . $root . '/edition_parametres_graphiques^^^' . $LG_Menu_Title['Design'] . '^^^G^^^';
+    $menu[] = '1^^^' . $root . '/liste_utilisateurs^^^' . $LG_Menu_Title['Users_List'] . '^^^G^^^';
+    $menu[] = '1^^^' . $root . '/liste_connexions^^^' . $LG_Menu_Title['Connections'] . '^^^G^^^';
+    if (!$SiteGratuit) {
+        // $menu[] = '1^^^https://tech.geneamania.net/Verif_Version.php?Version=' . $Version . '^^^Vérification de la version de Généamania^^^G^^^';
+        $menu[] = '1^^^' . $root . '/admin_tables^^^' . $LG_Menu_Title['Tables_Admin'] . '^^^G^^^';
+        // $menu[] = '1^^^https://genealogies.geneamania.net/Gratuits_Premiums.php^^^Différences gratuit / Premium^^^G^^^';
+    }
+
+    $num_div = 0;
+    $num_puce = 0;
+
+    if ($type_menu == 'D') {
+        if ($formu) echo '<form method="post">';
+        echo '<select name="example" size="1" onchange="document.location = this.options[this.selectedIndex].value;">';
+        echo '<option value="' . $root . '/">Menu rapide...</option>';
+        if ($formu)
+            echo '<option value="' . $root . '/">Accueil</option>';
+    }
+    $deb_opt  = 0;
+    $count = count($menu);
+    for ($nb = 0; $nb < $count; $nb++) {
+        $elements = explode('^^^', $menu[$nb]);
+        $rep = '';
+        // On affiche les lignes publiques
+        // ou les autres si on a les droits
+        if (($elements[3] == 'I') or ($droits == $elements[3]) or ($droits == 'G')) {
+            if ($elements[0] == 0) {
+                if ($type_menu == 'D') {
+                    if ($deb_opt) echo '</optgroup>';
+                    echo '<optgroup label="' . my_html($elements[2]) . '">';
+                } else {
+                    if ($deb_opt) echo '</div>';
+                    echo '<br>' . my_html($elements[2]) . ' ';
+                    ++$num_div;
+                    echo '<img src="' . $root . '/assets/img/' . $Icones['menu_open'] . '" alt="Flèche" ' . Survole_Clic_Div('id_div' . $num_div) . '/>';
+                    echo '<div id="id_div' . $num_div . '">';
+                }
+                $deb_opt = 1;
+            } else {
+                if ($type_menu == 'D') {
+                    echo '<option value="';
+                    echo $rep . $elements[1] . '">' . my_html($elements[2]) . '</option>';
+                } else {
+                    echo '   <img id="puce' . ++$num_puce . '" src="' . $root . '/assets/img/' . $Icones['menu_option'] . '" alt="Puce"/>';
+                    echo '<a href="' . $rep . $rep . $elements[1] . '">' . my_html($elements[2]) . '</a><br>';
+                }
+            }
+        }
+    }
+    if ($type_menu == 'D') {
+        if ($deb_opt) echo '</optgroup>';
+        echo '</select>';
+        if ($formu) echo '</form>';
+    } else {
+        if ($deb_opt) echo '</div>';
+
+        // Masquage des div créés
+        echo '<script type="text/javascript">';
+        for ($x = 1; $x <= $num_div; $x++) {
+            echo 'cache_div(\'id_div' . $x . '\');';
+        }
+        echo '</script>';
+    }
+}
+
+// Renvoye un Query String compatible W3C ??? lol nothing to do with it
+/**
+ * @deprecated will be removed
+ */
+function Query_Str()
+{
+    return str_replace('&', '&amp;', $_SERVER['QUERY_STRING']);
+}
+
+// Ajout d'un bouton retour
+/**
+ * @deprecated will be removed
+ */
+function Bouton_Retour($lib_Retour, $compl = '')
+{
+    echo '<form id="saisie" method="post" action="' . my_self() . $compl . '">' . "\n";
+    bt_ok_an_sup('', $lib_Retour, '', '', false);
+    echo '</form>';
+}
+
+//	----- Contrôle du niveau de l'utilisateur
+//			Il faut avoir le niveau requis pour accéder à ce script
+//			Le paramètre niveauRequis doit contenir G (gestionnaire), C (contributeur), P (privilégié) ou I (invité)
+/**
+ * @deprecated will be removed
+ */
+function controle_utilisateur($niveauRequis)
+{
+    //	C"est le premier appel au contrôle => droits d'invité anonyme
+    if (!isset($_SESSION['niveau'])) {
+        $_SESSION['nomUtilisateur']  = 'Anonyme';
+        $_SESSION['utilisateur']     = 'Anonyme';
+        $_SESSION['motPasse']        = '';
+        $_SESSION['niveau']          = 'I';
+        $_SESSION['estInvite']       = true;
+        $_SESSION['estPrivilegie']   = false;
+        $_SESSION['estContributeur'] = false;
+        $_SESSION['estGestionnaire'] = false;
+    }
+    //	vérification que les droits de l'utilisateur permettent d'accéder à la page demandée
+    $num_niveau = 0;
+    $val_ret = false;
+    switch ($_SESSION['niveau']) {
+        case 'I':
+            $num_niveau = 1;
+            break;
+        case 'P':
+            $num_niveau = 3;
+            break;
+        case 'C':
+            $num_niveau = 5;
+            break;
+        case 'G':
+            $num_niveau = 9;
+            break;
+    }
+    switch ($niveauRequis) {
+        case 'I':
+            if ($num_niveau >= 1) $val_ret = true;
+            break;
+        case 'P':
+            if ($num_niveau >= 3) $val_ret = true;
+            break;
+        case 'C':
+            if ($num_niveau >= 5) $val_ret = true;
+            break;
+        case 'G':
+            if ($num_niveau >= 9) $val_ret = true;
+            break;
+    }
+    return $val_ret;
+}
+
+// Initilisation des infirmations de connexion
+function Init_infos_cnx()
+{
+    global $util_defaut;
+    $_SESSION['estInvite'] = true;
+    $_SESSION['estPrivilegie'] = false;
+    $_SESSION['estContributeur'] = false;
+    $_SESSION['estGestionnaire'] = false;
+    $_SESSION['niveau'] = 'I';
+    $_SESSION['nomUtilisateur'] = $util_defaut;
+    $_SESSION['estCnx'] = false;
+    $est_cnx = false;
+}

@@ -6,7 +6,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Direct_Desc'];        // Titre pour META
 $x = Lit_Env();
 $index_follow = 'IN';                        // NOFOLLOW demandé pour les moteurs
@@ -34,7 +33,7 @@ function Affiche_Pers($num)
                 echo $num . ' : ';
                 $Ref_Pers = $enreg[0];
                 if (! $texte)
-                    echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref_Pers . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>';
+                    echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref_Pers . '">' . my_html($enreg[2] . ' ' . $enreg[1]) . '</a>';
                 else
                     echo my_html($enreg[2] . ' ' . $enreg[1]);
                 $Ne = $enreg[4];
@@ -49,8 +48,8 @@ function Affiche_Pers($num)
                     echo ')';
                 }
                 if (!$texte) {
-                    echo '  <a href="' . $root . '/arbre_asc_pers.php?Refer=' . $Ref_Pers . '"' . $fin_arbres_asc;
-                    echo ' <a href="' . $root . '/arbre_desc_pers.php?Refer=' . $Ref_Pers . '"' . $fin_arbres_desc;
+                    echo '  <a href="' . $root . '/arbre_asc_pers?Refer=' . $Ref_Pers . '"' . $fin_arbres_asc;
+                    echo ' <a href="' . $root . '/arbre_desc_pers?Refer=' . $Ref_Pers . '"' . $fin_arbres_desc;
                 }
 
                 // Si les conjoints ont été demandés, on va les chercher
@@ -104,7 +103,7 @@ $comp_texte = '';
 if ($conj_demandes) $comp_texte .= '&amp;avec_conjoints=O';
 
 $compl = Ajoute_Page_Info(600, 250) .
-    Affiche_Icone_Lien('href="' . $root . '/desc_directe_pers.php?Numero=' . $Numero . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . ' ';
+    Affiche_Icone_Lien('href="' . $root . '/desc_directe_pers?Numero=' . $Numero . '&amp;texte=O' . $comp_texte . '"', 'text', $LG_printable_format) . ' ';
 
 if (! $texte) Insere_Haut($titre, $compl, 'Desc_Directe_Pers', $Numero);
 else {

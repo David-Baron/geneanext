@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -69,7 +74,7 @@ function lien_aj_union($unisexe)
     global $root, $SexePers, $Refer;
     $lib = 'Ajouter une union';
     if ($unisexe == 'o') $lib .= ' unisexe';
-    $lien = 'href="' . $root . '/edition_union.php?Conjoint=' . $Refer . '&amp;Ref_Union=-1';
+    $lien = 'href="' . $root . '/edition_union?Conjoint=' . $Refer . '&amp;Ref_Union=-1';
     if ($unisexe == 'o') {
         $us = 'o';
         echo LG_PERS_UNION_UNISEX;
@@ -78,7 +83,7 @@ function lien_aj_union($unisexe)
         echo LG_PERS_UNION_MULTISEX;
     }
     //echo ' '.Affiche_Icone_Lien($lien.'"','ajout',$lib).'<br />';
-    echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_union.php?Reference=-1&amp;Personne=0&amp;us=n"', 'ajout', $lib) . '<br />';
+    echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_union?Reference=-1&amp;Personne=0&amp;us=n"', 'ajout', $lib) . '<br />';
 }
 
 // Affiche une personne et ses parents
@@ -235,7 +240,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
                 // .'&sex='.strtoupper($enreg2['Sexe'])
                 // .'&birthDate='.substr($enreg2['Ne_le'],6,2).'%2F'.substr($enreg2['Ne_le'],4,2).'%2F'.substr($enreg2['Ne_le'],0,4).'"'
                 // .' target="_blank">Match Id</a> ';
-                echo '<a href="' . $root . '/recherche_matchid_unitaire.php?ref=' . $Refer . '" target="_blank">' . $LG_Menu_Title['MatchId_Sch'] . '</a>';
+                echo '<a href="' . $root . '/recherche_matchid_unitaire?ref=' . $Refer . '" target="_blank">' . $LG_Menu_Title['MatchId_Sch'] . '</a>';
             }
         }
     }
@@ -329,7 +334,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         $x = Aff_Sources_Objet($Refer, 'P', 'N');
         // Possibilité de lier une source pour la personne
         echo '<br /> ' . my_html(LG_PERS_LINK_SOURCE) . ' : ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source.php?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refSrc=-1"', 'ajout', LG_PERS_LINK_SOURCE);
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_source?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refSrc=-1"', 'ajout', LG_PERS_LINK_SOURCE);
     }
 
     echo '</div>';
@@ -359,13 +364,13 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
             $LG_of_h = my_html($LG_of);
             if ($Pere != 0) {
                 if (Get_Nom_Prenoms($Pere, $Nom, $Prenoms)) {
-                    echo ' ' . $LG_of_h . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Pere . '">' . $Prenoms . ' ' . $Nom . '</a>';
+                    echo ' ' . $LG_of_h . ' <a href="' . $root . '/edition_personne?Refer=' . $Pere . '">' . $Prenoms . ' ' . $Nom . '</a>';
                 }
             }
             if ($Mere != 0) {
                 if ($Pere != 0) echo ' ' . my_html($LG_andof);
                 if (Get_Nom_Prenoms($Mere, $Nom, $Prenoms)) {
-                    echo ' ' . $LG_of_h . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Mere . '">' . $Prenoms . ' ' . $Nom . '</a>';
+                    echo ' ' . $LG_of_h . ' <a href="' . $root . '/edition_personne?Refer=' . $Mere . '">' . $Prenoms . ' ' . $Nom . '</a>';
                 }
             }
             echo ' (' . LG_PERS_RANK . ' : ' . $Rang . ' )';
@@ -375,11 +380,11 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
             $icone = 'ajout';
             $lib = LG_PERS_CREATE_PARENTS;
             echo my_html($lib) . ' : ';
-            echo Affiche_Icone_Lien('href="' . $root . '/edition_filiation.php?Refer=' . $Refer . '"', $icone, $lib);
+            echo Affiche_Icone_Lien('href="' . $root . '/edition_filiation?Refer=' . $Refer . '"', $icone, $lib);
         } else {
             $icone = 'fiche_edition';
             $lib = LG_PERS_UPDATE_PARENTS;
-            echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_filiation.php?Refer=' . $Refer . '"', $icone, $lib);
+            echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_filiation?Refer=' . $Refer . '"', $icone, $lib);
         }
 
         echo '</fieldset>';
@@ -404,13 +409,13 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
                 Champ_car($enreg2C, 'Nom');
                 Champ_car($enreg2C, 'Prenoms');
                 $lib = LG_PERS_UPDATE_UNION;
-                echo $LG_with . ' <a href="' . $root . '/edition_personne.php?Refer=' . $enreg2C['Reference'] . '">' . $enreg2C['Prenoms'] . ' ' . $enreg2C['Nom'] . "</a>";
+                echo $LG_with . ' <a href="' . $root . '/edition_personne?Refer=' . $enreg2C['Reference'] . '">' . $enreg2C['Prenoms'] . ' ' . $enreg2C['Nom'] . "</a>";
                 if ($enreg2C['Sexe'] == $SexePers)
                     $us = 'o';
                 else
                     $us = 'n';
                 //echo 'unisexe : '.$us;
-                echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_union.php?Reference=' . $Ref_U . '&amp;Refer=' . $Personne . '&amp;us=' . $us . '"', 'fiche_edition', $lib) . '<br />';
+                echo ' ' . Affiche_Icone_Lien('href="' . $root . '/edition_union?Reference=' . $Ref_U . '&amp;Refer=' . $Personne . '&amp;us=' . $us . '"', 'fiche_edition', $lib) . '<br />';
                 $resC->closeCursor();
             }
             $resU->closeCursor();
@@ -482,14 +487,14 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
             while ($enr_ns = $res_ns->fetch(PDO::FETCH_NUM)) {
                 echo '<tr><td>' . my_html($enr_ns[0]) . '</td><td>' . my_html($enr_ns[1]) . '</td>';
                 echo '<td>' .
-                    Affiche_Icone_Lien('href="' . $root . '/edition_lier_nom.php?refPers=' . $Personne . '&amp;refNom=' . $enr_ns[2] . '"', 'fiche_edition', 'Modification d\'un nom secondaire') .
+                    Affiche_Icone_Lien('href="' . $root . '/edition_lier_nom?refPers=' . $Personne . '&amp;refNom=' . $enr_ns[2] . '"', 'fiche_edition', 'Modification d\'un nom secondaire') .
                     '</td></tr>';
             }
             echo '</table>';
         }
         // Possibilité de lier un nom secondaire pour la personne
         echo '<br /> ' . LG_PERS_ALT_NAME_ADD . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_lier_nom.php?refPers=' . $Personne . '&amp;refNom=-1"', 'ajout', LG_PERS_ALT_NAME_ADD);
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_nom?refPers=' . $Personne . '&amp;refNom=-1"', 'ajout', LG_PERS_ALT_NAME_ADD);
         echo '</div>';
 
         //	Documents liés à la personne
@@ -498,9 +503,9 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
         Aff_Documents_Objet($Personne, 'P', 'N');
         // Possibilité de lier un document pour la personne
         echo '<br /> ' . LG_PERS_DOC_LINK_EXISTS . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc.php?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refDoc=-1"', 'ajout', LG_PERS_DOC_LINK);
+            Affiche_Icone_Lien('href="' . $root . '/edition_lier_doc?refObjet=' . $Personne . '&amp;typeObjet=P&amp;refDoc=-1"', 'ajout', LG_PERS_DOC_LINK);
         echo '<br /> ' . LG_PERS_DOC_LINK_NEW . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/edition_document.php?Reference=-1&amp;refObjet=' . $Personne .
+            Affiche_Icone_Lien('href="' . $root . '/edition_document?Reference=-1&amp;refObjet=' . $Personne .
                 '&amp;typeObjet=P"', 'ajout', LG_PERS_DOC_LINK);
         echo '</div>';
     }
@@ -797,9 +802,8 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         }
         // Si la personne a été supprimée entre-temps
         else {
-            header('Location: index.php');
-            // Retour_Ar();
-            // die();
+            header('Location: ' .$root. '/');
+            exit();
         }
     } else {
         $enreg2['Reference'] = 0;
@@ -823,12 +827,12 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(650, 250);
     if ($Modif) {
         $compl .=
-            Affiche_Icone_Lien('href="' . $root . '/liste_images.php?Refer=' . $Refer . '&amp;Type_Ref=P"', 'images', 'Images') . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pers.php?Refer=' . $Refer . '"', 'arbre_asc', $LG_assc_tree) . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers.php?Refer=' . $Refer . '"', 'arbre_desc', $LG_desc_tree) . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/ajout_rapide.php?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/verif_personne.php?Refer=' . $Refer . '"', 'fiche_controle', $LG_LPers_Check_Pers) . ' ' .
-            Affiche_Icone_Lien('href="' . $root . '/fiche_fam_pers.php?Refer=' . $Refer . '"', 'fiche_fam', 'Fiche familiale');
+            Affiche_Icone_Lien('href="' . $root . '/liste_images?Refer=' . $Refer . '&amp;Type_Ref=P"', 'images', 'Images') . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/arbre_asc_pers?Refer=' . $Refer . '"', 'arbre_asc', $LG_assc_tree) . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/arbre_desc_pers?Refer=' . $Refer . '"', 'arbre_desc', $LG_desc_tree) . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/ajout_rapide?Refer=' . $Refer . '"', 'ajout_rapide', $LG_quick_adding) . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/verif_personne?Refer=' . $Refer . '"', 'fiche_controle', $LG_LPers_Check_Pers) . ' ' .
+            Affiche_Icone_Lien('href="' . $root . '/fiche_fam_pers?Refer=' . $Refer . '"', 'fiche_fam', 'Fiche familiale');
     }
 
     Insere_Haut($titre, $compl, 'Edition_Personne', $Refer);

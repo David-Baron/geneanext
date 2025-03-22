@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -129,16 +133,12 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Gestion standard des pages
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour
 $titre = LG_CONTRIB_EDIT_TITLE;
 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 //	Gestion des droits
 require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de la gestion standard des pages
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Largeur de la colonne de titre exprimée en pourcentage
 $largP = 25;
@@ -215,7 +215,7 @@ function Traite_nom_Ins(&$nom_traite, $indic_maj, $ANom = '')
                 // Initialisation technique des noms
                 if ($premier_nom) {
                     // Appel du fichier contenant la classe
-                    require(__DIR__ . '/../app/Phonetique.php');
+                    require(__DIR__ . '/../app/Util/Phonetique.php');
                     // Initialisation d'un objet de la classe
                     $codePho = new Phonetique();
                     $idNom = Nouvel_Identifiant('idNomFam', 'noms_famille') - 1;

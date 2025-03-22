@@ -7,7 +7,12 @@
  * 
  */
 
- require(__DIR__ . '/../app/ressources/fonctions.php');
+require(__DIR__ . '/../app/ressources/fonctions.php');
+
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 
 function Liste_Noms_Images($chemin)
 {

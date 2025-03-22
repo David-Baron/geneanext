@@ -5,7 +5,10 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 
 $lib_ok = $lib_Exporter;
 $lib_an = $lib_Retour;
@@ -24,15 +27,9 @@ $min_year = Secur_Variable_Post($min_year, 1, 'N');
 if ($min_year == 0)
     $min_year = $death_def_min_year;
 
-// On retravaille le libellé du bouton pour effectuer le retour...
-if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
-
 $titre = $LG_Menu_Title['Export_Death'];     // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'G';        // Niveau minimum : Gestionnaire
 
-// On retravaille le libellé du bouton pour effectuer le retour...
-if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 if ($ok == $lib_ok) $ok = 'OK';
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -40,8 +37,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 // Page interdite sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $compl = Ajoute_Page_Info(600, 300);
 if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
@@ -112,8 +107,8 @@ if ($bt_OK) {
                 echo $row[0] . ' '
                     . UnPrenom($row[1]) . ' '
                     . lib_sexe_born($row[5]) . ' ' . etend_date($row[2]) . ' ' . LG_AT . ' ' . $row[4];
-                echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $row[6] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
-                echo ' <a href="' . $root . '/recherche_matchid_unitaire.php'
+                echo ' <a href="' . $root . '/edition_personne?Refer=' . $row[6] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                echo ' <a href="' . $root . '/recherche_matchid_unitaire'
                     . '?ref=' . $row[6] . '"'
                     . ' target="_blank">'
                     . $LG_Menu_Title['MatchId_Sch'] . '</a>';
@@ -121,7 +116,7 @@ if ($bt_OK) {
             }
         }
     }
-    Bouton_Retour($lib_Retour);
+
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';

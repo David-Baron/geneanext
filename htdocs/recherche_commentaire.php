@@ -9,6 +9,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -30,10 +35,8 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 // On retravaille le libellé du bouton pour être standard...
 if ($ok == $lib_Rechercher) $ok = 'OK';
 
-// Gestion standard des pages
-$acces = 'L';                                    // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Search_Comment'];        // Titre pour META
-$niv_requis = 'C';
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
@@ -41,8 +44,6 @@ $Divers   = Secur_Variable_Post($Divers, 65535, 'S');
 $Sortie   = Secur_Variable_Post($Sortie, 1, 'S');
 
 $compl = '';
-
-if ($est_gestionnaire) {
 
     if ($bt_OK) Ecrit_Entete_Page($titre, $contenu, $mots);
 
@@ -220,7 +221,7 @@ if ($est_gestionnaire) {
         echo '<tr><td class="label" width="' . $larg_titre . '%">' . ucfirst($LG_Ch_Output_Format) . '</td><td class="value">';
         echo '<input type="radio" id="Sortie_e" name="Sortie" value="e" checked/><label for="Sortie_e">' . $LG_Ch_Output_Screen . '</label> ';
         echo '<input type="radio" id="Sortie_t" name="Sortie" value="t"/><label for="Sortie_t">' . $LG_Ch_Output_Text . '</label> ';
-        if ($est_privilegie) echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
+        echo '<input id="Sortie_c" type="radio" name="Sortie" value="c"/><label for="Sortie_c">' . $LG_Ch_Output_CSV . '</label>';
         echo '</td></tr>' . "\n";
 
         echo '<tr><td colspan="2"> </td></tr>';
@@ -230,7 +231,7 @@ if ($est_gestionnaire) {
         echo '</table>' . "\n";
         echo '</form>' . "\n";
 
-        include(__DIR__ . '/assets/js/Insert_Tiny.js');
+        include(__DIR__ . '/../public/assets/js/Insert_Tiny.js');
     }
 
     if ($Sortie != 't') {
@@ -243,7 +244,7 @@ if ($est_gestionnaire) {
         echo '</tr>';
         echo '</table>';
     }
-} else echo my_html($LG_function_noavailable_profile) . "\n";
+
 ?>
 </body>
 

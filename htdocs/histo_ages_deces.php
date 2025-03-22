@@ -50,7 +50,7 @@ $deb_sql = 'SELECT Ne_le, Decede_Le, Reference FROM ' . nom_table('personnes') .
     " and Ne_le >= '" . $Debut . "0101L'" .
     " and Ne_le <= '" . $Fin . "1231L'" .
     " AND Decede_Le LIKE '_________L' ";
-if (!$est_privilegie) {
+if (!IS_GRANTED('P')) {
     $deb_sql .= "and Diff_Internet = 'O' ";
 }
 $sql = $deb_sql . " and Sexe = 'm' order by Ne_Le";
@@ -149,21 +149,18 @@ echo '</table>';
 $Nom = '';
 $Prenoms = '';
 if (Get_Nom_Prenoms($ref_max_h, $Nom, $Prenoms)) {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_max_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_h) . ')';
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_M . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_max_h . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_h) . ')';
 }
 if (Get_Nom_Prenoms($ref_max_f, $Nom, $Prenoms)) {
-    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers.php?Refer=' . $ref_max_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_f) . ')';
+    echo '<br />' . LG_CH_HISTO_AGE_OLDEST_W . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_max_f . '">' . $Prenoms . '&nbsp;' . $Nom . '</a> (' . Decompose_Mois($max_mois_f) . ')';
 }
 
 // Un décès est antérieur à la date de naissance
-if ($est_contributeur) {
+if (IS_GRANTED('C')) {
     if ($warning_negatif) {
         echo '<br><br><img src="' . $root . '/assets/img/' . $Icones['tip'] . '" alt="Conseil" title="Conseil"> ' . LG_CH_HISTO_AGE_CTL_BIRTH;
     }
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

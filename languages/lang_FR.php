@@ -8,7 +8,7 @@ $salt3 = '@")[&ù';
 if ($nom_page == 'index.php') {
     $LG_index_welcome = 'Bienvenue sur le site de généalogie de';
     $LG_index_responsability = 'Les données sont publiées sous la responsabilité du titulaire du site';
-    $LG_index_connexion_error = 'Erreur de code utilisateur et/ou mot de passe';
+    $LG_index_connexion_error = 'Nom d\'utilisateur et/ou mot de passe incorrect';
     $LG_index_title = 'Généalogie';
     $LG_index_desc = 'Accueil de la généalogie de';
     $LG_index_tip_no_param = 'Pensez à paramétrer votre site dans le menu "Gestion du site"';
@@ -205,7 +205,7 @@ if ($nom_page == 'edition_lier_pers.php') {
 }
 
 if (($nom_page == 'fiche_document.php') or ($nom_page == 'edition_document.php')
-    or ($nom_page == 'Create_Multiple_Docs.php') or ($nom_page == 'Edition_Lier_Doc.php')
+    or ($nom_page == 'create_multiple_docs.php') or ($nom_page == 'edition_lier_doc.php')
 ) {
     $LG_Docs_Doc = 'Document';
     $LG_Docs_Title = 'Titre';
@@ -1312,7 +1312,7 @@ if ($nom_page == 'infos_tech.php') {
 }
 
 // if (($nom_page == 'Import_CSV_Liens.php') or ($nom_page == 'Import_CSV_Evenements.php') or ($nom_page == 'Import_CSV_Villes.php')) {
-if (strpos($nom_page, 'import_CSV') !== false) {
+if (strpos($nom_page, 'import_csv') !== false) {
     define('LG_IMP_CSV_REQ_FIELDS', 'Champs demandés');
     define('LG_IMP_CSV_IN_COL', 'dans la colonne');
     define('LG_IMP_CSV_ERR_MATCH_1', 'Erreur de correspondance avec entête présente ; champ ');

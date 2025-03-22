@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -47,8 +51,6 @@ else $titre = $LG_Menu_Title['Name_Edit'];
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour arrière sur une demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $nomFam        = Secur_Variable_Post($nomFam, 50, 'S');
 $AnomFam       = Secur_Variable_Post($AnomFam, 50, 'S');
@@ -88,7 +90,7 @@ if ($bt_Sup) {
     Retour_Ar();
 }
 
-require(__DIR__ . '/../app/Phonetique.php');
+require(__DIR__ . '/../app/Util/Phonetique.php');
 //	Initialisation d'un objet de la classe
 $objetCodePho = new Phonetique();
 
@@ -223,7 +225,7 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     $compl = Ajoute_Page_Info(600, 400);
     if ($idNomFam != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_nomfam.php?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . ' ';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_nomfam?idNom=' . $idNomFam . '"', 'page', LG_NAME_REC) . ' ';
 
     Insere_Haut($titre, $compl, 'Edition_NomFam', $idNomFam);
 

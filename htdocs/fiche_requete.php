@@ -6,9 +6,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Request'];       // Titre pour META
-$niv_requis = 'P';
 $x = Lit_Env();
 
 $tab_variables = array('annuler');
@@ -37,8 +40,8 @@ $enreg = $enreg_sel;
 $compl = Ajoute_Page_Info(600, 150);
 
 // Possibilité de venir en modification pour les gestionnaires
-if ($est_gestionnaire)
-    $compl .= '<a href="' . $root . '/edition_requete.php?reference=' . $reference . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_Menu_Title['Request_Edit'] . '" title="' . $LG_Menu_Title['Request_Edit'] . '"></a>' . "\n";
+if (IS_GRANTED('G'))
+    $compl .= '<a href="' . $root . '/edition_requete?reference=' . $reference . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_Menu_Title['Request_Edit'] . '" title="' . $LG_Menu_Title['Request_Edit'] . '"></a>' . "\n";
 
 Insere_Haut(my_html($titre), $compl, 'Fiche_Requete', $reference);
 
@@ -56,10 +59,6 @@ if ($nb_crit > 0) {
 }
 echo '<tr><td class="label" width="25%">' . ucfirst(LG_QUERY_CODE) . '</td><td class="value">' . $enreg['Code_SQL'] . '</td></tr>';
 echo '</table>' . "\n";
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
-
 echo '<br />' . "\n";
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

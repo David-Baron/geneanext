@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function affiche($req, $sexe)
 {
     global $root, $echo_modif;
@@ -30,18 +35,17 @@ function affiche($req, $sexe)
         // Affichage
         while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
             $idPers = $enreg[0];
-            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $idPers . '">' .
+            echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $idPers . '">' .
                 my_html($enreg[1] . ' ' . $enreg[2]) . '</a>';
-            echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $idPers . '">' . $echo_modif;
+            echo '&nbsp;<a href="' . $root . '/edition_personne?Refer=' . $idPers . '">' . $echo_modif;
         }
         $res->closeCursor();
     }
 }
 
-$acces = 'L';                          // Type d'accès de la page : (L)ecture
 $titre = $LG_Menu_Title['Non_Linked_Pers']; // Titre pour META
 $x = Lit_Env();
-$niv_requis = 'C';                        // Page acessible au gestionnaire uniquement
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 $compl = Ajoute_Page_Info(600, 150);

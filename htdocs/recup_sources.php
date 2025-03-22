@@ -86,7 +86,7 @@ echo '</form>';
 echo '<br>NB : il faut être connecté à Internet pour récupérer les sources de Généamania<br><br>';
 echo '<br>NB : la récupération des sources peut prendre un certain temps !<br><br>';
 echo "<hr>";
-echo '<a href="' . $root . '/install.php">Page d\'installation</a>';
+echo '<a href="' . $root . '/install">Page d\'installation</a>';
 
 // L'utilisateur a cliqué sur Mettre à jour les paramètres
 if ($majsource == 'OK') {
@@ -156,7 +156,7 @@ if ($majsource == 'OK') {
             unlink($nom_arch_locale);
 
 
-            echo '<br>Appel de la page de <a href="' . $root . '/install.php">migration</a>';
+            echo '<br>Appel de la page de <a href="' . $root . '/install">migration</a>';
         } else {
             echo 'Echec de l\'ouverture de l\'archive. vérifiez que votre installation autorise PHP à utiliser les fonctions de compression';
         }

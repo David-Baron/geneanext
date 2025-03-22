@@ -6,7 +6,10 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
 $tab_variables = array('ok', 'annuler', 'S_Int', 'idNom');
 
 foreach ($tab_variables as $nom_variables) {
@@ -21,10 +24,8 @@ $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
-// Gestion standard des pages
-$acces = 'M';                                  // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Name_Not_Used'];     // Titre pour META
-$niv_requis = 'C';                               // Page réservée à partir du profil contributeur
+
 $x = Lit_Env();
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -81,8 +82,8 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam.php?idNom=';
-    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam?idNom=';
     $numLig = 0;
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
@@ -98,7 +99,7 @@ if ($nb_lignes > 0) {
 
         echo '<td>' . $deb_visu . $enr[0] . '&amp;Nom=' . $nom . '">' . $nom . '</a>';
 
-        if ($est_gestionnaire)
+        if (IS_GRANTED('G'))
             echo '&nbsp;' . Affiche_Icone_Lien($deb_modif . $id_nom . '"', 'fiche_edition', 'Modifier');
 
         echo '</td>';

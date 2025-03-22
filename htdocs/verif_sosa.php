@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -50,8 +55,8 @@ function Accede_Personne($Reference)
             echo '<td width="20%">' . $Personne[3] . '</td>';
             echo '<td width="20%">' . $Sosa . '</td>';
             echo '<td width="50%">';
-            echo '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($Personne[2] . ' ' . $Personne[1]) . '</a>';
-            echo ' <a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '">' . $echo_modif;
+            echo '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref . '">' . my_html($Personne[2] . ' ' . $Personne[1]) . '</a>';
+            echo ' <a href="' . $root . '/edition_personne?Refer=' . $Ref . '">' . $echo_modif;
             //echo 'mem : '.memory_get_usage();
             echo '</td></tr>' . "\n";
         }
@@ -193,11 +198,11 @@ if ($Personne = $Res->fetch(PDO::FETCH_ASSOC)) {
 
     echo '</form>';
 
-    echo '<br /><a href="' . $root . '/init_sosa.php">' . my_html($LG_Menu_Title['Delete_Sosa']) . '</a>';
+    echo '<br /><a href="' . $root . '/init_sosa">' . my_html($LG_Menu_Title['Delete_Sosa']) . '</a>';
 } else {
     echo '<img src="' . $root . '/assets/img/error.png" alt="Avertissement"> ';
     echo 'De cujus non trouvé, veuillez attribuer le numéro 1 &agrave; la personne de votre choix ; ';
-    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers.php?Type_Liste=P">liste par noms</a>.';
+    echo 'pour ce faire, passez par la <a href="' . $root . '/liste_pers?Type_Liste=P">liste par noms</a>.';
 }
 
 echo '<table cellpadding="0" width="100%">';

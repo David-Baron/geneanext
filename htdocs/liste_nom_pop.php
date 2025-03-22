@@ -31,7 +31,7 @@ Insere_Haut($titre, $compl, 'Liste_Nom_Pop', '');
 
 // Préparation sur la clause de diffusabilité
 $p_diff_int = '';
-if (!$est_privilegie) $p_diff_int = " and Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $p_diff_int = " and Diff_Internet = 'O' ";
 
 $sql = 'SELECT count(*) , f.nomFamille, f.idNomFam' .
     ' FROM ' . nom_table('noms_personnes') . ' n, ' . nom_table('noms_famille') . ' f, ' . nom_table('personnes') . ' p' .
@@ -56,8 +56,8 @@ if ($nb_lignes > 0) {
     echo '</tr>' . "\n";
     $num_lig = 0;
 
-    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam.php?idNom=';
-    $deb_modif = 'href="' . $root . '/edition_nomfam.php?idNom=';
+    $deb_visu  = '&nbsp;<a href="' . $root . '/fiche_nomfam?idNom=';
+    $deb_modif = 'href="' . $root . '/edition_nomfam?idNom=';
 
     while ($enr = $res->fetch(PDO::FETCH_NUM)) {
 
@@ -67,7 +67,7 @@ if ($nb_lignes > 0) {
         $nom = $enr[1];
         echo '<td>' . $deb_visu . $enr[2] . '&amp;Nom=' . $nom . '">' . my_html($nom) . '</a>';
 
-        if ($est_gestionnaire)
+        if (IS_GRANTED('G'))
             echo '&nbsp;' . Affiche_Icone_Lien($deb_modif . $enr[2] . '"', 'fiche_edition', my_html($LG_modify));
 
         echo '</td>';
@@ -80,9 +80,6 @@ if ($nb_lignes > 0) {
     echo '</table>' . "\n";
     echo '<br />' . "\n";
 }
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '');
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

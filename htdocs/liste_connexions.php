@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array('annuler');
 foreach ($tab_variables as $nom_variables) {
     if (isset($_POST[$nom_variables])) $$nom_variables = $_POST[$nom_variables];
@@ -16,11 +21,9 @@ $annuler = Secur_Variable_Post($annuler, strlen($lib_Retour), 'S');
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
-// Gestion standard des pages
-$acces = 'L';
 $titre = $LG_Menu_Title['Connections'];
 $x = Lit_Env();
-$niv_requis = 'G';
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Sortie dans un fichier CSV ?
@@ -28,9 +31,6 @@ $csv_dem = Recup_Variable('csv', 'C', 'ce');
 $CSV = false;
 if ($csv_dem === 'c') $CSV = true;
 if (($SiteGratuit) and (!$Premium)) $CSV = false;
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Récupération de la personne sélectionnée sur l'affichage précédent ou demandée
 $id_Util = '-1';
@@ -43,10 +43,10 @@ if ($Util) $id_Util = $Util;
 
 $compl = Ajoute_Page_Info(600, 150);
 if ((!$SiteGratuit) or ($Premium)) {
-    if ($_SESSION['estCnx']) {
+    if (IS_AUTHENTICATED()) {
         $filtre = '';
         if ($id_Util != -1) $filtre = '&amp;Util=' . $id_Util;
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_connexions.php?csv=c' . $filtre . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_connexions?csv=c' . $filtre . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
     }
 }
 
@@ -104,8 +104,8 @@ if (!$CSV) {
             echo '</tr>' . "\n";
         }
         echo '<tr>';
-        echo '<td><a href="' . $root . '/fiche_utilisateur.php?code=' . $row[0] . '">' . $row[3];
-        echo '</a>&nbsp;<a href="' . $root . '/edition_utilisateur.php?code=' . $row[0] . '">' . $echo_modif . '</td>';
+        echo '<td><a href="' . $root . '/fiche_utilisateur?code=' . $row[0] . '">' . $row[3];
+        echo '</a>&nbsp;<a href="' . $root . '/edition_utilisateur?code=' . $row[0] . '">' . $echo_modif . '</td>';
         echo '<td>' . DateTime_Fr($row[1]) . '</td>';
         echo '<td>' . $row[2] . '</td>';
         echo '</tr>' . "\n";
@@ -140,9 +140,6 @@ if (!$CSV) {
 }
 
 $res->closeCursor();
-
-// Formulaire pour le bouton retour
-Bouton_Retour($lib_Retour, '?' . Query_Str());
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

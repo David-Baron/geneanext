@@ -7,6 +7,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function aff_nb_enr($lib1, $accord)
 {
     global $simulation, $nb_enr, $premier_lib, $tab, $h_LG_EVT_MERGE_ACTION, $lg_evt_participation, $lg_evt_participations, $lg_evt_image, $lg_evt_images, $lg_evt_document, $lg_evt_documents, $lg_evt_done;
@@ -117,10 +122,10 @@ while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
 
             if ($premier) {
                 echo '<br />' . my_html(LG_EVT_MERGE_PROCESS . ' ' . $enreg[4]) . '<br />';
-                echo $tab . '<a href="' . $root . '/fiche_evenement.php?refPar=' . $ident_premier . '">' . $h_LG_EVT_MERGE_REF . '</a><br />';
+                echo $tab . '<a href="' . $root . '/fiche_evenement?refPar=' . $ident_premier . '">' . $h_LG_EVT_MERGE_REF . '</a><br />';
                 $premier = false;
             }
-            echo $tab . '<a href="' . $root . '/fiche_evenement.php?refPar=' . $id_courant . '">' . $h_LG_EVT_MERGE_OTHER . '</a><br />';
+            echo $tab . '<a href="' . $root . '/fiche_evenement?refPar=' . $id_courant . '">' . $h_LG_EVT_MERGE_OTHER . '</a><br />';
 
 
             // Etape 1 : on bascule les participations sur le commentaire le plus ancien

@@ -1,13 +1,17 @@
 <?php
-//=====================================================================
-// Vérification des homonymes
-//=====================================================================
+/*
+ * Vérification des homonymes
+ */
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Namesake_Cheking']; // Titre pour META
-$niv_requis = 'C';
+
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
@@ -27,8 +31,8 @@ if ($D_Dec) $compl_texte .= '&D_Dec=O';
 $texte = Dem_Texte();
 
 $compl = Ajoute_Page_Info(600, 300);
-if ($_SESSION['estGestionnaire']) {
-    $compl .= '<a href="' . $root . '/verif_homonymes.php?texte=O' . $compl_texte . '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '"></a>' . "\n";
+if (IS_GRANTED('G')) {
+    $compl .= '<a href="' . $root . '/verif_homonymes?texte=O' . $compl_texte . '"><img src="' . $root . '/assets/img/' . $Icones['text'] . '" alt="' . $LG_printable_format . '" title="' . $LG_printable_format . '"></a>' . "\n";
 }
 
 # include(__DIR__ . '/assets/js/Verif_Homonymes.js');
@@ -86,14 +90,14 @@ $x_Ref = my_html($LG_Reference);
 
 if ($res = lect_sql($sql)) {
     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
-        if (!$texte) echo '<form action="' . $root . '/fiche_homonymes.php" id="frm_' . $nb . '">';
+        if (!$texte) echo '<form action="' . $root . '/fiche_homonymes" id="frm_' . $nb . '">';
         echo '<fieldset>';
         $nom = $enreg[1];
         $prenom = $enreg[2];
         $nb_homonymes = $enreg[0];
         echo '<legend>';
         if (!$texte) {
-            echo '<a href="' . $root . '/liste_pers2.php?Type_Liste=P&amp;idNom=' . $enreg[3] . '&amp;Nom=' . $nom . '">' . my_html($nom) . '</a>';
+            echo '<a href="' . $root . '/liste_pers2?Type_Liste=P&amp;idNom=' . $enreg[3] . '&amp;Nom=' . $nom . '">' . my_html($nom) . '</a>';
         } else {
             echo my_html($nom) . '';
         }
@@ -116,14 +120,14 @@ if ($res = lect_sql($sql)) {
                 echo '<tr>';
                 echo '<td ' . $classe . '>';
                 if (!$texte) {
-                    echo $x_Ref . ' : ' . '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $enreg2['Reference'] . '">' . $enreg2['Reference'] . '</a>' . "\n";
+                    echo $x_Ref . ' : ' . '<a href="' . $root . '/fiche_fam_pers?Refer=' . $enreg2['Reference'] . '">' . $enreg2['Reference'] . '</a>' . "\n";
                 } else {
                     echo '&nbsp;&nbsp;&nbsp;' . $x_Ref . '&nbsp;' . $enreg2['Reference'] . "\n";
                 }
                 if ($enreg2['Ne_le'] != '') echo ',' . $x_ne . Etend_date($enreg2['Ne_le']);
                 if ($enreg2['Decede_Le'] != '') echo ', + ' . Etend_date($enreg2['Decede_Le']);
                 if (!$texte) {
-                    echo '&nbsp;<a href="' . $root . '/edition_personne.php?Refer=' . $enreg2['Reference'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
+                    echo '&nbsp;<a href="' . $root . '/edition_personne?Refer=' . $enreg2['Reference'] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                 }
                 echo '</td>' . "\n";
                 if (!$texte) {

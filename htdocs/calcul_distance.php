@@ -24,17 +24,12 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 // On retravaille le libellé du bouton pour être standard...
 if ($ok == $lib_Calculer) $ok = 'OK';
 
-// Gestion standard des pages
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Calculate_Distance'];          // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Verrouillage sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $Ref_Ville1 = Secur_Variable_Post($Ref_Ville1, 1, 'N');
 $Ref_Ville2 = Secur_Variable_Post($Ref_Ville2, 1, 'N');
@@ -55,7 +50,7 @@ if (!$bt_OK) {
 
 $n_villes = nom_table('villes');
 
-echo '<form id="saisie" method="post" action="' . my_self() . '">' . "\n";
+echo '<form id="saisie" method="post">' . "\n";
 
 // Constitution de la liste des villes
 $sql = 'select Identifiant_zone, Nom_Ville from ' . $n_villes . ' where Latitude <> 0 or Longitude <> 0'

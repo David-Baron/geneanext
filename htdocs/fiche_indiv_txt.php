@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('P')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function fin_fs()
 {
     global $sortie_pdf;
@@ -134,9 +139,7 @@ function aff_enf_frat($typo)
     } else HTML_ou_PDF('<br />' . "\n", $sortie);
 }
 
-$acces = 'L';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = $LG_Menu_Title['Indiv_Text_Report']; // Titre pour META
-$niv_requis = 'P';                     // Page accessible uniquement aux privilégiés
 
 // Sortie en pdf ?
 $sortie_pdf = false;

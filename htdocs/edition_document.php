@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -43,8 +47,7 @@ if ($Reference == -1) $Modif = false;
 $refObjet = Recup_Variable('refObjet', 'N');            // Objet concerné
 $typeObjet = Recup_Variable('typeObjet', 'S');          // Type d'objet concerné
 
-// Gestion standard des pages
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
+
 if (!$Modif)
     $titre = $LG_Menu_Title['Document_Add'];
 else
@@ -52,8 +55,6 @@ else
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $NatureDoc  = Secur_Variable_Post($NatureDoc, 3, 'S');
 $ANatureDoc = Secur_Variable_Post($ATitreDoc, 3, 'S');
@@ -256,11 +257,11 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
     $compl = Ajoute_Page_Info(600, 20);
 
     if ($Reference != -1)
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_document.php?Reference=' . $Reference . '"', 'page', my_html($LG_Menu_Title['Document'])) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/fiche_document?Reference=' . $Reference . '"', 'page', my_html($LG_Menu_Title['Document'])) . '&nbsp;';
 
     Insere_Haut(my_html($titre), $compl, 'Edition_Document', $Reference);
 
-    echo '<form id="saisie" method="post" onsubmit="return verification_form(this)" enctype="multipart/form-data" action="' . my_self() . '?' . Query_Str() . '">' . "\n";
+    echo '<form id="saisie" method="post" onsubmit="return verification_form(this)" enctype="multipart/form-data">' . "\n";
     echo '<input type="hidden" name="Horigine" value="' . my_html($Horigine) . '"/>' . "\n";
 
     if ($Modif) {
@@ -309,7 +310,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         if ($result->rowCount() > 0) {
             $affBtSup = false;
             echo '<tr><td colspan="2">&nbsp;</td></tr>';
-            echo '<tr><td colspan="2"><a href="' . $root . '/utilisations_document.php?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a></td></tr>' . "\n";
+            echo '<tr><td colspan="2"><a href="' . $root . '/utilisations_document?Doc=' . $Reference . '">' . my_html($LG_Menu_Title['Document_Utils']) . '</a></td></tr>' . "\n";
         }
     }
 

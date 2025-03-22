@@ -4,7 +4,7 @@
 //=====================================================================
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
-require(__DIR__ . '/../app/Phonetique.php');
+require(__DIR__ . '/../app/Util/Phonetique.php');
 
 $acces = 'L';                        // Type d'accès de la page : (M)ise à jour, (L)ecture
 
@@ -28,7 +28,7 @@ if (! $texte) {
     $icone_modifier = '<img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($h_mod) . '" title="' . my_html($h_mod) . '">';
 
     // Lien direct sur le dernier nom de personne saisi et possibilité d'insérer un nom de famille
-    if ($est_gestionnaire) {
+    if (IS_GRANTED('G')) {
         $MaxRef = 0;
         $sql = 'SELECT idNomFam, nomFamille FROM ' . $n_noms_famille . ' a ' .
             'WHERE a.idNomFam = ( SELECT max( idNomFam ) FROM ' . $n_noms_famille . ')';
@@ -38,11 +38,11 @@ if (! $texte) {
         }
         // Lien direct sur le dernier nom de personne saisi
         if ($MaxRef > 0) {
-            echo my_html(LG_NAMES_LIST_LAST) . ' <a href="' . $root . '/fiche_nomfam.php?idNom=' . $MaxRef . '">' . my_html($enrmax[1]) . '</a>&nbsp;';
-            echo Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=' . $MaxRef . '"', 'fiche_edition', $h_mod) . '<br />';
+            echo my_html(LG_NAMES_LIST_LAST) . ' <a href="' . $root . '/fiche_nomfam?idNom=' . $MaxRef . '">' . my_html($enrmax[1]) . '</a>&nbsp;';
+            echo Affiche_Icone_Lien('href="' . $root . '/edition_nomfam?idNom=' . $MaxRef . '"', 'fiche_edition', $h_mod) . '<br />';
         }
         $resmax->closeCursor();
-        echo my_html(LG_NAMES_LIST_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=-1"', 'ajouter', my_html($LG_add)) . '<br /><br />' . "\n";
+        echo my_html(LG_NAMES_LIST_ADD) . LG_SEMIC . Affiche_Icone_Lien('href="' . $root . '/edition_nomfam?idNom=-1"', 'ajouter', my_html($LG_add)) . '<br /><br />' . "\n";
     }
     $echo_haut = Affiche_Icone_Lien('href="#top"', 'page_haut', my_html($LG_top)) . '<br />';
 
@@ -99,9 +99,9 @@ if (! $texte) {
                 $Anc_Lettre = $Nouv_Lettre;
             }
 
-            echo '<a href="' . $root . '/fiche_nomfam.php?idNom=' . $row[0] . '">' . $NomA . '</a> (' . $codePho->codeVersPhon($row[2]) . ")\n";
-            if (($est_gestionnaire) and (! $texte)) {
-                echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=' . $row[0] . '"', 'fiche_edition', $h_mod);
+            echo '<a href="' . $root . '/fiche_nomfam?idNom=' . $row[0] . '">' . $NomA . '</a> (' . $codePho->codeVersPhon($row[2]) . ")\n";
+            if ((IS_GRANTED('G')) and (! $texte)) {
+                echo '&nbsp;' . Affiche_Icone_Lien('href="' . $root . '/edition_nomfam?idNom=' . $row[0] . '"', 'fiche_edition', $h_mod);
             }
             echo "<br />\n";
         }

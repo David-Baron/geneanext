@@ -8,7 +8,6 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                                // Type d'accès de la page : (M)ise à jour, (L)ecture
 $titre = 'Calcul conversion calendriers';    // Titre pour META
 $mots = 'Calendriers, Républicain, Jour, Semaine, Pâques';
 $x = Lit_Env();

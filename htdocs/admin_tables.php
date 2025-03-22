@@ -5,6 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 // Récupération de la liste des tables dans un tableau
 function recup_liste_tables()
 {
@@ -63,9 +68,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Verrouillage de la page sur les gratuits
 if ($SiteGratuit) Retour_Ar();
-
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $type_action = Secur_Variable_Post($type_action, 15, 'S');
 

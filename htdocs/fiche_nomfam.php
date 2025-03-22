@@ -20,7 +20,7 @@ $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 // On retravaille le libellé du bouton pour effectuer le retour...
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
-$contenu = 'Codage phon&eacute;tique'; // Mots clés supplémentaires
+$contenu = 'Codage phonétique'; // Mots clés supplémentaires
 
 // Recup de la variable passée dans l'URL : identifiant du nom de famille
 $idNomFam = Recup_Variable('idNom', 'N');
@@ -29,20 +29,16 @@ $req_sel = 'SELECT * FROM ' . nom_table('noms_famille') . ' WHERE idNomFam =' . 
 $x = Lit_Env();                        // Lecture de l'indicateur d'environnement
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
-else {
-
     if ((!$enreg_sel) or ($idNomFam == -1)) Retour_Ar();
 
     else {
 
-        require(__DIR__ . '/../app/Phonetique.php');
+        require(__DIR__ . '/../app/Util/Phonetique.php');
         $codePho = new Phonetique();
 
         $compl = Ajoute_Page_Info(600, 150);
-        if ($est_gestionnaire) {
-            $compl = Affiche_Icone_Lien('href="' . $root . '/edition_nomfam.php?idNom=' . $idNomFam . '"', 'fiche_edition', $LG_Menu_Title['Name_Edit']) . '&nbsp;';
+        if (IS_GRANTED('G')) {
+            $compl = Affiche_Icone_Lien('href="' . $root . '/edition_nomfam?idNom=' . $idNomFam . '"', 'fiche_edition', $LG_Menu_Title['Name_Edit']) . '&nbsp;';
         }
         Insere_Haut($titre, $compl, 'Fiche_NomFam', $idNomFam);
 
@@ -61,7 +57,7 @@ else {
 
             //  ===== Affichage du commentaire
             if (Rech_Commentaire($idNomFam, 'O')) {
-                if (($Commentaire != '') and (($est_privilegie) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
                     echo '<fieldset><legend>Note</legend>' . my_html($Commentaire) . '</fieldset><br>' . "\n";
                 }
             }
@@ -71,14 +67,14 @@ else {
             $utilise = ($enreg = $res->fetch(PDO::FETCH_ASSOC));
             $res->closeCursor();
             if ($utilise) {
-                $deb_lien = '<a href="' . $root . '/liste_pers2.php?Type_Liste=';
+                $deb_lien = '<a href="' . $root . '/liste_pers2?Type_Liste=';
                 $fin_lien = '&amp;idNom=' . $idNomFam . '&amp;Nom=' . $r_nom . '">';
                 echo '<br />' . $deb_lien . 'P' . $fin_lien . LG_LPERS_OBJ_P . ' ' . $r_nom . '</a>';
                 echo '<br />' . $deb_lien . 'p' . $fin_lien . LG_LPERS_OBJ_PC . ' ' . $r_nom . '</a>';
                 echo '<br />' . "\n";
                 if ((!$SiteGratuit) or ($Premium))
-                    if ($est_contributeur)
-                        echo '<br /><a href="' . $root . '/completude_nom.php?idNom=' . $idNomFam . '&amp;Nom=' . $r_nom . '">' . my_html($LG_Menu_Title['Name_Is_Complete']) . $r_nom . '</a><br />' . "\n";
+                    if (IS_GRANTED('C'))
+                        echo '<br /><a href="' . $root . '/completude_nom?idNom=' . $idNomFam . '&amp;Nom=' . $r_nom . '">' . my_html($LG_Menu_Title['Name_Is_Complete']) . $r_nom . '</a><br />' . "\n";
             }
 
             // Recherche du nom sur les sites gratuits ; pas sur les sites gratuits non premium
@@ -88,8 +84,6 @@ else {
                 }
             }
 
-            // Formulaire pour le bouton retour
-            Bouton_Retour($lib_Retour, '?' . Query_Str());
         }
         echo '<table cellpadding="0" width="100%">';
         echo '<tr>';
@@ -100,7 +94,7 @@ else {
         echo '</tr>';
         echo '</table>';
     }
-}
+
 ?>
 </body>
 

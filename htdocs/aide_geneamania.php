@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('I')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $acces = 'L'; // Type d'accès de la page : (L)ecture
 $titre = 'Aide Généamania';
 $x = Lit_Env();

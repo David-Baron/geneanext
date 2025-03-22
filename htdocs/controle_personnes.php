@@ -6,7 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';                          // Type d'accès de la page : (L)ecture
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Check_Persons']; // Titre pour META
 
 $tab_variables = array('annuler', 'Horigine', 'Ignore');
@@ -26,14 +30,12 @@ else $Ignore = false;
 if ($annuler == $lib_Retour) $annuler = $lib_Annuler;
 
 $x = Lit_Env();
-$niv_requis = 'C';                // Page accessible à partir du niveau contributeur
+
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 // Verrouillage sur les gratuits non Premium
 if (($SiteGratuit) and (!$Premium)) Retour_Ar();
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 // Recup des variables passées dans l'URL :
 
@@ -70,13 +72,13 @@ else $al_texte .= 'N';
 
 
 
-$lien = 'href="' . $root . '/controle_personnes.php?texte=O' .
+$lien = 'href="' . $root . '/controle_personnes?texte=O' .
     '&amp;al=' . $al_texte .
     '&CT=O';
 
 $compl = Ajoute_Page_Info(700, 250) .
     Affiche_Icone_Lien($lien . '"', 'text', $LG_printable_format) . ' '
-    //.Affiche_Icone_Lien('href="'. $root .'/controle_personnes.php?idNom='.$idNom.'&amp;Nom='.$NomL.'&amp;Sortie=c"','exp_tab','Export CSV').' '
+    //.Affiche_Icone_Lien('href="'. $root .'/controle_personnes?idNom='.$idNom.'&amp;Nom='.$NomL.'&amp;Sortie=c"','exp_tab','Export CSV').' '
 ;
 
 
@@ -278,9 +280,9 @@ if ($controle) {
 
             $ligne_P = '';
             if (!$texte) {
-                $ligne_P =  '<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '" target="_blank">' . my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '</a>'
-                    . ' <a href="' . $root . '/edition_personne.php?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>'
-                    . ' <a href="' . $root . '/verif_personne.php?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . my_html($LG_LPers_Check_Pers) . '" title="' . my_html($LG_LPers_Check_Pers) . '"></a>';
+                $ligne_P =  '<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref . '" target="_blank">' . my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . '</a>'
+                    . ' <a href="' . $root . '/edition_personne?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . my_html($LG_modify) . '" title="' . my_html($LG_modify) . '"></a>'
+                    . ' <a href="' . $root . '/verif_personne?Refer=' . $Ref . '" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['fiche_controle'] . '" alt="' . my_html($LG_LPers_Check_Pers) . '" title="' . my_html($LG_LPers_Check_Pers) . '"></a>';
             } else {
                 $ligne_P = my_html($enr['Nom0'] . ' ' . $enr['Prenoms0']) . ' ';
             }
@@ -306,9 +308,6 @@ if ($controle) {
 }
 
 if (! $texte) {
-
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
 
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';

@@ -11,6 +11,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 function Lire_Nom_Prenoms_Unions($refUnion)
 {
     global $NomPere, $PrenomsPere, $NomMere, $PrenomsMere, $LG_Link_Doc_Fa_Not_Found, $LG_Link_Doc_Mo_Not_Found;
@@ -82,8 +87,6 @@ $annuler   = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $supprimer = Secur_Variable_Post($supprimer, strlen($lib_Supprimer), 'S');
 $Horigine  = Secur_Variable_Post($Horigine, 100, 'S');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $Defaut    = Secur_Variable_Post($Defaut, 1, 'S');
 $ADefaut   = Secur_Variable_Post($ADefaut, 1, 'S');

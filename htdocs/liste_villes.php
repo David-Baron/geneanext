@@ -44,11 +44,12 @@ if ($csv_dem === 'c') $CSV = true;
 if (($SiteGratuit) and (!$Premium)) $CSV = false;
 
 $compl = Ajoute_Page_Info(600, 150);
-if ((!$SiteGratuit) or ($Premium)) {
+/** @todo query_str problem here.... */
+/* if ((!$SiteGratuit) or ($Premium)) {
     if ($_SESSION['estCnx']) {
-        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_villes?' . Query_Str() . '&amp;csv=c' . '"', 'exp_tab', my_html($LG_csv_export)) . '&nbsp;';
+        $compl .= Affiche_Icone_Lien('href="' . $root . '/liste_villes?' . Query_Str() . '&amp;csv=c' . '"', 'exp_tab', $LG_csv_export) . '&nbsp;';
     }
-}
+} */
 Insere_Haut(my_html($objet), $compl, 'Liste_Villes', $Type_Liste);
 
 $n_subdivs = nom_table('subdivisions');
@@ -58,7 +59,7 @@ $n_regions = nom_table('regions');
 $n_pays = nom_table('pays');
 
 // Lien direct sur la dernière personne zone et possibilité d'insérer une zone
-if ($est_gestionnaire) {
+if (IS_GRANTED('G')) {
     $MaxRef = 0;
 
     //$sql = 'select max(Identifiant_zone) from ';
@@ -275,7 +276,7 @@ if ($res->rowCount() > 0) {
                     if (($Lat_V != 0) or ($Long_V != 0)) {
                         echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                     }
-                    if ($est_gestionnaire) {
+                    if (IS_GRANTED('G')) {
                         echo '&nbsp;<a href="' . $root . '/edition_subdivision?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
@@ -286,21 +287,21 @@ if ($res->rowCount() > 0) {
                     if (($Lat_V != 0) or ($Long_V != 0)) {
                         echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                     }
-                    if ($est_gestionnaire) {
+                    if (IS_GRANTED('G')) {
                         echo '&nbsp;<a href="' . $root . '/edition_ville?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
                 case 'D':
                     $n_dep = str_replace($interdits, '', $row[1]);
                     echo $tab . '<a href="' . $root . '/liste_villes?Type_Liste=V#' . $n_dep . '">' . my_html($row[1]) . "</a>";
-                    if ($est_gestionnaire) {
+                    if (IS_GRANTED('G')) {
                         echo '&nbsp;<a href="' . $root . '/edition_depart?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;
                 case 'R':
                     $n_reg = str_replace($interdits, '', $row[1]);
                     echo $tab . '<a href="' . $root . '/liste_villes?Type_Liste=D#' . $n_reg . '">' . my_html($row[1]) . "</a>";
-                    if ($est_gestionnaire) {
+                    if (IS_GRANTED('G')) {
                         echo '&nbsp;<a href="' . $root . '/edition_region?Ident=' . $row[0] . '"><img src="' . $root . '/assets/img/' . $Icones['fiche_edition'] . '" alt="' . $LG_modify . '" title="' . $LG_modify . '"></a>';
                     }
                     break;

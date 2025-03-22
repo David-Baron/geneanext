@@ -5,7 +5,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-// Récupération des variables de l'affichage précédent
+if (!IS_GRANTED('C')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -34,8 +38,6 @@ $ok       = Secur_Variable_Post($ok, strlen($lib_Okay), 'S');
 $annuler  = Secur_Variable_Post($annuler, strlen($lib_Annuler), 'S');
 $Horigine = Secur_Variable_Post($Horigine, 100, 'S');
 
-$acces = 'M';                          // Type d'accès de la page : (M)ise à jour, (L)ecture
-
 // Recup des variables passées dans l'URL : Identifiant du département
 $Ident = Recup_Variable('Ident', 'N');
 $Modif = true;
@@ -50,8 +52,6 @@ else
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-// Retour sur demande d'annulation
-if ($bt_An) Retour_Ar();
 
 $Nom_Depart           = Secur_Variable_Post($Nom_Depart, 50, 'S');
 $ANom_Depart          = Secur_Variable_Post($ANom_Depart, 50, 'S');
@@ -157,7 +157,7 @@ if (($ok == '') && ($annuler == '')) {
     // ville inconnue, supprimée entre temps, retour...
     if ((!$enreg) and ($Ident != -1)) {
         echo '<center><font color="red"><br><br><br><h2>' . LG_DEPART_UNKNOWN . '</h2></font></center>';
-        echo '<a href="' . $root . '/liste_villes.php?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
+        echo '<a href="' . $root . '/liste_villes?Type_Liste=D">' . LG_LAREAS_COUNTIES . '</a>';
     } else {
         if ($Modif) {
             Champ_car($enreg2, 'Nom_Depart_Min');

@@ -18,14 +18,14 @@ $wp_cell = 'width:' . $Larg_Cellule . 'px; height:' . $Haut_Cellule . 'px; ';
 // - $after : trait après la cellule
 function case_pers($LaRef, $before, $after, $trait = 'solid')
 {
-    global $root, $chemin_images_util, $top, $left, $wp_cell, $est_privilegie, $n_personnes, $img_asc, $img_desc, $img_image, $evenement, $existe_images, $Haut_Cellule, $Larg_Cellule, $Larg_Trait_Hor, $Demie_Hauteur, $Ok_Protection, $LG_Data_noavailable_profile;
+    global $root, $chemin_images_util, $top, $left, $wp_cell, $n_personnes, $img_asc, $img_desc, $img_image, $evenement, $existe_images, $Haut_Cellule, $Larg_Cellule, $Larg_Trait_Hor, $Demie_Hauteur, $Ok_Protection, $LG_Data_noavailable_profile;
     $Ok_Protection = false;
     // Accès aux données de la personne
     $sql = 'select Nom, Prenoms, Ne_Le, Decede_Le, Diff_Internet, Sexe from ' . $n_personnes . ' where reference = ' . $LaRef . ' limit 1';
     if ($res = lect_sql($sql)) {
         if ($infos = $res->fetch(PDO::FETCH_NUM)) {
             // Protection des données sur Internet
-            if (($est_privilegie) or ($infos[4] == 'O')) {
+            if (IS_GRANTED('P') or ($infos[4] == 'O')) {
                 $Ok_Protection = true;
                 // couleur de la case en fonction de la personne
                 switch ($infos[5]) {
@@ -42,7 +42,7 @@ function case_pers($LaRef, $before, $after, $trait = 'solid')
                 if ($LaRef) {
                     $P_N = ret_Nom_prenom($infos[0], $infos[1]);
                     echo '<table width="100%"><tr align="center">';
-                    echo '<td><a href="' . $root . '/fiche_fam_pers.php?Refer=' . $LaRef . '"';
+                    echo '<td><a href="' . $root . '/fiche_fam_pers?Refer=' . $LaRef . '"';
                     // Présence d'une image ? Si oui, celle-ci sera affichée au survol de la case
                     $image = Rech_Image_Defaut($LaRef, 'P');
                     // Si l'image n'existe pas, on la zappe...
@@ -61,8 +61,8 @@ function case_pers($LaRef, $before, $after, $trait = 'solid')
                     else                $Decede = '';
                     $Dates = $Ne . ' ' . $Decede;
                     echo $Dates . '<br />' . "\n";
-                    echo '<a href="' . $root . '/arbre_asc_pers.php?Refer=' . $LaRef . '">' . $img_asc . '</a>';
-                    echo '<a href="' . $root . '/arbre_desc_pers.php?Refer=' . $LaRef . '">' . $img_desc . '</a>';
+                    echo '<a href="' . $root . '/arbre_asc_pers?Refer=' . $LaRef . '">' . $img_asc . '</a>';
+                    echo '<a href="' . $root . '/arbre_desc_pers?Refer=' . $LaRef . '">' . $img_desc . '</a>';
                     if ($image != '') {
                         $image = $chemin_images_util . $image;
                         $hauteur = 150;

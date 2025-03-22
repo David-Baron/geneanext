@@ -40,7 +40,7 @@ for ($nb = 1; $nb <= 12; $nb++) {
 
 // Naissances
 $sql = 'SELECT count( * ) , substr(Ne_le, 5, 2) FROM ' . nom_table('personnes') . ' WHERE substr(Ne_le, 10, 1) = "L" ';
-if (!$_SESSION['estPrivilegie']) $sql .= ' AND Diff_Internet = "O"';
+if (!IS_GRANTED('P')) $sql .= ' AND Diff_Internet = "O"';
 $sql .= ' GROUP BY 2';
 if ($res = lect_sql($sql)) {
     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
@@ -52,7 +52,7 @@ if ($res = lect_sql($sql)) {
 
 // Décès
 $sql = 'SELECT count( * ) , substr(Decede_Le, 5, 2) FROM ' . nom_table('personnes') . ' WHERE substr(Decede_Le, 10, 1) = "L"';
-if (!$_SESSION['estPrivilegie']) $sql .= ' AND Diff_Internet = "O"';
+if (!IS_GRANTED('P')) $sql .= ' AND Diff_Internet = "O"';
 $sql .= ' GROUP BY 2';
 if ($res = lect_sql($sql)) {
     while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
@@ -66,7 +66,7 @@ if ($res = lect_sql($sql)) {
 $sql = 'SELECT count( * ) , substr(Maries_le, 5, 2)'
     . ' FROM ' . nom_table('unions')
     . ' WHERE substr(Maries_le, 10, 1) = "L"';
-if (!$_SESSION['estPrivilegie']) $sql .=
+if (!IS_GRANTED('P')) $sql .=
     ' AND Conjoint_1 IN (SELECT Reference FROM ' . nom_table('personnes') . ' WHERE Diff_Internet = "O")' .
     ' AND Conjoint_2 IN (SELECT Reference FROM ' . nom_table('personnes') . ' WHERE Diff_Internet = "O")';
 $sql     .= ' GROUP BY 2';
@@ -194,7 +194,7 @@ echo '<td width="' . $l_col . '%" align="right"><b>' . $tot_D . '</b></td>' . "\
 echo "</tr>\n";
 echo "</table>\n";
 echo '<br />';
-Bouton_Retour($lib_Retour, '');
+
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';
 echo '<td align="right">';

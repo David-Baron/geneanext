@@ -6,6 +6,11 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $tab_variables = array(
     'ok',
     'annuler',
@@ -35,7 +40,6 @@ $niv_requis = 'G'; // Page accessible au gestionnaire
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
 if (($SiteGratuit) and (!$Premium)) Retour_Ar(); // Page interdite sur les gratuits non Premium
-if ($bt_An) Retour_Ar();
 
 // Valeurs par défaut des codes département et région
 $code_defaut_depart = 'xxx';
@@ -409,7 +413,6 @@ if ($ok == 'OK') {
     }
 }
 
-if ($est_gestionnaire) {
     if (($ok == '') && ($annuler == '')) {
         echo '<br>';
         echo '<form id="saisie" method="post" enctype="multipart/form-data">' . "\n";
@@ -482,9 +485,6 @@ if ($est_gestionnaire) {
         echo '</table>';
         echo '</form>';
     }
-} else {
-    echo my_html($LG_function_noavailable_profile);
-}
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

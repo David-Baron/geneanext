@@ -6,9 +6,12 @@
 
 require(__DIR__ . '/../app/ressources/fonctions.php');
 
-$acces = 'L';
+if (!IS_GRANTED('G')) {
+    header('Location: ' . $root . '/');
+    exit();
+}
+
 $titre = $LG_Menu_Title['Tech_Info'];
-$niv_requis = 'G';
 $x = Lit_Env();
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -25,14 +28,14 @@ echo '<br><br><br>' . "\n";
 // $x = getPhpinfo();
 // var_dump($x);
 
-phpinfo(
+/* phpinfo(
     INFO_GENERAL
     # +INFO_CREDITS
     + INFO_CONFIGURATION
     + INFO_MODULES
     + INFO_ENVIRONMENT
     + INFO_VARIABLES
-);
+); */
 
 echo '<table cellpadding="0" width="100%">';
 echo '<tr>';

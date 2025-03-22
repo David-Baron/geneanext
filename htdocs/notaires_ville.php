@@ -40,7 +40,7 @@ if ((!$SiteGratuit) or ($Premium)) {
 
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
-$lien = 'href="' . $root . '/notaires_ville.php?texte=O' .
+$lien = 'href="' . $root . '/notaires_ville?texte=O' .
     '&amp;Ville=' . $idVille .
     '&amp;Nom=' . StripSlashes(str_replace(' ', '%20', $NomL));
 
@@ -55,7 +55,7 @@ if (! $texte) {
 } else {
     // Sortie dans un PDF
     if ($sortie_pdf) {
-        require('html2pdfb.php');
+        require(__DIR__ . '/html2pdfb.php');
         $sortie = 'P';
         $pdf = new PDF_HTML();
         $pdf->SetFont($font_pdf, '', 12);
@@ -88,7 +88,7 @@ $sql = 'select c1.Reference, c1.Nom, c1.Prenoms, c2.Reference as Reference2, c2.
     'from ' . $n_unions . ' u,' . $n_personnes . ' c1,' . $n_personnes . ' c2' .
     ' where c1.Reference = u.Conjoint_1 and c2.Reference = u.Conjoint_2 ' .
     ' and u.Ville_Notaire = ' . $idVille;
-if (!$est_privilegie) $sql = $sql . " and c1.Diff_Internet = 'O'and c2.Diff_Internet = 'O' ";
+if (!IS_GRANTED('P')) $sql = $sql . " and c1.Diff_Internet = 'O'and c2.Diff_Internet = 'O' ";
 $sql = $sql . ' order by u.Notaire_K, u.Date_K';
 
 $res = lect_sql($sql);
@@ -111,7 +111,7 @@ if ($nb_lig > 0) {
         }
         $Ref = $row['Reference'];
         HTML_ou_PDF("<br />\n", $sortie);
-        if (! $texte) echo $tab . '&nbsp;<a href="' . $root . '/fiche_fam_pers.php?Refer=' . $Ref . '">' . my_html($row['Prenoms'] . ' ' . $row['Nom'] . ' x ' . $row['Prenoms2'] . ' ' . $row['Nom2']) . '</a>' . "\n";
+        if (! $texte) echo $tab . '&nbsp;<a href="' . $root . '/fiche_fam_pers?Refer=' . $Ref . '">' . my_html($row['Prenoms'] . ' ' . $row['Nom'] . ' x ' . $row['Prenoms2'] . ' ' . $row['Nom2']) . '</a>' . "\n";
         else echo HTML_ou_PDF(my_html($tab . ' ' . $row['Prenoms'] . ' ' . $row['Nom'] . ' x ' . $row['Prenoms2'] . ' ' . $row['Nom2']) . "\n", $sortie);
         $Date_K = $row['Date_K'];
         if ($Date_K != '') {
@@ -129,8 +129,6 @@ if ($sortie_pdf) {
 $res->closeCursor();
 
 if (! $texte) {
-    // Formulaire pour le bouton retour
-    Bouton_Retour($lib_Retour, '?' . Query_Str());
     echo '<table cellpadding="0" width="100%">';
     echo '<tr>';
     echo '<td align="right">';
