@@ -50,11 +50,6 @@ Insere_Haut($titre, $compl, 'exp_GenWeb', $Depart);
 // Sortie dans un fichier ou à l'écran ?
 $exp_file = false;
 if ($destination == LG_GENWEB_FILE) $exp_file = true;
-if ($debug) {
-    var_dump($destination);
-    var_dump(LG_GENWEB_FILE);
-    var_dump($exp_file);
-}
 
 // Création éventuelle du fichier d'export GenWeb
 if ($exp_file) {

@@ -120,7 +120,7 @@ function est_utilisee($aff)
 // Affiche une ville
 function Aff_Ville($enreg2)
 {
-    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $id_image, $largP, $debug, $lib_Okay, $lib_Annuler, $lib_Supprimer;
+    global $root, $Icones, $Images, $Ident, $Environnement, $Commentaire, $Diffusion_Commentaire_Internet, $enreg, $id_image, $largP, $lib_Okay, $lib_Annuler, $lib_Supprimer;
 
     $n_ville = $enreg['Nom_Ville'];
     $n_ville_html = $enreg2['Nom_Ville'];
@@ -225,8 +225,21 @@ function Aff_Ville($enreg2)
     // Données de la fiche
     echo '<div id="pnl_Fiche">' . "\n";
     // Affiche les données propres à l'enregistrement de la fiche
-    $x = Affiche_Fiche($enreg2, true);
-
+    echo '<fieldset>';
+    echo '<legend>Statut</legend>';
+    echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($enreg2['Statut_Fiche'] == 'O' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($enreg2['Statut_Fiche'] == 'N' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($enreg2['Statut_Fiche'] == 'I' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
+    echo '<input type="hidden" name="AStatut_Fiche" value="' . $enreg2['Statut_Fiche'] . '"/>';
+    echo '</fieldset>';
+    echo '<fieldset>';
+    echo '<legend>Traçabilité</legend>';
+    echo 'Création : ' . DateTime_Fr($enreg2['Date_Creation']) . '<br>';
+    echo 'Modification : ' . DateTime_Fr($enreg2['Date_Modification']);
+    echo '</fieldset>';
     //  Sources lies à la ville
     if ($Ident != -1) {
         echo '<hr/>';

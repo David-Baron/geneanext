@@ -217,7 +217,21 @@ function Aff_Lien($enreg2)
     echo "</table>\n";
     echo '</fieldset>' . "\n";
     // Affiche les données propres à l'enregistrement de la fiche
-    $x = Affiche_Fiche($enreg2, 1);
+    echo '<fieldset>';
+    echo '<legend>Statut</legend>';
+    echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($enreg2['Statut_Fiche'] == 'O' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($enreg2['Statut_Fiche'] == 'N' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($enreg2['Statut_Fiche'] == 'I' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
+    echo '<input type="hidden" name="AStatut_Fiche" value="' . $enreg2['Statut_Fiche'] . '"/>';
+    echo '</fieldset>';
+    echo '<fieldset>';
+    echo '<legend>Traçabilité</legend>';
+    echo 'Création : ' . DateTime_Fr($enreg2['Date_Creation']) . '<br>';
+    echo 'Modification : ' . DateTime_Fr($enreg2['Date_Modification']);
+    echo '</fieldset>';
     echo '</div>' . "\n";
 
     echo '</div> ' . "\n";  //<!-- panes -->
@@ -351,7 +365,7 @@ if ($bt_OK) {
         if ($maj_site) maj_date_site();
 
         // Retour sur la page précédente
-        if (!$debug) Retour_Ar();
+        Retour_Ar();
     }
 }
 

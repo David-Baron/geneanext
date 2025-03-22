@@ -109,11 +109,6 @@ if ($res = lect_sql($sql)) {
 }
 
 // Affichage des compteurs
-if ($debug) {
-    var_dump($nb_F);
-    var_dump($nb_H);
-}
-
 // Représentativité maximum ?
 // Et dispaching dans les blocs
 $max = 0;
@@ -139,7 +134,6 @@ for ($a = 0; $a <= 100; $a++) {
     $mins[$ref_annee] = $ref_annee;
     $maxs[$ref_annee] = $ref_annee_m;
 
-    if ($debug) echo 'a : ' . $a . ', ref_annee : ' . $ref_annee . ', $ref_annee_m : ' . $ref_annee_m . '<br />';
     if ($nb_F[$a] > $max) {
         $max = $nb_F[$a];
         $rep_max = $nb_F[$a];
@@ -148,13 +142,6 @@ for ($a = 0; $a <= 100; $a++) {
         $max = $nb_H[$a];
         $rep_max = $nb_H[$a];
     }
-}
-
-if ($debug) {
-    var_dump($hommes);
-    var_dump($femmes);
-    var_dump($mins);
-    var_dump($maxs);
 }
 
 echo '<br />';

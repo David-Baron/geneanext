@@ -170,7 +170,6 @@ if (!$vide) {
         $max_age = max($key, $max_age);
         $tot_mois_femmes += $mois;
         $tot_nb_femmes += $nb;
-        if ($debug) echo 'tot mois femmes : ' . $tot_mois_femmes . '<br />';
     }
     $max_moy_femmes = round(max($moyennes_femmes));
     foreach ($nb_hommes as $key => $value) {
@@ -181,14 +180,9 @@ if (!$vide) {
         $max_age = max($key, $max_age);
         $tot_mois_hommes += $mois;
         $tot_nb_hommes += $nb;
-        if ($debug) echo 'tot mois hommes : ' . $tot_mois_hommes . '<br />';
     }
     $max_moy_hommes = round(max($moyennes_hommes));
     $max_moy = max($max_moy_femmes, $max_moy_hommes);
-    if ($debug) {
-        echo 'moyennes_femmes, moyennes_hommes, min_age, max_age, max_moy_femmes, max_moy_hommes; max_moy ';
-        var_dump($moyennes_femmes, $moyennes_hommes, $min_age, $max_age, $max_moy_femmes, $max_moy_hommes, $max_moy);
-    }
     $deb_barre_h = '<img src="' . $barre_homme . '" height="15" width="';
     $deb_barre_f = '<img src="' . $barre_femme . '" height="15" width="';
 

@@ -80,10 +80,6 @@ if ($bt_OK) {
 
             // Vérification que le type de fichier fait partie de la liste des types autorisés
             $type_valide = array_key_exists($type_doc, $Natures_Docs);
-            if ($debug) {
-                echo 'type_doc : ' . $type_doc . ', ';
-                echo 'type_valide : ' . $type_valide . '<br>';
-            }
 
             if (!$type_valide) {
                 echo '<br><img src="' . $root . '/assets/img/stop.png" alt="Stop"/>Fichier ' . $nom_fic . ' : type de fichier non supporté<br>';
@@ -175,12 +171,6 @@ if ($bt_OK) {
             }
         }
         // Si c'est OK pour les fchiers on fait les maj en base 
-        if ($debug) {
-            echo 'erreur : ' . $erreur . '<br>';
-            echo 'TitreDoc : ' . $TitreDoc . '<br>';
-            echo 'nom_fic : ' . $nom_fic . '<br>';
-            echo 'nom_fic : ' . $nom_fic . '<br>';
-        }
         if ($erreur == '') {
             // On n'autorise la création que si le nom et la description sont saisis
             if (($TitreDoc != '') and ($nom_fic != '')) {

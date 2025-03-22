@@ -320,17 +320,9 @@ function rech_zone($tableau_lib, $tableau_ref, $posi, $table, $nom_zone, $niveau
     global
         $Codage_ANSEL, $lieu_arr, $Init, $db, $sZone,
         $lib_villes, $lib_departements, $lib_regions, $lib_pays,
-        $ref_villes, $ref_departements, $ref_regions, $ref_pays, $memo_lib_ville, $memo_ville, $existe_villes, $debug;
+        $ref_villes, $ref_departements, $ref_regions, $ref_pays, $memo_lib_ville, $memo_ville, $existe_villes;
 
     $la_zone = trim($lieu_arr[$posi]);
-
-    if ($debug) {
-        $lieu_arr_str = implode($lieu_arr);
-        echo 'lieu_arr : ' . $lieu_arr_str . '<br />';
-        echo 'posi : ' . $posi . ', ';
-        echo 'Niveau : ' . $niveau . '/' . $la_zone . '<br />';
-    }
-
     $zone_geo = -1;
 
     if ($niveau == 4) {
@@ -348,11 +340,9 @@ function rech_zone($tableau_lib, $tableau_ref, $posi, $table, $nom_zone, $niveau
         // Si la zone a déjà été analysée, on a son identifiant
         $x = false;
         if (isset($tableau_lib)) $x = array_search($la_zone, $tableau_lib);
-        //if ($debug) for ($nb=0;nb<count($tableau_lib);$nb++) echo $nb.':'.$tableau_lib[$nb].'<br />';
         // La zone a été trouvée dans le tableau
         if ($x !== false) {
             $zone_geo = $tableau_ref[$x];
-            if ($debug) echo 'Zone trouvée dans tableau : ' . $la_zone . ', ' . $x . '/' . $zone_geo . '<br>';
         }
         // Sinon on la recherche en base et éventuellement on la crée et on attribue un nouvel identifiant
         else {
@@ -381,7 +371,6 @@ function rech_zone($tableau_lib, $tableau_ref, $posi, $table, $nom_zone, $niveau
                     $doit_rech = false;
                 if ($doit_rech) {
                     $sql = 'select Identifiant_zone from ' . $table . ' where ' . $nom_zone . ' = \'' . $sZone . '\' limit 1';
-                    if ($debug) echo 'rech <br />';
                     if ($res = lect_sql($sql)) {
                         if ($enreg = $res->fetch(PDO::FETCH_NUM)) {
                             $zone_geo = $enreg[0];
@@ -406,7 +395,6 @@ function rech_zone($tableau_lib, $tableau_ref, $posi, $table, $nom_zone, $niveau
         }
     }
     if ($niveau == 4) $memo_ville = $zone_geo;
-    if ($debug) echo 'val retour = ' . $zone_geo . '<br />';
     return $zone_geo;
 }
 
@@ -416,7 +404,7 @@ function traite_lieu($str)
 {
     global
         $root,
-        $debug, $maj_oui,
+        $maj_oui,
         $nb_enr,
         $ref_villes, $ref_departements, $ref_regions, $ref_pays,
         $id_ville, $id_depart, $id_region,
@@ -439,10 +427,7 @@ function traite_lieu($str)
     // On ne peut traiter que si la ville fait partie du format, vu que l'on ne peut rattacher à autre chose
     if ($maj_oui == 'on') {
         if ($p_ville != -1) {
-
-            if ($debug) echo 'Lieu à traiter : ' . $str . '<br>';
             $ex_lieu = substr($str, 6);
-            if ($debug) echo 'Lieu à traiter, extr : ' . $ex_lieu . '<br>';
             $lieu_arr = explode(',', $ex_lieu);
             $c_lieux = count($lieu_arr);
 
@@ -818,9 +803,6 @@ if ($ok == 'OK') {
                     // Détermination du niveau de la ligne
                     $p_blanc = strpos($str, ' ');
                     $niveau = intval(substr($str, 0, $p_blanc));
-
-                    if ($debug) echo $nb_enr . ' :' . $str . '<br />';
-
                     // Traitement en rupture sur niveau 0
                     if (($niveau == 0) and ($nb_enr > 1)) {
 

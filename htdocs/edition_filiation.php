@@ -307,7 +307,21 @@ function Aff_Filiation($enreg)
     // Données de la fiche
     echo '<div id="pnlFiche">' . "\n";
     // Affiche les données propres à l'enregistrement de la fiche
-    $x = Affiche_Fiche($enreg, 1);
+    echo '<fieldset>';
+    echo '<legend>Statut</legend>';
+    echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($enreg['Statut_Fiche'] == 'O' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($enreg['Statut_Fiche'] == 'N' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($enreg['Statut_Fiche'] == 'I' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
+    echo '<input type="hidden" name="AStatut_Fiche" value="' . $enreg['Statut_Fiche'] . '"/>';
+    echo '</fieldset>';
+    echo '<fieldset>';
+    echo '<legend>Traçabilité</legend>';
+    echo 'Création : ' . DateTime_Fr($enreg['Date_Creation']) . '<br>';
+    echo 'Modification : ' . DateTime_Fr($enreg['Date_Modification']);
+    echo '</fieldset>';
     //  Sources lies à la filiation
     echo '<hr/>';
     $x = Aff_Sources_Objet($Refer, 'F', 'N');

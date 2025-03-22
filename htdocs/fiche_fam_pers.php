@@ -19,7 +19,7 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 // Affichage des enfants avec le conjoint éventuel
 function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
 {
-    global $root, $Icones, $chemin_images_util, $SiteGratuit, $Premium, $premier_enf, $lst_conj, $premier_lib_v, $h_LG_AT, $LG_Data_noavailable_profile, $Commentaire, $Diffusion_Commentaire_Internet, $rech_comment_ville, $debug;
+    global $root, $Icones, $chemin_images_util, $SiteGratuit, $Premium, $premier_enf, $lst_conj, $premier_lib_v, $h_LG_AT, $LG_Data_noavailable_profile, $Commentaire, $Diffusion_Commentaire_Internet, $rech_comment_ville;
     if (($Mari) or ($Femme)) {
         $crit = '';
         if ($type_aff == 'E') {
@@ -110,9 +110,8 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                         . ' where Reference = ' . $Enfant . ' limit 1';
                     $resEnf = lect_sql($sqlEnf);
                     $enregEnf = $resEnf->fetch(PDO::FETCH_ASSOC);
-                    if ($debug) var_dump($enregEnf);
 
-                    if ($_SESSION['estPrivilegie'] or ($enregEnf['Diff_Internet'] == 'O')) {
+                    if (IS_GRANTED('P') or ($enregEnf['Diff_Internet'] == 'O')) {
 
                         $sexe = $enregEnf['Sexe'];
                         $sur = $enregEnf['Surnom'];
@@ -176,7 +175,7 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                                     if (($Lat_V != 0) or ($Long_V != 0)) {
                                         echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                                     }
-                                    if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                                    if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
                                         echo Div_Note($Commentaire);
                                     }
                                 }
@@ -194,7 +193,7 @@ function Aff_Enfants($Mari, $Femme, $type_aff = 'E', $exclu = 0)
                                     if (($Lat_V != 0) or ($Long_V != 0)) {
                                         echo '<a href="http://www.openstreetmap.org/?lat=' . $Lat_V . '&amp;lon=' . $Long_V . '&amp;mlat=' . $Lat_V . '&amp;mlon=' . $Long_V . '&amp;zoom=10" target="_blank"><img src="' . $root . '/assets/img/' . $Icones['map_go'] . '" alt="' . $LG_Show_On_Map . '" title="' . $LG_Show_On_Map . '"></a>';
                                     }
-                                    if (($Commentaire != '') and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet == 'O'))) {
+                                    if (($Commentaire != '') and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet == 'O'))) {
                                         echo Div_Note($Commentaire);
                                     }
                                 }
@@ -458,7 +457,7 @@ if ((!$enreg_sel) or ($Refer == 0)) {
                     echo ' ';
                 }
 
-                if (($Existe_Commentaire_cm) and (($_SESSION['estPrivilegie']) or ($Diffusion_Commentaire_Internet_cm == 'O'))) {
+                if (($Existe_Commentaire_cm) and (IS_GRANTED('P') or ($Diffusion_Commentaire_Internet_cm == 'O'))) {
                     if ($aff_note_old)
                         Div_Note_Old('ajout' . $Ref_Union, 'id_div_ajoutU' . $Ref_Union, $Commentaire_cm);
                     else

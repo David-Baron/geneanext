@@ -64,8 +64,6 @@ $Adivers       = Secur_Variable_Post($Adivers, 65535, 'S');
 $diffNote      = Secur_Variable_Post($diffNote, 1, 'S');
 $AdiffNote     = Secur_Variable_Post($AdiffNote, 1, 'S');
 
-if ($debug) var_dump($codePho);
-
 // Indicateur pour le nom de famille au format stocké
 $stock = false;
 

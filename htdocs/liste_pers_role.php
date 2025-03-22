@@ -40,16 +40,6 @@ $resR = lect_sql($sqlR);
 $symetrie = '';
 if ($enregR = $resR->fetch(PDO::FETCH_ASSOC)) {
     $symetrie = $enregR['Symetrie'];
-    if ($debug) {
-        if ($symetrie == 'O')
-            $val_sim = $LG_Yes;
-        else
-            $val_sim = $LG_No;
-        echo LG_ROLE_CODE . ' : ' . $c_Role . '<br />';
-        echo LG_ROLE_SYM . ' : ' . $val_sim . '<br />';
-        echo LG_ROLE_LABEL . ' : ' . $enregR['Libelle_Role'] . '<br />';
-        echo LG_ROLE_OPPOS_LABEL . ' : ' . $enregR['Libelle_Inv_Role'] . '<br />' . '<br />';
-    }
 }
 
 // Constitution de la requête d'extraction

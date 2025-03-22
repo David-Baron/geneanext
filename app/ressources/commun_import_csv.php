@@ -3,7 +3,7 @@
 
 function insert_champs()
 {
-    global $champ_lib, $champ_table, $champ_classe, $entete, $num_ident, $fp, $deb_req, $deb_req_suite, $fin_req, $nb_enr, $nb_enr_crees, $radical_variable_champ, $radical_variable_csv, $debug, $modif;
+    global $champ_lib, $champ_table, $champ_classe, $entete, $num_ident, $fp, $deb_req, $deb_req_suite, $fin_req, $nb_enr, $nb_enr_crees, $radical_variable_champ, $radical_variable_csv, $modif;
 
     $c_zbase = count($champ_lib);
     for ($nb = 0; $nb < $c_zbase; $nb++)
@@ -44,21 +44,11 @@ function insert_champs()
             else {
                 $champ_table_l = array_map('strtolower', $champ_table);
                 $arr_l = array_map('strtolower', $arr);
-                if ($debug) {
-                    var_dump($champ_lib_l);
-                    echo '<br />';
-                    var_dump($champ_table_l);
-                    echo '<br />';
-                    var_dump($arr_l);
-                    echo '<br />';
-                }
                 for ($nb = 0; $nb < $c_zbase; $nb++) {
                     // Recherche du libellé du champ
                     $cont = trim($arr_l[$nb]);
                     $x = array_search($cont, $champ_lib_l);
-                    if ($debug) echo '1-$x vaut : ' . $x . '<br />';
                     if ($x === false) $x = array_search($cont, $champ_table_l);
-                    if ($debug) echo '2-$x vaut : ' . $x . '<br />';
                     if ($x !== false) {
                         if ($nb > 0) $deb_req = $deb_req . ',';
                         $deb_req = $deb_req . $champ_table[$x];
@@ -71,7 +61,6 @@ function insert_champs()
             }
             // Ajout des constantes
             $deb_req = $deb_req . $deb_req_suite . ') values(';
-            if ($debug) echo $deb_req . '<br />';
         }
 
         if (($entete != 'P') or ($nb_enr > 1)) {
@@ -97,7 +86,6 @@ function insert_champs()
                                     if ($cont != '') $cont = '"' . traite_date_csv($cont) . '"';
                                     break;
                             }
-                            if ($debug) echo 'Contenu du champ ' . $nb . ' :  ' . $cont . '<br />';
                             if ($cont == '') $cont = 'null';
                             if ($req != '') $req = $req . ',';
                             $req = $req . $cont;
@@ -110,7 +98,6 @@ function insert_champs()
                 $z_ident = '';
                 if ($num_ident != '') $z_ident = $num_ident . ',';
                 $req = $deb_req . $z_ident . $req . $fin_req;
-                if ($debug) echo 'Req  : ' . $req . '<br />';
                 $res = maj_sql($req);
                 if ($res !== false) ++$nb_enr_crees;
                 $modif = true;

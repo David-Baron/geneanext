@@ -47,8 +47,7 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 // Traitement en rupture sur le nom de la table ==> uniquement pour les sites gratuits
 function traite_rup_table($nom_table)
 {
-    global $root, $nb_req_table, $Icones, $SiteGratuit, $Premium, $Pivot_Masquage, $depuis_heberge, $Environnement, $debug;
-    if ($debug) echo $nb_req_table . ' ' . my_html(LG_IMP_BACKUP_READ_LINES) . '<br>';
+    global $root, $nb_req_table, $Icones, $SiteGratuit, $Premium, $Pivot_Masquage, $depuis_heberge, $Environnement;
     // Traitement de cohérence : on vérifie que le nombre de lignes de la table correspond au nombre de lignes du fichier
     // Si ce n'est pas le cas, on considère qu'il y falsification du fichier
     // La vérification n'est faite que dans le cas du site gratuit
@@ -286,21 +285,14 @@ if ($bt_OK) {
                 $ligne = trim(fgets($fp));
                 $num_ligne++;
                 $lligne = strlen($ligne);
-                if ($debug) echo $num_ligne . ' : ' . $ligne . '<br>';
 
                 // Sur la 1ère, il ne faut pas oublier que l'on a potentiellement les 3 caractères du BOM au début ; on les enlève
                 if ($num_ligne == 1) {
                     if ($lligne > 3) {
-                        // if ($debug) {
-                        // var_dump(ord(substr($ligne,0,1)));
-                        // var_dump(ord(substr($ligne,1,1)));
-                        // var_dump(ord(substr($ligne,2,1)));
-                        // }
                         if ((ord(substr($ligne, 0, 1)) == 0xEF) and
                             (ord(substr($ligne, 1, 1)) == 0xBB) and
                             (ord(substr($ligne, 2, 1)) == 0xBF)
                         ) {
-                            if ($debug) echo 'Suppression du BOM<br>';
                             $ligne = substr($ligne, 3, $lligne - 3);
                         }
                     }
@@ -318,7 +310,6 @@ if ($bt_OK) {
                     if ($lligne > 10) {
                         if (strpos($ligne, 'prefixe') !== false) {
                             $pref_fic = substr($ligne, 10);
-                            if ($debug) echo '$pref_fic : ' . $pref_fic . '<br>';
                             if (($depuis_heberge) or ($pref_fic != $pref_tables)) {
                                 $ch_drop_sh_I = 'DROP TABLE IF EXISTS `' . $pref_fic;
                                 $ch_create_sh_I = 'CREATE TABLE `' . $pref_fic;
@@ -354,11 +345,6 @@ if ($bt_OK) {
                                 $nb_req_lues++;
                                 //echo $req.'<br>';
                                 if ($res = maj_sql($req, false)) $nb_req_ok++;
-                                else {
-                                    if ($debug) {
-                                        echo 'Req KO : ' . $req . '<br>';
-                                    }
-                                }
                                 $req = '';
                             }
                         }
@@ -390,8 +376,6 @@ if ($bt_OK) {
                         $car1   = substr($ligne, 0, 1);
                         $dercar = substr($ligne, $lligne - 1, 1);
                     }
-                    if ($debug)
-                        var_dump($car1);
                     // Traitement de la ligne en fonction du premier caractère
                     // # : ligne de commentaire
                     // [ : ligne donnant un nom de table
@@ -427,7 +411,6 @@ if ($bt_OK) {
                     if ($car1 == '[') {
                         // Traitement de cohérence + nb requêtes par table, indispensable pour les sites gratuits
                         if ($table != '') {
-                            if ($debug) echo "traite_rup_table($pref_tables.$table)<br>";
                             traite_rup_table($pref_tables . $table);
                         }
                         $pos = strrpos($ligne, ']');

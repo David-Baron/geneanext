@@ -43,7 +43,7 @@ echo '<br>';
 echo '<table width="60%" class="table_form" align="center">' . "\n";
 echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_NAME) . '</td><td class="value">' . $enreg['nom'] . '</td></tr>';
 echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_CODE) . '</td><td class="value">' . $enreg['codeUtil'] . '</td></tr>';
-echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PROFILE) . '</td><td class="value">' . libelleNiveau($enreg['niveau']) . '</td></tr>';
+echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PROFILE) . '</td><td class="value">' . $LG_User_Level[$enreg['niveau']] . '</td></tr>';
 echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_EMAIL) . '</td><td class="value">' . $enreg['Adresse'] . '</td></tr>';
 
 $Last_cnx = '';

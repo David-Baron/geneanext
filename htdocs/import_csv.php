@@ -246,10 +246,6 @@ if ($ok == 'OK') {
                                 if ($x === false) $x = array_search($cont, $champ_table_l);
                                 if ($x !== false) {
                                     $champ_pers[$max_champs] = $champ_table[$x];
-                                    if ($debug) {
-                                        echo '$champ_table[$x] : ' . $champ_table[$x] . '<br>';
-                                        echo '$champ_pers[$max_champs] : ' . $champ_pers[$max_champs] . '<br>';
-                                    }
                                     $num_csv[$max_champs] = $nb;
                                     echo $tab . '"' . $cont . '" ' . LG_IMP_CSV_IN_COL . ' ' . chr($o_A + $nb) . '<br>';
                                     $max_champs++;

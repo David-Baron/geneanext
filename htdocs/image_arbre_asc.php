@@ -110,7 +110,7 @@ function larg_texte($font, $taille, $text)
 
 function justifie($img, $font, $taille, $x, $y, $largeur, $text, $color, $align = 'centre')
 {
-    global $debug, $f_log;
+    global $f_log;
     $largeur_texte = larg_texte($font, $taille, $text);
     // **************************************
     // Prévoir le cas où la largeur > largeur max
@@ -128,9 +128,6 @@ function justifie($img, $font, $taille, $x, $y, $largeur, $text, $color, $align 
     }
     $x = round($x);
     $y = round($y);
-    if ($debug) {
-        fputs($f_log, $taille);
-    }
     //ImageTTFText($img, $taille, 0, $x, $y, $color, $font, $text.'anc x : '.$anc_x.' x : '.$x.' largeur : '.$largeur.' larg texte : '.$largeur_texte);
     ImageTTFText($img, $taille, 0, $x, $y, $color, $font, $text);
 }
@@ -230,8 +227,6 @@ function Charge_Parents($Personne)
     return 0;
 }
 
-// $debug = false;
-
 $x = Lit_Env();
 
 $sql = 'select Image_Arbre_Asc, Affiche_Mar_Arbre_Asc  from ' . nom_table('general');
@@ -239,17 +234,10 @@ $res = lect_sql($sql);
 $enreg = $res->fetch(PDO::FETCH_ASSOC);
 
 // Appel de l'image de fond
-if ($debug) {
-    $f_log = fopen('log.txt', 'a+');
-    fputs($f_log, '$chemin_images_a_asc : ' . $chemin_images_a_asc);
-}
-//if ($debug) fputs($f_log,$chemin_images_a_asc.$enreg['Image_Arbre_Asc']);
 $imagesource = $chemin_images_a_asc . $enreg['Image_Arbre_Asc'];
 $image = @ImageCreateFromPng($imagesource);
 //$image = @imagecreate (100, 50) or die ("Impossible d'initialiser la bibliothèque GD");
 $noir = ImageColorAllocate($image, 0, 0, 0);
-
-if ($debug) fputs($f_log, $image);
 
 // Récupération des coordonnées en fonction du type d'arbre
 // Le type d'arbre est la 3ème composante du nom de l'arbre
@@ -266,14 +254,10 @@ $Ref = $Refer;
 
 $font = Get_Font();
 
-if ($debug) fputs($f_log, 'av Retourne_Pers pour ' . $Ref);
 $x = Retourne_Pers($Ref);
-if ($debug) fputs($f_log, 'ap Retourne_Pers pour ' . $Ref);
 
 if ($nb_Rangs > 1) {
-    if ($debug) fputs($f_log, 'av Charge_Parents pour ' . $Ref);
     $x = Charge_Parents($Ref);
-    if ($debug) fputs($f_log, 'ap Charge_Parents pour ' . $Ref);
 }
 if ($nb_Rangs > 2) {
     for ($nb = 3; $nb <= $nb_Rangs; $nb++) {
@@ -282,9 +266,7 @@ if ($nb_Rangs > 2) {
         for ($nb2 = $Rang_Min; $nb2 <= $Rang_Max; $nb2++) {
             $nb3 = $nb2 - 1;
             $Ref = $Ensemble[$nb2 - 1];
-            if ($debug) fputs($f_log, 'av Charge_Parents pour ' . $Ref);
             $x = Charge_Parents($Ref);
-            if ($debug) fputs($f_log, 'ap Charge_Parents pour ' . $Ref);
         }
     }
 }
@@ -351,12 +333,8 @@ for ($nb_enr = 0; $nb_enr < count($Ensemble); ++$nb_enr) {
     }
 }
 
-if ($debug) fputs($f_log, 'Fin accès');
-
 @ImagePng($image);
 
 // Sauvegarde pour utilisation externe
 //sauve_img_gd($image);
 //@ImageDestroy($image);
-
-if ($debug) fclose($f_log);

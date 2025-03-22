@@ -918,3 +918,149 @@ function Init_infos_cnx()
     $_SESSION['estCnx'] = false;
     $est_cnx = false;
 }
+
+function aff_option_niveau($niv_option)
+{
+    global $profil;
+    echo '<option value="' . $niv_option . '"';
+    if ($niv_option == $profil) echo ' selected="selected"';
+    echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
+}
+
+//	Constitution du libellé du niveau des droits utilisateur
+/**
+ * @todo will be refacto
+ */
+function libelleNiveau($niveau)
+{
+    /* $user_levels = [
+        'I' => 'Invité',
+        'P' => 'Privilégié',
+        'C' => 'Contributeur',
+        'G' => 'Gestionnaire',
+    ]; */
+    switch ($niveau) {
+        case 'I':
+            $libelle = 'Invité';
+            break;
+        case 'P':
+            $libelle = 'Privilégié';
+            break;
+        case 'C':
+            $libelle = 'Contributeur';
+            break;
+        case 'G':
+            $libelle = 'Gestionnaire';
+            break;
+        default:
+            $libelle = '';
+    }
+    return $libelle;
+}
+
+// Affichage des données des fiches (personne, union, filiation)
+// Validation, création, modification ; fs : affichage dans un fieldset
+/**
+ * @deprecated will be removed
+ */
+function Affiche_Fiche($enreg, $fs = 0)
+{
+    if ($fs == 0) {
+        echo '<table width="85%" border="1">';
+        echo '<tr>';
+        // Validation fiche
+        echo '<td colspan="2">Statut fiche';
+        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($enreg['Statut_Fiche'] == 'O' ? ' checked' : '') . '/>'
+            . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($enreg['Statut_Fiche'] == 'N' ? ' checked' : '') . '/>'
+            . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($enreg['Statut_Fiche'] == 'I' ? ' checked' : '') . '/>'
+            . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
+        echo '<input type="hidden" name="AStatut_Fiche" value="' . $enreg['Statut_Fiche'] . '">';
+        echo '</td>';
+        echo '<td>Création : ' . DateTime_Fr($enreg['Date_Creation']) . '</td>';
+        echo '<td>Modification : ' . DateTime_Fr($enreg['Date_Modification']) . '</td>';
+        if ($enreg['Statut_Fiche'] == 'O') echo ' checked';
+        echo '/>Validée ';
+        echo '<input type="radio" name="Statut_Fiche" value="N"';
+        if ($enreg['Statut_Fiche'] == 'N') echo ' checked';
+        echo '</tr>';
+        echo '</table>';
+    } else {
+        echo '<fieldset>';
+        echo '<legend>Statut</legend>';
+        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($enreg['Statut_Fiche'] == 'O' ? ' checked' : '') . '/>'
+            . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($enreg['Statut_Fiche'] == 'N' ? ' checked' : '') . '/>'
+            . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($enreg['Statut_Fiche'] == 'I' ? ' checked' : '') . '/>'
+            . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
+        echo '<input type="hidden" name="AStatut_Fiche" value="' . $enreg['Statut_Fiche'] . '"/>';
+        echo '</fieldset>';
+        echo '<fieldset>';
+        echo '<legend>Traçabilité</legend>';
+        echo 'Création : ' . DateTime_Fr($enreg['Date_Creation']) . '<br>';
+        echo 'Modification : ' . DateTime_Fr($enreg['Date_Modification']);
+        echo '</fieldset>';
+    }
+}
+
+/**
+ * @deprecated will be removed
+ */
+function lit_fonc_fichier()
+{
+    $nom_fic = 'version.txt';
+    if (file_exists(__DIR__ . '/../../' . $nom_fic)) {
+        $fic = fopen(__DIR__ . '/../../' . $nom_fic, 'r');
+        if ($fic) {
+            $vers_fic = trim(fgets($fic));
+            fclose($fic);
+        }
+    }
+    return $vers_fic;
+}
+
+// Sauvegarde d'une image GD pour récupération éventuelle
+function sauve_img_gd($image)
+{
+    global $Environnement, $chemin_images_util, $n_sv_img_gd;
+    // Si environnement local, sauvegarde pour utilisation externe
+    if (($Environnement == 'L') or ($n_sv_img_gd != '')) {
+        if ($n_sv_img_gd == '') $n_sv_img_gd = '__sv_img_gd.png';
+        @ImagePng($image, $chemin_images_util . $n_sv_img_gd);
+    }
+}
+
+/**
+ * @deprecated will be removed
+ */
+function Affiche_Icone_Lien_Bt($lien, $icone, $lib)
+{
+    global $root, $Icones;
+    $a = '<div class="buttons">';
+    $a .= '<a ' . $lien . '"><img src="' . $root . '/assets/img/' . $Icones[$icone] . '" alt="' . $lib . '"/> ' . $lib . '</a>';
+    $a .= '</div>' . "\n";
+    return $a;
+}
+
+/**
+ * @deprecated will be removed
+ */
+function my_html_inv($chaine)
+{
+    global $def_enc;
+    return html_entity_decode($chaine, ENT_QUOTES, $def_enc);
+}
+
+/** @deprecated */
+function cryptmail($addmail)
+{
+    $addmailcode = '';
+    $longueur = strlen($addmail);
+    for ($x = 0; $x < $longueur; $x++) {
+        $ord = ord(substr($addmail, $x, 1));
+        $addmailcode .= "&#$ord;";
+    }
+    return $addmailcode;
+}

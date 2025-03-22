@@ -14,7 +14,7 @@
 
 function aff_degrade($datas, $labels, $couleur, $larg_image, $haut_image, $suffixe, $larg_legende, $texte_ajout)
 {
-    global $debug, $nb_cols, $Rouge, $Vert, $Bleu, $Jaune, $Marron, $Violet, $Gris, $Orange, $Rose;
+    global $nb_cols, $Rouge, $Vert, $Bleu, $Jaune, $Marron, $Violet, $Gris, $Orange, $Rose;
 
     // Si on veut avoir toutes les couleurs de dégradés, décommenter la ligne suivante
     //$all = true;
@@ -23,20 +23,8 @@ function aff_degrade($datas, $labels, $couleur, $larg_image, $haut_image, $suffi
     // Allocation des couleurs en fonction du dégradé du site
     include_once(__DIR__ . '/degrades_inc.php');
 
-    if ($debug) {
-        echo 'datas : ' . $datas . '<br />';
-        echo 'labels : ' . $labels . '<br />';
-        echo 'couleur : ' . $couleur . '<br />';
-    }
-
     $datas = str_replace('*', ',', $datas);
     $labels = str_replace('*', '","', $labels);
-
-    if ($debug) {
-        echo 'datas : ' . $datas . '<br />';
-        echo 'labels : ' . $labels . '<br />';
-        echo 'couleur : ' . $couleur . '<br />';
-    }
 
     //$larg_image = 400;
     //$haut_image = 200;
@@ -50,7 +38,6 @@ function aff_degrade($datas, $labels, $couleur, $larg_image, $haut_image, $suffi
         $x = $r * 2;
         //$x = $r;
         $rvb = strtoupper($la_couleur[$x]);
-        if ($debug) echo 'rvb : ' . $rvb . '<br />';
         if ($couleurs != '') $couleurs .= ',';
         $couleurs .= '"' . $rvb . '"';
     }
@@ -60,9 +47,6 @@ function aff_degrade($datas, $labels, $couleur, $larg_image, $haut_image, $suffi
 	$couleurs = array_reverse($couleurs);
 	$couleurs = implode(',',$couleurs);
 	*/
-    if ($debug) {
-        echo 'couleurs : ' . $couleurs . '<br />';
-    }
 
     echo '<table>';
     echo '<tr>';

@@ -1,9 +1,8 @@
 <?php
 
-// Carriage return
-// $cr = "\r\n"; // version Windows
+# date_default_timezone_set("Europe/Paris"); // This will be server parameter and not app!
+
 $cr = "\n";   // version Unix
-//$cr = "\r";   // version Macintosh
 
 // Est-on sur un site gratuit ?
 // ==> on est sur genealogies.geneamania.net
@@ -38,38 +37,50 @@ $lim_temps = 60;
 if ($Premium) $lim_temps *= 2;
 
 // Paramétrage du répertoire de stockage de TinyMCE à des fins de mutualisation
-$rep_Tiny = 'assets/js/tiny_mce/';
+# $rep_Tiny = 'assets/js/tiny_mce/'; // Defined by the application, no additional requirements are required
 
 // Paramétrage du répertoire de stockage des sources
-$rep_src = '';
+/** @deprecated */
+# $rep_src = ''; 
 
 // Chemins des images
-$chemin_images_util = 'Images_Util/';
+/** @deprecated */
+$chemin_images_util = 'images/';
+/** @deprecated */
 $chemin_images      = 'assets/img/';
+/** @deprecated */
 $chemin_images_a_asc = $chemin_images . 'arbres_asc/';
+/** @deprecated */
 $chemin_images_lettres = $chemin_images . 'lettres/';
+/** @deprecated */
 $chemin_images_barres = $chemin_images . 'fonds_barre/';
+/** @deprecated */
 $chemin_images_icones = $chemin_images;
 
 // Chemin des Gedcom
-$chemin_Gedcom = 'Gedcom/';
+/** @deprecated */
+# $chemin_Gedcom = 'Gedcom/';
 
 // Chemin des exports fichiers
-$chemin_exports = 'exports/';
+/** @deprecated */
+# $chemin_exports = 'exports/';
 
 // Chemin des contributions
-$chemin_contributions = 'contributions/';      // Attention, le chemin est aussi paramétré dans la page d'install
+/** @deprecated */
+# $chemin_contributions = 'contributions/';      // Attention, le chemin est aussi paramétré dans la page d'install
 
 // Chemin des documents
-$chemin_docs_HTM = 'documents/HTM/';
-$chemin_docs_PDF = 'documents/PDF/';
-$chemin_docs_IMG = 'documents/IMG/';
-$chemin_docs_TXT = 'documents/TXT/';
+/** @deprecated */
+# $chemin_docs_HTM = 'documents/HTM/';
+# $chemin_docs_PDF = 'documents/PDF/';
+# $chemin_docs_IMG = 'documents/IMG/';
+# $chemin_docs_TXT = 'documents/TXT/';
 
 // Chemin du site
 // Ajout automatique de sous-répertoire en local
-$ajout = '';
-$self  = my_self();
+/** @deprecated */
+# $ajout = '';
+/* $self  = my_self();
 
 if ($self[strlen($self) - 1] == '/') $self = substr($self, 0, strlen($self) - 1); // Au cas où l'utilsateur mettrait un / en dernière position on le supprime...
 $dpos  = strrpos($self, '/');
@@ -80,7 +91,7 @@ if ($dpos !== false) {
 }
 $RepGenSiteLoc = $ajout;
 // $RepGenSiteLoc = 'http://localhost/'.$ajout;	// Ne fonctionne pas avec les virtual host locaux TODO: lol so it's useless.
-$RepGenSiteInt = '';
+$RepGenSiteInt = ''; */
 
 // Nombre de générations maximum à remonter pour la recherche de cousinage
 // sur internet ou en local
@@ -93,6 +104,7 @@ if (($SiteGratuit) and (!$Premium)) $max_gen_AD_int = $max_gen_int * 2;
 else $max_gen_AD_int = $max_gen_int * 3;
 
 // Police pour les graphiques
+/** @deprecated */
 $FontLoc = 'C:/Windows/Fonts/Arial.ttf';
 $FontInt = './arial.ttf';
 
@@ -101,41 +113,42 @@ $FontInt = './arial.ttf';
 $Insert_Compteur = 0;
 
 // Fichier d'export GenWeb
-$nom_fic_GenWeb = 'export_GenWeb#.txt';
+/** @deprecated */
+# $nom_fic_GenWeb = 'export_GenWeb#.txt';
 
 // Affichage des requêtes ==> mode debug
-$aff_req = false;
-$debug = false;
+/** @deprecated */
+# $aff_req = false;
+# $debug = false;
 
 // Préfixe des tables (stocké dans un fichier à part pour les sites gratuits)
 $pref_tables = '';
 
 // Fichier des icones
+/** @deprecated */
 $fic_icones = 'Icones.php';
 
 // Couleur de fond de zone saisissable obligatoire
-$style_z_oblig = ' style="background-color:#FEFFBC" ';
+/** @deprecated */
+# $style_z_oblig = ' style="background-color:#FEFFBC" ';
 
 // Nombre de postes à mémoriser pour les personnes modifiées / créées
+/** @todo wtf is that? */
 $postes_memo_pers = 3;
 
-// Nombre de noms à afficher dans la liste des noms les plus portés
-$nb_noms = 15;
-if ($SiteGratuit and !$Premium) $nb_noms = 10;
 
-// Nombre de noms à afficher dans la liste des noms les plus portés
-$nb_prof = 15;
-if ($SiteGratuit and !$Premium) $nb_prof = 10;
-
-// Nombre de dernières personnes modifiées à afficher
-$nb_pers_mod = 15;
-if ($SiteGratuit and !$Premium) $nb_pers_mod = 10;
+$nb_noms = 15; // Nombre de noms à afficher dans la liste des noms les plus portés
+$nb_prof = 15; // Nombre de professions à afficher dans la liste des noms les plus portés
+$nb_pers_mod = 15; // Nombre de dernières personnes modifiées à afficher
+if ($SiteGratuit and !$Premium) {
+    $nb_noms = 10;
+    $nb_prof = 10;
+    $nb_pers_mod = 10;
+}
 
 // Séparateur
+/** @todo wtf is that? */
 $separ = '|||';
-
-// Localisation par défaut pour la date
-date_default_timezone_set("Europe/Paris");
 
 // Date limite de personne vivante
 // Calcul de la date du jour - 130 ans (on suppose que 130 ans est la durée de vie maximum d'un être humain)
@@ -148,25 +161,27 @@ $xM = str_pad($M, 2, '0', STR_PAD_LEFT);
 $xJ = str_pad($J, 2, '0', STR_PAD_LEFT);
 $date_lim_vivant = $xA . $xM . $xJ;
 
-// Limite de la diffusabilité exprimée en années
+ // Limite de la diffusabilité exprimée en années
 $Lim_Diffu = 100;
-
 $Lim_Diffu_Dec = $Lim_Diffu + $annees_maxi_vivant;
 
 // Type d'évènement des actualités
 $TypeEv_actu = 'AC3U';
 
-$FromTo_Mail = 'support@geneamania.net';
-$FromTo_Texte = 'Support Geneamania';
+/** @deprecated */
+# $FromTo_Mail = 'support@geneamania.net';
+# $FromTo_Texte = 'Support Geneamania';
 
 // Encodage par défaut pour htmlentities
-$def_enc = 'UTF-8'; // UTF-8|ISO-8859-1
+/** @deprecated */
+# $def_enc = 'UTF-8'; // UTF-8|ISO-8859-1
 
 // Polices intallées par défaut pour les pdf
 $list_font_pdf = array('Courier', 'Helvetica', 'Arial', 'Times');
 $list_font_pdf_plus = array();
 # $coul_pdf = '#4F95B0';
 
+/** @deprecated all graphisme */
 // Proposition pour les graphismes pré-définis
 $dominantes = array('bleu', 'rouge', 'marron', 'vert', 'violet', 'gris');
 $ch_barre = $chemin_images . 'fonds_barre/';
@@ -228,6 +243,9 @@ $gra_barre[$dominante] = $ch_barre . 'bar_off_gris.gif';
 $gra_fond[$dominante] = $ch_fond . 'pierre02.jpg';
 $gra_lettre[$dominante] = $ch_lettre . 'B_gris.gif';
 
+$barre_homme = $chemin_images . 'bb3.jpg';
+$barre_femme = $chemin_images . 'br2.jpg';
+
 //Couleur de fond des calculatrices
 $fond_calc = '#DCDCDC';
 
@@ -235,28 +253,27 @@ $fond_calc = '#DCDCDC';
 // (I)cone, (P)arenthèse, (N)on
 $aff_rev = 'I';
 
-$adr_rech_gratuits = 'https://genealogies.geneamania.net/recherche_heberges.php';
-$adr_rech_gratuits_ville = 'https://genealogies.geneamania.net/recherche_heberges_ville.php';
-// $adr_rech_gratuits ='http://www.geneamania.net/gratuits_recherche_nom.php';
-$adr_rech_ville_ref = 'https://genealogies.geneamania.net/recherche_ville_geneamania.php';
+# $adr_rech_gratuits = 'https://genealogies.geneamania.net/recherche_heberges.php';
+# $adr_rech_gratuits_ville = 'https://genealogies.geneamania.net/recherche_heberges_ville.php';
+# $adr_rech_gratuits ='http://www.geneamania.net/gratuits_recherche_nom.php';
+# $adr_rech_ville_ref = 'https://genealogies.geneamania.net/recherche_ville_geneamania.php';
 
 // Affichage des notes "à l'ancienne mode"
 $aff_note_old = false;
 
-$barre_homme = $chemin_images . 'bb3.jpg';
-$barre_femme = $chemin_images . 'br2.jpg';
-
 $rupt_Fiche_Indiv = '';
 
 // Répertoire des pages d'information
-//$rep_Infos = 'pages_info/';
-//$offset_info = '../';
+# $rep_Infos = 'pages_info/';
+# $offset_info = '../';
 
 // Répertoire des langues
-$rep_lang = 'languages'; // TODO: not a language rep but tranlations rep lol
+/** @todo not a language rep but tranlations rep lol */
+$rep_lang = 'languages';
 
 // Date de naissance par défaut pour l'export de la recherche des décès
 $death_def_min_year = 1970 - $annees_maxi_vivant;
+
 $url_matchid = 'https://deces.matchid.io';
 $url_matchid_link = $url_matchid . '/link';
 $url_matchid_sch = $url_matchid . '/deces/api/v1/search';
@@ -267,7 +284,9 @@ if ($SiteGratuit) {
     if (file_exists(__DIR__ . '/../../param_gratuit.php')) include(__DIR__ . '/../../param_gratuit.php');
 }
 
+/** @deprecated and useless */
 # $hidden = (!$debug ? 'hidden' : 'text');
 
+/** @todo wtf is that? */
 if (!isset($mod_nom_fic)) $mod_nom_fic = '';
 if (!isset($n_sv_img_gd)) $n_sv_img_gd = '';

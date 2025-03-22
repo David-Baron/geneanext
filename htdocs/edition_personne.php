@@ -60,7 +60,7 @@ $Refer = Recup_Variable('Refer', 'N');
 $Modif = true;
 if ($Refer == -1) $Modif = false;
 
-$acces = 'M';    
+$acces = 'M';
 $titre = $LG_Menu_Title['Person_Add'];                                           // Type d'accès de la page : (M)ise à jour, (L)ecture
 if ($Modif) $titre = $LG_Menu_Title['Person_Modify'];    // Titre pour META
 
@@ -145,7 +145,7 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo ' <img id="majuscule" src="' . $root . '/assets/img/' . $Icones['majuscule'] . '" alt="' . LG_NAME_TO_UPCASE . '" title="' . LG_NAME_TO_UPCASE . '"' .
         ' onclick="NomMaj();document.getElementById(\'NomP\').focus();"/>';
     echo '<input type="button" name="ferme_OK_nom" value="' . my_html($lib_OK) . '" onclick="ajoute_nom()"/>';
-    echo '<input type="button" name="ferme_An_nom" value="' . my_html($lib_Annuler). '" onclick="inverse_div(\'id_div_ajout_nom\')"/>';
+    echo '<input type="button" name="ferme_An_nom" value="' . my_html($lib_Annuler) . '" onclick="inverse_div(\'id_div_ajout_nom\')"/>';
     echo '</div>';
     echo '</td>';
     // Affichage de l'image par défaut pour la personne
@@ -304,8 +304,21 @@ function Aff_PersonneI($enreg2, $Personne, $Decalage)
     echo '</table>';
     echo '</fieldset>';
     // Affiche les données propres à l'enregistrement de la fiche
-    Affiche_Fiche($enreg2, 1);
-
+    echo '<fieldset>';
+    echo '<legend>Statut</legend>';
+    echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($enreg2['Statut_Fiche'] == 'O' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($enreg2['Statut_Fiche'] == 'N' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
+    echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($enreg2['Statut_Fiche'] == 'I' ? ' checked' : '') . '/>'
+        . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
+    echo '<input type="hidden" name="AStatut_Fiche" value="' . $enreg2['Statut_Fiche'] . '"/>';
+    echo '</fieldset>';
+    echo '<fieldset>';
+    echo '<legend>Traçabilité</legend>';
+    echo 'Création : ' . DateTime_Fr($enreg2['Date_Creation']) . '<br>';
+    echo 'Modification : ' . DateTime_Fr($enreg2['Date_Modification']);
+    echo '</fieldset>';
     // Affichage des tags
     echo '<fieldset>';
     echo '<legend>' . ucfirst(LG_PERS_CATEGORY) . '</legend>';
@@ -675,7 +688,7 @@ if ($bt_OK) {
             $_SESSION['Nom_Saisi']    = $idNomP . '/' . $NomP;
             $_SESSION['VilleN_Saisie'] = $Ville_NaissanceP;
             $_SESSION['VilleD_Saisie'] = $Ville_DecesP;
-            
+
             Ins_Zone_Req($NomP, 'A', $req);
             Ins_Zone_Req($PrenomsP, 'A', $req);
             Ins_Zone_Req($SexeP, 'A', $req);
@@ -802,7 +815,7 @@ if ((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) {
         }
         // Si la personne a été supprimée entre-temps
         else {
-            header('Location: ' .$root. '/');
+            header('Location: ' . $root . '/');
             exit();
         }
     } else {

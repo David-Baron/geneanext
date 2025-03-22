@@ -68,7 +68,6 @@ if (! $texte) {
 } else {
     // Sortie dans un PDF
     if ($sortie_pdf) {
-        if ($debug) echo 'demande sortie pdf...<br />';
         require(__DIR__ . '/html2pdfb.php');
         $sortie = 'P';
         $pdf = new PDF_HTML();
@@ -80,7 +79,6 @@ if (! $texte) {
         $pdf->Cell(0, 5, $titre, 'LTRB', 1, 'C');
         $pdf->SetFont($font_pdf, '', 11);
         $pdf->Ln();
-        if ($debug) echo 'fin décl pdf...<br />';
     }
     // Sortie au format texte
     else {
@@ -167,11 +165,6 @@ if ($Nom != '-1') {
     $sql .= $crit_nai . $crit_nom . " order by Nom, Prenoms";
     $res = lect_sql($sql);
 
-    if ($debug) {
-        echo $sortie . '<br />';
-        echo $sortie_pdf . '<br />';
-        echo $texte . '<br />';
-    }
     HTML_ou_PDF(LG_LIVING_REF_DATE . ' : ' . Etend_date($date_lim_vivant . 'GL') . ' (' . LG_LIVING_TODAY . ' - ' . $annees_maxi_vivant . ' ' . LG_LIVING_YEARS . ')<br /><br />', $sortie);
 
     // Initialisations
@@ -191,19 +184,16 @@ if ($Nom != '-1') {
         if ($vivant) {
             $Nouv_Nom = my_html($row[1]);
             if ($Nouv_Nom != $Anc_Nom) {
-                if ($debug) echo 'Changement de nom<br />';
                 if ($Anc_Nom != '') {
                     HTML_ou_PDF('</table>', $sortie);
                     if (($existe_div) and (!$texte)) HTML_ou_PDF('</div>', $sortie);
                     HTML_ou_PDF('<br />', $sortie);
                     $existe_div = 0;
                 }
-                if ($debug) echo 'Nouv_Nom : ' . $Nouv_Nom . '<br />';
                 if (! $texte) {
                     echo '<table width="95%" class="classic" cellspacing="1" cellpadding="3" align="center"><tr align="center"><td class="rupt_table">';
                     echo '<a href="' . $root . '/liste_pers2?Type_Liste=P&amp;idNom=' . $row[7] . '&amp;Nom=' . $Nouv_Nom . '">' . $Nouv_Nom . "</a>\n";
                 } else {
-                    if ($debug) echo 'Entête<br />';
                     HTML_ou_PDF('<table width="95%" align="center" class="tableau_imp"><thead><tr><th>' . $Nouv_Nom . '</th></tr></thead>', $sortie);
                 }
                 $attente = 1;

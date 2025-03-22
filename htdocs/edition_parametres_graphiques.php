@@ -72,7 +72,7 @@ function affiche_images($extension, $nb_cases, $cancel = false)
     if ($src[strlen($src) - 1] == '-') $src = '';
     echo '<td align="center" valign="middle">Sélection :<br>';
     echo '<img id="image_copie_' . $extension . '" width="' . $larg . '" height="' . $haut . '" src="' . $src . '" alt="' . $texte_im . '" title="' . $texte_im . '"/>';
-    echo ' <input type="' . $aff_infos . '" id="src_case_copie_' . $extension . '" name="src_case_copie_' . $extension . '" value="-"/>';
+    echo ' <input type="hidden" id="src_case_copie_' . $extension . '" name="src_case_copie_' . $extension . '" value="-"/>';
     echo '</td></tr>';
 
     echo '<tr align="center"><td colspan="' . $nb_cases . '">';
@@ -89,9 +89,9 @@ function affiche_images($extension, $nb_cases, $cancel = false)
     echo '<td> </td></tr>';
 
     echo '</table>';
-    echo '<input type="' . $aff_infos . '" id="indice' . '_' . $extension . '" value="1"/>';
+    echo '<input type="hidden" id="indice' . '_' . $extension . '" value="1"/>';
     for ($nb = 1; $nb <= $nb_cases; $nb++)
-        echo '<input type="' . $aff_infos . '"  id="src_case_' . $nb . '_' . $extension . '" value="-"/>';
+        echo '<input type="hidden"  id="src_case_' . $nb . '_' . $extension . '" value="-"/>';
 }
 
 // Affiche une ligne pour choisir les couleurs
@@ -335,8 +335,6 @@ if ((!$bt_OK) && (!$bt_An)) {
     $compl = Ajoute_Page_Info(600, 150);
     Insere_Haut($titre, $compl, 'Edition_Parametres_Graphiques', '');
 
-    $aff_infos = ($debug) ? 'text' : 'hidden';
-
     $all = true;
     include(__DIR__ . '/../app/ressources/degrades_inc.php');
 
@@ -483,23 +481,20 @@ if ((!$bt_OK) && (!$bt_An)) {
 
     bt_ok_an_sup($lib_Okay, $lib_Annuler, '', '', false);
 
-    if ($debug) echo 'Zones réceptrices des saisies : ';
     // Zones réceptrices des saisies
-    echo '<input type="' . $aff_infos . '" name="Sel_fonds" id="Sel_fonds" value="' . $Image_Fond . '"/>';
-    echo '<input type="' . $aff_infos . '" name="Sel_lettres" id="Sel_lettres" value="' . $Lettre_B . '"/>';
-    echo '<input type="' . $aff_infos . '" name="Sel_barres" id="Sel_barres" value="' . $Image_Barre . '"/>';
-    echo '<input type="' . $aff_infos . '" name="Sel_arbres_asc" id="Sel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>';
-    // Mémoristion des valeurs initiales
-    if ($debug) echo '<br>Zones initiales : ';
-    echo '<input type="' . $aff_infos . '" name="ASel_fonds" value="' . $Image_Fond . '"/>';
-    echo '<input type="' . $aff_infos . '" name="ASel_lettres" value="' . $Lettre_B . '"/>';
-    echo '<input type="' . $aff_infos . '" name="ASel_barres" id="ASel_barres" value="' . $Image_Barre . '"/>';
-    echo '<input type="' . $aff_infos . '" name="ASel_arbres_asc" id="ASel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>';
-    echo '<input type="' . $aff_infos . '" name="ACouleur" value="' . $coul_fond_table . '"/>';
-    echo '<input type="' . $aff_infos . '" name="ADegrade" value="' . $Degrade . '"/>';
-    echo '<input type="' . $aff_infos . '" name="AImageBarre" value="' . $Image_Barre . '"/>';
-    echo '<input type="' . $aff_infos . '" name="ASelFond_Arbre" value="' . $Image_Arbre_Asc . '"/>';
-    echo '<input type="' . $aff_infos . '" name="AAffiche_Mar_Arbre" value="' . $Affiche_Mar_Arbre_Asc . '"/>';
+    echo '<input type="hidden" name="Sel_fonds" id="Sel_fonds" value="' . $Image_Fond . '"/>';
+    echo '<input type="hidden" name="Sel_lettres" id="Sel_lettres" value="' . $Lettre_B . '"/>';
+    echo '<input type="hidden" name="Sel_barres" id="Sel_barres" value="' . $Image_Barre . '"/>';
+    echo '<input type="hidden" name="Sel_arbres_asc" id="Sel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>';
+    echo '<input type="hidden" name="ASel_fonds" value="' . $Image_Fond . '"/>';
+    echo '<input type="hidden" name="ASel_lettres" value="' . $Lettre_B . '"/>';
+    echo '<input type="hidden" name="ASel_barres" id="ASel_barres" value="' . $Image_Barre . '"/>';
+    echo '<input type="hidden" name="ASel_arbres_asc" id="ASel_arbres_asc" value="' . $Image_Arbre_Asc . '"/>';
+    echo '<input type="hidden" name="ACouleur" value="' . $coul_fond_table . '"/>';
+    echo '<input type="hidden" name="ADegrade" value="' . $Degrade . '"/>';
+    echo '<input type="hidden" name="AImageBarre" value="' . $Image_Barre . '"/>';
+    echo '<input type="hidden" name="ASelFond_Arbre" value="' . $Image_Arbre_Asc . '"/>';
+    echo '<input type="hidden" name="AAffiche_Mar_Arbre" value="' . $Affiche_Mar_Arbre_Asc . '"/>';
     echo '</form>';
     echo '</div>';        //echo '<!-- fin tab-container -->';
     echo '<table cellpadding="0" width="100%">';

@@ -54,8 +54,6 @@ if ($result = lect_sql($requete)) {
         $dFinLu        = $enreg['Fin'];
         $statutLu      = $enreg['Statut_Fiche'];
         $objetCibleLu  = $enreg['Objet_Cible'];
-        if ($debug) var_dump($enreg);
-
         $Type_Ref = 'E';
 
         // Affichage de l'image par défaut

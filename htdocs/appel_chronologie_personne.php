@@ -402,45 +402,25 @@ if ($dates_OK) {
     //$ages_10 = Age_Mois($Ne_PC,$Decede_PC)/12/10;
     $a = Age_Mois($Ne_PC, $maxi . 'GL');
     $ages_10 = Age_Mois($Ne_PC, $maxi . 'GL') / 12 / 10;
-    if ($debug) {
-        echo 'ages_10 : ' . $ages_10 . '<br />';
-        echo 'Ne_PC : ' . $Ne_PC . '<br />';
-        echo 'maxi : ' . $maxi . '<br />';
-    }
     $la_date = $Ne_PC;
     for ($nb = 1; $nb < $ages_10; $nb++) {
         $annee = intval(substr($la_date, 0, 4)) + 10;
-        if ($debug) echo 'calc annee : ' . $annee . '<br />';
         $la_date = $annee . substr($la_date, 4, 6);
-        if ($debug) echo 'calc : ' . $la_date . '<br />';
         $les_dates[] = $la_date . '/AGE10/' . $nb . '0 ans';
     }
 
-    if ($debug) {
-        var_dump($les_dates);
-        echo '<br />';
-    }
     sort($les_dates);
-    if ($debug) {
-        var_dump($les_dates);
-        echo '<br />';
-    }
 
     $somme_offset = 0;
     $date_prec = '';
     $offsets = [];
 
-    if ($debug) echo 'Max : ' . $Decede_P . '<br />';
-
     for ($nb = 0; $nb < count($les_dates); $nb++) {
-        if ($debug) echo $les_dates[$nb] . '<br />';
         $la_date = substr($les_dates[$nb], 0, 8);
         $la_dateC = substr($les_dates[$nb], 0, 10);
-        if ($debug) echo 'la_dateC : ' . $la_dateC . '<br />';
         //if ($la_date <= $Decede_P) {
         //if (($la_date <= $maxi) and ($la_date >= $Ne_PC)) {
         if ($la_date <= $maxi) {
-            if ($debug) echo 'date : ' . $la_date . '<br />';
             if ($nb == 0) {
                 $offset = 0;
             } else {
@@ -449,7 +429,6 @@ if ($dates_OK) {
                     $offset = $am / 12;
                 else
                     $offset = 1;
-                if ($debug) echo 'off : ' . $offset . '<br />';
             }
             $date_prec = $la_dateC;
             $offsets[] = $offset;
@@ -460,20 +439,13 @@ if ($dates_OK) {
     // Pour éviter le multi-colonnes sur des personnes décédées jeunes
     $somme_offset = max(50, $somme_offset);
 
-    if ($debug) echo 'date de décès : ' . $Decede_P . '<br />';
-
     echo HTML_ou_PDF('<ul id="timeline" style="columns: ' . $somme_offset . 'em;">', $sortie);
     for ($nb = 0; $nb < count($les_dates); $nb++) {
         $la_date = substr($les_dates[$nb], 0, 8);
-        if ($debug) echo 'la_date : ' . $la_date . ', Decede_P : ' . $Decede_P . '<br />';
         //if (($la_date <= $maxi) and ($la_date >= $Ne_PC)) {
         if ($la_date <= $maxi) {
             //echo $les_dates[$nb].'<br />';
             $composants = explode('/', $les_dates[$nb]);
-            if ($debug) {
-                var_dump($composants);
-                echo '<br />';
-            }
             //$p_gauche = etend_date(substr($les_dates[$nb],0,10));
             if ($composants[1] == 'AGE10') {
                 $p_gauche = $composants[2];

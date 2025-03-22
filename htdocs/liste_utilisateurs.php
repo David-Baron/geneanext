@@ -10,14 +10,6 @@ if (!IS_GRANTED('G')) {
     exit();
 }
 
-function aff_option_niveau($niv_option)
-{
-    global $profil;
-    echo '<option value="' . $niv_option . '"';
-    if ($niv_option == $profil) echo ' selected="selected"';
-    echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
-}
-
 $titre = $LG_Menu_Title['Users_List'];        // Titre pour META
 $x = Lit_Env();
 require(__DIR__ . '/../app/ressources/gestion_pages.php');
@@ -43,20 +35,16 @@ if ($Environnement == 'I') {
 }
 $mails = true;
 
-echo '<form action="' . my_self() . '" method="post">' . "\n";
+echo '<form method="post">' . "\n";
 echo '<table width="50%" align="center">' . "\n";
 echo '<tr align="center" class="rupt_table">';
-echo '<td width="50%">' . my_html(LG_UTIL_PROFILE) . ' ' . "\n";
+echo '<td width="50%">' . LG_UTIL_PROFILE . ' ' . "\n";
 echo '<select name="profil">' . "\n";
-echo '<option value="' . $defaut . '"';
-if ($profil == $defaut) {
-    echo ' selected="selected"';
-}
-echo '>Tous</option>' . "\n";
-aff_option_niveau('I');
-aff_option_niveau('P');
-aff_option_niveau('C');
-aff_option_niveau('G');
+echo '<option value="' . $defaut . '"' . ($profil == $defaut ? ' selected' : '') . '>Tous</option>';
+echo '<option value="I"' . ('I' == $profil ? ' selected' : '') . '>' . $LG_User_Level['I'] . '</option>';
+echo '<option value="P"' . ('P' == $profil ? ' selected' : '') . '>' . $LG_User_Level['P'] . '</option>';
+echo '<option value="C"' . ('C' == $profil ? ' selected' : '') . '>' . $LG_User_Level['C'] . '</option>';
+echo '<option value="G"' . ('G' == $profil ? ' selected' : '') . '>' . $LG_User_Level['G'] . '</option>';
 echo '</select>' . "\n";
 echo '</td>' . "\n";
 echo '<td width="50%"><input type="submit" value="' . $LG_modify_list . '"/></td>' . "\n";
@@ -73,7 +61,7 @@ $res = lect_sql($sql);
 
 if ($res->rowCount() > 0) {
 
-    if ($mails) echo '<form id="saisie" method="post" action="'.$root.'/mail_ut">' . "\n";
+    if ($mails) echo '<form id="saisie" method="post" action="' . $root . '/mail_ut">' . "\n";
 
     while ($row = $res->fetch(PDO::FETCH_NUM)) {
         if ($mails)

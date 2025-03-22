@@ -437,7 +437,7 @@ function case_personne($suff)
 
 function exec_req_vide($req)
 {
-    global $vide, $debug;
+    global $vide;
     $ret = false;
     $z1 = 0;
     if ($vide) {
@@ -452,15 +452,13 @@ function exec_req_vide($req)
             $ret = true;
             $vide = false;
         }
-        if ($debug) echo 'z1 : ' . $z1 . '<br />';
     }
     return $ret;
 }
 
 function cree_ville($nom_ville)
 {
-    global $max_id_ville, $tab_villes, $debug;
-    if ($debug) echo 'cre ville : ' . $nom_ville . '<br />';
+    global $max_id_ville, $tab_villes;
     $id_ville = 0;
     if ($nom_ville <> '') {
         $nom_ville = ajoute_sl_rt($nom_ville);
@@ -469,7 +467,6 @@ function cree_ville($nom_ville)
         // La zone a été trouvée dans le tableau
         if ($x !== false) {
             $id_ville = $tab_villes[$x];
-            if ($debug) echo 'Zone trouvée dans tableau : ' . $nom_ville . ', ' . $x . '<br />';
         }
         // Sinon, on la crée
         else {

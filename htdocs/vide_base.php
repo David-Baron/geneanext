@@ -15,13 +15,11 @@ if (!IS_GRANTED('G')) {
 dd('Don\'t use that anymore!!!');
 function suppression($lib, $n_table, $genre, $where, $affichage = true)
 {
-    global $debug;
     if ($affichage) echo '&nbsp;&nbsp;- ';
     if ($where != '')
         $req = 'DELETE FROM ' . $n_table . ' where ' . $where;
     else
         $req = 'TRUNCATE TABLE ' . $n_table;
-    if ($debug) $req . '<br>';
     $res = maj_sql($req);
     if ($affichage) {
         echo LG_RESET_DATA_BEG . ' ' . $lib . ' ' . LG_RESET_DATA_END . '<br>';

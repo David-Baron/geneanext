@@ -94,14 +94,12 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');
 
         while ($row = $resGI->fetch(PDO::FETCH_ASSOC)) {
             $ref_objet = $row['Reference_Objet'];
-            if ($debug) echo '<br />' . $row['Type_Objet'] . '/' . $ref_objet . '<br />';
             if (!$num_image) {
                 echo '<tr align="center">';
             }
             $num_image++;
             echo '<td>';
             Aff_Img_Redim_Lien($rep . $row['Nom_Fichier'], 200, 200);
-            if ($debug) echo '<br />' . $row['Type_Objet'] . '/' . $ref_objet;
             $n_personnes = nom_table('personnes');
             switch ($row['Type_Objet']) {
                 // Personne

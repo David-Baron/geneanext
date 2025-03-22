@@ -10,14 +10,6 @@ if (!IS_GRANTED('G')) {
     exit();
 }
 
-function aff_option_niveau($niv_option)
-{
-    global $niv;
-    echo '<option value="' . $niv_option . '"';
-    if ($niv_option == $niv) echo ' selected';
-    echo '>' . libelleNiveau($niv_option) . '</option>' . "\n";
-}
-
 // Récupération des variables de l'affichage précédent
 $tab_variables = array(
     'ok',
@@ -54,9 +46,6 @@ $Code = Recup_Variable('code', 'A');
 if ($Code == '-----') $Creation = true;
 else                  $Creation = false;
 
-// Gestion standard des pages
-$acces = 'M';                            // Type d'accès de la page
-$niv_requis = 'G';                        // Page accessible pour les gestionnaires uniquement
 // Titre pour META
 if (!$Creation) $titre = $LG_Menu_Title['User_Edit'];
 else $titre = $LG_Menu_Title['User_Add'];
@@ -76,10 +65,8 @@ $Envoi_Mail = Secur_Variable_Post($Envoi_Mail, 2, 'S');
 $Adresse    = Secur_Variable_Post($Adresse, 80, 'S');
 $AAdresse   = Secur_Variable_Post($AAdresse, 80, 'S');
 
-$n_utilisateurs = nom_table('utilisateurs');
-
 if ($bt_Sup) {
-    $req = 'delete from ' . $n_utilisateurs . ' where idUtil = ' . $Code;
+    $req = 'delete from ' . nom_table('utilisateurs') . ' where idUtil = ' . $Code;
     $res = maj_sql($req);
     Retour_Ar();
 }
@@ -93,7 +80,7 @@ if ($bt_OK) {
 
     // Vérification si le code utilisateur existe déjà
     if ($codeUtil != $codeUtil) {
-        $sql = 'select 1 from ' . $n_utilisateurs . ' where codeUtil = \'' . $codeUtil . '\' limit 1';
+        $sql = 'select 1 from ' . nom_table('utilisateurs') . ' where codeUtil = \'' . $codeUtil . '\' limit 1';
         $enreg = lect_sql($sql);
         if ($enreg->rowCount() > 0) {
             $mesErreur .= LG_UTIL_ERROR_EXISTS . ' (' . $codeUtil . ')<br />';
@@ -127,7 +114,7 @@ if ($bt_OK) {
         if ($motPasseSha != '') Aj_Zone_Req('motPasseUtil', $motPasseSha, '', 'A', $req);
         Aj_Zone_Req('niveau', $niv, $Aniveau, 'A', $req);
         Aj_Zone_Req('Adresse', $Adresse, $AAdresse, 'A', $req);
-        if ($req != '') $req = 'update ' . $n_utilisateurs . ' set ' . $req . ' where idUtil = ' . $Code;
+        if ($req != '') $req = 'update ' . nom_table('utilisateurs') . ' set ' . $req . ' where idUtil = ' . $Code;
     }
     // Cas de la création
     if ($Creation and $mesErreur == '') {
@@ -137,7 +124,7 @@ if ($bt_OK) {
         Ins_Zone_Req($motPasseSha, 'A', $req);
         Ins_Zone_Req($niv, 'A', $req);
         Ins_Zone_Req($Adresse, 'A', $req);
-        if ($req != '') $req = 'insert into ' . $n_utilisateurs . ' values( ' . $req . ')';
+        if ($req != '') $req = 'insert into ' . nom_table('utilisateurs') . ' values( ' . $req . ')';
     }
     if ($mesErreur == '') {
         if ($req != '') $res = maj_sql($req);
@@ -173,7 +160,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     }
 
     if (!$Creation) {
-        $sql = 'select * from ' . $n_utilisateurs . ' where idUtil = ' . $Code . ' limit 1';
+        $sql = 'select * from ' . nom_table('utilisateurs') . ' where idUtil = ' . $Code . ' limit 1';
         $res    = lect_sql($sql);
         $enreg  = $res->fetch(PDO::FETCH_ASSOC);
         $enreg2 = $enreg;
@@ -224,16 +211,16 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '</td></tr>' . "\n";
     echo '<tr><td class="label" width="30%">' . ucfirst(LG_UTIL_PROFILE) . '</td><td class="value">';
     // Le niveau n'est pas modifiable pour le user de connexion
-    if ((!$Creation) and ($Code == $_SESSION['idUtil'])) {
-        echo libelleNiveau($niv);
+    if ((!$Creation) and ($Code == $session->get('user')['idUtil'])) {
+        echo $LG_User_Level[$niv];
         echo '<input type="hidden" name="niv" value="' . $niv . '"/>' . "\n";
     } else {
-        echo '<select name="niv">' . "\n";
-        aff_option_niveau('I');
-        aff_option_niveau('P');
-        aff_option_niveau('C');
-        aff_option_niveau('G');
-        echo '</select>' . "\n";
+        echo '<select name="niv">';
+        echo '<option value="I"' . ('I' == $niv ? ' selected' : '') . '>' . $LG_User_Level['I'] . '</option>';
+        echo '<option value="P"' . ('P' == $niv ? ' selected' : '') . '>' . $LG_User_Level['P'] . '</option>';
+        echo '<option value="C"' . ('C' == $niv ? ' selected' : '') . '>' . $LG_User_Level['C'] . '</option>';
+        echo '<option value="G"' . ('G' == $niv ? ' selected' : '') . '>' . $LG_User_Level['G'] . '</option>';
+        echo '</select>';
     }
     echo '<input type="hidden" name="Aniveau" value="' . $niv . '"/>' . "\n";
     echo '</td></tr>' . "\n";
@@ -252,11 +239,10 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     }
 
     echo '<tr><td colspan="2">&nbsp;</td></tr>';
-
     echo '<tr><td colspan="2" align="center">';
 
     $lib_sup = '';
-    if ((!$Creation) and ($Code != $_SESSION['idUtil'])) {
+    if ((!$Creation) and ($Code != $session->get('user')['idUtil'])) {
         $lib_sup = $lib_Supprimer;
     }
 
@@ -288,7 +274,7 @@ if (((!$bt_OK) && (!$bt_An) && (!$bt_Sup)) || $mesErreur != '') {
     echo '</td></tr>' . "\n";
     echo '</table>' . "\n";
 
-    if ((!$Creation) and ($Code == $_SESSION['idUtil'])) {
+    if ((!$Creation) and ($Code == $session->get('user')['idUtil'])) {
         echo '<br /><img src="' . $root . '/assets/img/' . $Icones['warning'] . '" alt="Attention" title="Attention"> ' . LG_UTIL_WARN . '.';
     }
 

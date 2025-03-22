@@ -2067,3 +2067,10 @@ $LG_Menu_Title['Export_Death'] = 'Export pour recherche des dates de décès';
 $LG_Menu_Title['Reset_DB'] = 'Vidage de la base';
 $LG_Menu_Title['MatchId_Sch'] = 'Recherche matchId';
 $LG_Menu_Title['Town_Merging'] = 'Fusion de villes';
+
+$LG_User_Level = [
+    'I' => 'Invité',
+    'P' => 'Privilégié',
+    'C' => 'Contributeur',
+    'G' => 'Gestionnaire',
+];

@@ -88,7 +88,6 @@ require(__DIR__ . '/../app/ressources/gestion_pages.php');          // Appel de 
     if ($result->rowCount() > 0) {
 
         while ($enreg = $result->fetch(PDO::FETCH_ASSOC)) {
-            if ($debug) var_dump($enreg);
             $ref_evt = $enreg['Reference'];
             $page = 'fiche_evenement';
             if ($enreg['Code_Type'] == 'AC3U') $page = 'fiche_actualite';

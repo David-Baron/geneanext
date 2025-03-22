@@ -52,10 +52,6 @@ if ($res = lect_sql($sql)) {
         $nb = $row[0];
         $annee = intval(substr($row[2], 0, 4));
         $ref_annee = intval($annee / $bloc_annees) * $bloc_annees;
-        if ($debug) {
-            var_dump($row);
-            var_dump($ref_annee);
-        }
         if (!isset($nb_femmes[$ref_annee])) {
             $nb_femmes[$ref_annee] = 0;
             $nb_enfants[$ref_annee] = 0;
@@ -69,11 +65,6 @@ if ($res = lect_sql($sql)) {
     }
 }
 
-if ($debug) {
-    var_dump($nb_femmes);
-    var_dump($nb_enfants);
-}
-
 if ($presence) {
     echo '<br />';
     echo '<table width="50%" border="0" class="classic" align="center" >' . "\n";
@@ -85,20 +76,11 @@ if ($presence) {
     // Calcul des moyennes par période
     foreach ($nb_femmes as $key => $value) {
         $moyennes[$key] = $nb_enfants[$key] / $nb_femmes[$key];
-        if ($debug) {
-            echo 'key : ' . $key . ', value : ' . $value . '<br />';
-            echo 'nb de femmes : ' . $nb_femmes[$key] . ', nb enfants : ' . $nb_enfants[$key] . '<br />';
-            echo 'moyenne : ' . $nb_enfants[$key] / $nb_femmes[$key] . '<br />';
-        }
     }
     // Moyenne maxi ?
+    $maxi = 1;
     if (isset($moyennes)) {
         $maxi = max($moyennes);
-    } else {
-        $maxi = 1;
-    }
-    if ($debug) {
-        echo 'Moyenne maxi : ' . $maxi . '<br />';
     }
 
     foreach ($moyennes as $key => $value) {

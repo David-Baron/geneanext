@@ -116,11 +116,6 @@ if ($res = lect_sql($sql)) {
                 $warning_negatif = true;
             else
                 $nb_pers[$rang]++;
-            if ($debug) {
-                echo $ref_nouv . ', âge : ' . Decompose_Mois($mois)
-                    . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
-                    . '<br />';
-            }
         }
     }
 }
@@ -163,11 +158,6 @@ if ($res = lect_sql($sql)) {
                 $warning_negatif = true;
             else
                 $nb_pers[$rang]++;
-            if ($debug) {
-                echo $ref_nouv . ', âge : ' . Decompose_Mois($mois)
-                    . ' : <a href="' . $root . '/fiche_fam_pers?Refer=' . $ref_nouv . '">' . $ref_nouv . '</a>'
-                    . '<br />';
-            }
         }
     }
 }
@@ -188,12 +178,6 @@ echo 'H : '.$datas_h.'<br>';
 echo 'F : '.$datas_f.'<br>';
 echo 'Labels : '.$labels.'<br>';
 */
-
-if ($debug) {
-    var_dump($datas_h);
-    var_dump($datas_f);
-    var_dump($labels);
-}
 
 $largeur = 300;
 $hauteur = 250;

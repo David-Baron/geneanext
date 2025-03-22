@@ -315,11 +315,6 @@ if ($res->rowCount() > 0) {
             echo "<br />\n";
         } else {
             $ligne = '';
-            if ($debug) {
-                echo $tab;
-                var_dump($row);
-                echo '<br />';
-            }
             switch ($Type_Liste) {
                 case 'S': // s.Identifiant_zone, Nom_Subdivision, Nom_Ville, s.Latitude, s.Longitude
                     constit_ligne(4);
@@ -358,11 +353,10 @@ echo '</table>';
 
 function constit_ligne($max_champ)
 {
-    global $ligne, $row, $fp, $debug;
+    global $ligne, $row, $fp;
     for ($nb = 0; $nb <= $max_champ; $nb++) {
         $ligne .= $row[$nb] . ';';
     }
-    if ($debug) echo $ligne . '<br />';
     fputs($fp, $ligne);
 }
 ?>

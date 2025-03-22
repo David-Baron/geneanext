@@ -5,15 +5,6 @@
 // Modification d'une requete SQL avec un champ si modifié
 function Aj_Zone_Req($NomRub, $Rub, $ARub, $TypRub, &$LaReq)
 {
-    global $debug;
-    if ($debug) {
-        echo '======================<br />';
-        echo ($NomRub) . '<br />';
-        echo gettype($Rub) . '<br />';
-        echo gettype($ARub) . '<br />';
-        echo $NomRub . ' nouv  : ' . $Rub . '<br />';
-        echo $NomRub . ' anc : ' . $ARub . '<br />';
-    }
     if ($Rub !== $ARub) {
         if ($LaReq != '') $LaReq = $LaReq . ',';
         $LaReq = $LaReq . ' ' . $NomRub . '=';
@@ -537,26 +528,22 @@ function recherche_nom($nom)
 // taille, chargement "standard"
 function ctrl_fichier_ko($nb_fic = -1)
 {
-    global $SiteGratuit, $Premium, $debug;
+    global $SiteGratuit, $Premium;
     $erreur = false;
     $message = '';
     $taille_maxi = ini_get('upload_max_filesize');
     // Taille maxi en octets
     $val = trim($taille_maxi);
-    if ($debug) echo 'val-1 : ' . $val . '<br />';
     $lg = strlen($val) - 1;
     $last = strtolower($val[$lg]);
     $val = substr($val, 0, $lg);
     switch ($last) {
         case 'g':
             $val *= 1024;
-            if ($debug) echo 'val-g : ' . $val . '<br />';
         case 'm':
             $val *= 1024;
-            if ($debug) echo 'val-m : ' . $val . '<br />';
         case 'k':
             $val *= 1024;
-            if ($debug) echo 'val-k : ' . $val . '<br />';;
     }
     $taille_maxi_o = $val;
 
@@ -949,7 +936,7 @@ function Creation_Noms_Commun()
 // Transformation de la date présente dans le fichier : format accepté : jj/mm/ssaa, jj-mm-ssaa, jj.mm.ssaa
 function traite_date_csv($la_date)
 {
-    global $arr, $MoisAnAbr, $ListeAnneesRev, $MoisRevAbr4, $nb_enr, $debug;
+    global $arr, $MoisAnAbr, $ListeAnneesRev, $MoisRevAbr4, $nb_enr;
 
     $ret = '';
     $err_format_date = 'La date n\'a pas le bon format :&nbsp;';
@@ -988,11 +975,6 @@ function traite_date_csv($la_date)
             )
                 $date_ok = false;
             else $greg = true;
-        }
-        if ($debug) {
-            if (!is_numeric($jour)) echo 'jour non num' . '<br />';
-            if (!is_numeric($mois)) echo 'mois non num' . '<br />';
-            if (!is_numeric($annee)) echo 'année non num>' . $annee . '<<br />';
         }
         // Contrôle de la validité d'une date grégorienne
         if (($date_ok) and ($greg)) {

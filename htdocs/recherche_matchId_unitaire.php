@@ -58,7 +58,6 @@ if ($enreg = $res->fetch(PDO::FETCH_ASSOC)) {
         . '&lastName=' . $enreg['Nom']
         . '&sex=' . strtoupper($enreg['Sexe'])
         . '&birthDate=' . $d_nai_id;
-    if ($debug) var_dump($url);
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');

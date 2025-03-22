@@ -72,7 +72,6 @@ if ($fp = fopen(__DIR__ . '/../' . $path, 'w+')) {
             }
             $res_FR->closeCursor();
         }
-        if ($debug) echo 'Libellé FRA = ' . $lib_FR . '<br>';
         while ($enreg = $res->fetch(PDO::FETCH_NUM)) {
             // Données sur la personne
             Personne_Gedcom($fp, $enreg, $leger);

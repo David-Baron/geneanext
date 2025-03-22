@@ -244,7 +244,6 @@ if ($bt_OK) {
                 $resCreate = lect_sql($query);
                 $row = $resCreate->fetch(PDO::FETCH_NUM);
                 $schema = $row[1] . ";";
-                if ($debug) echo 'Schéma : ' . $schema . '<br />';
                 // On ne conserve pas les valeurs d'auto-increment
                 $ch_auto = ' AUTO_INCREMENT=';
                 $p1 = strpos($schema, $ch_auto);

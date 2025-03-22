@@ -121,5 +121,9 @@ $res->closeCursor();
 
 @ImagePng($image);
 // Sauvegarde pour utilisation externe
-sauve_img_gd($image);
+if (($Environnement == 'L') or ($n_sv_img_gd != '')) {
+    if ($n_sv_img_gd == '') $n_sv_img_gd = '__sv_img_gd.png';
+    @ImagePng($image, $chemin_images_util . $n_sv_img_gd);
+}
+
 @ImageDestroy($image);

@@ -402,9 +402,6 @@ function Lit_Env()
     return $Acces;
 }
 
-
-
-
 /**
  * @deprecated will be removed
  */
@@ -444,39 +441,6 @@ function Insere_Haut($titre, $compl_entete, $page, $param)
         }
     }
 }
-
-
-//	Constitution du libellé du niveau des droits utilisateur
-/**
- * @todo will be refacto
- */
-function libelleNiveau($niveau)
-{
-    /* $user_levels = [
-        'I' => 'Invité',
-        'P' => 'Privilégié',
-        'C' => 'Contributeur',
-        'G' => 'Gestionnaire',
-    ]; */
-    switch ($niveau) {
-        case 'I':
-            $libelle = 'Invité';
-            break;
-        case 'P':
-            $libelle = 'Privilégié';
-            break;
-        case 'C':
-            $libelle = 'Contributeur';
-            break;
-        case 'G':
-            $libelle = 'Gestionnaire';
-            break;
-        default:
-            $libelle = '';
-    }
-    return $libelle;
-}
-
 
 // Ecrit les balises meta de l'entête
 /**
@@ -878,54 +842,6 @@ function UnPrenom($LesPrenoms)
     if ($LesPrenoms != '') $pblanc = strpos($LesPrenoms, ' ', 1);
     if ($pblanc === FALSE) return $LesPrenoms;        // Un seul prénom dans les prénoms transmis
     else return substr($LesPrenoms, 0, $pblanc);
-}
-
-// Affichage des données des fiches (personne, union, filiation)
-// Validation, création, modification ; fs : affichage dans un fieldset
-/**
- * @deprecated will be removed
- */
-function Affiche_Fiche($enreg, $fs = 0)
-{
-    $Statut_Fiche = $enreg['Statut_Fiche'];
-    if ($fs == 0) {
-        echo '<table width="85%" border="1">';
-        echo '<tr>';
-        // Validation fiche
-        echo '<td colspan="2">Statut fiche';
-        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($Statut_Fiche == 'O' ? 'checked' : '') . '/>'
-            . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($Statut_Fiche == 'N' ? 'checked' : '') . '/>'
-            . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($Statut_Fiche == 'I' ? 'checked' : '') . '/>'
-            . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
-        echo '<input type="hidden" name="AStatut_Fiche" value="' . $Statut_Fiche . '">';
-        echo '</td>';
-        echo '<td>Création : ' . DateTime_Fr($enreg['Date_Creation']) . '</td>';
-        echo '<td>Modification : ' . DateTime_Fr($enreg['Date_Modification']) . '</td>';
-        if ($Statut_Fiche == 'O') echo ' checked';
-        echo '/>Validée ';
-        echo '<input type="radio" name="Statut_Fiche" value="N"';
-        if ($Statut_Fiche == 'N') echo ' checked';
-        echo '</tr>';
-        echo '</table>';
-    } else {
-        echo '<fieldset>';
-        echo '<legend>Statut</legend>';
-        echo '<input type="radio" id="Statut_FicheO" name="Statut_Fiche" value="O" ' . ($Statut_Fiche == 'O' ? 'checked' : '') . '/>'
-            . '<label for="Statut_FicheO">' . LG_CHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheN" name="Statut_Fiche" value="N" ' . ($Statut_Fiche == 'N' ? 'checked' : '') . '/>'
-            . '<label for="Statut_FicheN">' . LG_NOCHECKED_RECORD_SHORT . '</label> ';
-        echo '<input type="radio" id="Statut_FicheI" name="Statut_Fiche" value="I" ' . ($Statut_Fiche == 'I' ? 'checked' : '') . '/>'
-            . '<label for="Statut_FicheI">' . LG_FROM_INTERNET . '</label> ';
-        echo '<input type="hidden" name="AStatut_Fiche" value="' . $Statut_Fiche . '"/>';
-        echo '</fieldset>';
-        echo '<fieldset>';
-        echo '<legend>Traçabilité</legend>';
-        echo 'Création : ' . DateTime_Fr($enreg['Date_Creation']) . '<br>';
-        echo 'Modification : ' . DateTime_Fr($enreg['Date_Modification']);
-        echo '</fieldset>';
-    }
 }
 
 // Renvoie une datetime au format français
@@ -1897,7 +1813,7 @@ function Liste_Pers($Ensemble, $Nom_Sel, $Ref_Sel = 0)
     while ($row = $Ensemble->fetch(PDO::FETCH_NUM)) {
         $Ref = $row[0];
         echo '<option value="' . $Ref . '"';
-        if (($Ref_Sel != 0) and ($Ref == $Ref_Sel)) echo ' selected="selected" ';
+        if (($Ref_Sel != 0) and ($Ref == $Ref_Sel)) echo ' selected" ';
         echo '>' . my_html($row[1] . ' ' . $row[2]) .
             ' (' . affiche_date($row[3]) . '-' . affiche_date($row[4]) . ')' . '</option>' .
             "\n";
@@ -1915,24 +1831,13 @@ function Liste_Pers($Ensemble, $Nom_Sel, $Ref_Sel = 0)
  */
 function aff_liste_villes($nom_select, $premier, $dernier, $cle_sel)
 {
-    global $res_lv;
-    //if ($premier) echo 'Premier ';else echo 'Pas premier ';
-    //if ($dernier) echo 'Dernier ';else echo 'Pas dernier ';
+    $sql = 'SELECT Identifiant_zone, Nom_Ville FROM ' . nom_table('villes') . ' ORDER BY Nom_Ville';
+    $res_lv = lect_sql($sql);
     echo '<select name="' . $nom_select . '" id="' . $nom_select . '">' . "\n";
-    $sql = 'select Identifiant_zone, Nom_Ville from ' . nom_table('villes') . ' order by Nom_Ville';
-    if ($premier) {
-        $res_lv = lect_sql($sql);
-    } else {
-        $res_lv->closeCursor();
-        $res_lv = lect_sql($sql);
-    }
     while ($row = $res_lv->fetch(PDO::FETCH_NUM)) {
-        echo '<option value="' . $row[0] . '"';
-        if ($cle_sel == $row[0]) echo ' selected="selected" ';
-        echo '>' . my_html($row[1]) . '</option>' . "\n";
+        echo '<option value="' . $row[0] . '"' . ($cle_sel == $row[0] ? ' selected' : '') . '>' . my_html($row[1]) . '</option>' . "\n";
     }
     echo "</select>\n";
-    if ($dernier) $res_lv->closeCursor();
 }
 
 // Retourne les années de naissance et de décès entre parenthèses si l'une des 2 est servie
@@ -2288,22 +2193,6 @@ function lib_pfu($TypeObjet, $dem_article = false)
     return $txt;
 }
 
-/**
- * @deprecated will be removed
- */
-function lit_fonc_fichier()
-{
-    $nom_fic = 'version.txt';
-    if (file_exists(__DIR__ . '/../../' . $nom_fic)) {
-        $fic = fopen(__DIR__ . '/../../' . $nom_fic, 'r');
-        if ($fic) {
-            $vers_fic = trim(fgets($fic));
-            fclose($fic);
-        }
-    }
-    return $vers_fic;
-}
-
 // Affichage des noms secondaires (princ = 'N') pour la personne
 /**
  * @todo will be refacto and removed
@@ -2408,8 +2297,6 @@ function bt_ok_an_sup($lib_ok, $lib_an, $lib_sup, $lib_conf, $dans_table = true,
 
     if ($dans_table) echo '</td></tr>' . "\n";
 }
-
-
 
 // Récupération du microtime pour profilage de script
 function microtime_float()
@@ -2539,29 +2426,6 @@ function determine_etat_vivant($naissance, $deces = '')
     return $vivant;
 }
 
-// Sauvegarde d'une image GD pour récupération éventuelle
-function sauve_img_gd($image)
-{
-    global $Environnement, $chemin_images_util, $n_sv_img_gd;
-    // Si environnement local, sauvegarde pour utilisation externe
-    if (($Environnement == 'L') or ($n_sv_img_gd != '')) {
-        if ($n_sv_img_gd == '') $n_sv_img_gd = '__sv_img_gd.png';
-        @ImagePng($image, $chemin_images_util . $n_sv_img_gd);
-    }
-}
-
-/**
- * @deprecated will be removed
- */
-function Affiche_Icone_Lien_Bt($lien, $icone, $lib)
-{
-    global $root, $Icones;
-    $a = '<div class="buttons">';
-    $a .= '<a ' . $lien . '"><img src="' . $root . '/assets/img/' . $Icones[$icone] . '" alt="' . $lib . '"/> ' . $lib . '</a>';
-    $a .= '</div>' . "\n";
-    return $a;
-}
-
 /**
  * Positionne la couleur par défaut pour les PDF
  * @deprecated will be removed
@@ -2628,17 +2492,7 @@ function my_html($chaine)
     return htmlentities($chaine, ENT_QUOTES, $def_enc);
 }
 
-/**
- * @deprecated will be removed
- */
-function my_html_inv($chaine)
-{
-    global $def_enc;
-    return html_entity_decode($chaine, ENT_QUOTES, $def_enc);
-}
-
 // Récupère la liste des champs d'une requête SQL
-
 /**
  * @deprecated will be removed
  */
@@ -2664,10 +2518,8 @@ function get_fields($req, $enleve_descripteur)
     return $res;
 }
 
-
 /* Retourne le libellé d'une ville */
 /* P1 :numéro de la ville ; P2 : sortie HTML du libellé ; P3 : recherche du commentaire sur la ville */
-
 /**
  * @todo will be refacto and removed
  */
@@ -2782,28 +2634,6 @@ function get_divorce($Reference)
     return $retour;
 }
 
-/*
-Description : Calcul de la distance entre 2 points en fonction de leur latitude/longitude
-*/
-function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_long, $unit = 'km', $decimals = 2)
-{
-    // Calcul de la distance en degrés
-    $degrees = rad2deg(acos((sin(deg2rad($point1_lat)) * sin(deg2rad($point2_lat))) + (cos(deg2rad($point1_lat)) * cos(deg2rad($point2_lat)) * cos(deg2rad($point1_long - $point2_long)))));
-
-    // Conversion de la distance en degrés à l'unité choisie (kilomètres, milles ou milles nautiques)
-    switch ($unit) {
-        case 'km':
-            $distance = $degrees * 111.13384; // 1 degré = 111,13384 km, sur base du diamètre moyen de la Terre (12735 km)
-            break;
-        case 'mi':
-            $distance = $degrees * 69.05482; // 1 degré = 69,05482 milles, sur base du diamètre moyen de la Terre (7913,1 milles)
-            break;
-        case 'nmi':
-            $distance =  $degrees * 59.97662; // 1 degré = 59.97662 milles nautiques, sur base du diamètre moyen de la Terre (6,876.3 milles nautiques)
-    }
-    return round($distance, $decimals);
-}
-
 // Ajoute le modificateur de nom de fichier
 function construit_fic($chemin, $nom_fic, $ext = '')
 {
@@ -2813,7 +2643,6 @@ function construit_fic($chemin, $nom_fic, $ext = '')
     if ($ext != '') $nom_fic_out .= '.' . $ext;
     return $nom_fic_out;
 }
-
 
 // Chaine pdf pour utf-8 ?
 /**
@@ -2838,17 +2667,4 @@ function rectif_null_pers(&$enreg)
         $enreg['Ne_le'] = '';
     if (is_null($enreg['Decede_Le']))
         $enreg['Decede_Le'] = '';
-}
-
-
-/** @deprecated */
-function cryptmail($addmail)
-{
-    $addmailcode = '';
-    $longueur = strlen($addmail);
-    for ($x = 0; $x < $longueur; $x++) {
-        $ord = ord(substr($addmail, $x, 1));
-        $addmailcode .= "&#$ord;";
-    }
-    return $addmailcode;
 }

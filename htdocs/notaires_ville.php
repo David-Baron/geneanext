@@ -102,7 +102,6 @@ $tab = '-';
 if ($nb_lig > 0) {
     $anc_not = '';
     while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
-        if ($debug) print_r($row);
         $nouv_not = $row['Notaire_K'];
         if ($nouv_not != $anc_not) {
             $anc_not = $nouv_not;

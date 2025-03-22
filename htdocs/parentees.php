@@ -144,11 +144,6 @@ if ((!$enreg_sel) or ($Refer == 0)) {
             }
             $nb_refs = count($refs);
 
-            if ($debug) {
-                var_dump($refs);
-                var_dump($nb_refs);
-            }
-
             if ($refs == '') $nb_refs = 0;
 
             if ($nb_refs > 0) {
@@ -195,10 +190,6 @@ if ((!$enreg_sel) or ($Refer == 0)) {
             }
 
             $nb_refs = count($refs);
-            if ($debug) {
-                var_dump($refs);
-                var_dump($nb_refs);
-            }
             if ($refs == '') $nb_refs = 0;
             if ($nb_refs) {
                 for ($nb = $min; $nb <= $max; $nb++) {

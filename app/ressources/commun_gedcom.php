@@ -11,7 +11,7 @@ $n_villes = nom_table('villes');
 // Libellé et référence pour la France
 function get_Lib_FR()
 {
-    global $debug, $lib_FR, $ref_FR;
+    global $lib_FR, $ref_FR;
     $sql_FR = 'select Identifiant_zone, Nom_Pays from ' . nom_table('pays') . ' where Code_Pays_ISO_Alpha3 = "FRA" limit 1';
     if ($res_FR = lect_sql($sql_FR)) {
         if ($enr = $res_FR->fetch(PDO::FETCH_NUM)) {
@@ -20,7 +20,6 @@ function get_Lib_FR()
         }
         $res_FR->closeCursor();
     }
-    if ($debug) echo 'Libellé FRA = ' . $lib_FR . '<br />';
 }
 
 // Libellé d'une ville pour Gedcom

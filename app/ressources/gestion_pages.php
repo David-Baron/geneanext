@@ -130,17 +130,6 @@ if (isset($Environnement)) {
         if ($courante != $precedente) $_SESSION['pages'][] = $courante;
     }
 
-    // if ($debug) {
-    //     fputs($f_log, $dh . ' ===== après');
-    //     fputs($f_log, ' Pages mémorisées');
-    //     for ($nb = 0; $nb < count($_SESSION['pages']); $nb++) {
-    //         fputs($f_log, '   ' . $_SESSION['pages'][$nb]);
-    //     }
-    //     fputs($f_log, ' Self ' . my_self());
-    //     fputs($f_log, ' Page courante ' . $courante);
-    //     fputs($f_log, ' Page précédente ' . $precedente);
-    //     fclose($f_log);
-    // }
 }
 /* // Valeurs par défaut si non définies
 if (!isset($_SESSION['estInvite'])) $_SESSION['estInvite'] = false;
